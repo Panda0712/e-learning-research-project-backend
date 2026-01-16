@@ -1,0 +1,532 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  avatar      String?
+  phoneNumber String?
+  dateOfBirth DateTime?
+  role        String    @default("student")
+  isVerified  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  courses                Course[]                @relation("LecturerCourses")
+  enrollments            Enrollment[]
+  reviews                CourseReview[]
+  blogPosts              BlogPost[]              @relation("AuthorPosts")
+  lecturerProfile        LecturerProfile?
+  lecturerPayout         LecturerPayout[]
+  submissions            Submission[]
+  blogComments           BlogComment[]
+  wishlist               Wishlist[]
+  carts                  Cart[]
+  lecturerResources      LecturerResource[]
+  orders                 Order[]
+  transactions           Transaction[]
+  lecturerPayoutAccounts LecturerPayoutAccount[]
+}
+
+model Course {
+  id            Int       @id @default(autoincrement())
+  lecturerId    Int
+  categoryId    Int?
+  thumbnail     String?
+  name          String
+  lecturerName  String?
+  duration      String?
+  totalStudents Int       @default(0)
+  totalLessons  Int       @default(0)
+  totalQuizzes  Int       @default(0)
+  level         String?
+  overview      String?
+  price         Float     @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
+
+  // relations
+  lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
+  category    CourseCategory? @relation(fields: [categoryId], references: [id])
+  modules     Module[]
+  reviews     CourseReview[]
+  enrollments Enrollment[]
+  orderItems  OrderItem[]
+}
+
+model CourseCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  courses Course[]
+}
+
+model CourseFAQ {
+  id          Int       @id @default(autoincrement())
+  question    String
+  answer      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+}
+
+model CourseReview {
+  id            Int       @id @default(autoincrement())
+  courseId      Int
+  studentId     Int
+  studentName   String?
+  studentAvatar String?
+  rating        Int
+  content       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
+
+  // relations
+  course  Course @relation(fields: [courseId], references: [id])
+  student User   @relation(fields: [studentId], references: [id])
+}
+
+model Module {
+  id           Int       @id @default(autoincrement())
+  courseId     Int
+  title        String
+  description  String?
+  duration     String?
+  totalLessons Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  isDestroyed  Boolean   @default(false)
+
+  // relations
+  course  Course   @relation(fields: [courseId], references: [id])
+  lessons Lesson[]
+}
+
+model Lesson {
+  id          Int       @id @default(autoincrement())
+  resourceId  Int?
+  moduleId    Int
+  title       String
+  description String?
+  note        String?
+  videoUrl    String?
+  duration    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  module    Module           @relation(fields: [moduleId], references: [id])
+  resources LessonResource[]
+  quizzes   Quiz[]
+}
+
+model Resource {
+  id          Int       @id @default(autoincrement())
+  fileSize    Int?
+  fileType    String?
+  fileUrl     String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  lessonResources   LessonResource[]
+  lecturerResources LecturerResource[]
+}
+
+model LessonResource {
+  id         Int       @id @default(autoincrement())
+  lessonId   Int
+  resourceId Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  // relations
+  lesson   Lesson   @relation(fields: [lessonId], references: [id])
+  resource Resource @relation(fields: [resourceId], references: [id])
+}
+
+model LecturerResource {
+  id         Int       @id @default(autoincrement())
+  lecturerId Int
+  resourceId Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  // relations
+  lecturer User     @relation(fields: [lecturerId], references: [id])
+  resource Resource @relation(fields: [resourceId], references: [id])
+}
+
+model Enrollment {
+  id             Int       @id @default(autoincrement())
+  studentId      Int
+  courseId       Int
+  status         String    @default("enrolled")
+  progress       Float     @default(0)
+  lastAccessedAt DateTime?
+  createdAt      DateTime  @default(now())
+  isDestroyed    Boolean   @default(false)
+
+  // relations
+  student User   @relation(fields: [studentId], references: [id])
+  course  Course @relation(fields: [courseId], references: [id])
+}
+
+model Quiz {
+  id           Int       @id @default(autoincrement())
+  lessonId     Int
+  title        String
+  description  String?
+  timeLimit    Int?
+  passingScore Int?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  isDestroyed  Boolean   @default(false)
+
+  // relations
+  lesson    Lesson     @relation(fields: [lessonId], references: [id])
+  questions Question[]
+  submissions  Submission[]
+}
+
+model Question {
+  id            Int       @id @default(autoincrement())
+  quizId        Int
+  question      String
+  type          String
+  options       Json?
+  correctAnswer String?
+  point         Int?      @default(1)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
+
+  // relations
+  quiz Quiz @relation(fields: [quizId], references: [id])
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  studentId     Int
+  lecturer      String?
+  totalPrice    Float?   @default(0)
+  paymentMethod String?
+  status        String?  @default("pending")
+  createdAt     DateTime @default(now())
+  isDestroyed   Boolean  @default(false)
+
+  // relations
+  student User @relation(fields: [studentId], references: [id])
+  items   OrderItem[]
+}
+
+model OrderItem {
+  id        Int   @id @default(autoincrement())
+  orderId  Int
+  courseId Int
+  price    Float?
+  lecturerId Int?
+  createdAt     DateTime @default(now())
+  isDestroyed   Boolean  @default(false)
+
+  // relations
+  order  Order  @relation(fields: [orderId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([orderId, courseId])
+}
+
+model Coupon {
+  id              Int       @id @default(autoincrement())
+  name            String
+  description     String?
+  status          String?
+  customerGroup   String?
+  code            String    @unique
+  categoryId      Int?
+  quantity        Int?
+  usesPerCustomer Int?
+  priority        String?
+  actions         String?
+  type            String?
+  amount          Float?
+  startingDate    DateTime?
+  startingTime    String?
+  endingDate      DateTime?
+  endingTime      String?
+  isUnlimited     Boolean?  @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  isDestroyed     Boolean   @default(false)
+
+  // relations
+  category CouponCategory? @relation(fields: [categoryId], references: [id])
+}
+
+model CouponCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  coupons Coupon[]
+}
+
+model Submission {
+  id           Int       @id @default(autoincrement())
+  assessmentId Int
+  quizId       Int
+  studentId    Int
+  score        Float?
+  status       String?
+  submittedAt  DateTime?
+  isDestroyed  Boolean?  @default(false)
+
+  // relations
+  student     User            @relation(fields: [studentId], references: [id])
+  assessment  Assessment      @relation(fields: [assessmentId], references: [id])
+  quiz        Quiz            @relation(fields: [quizId], references: [id])
+}
+
+model Assessment {
+  id               Int       @id @default(autoincrement())
+  courseId         Int?
+  lessonId         Int?
+  title            String
+  type             String?
+  dueDate          DateTime?
+  status           String?
+  totalSubmissions Int?
+  averageScore     Float?
+  createdAt        DateTime  @default(now())
+  isDestroyed      Boolean   @default(false)
+
+  // relations
+  submissions      Submission[]
+}
+
+model BlogPost {
+  id            Int       @id @default(autoincrement())
+  authorId      Int
+  categoryId    Int?
+  title         String
+  slug          String?
+  content       String?
+  thumbnail     String?
+  totalComments Int?      @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
+
+  // relations
+  author   User          @relation(fields: [authorId], references: [id], name: "AuthorPosts")
+  category BlogCategory? @relation(fields: [categoryId], references: [id])
+  comments BlogComment[]
+}
+
+model BlogCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  slug        String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  posts BlogPost[]
+}
+
+model BlogComment {
+  id          Int       @id @default(autoincrement())
+  blogId      Int
+  userId      Int
+  content     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  isDestroyed Boolean   @default(false)
+
+  // relations
+  post BlogPost @relation(fields: [blogId], references: [id])
+  user User     @relation(fields: [userId], references: [id])
+}
+
+model Wishlist {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  courseId        Int
+  courseThumbnail String?
+  courseName      String?
+  lecturer        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  isDestroyed     Boolean   @default(false)
+
+  // relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  courseId    Int
+  courseName  String?
+  lecturer    String?
+  totalPrice  Float?
+  createdAt   DateTime @default(now())
+  isDestroyed Boolean  @default(false)
+
+  // relations
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Transaction {
+  id               Int      @id @default(autoincrement())
+  userId           Int
+  userRole         String?
+  amount           Float?
+  paymentMethod    String?
+  status           String?
+  gatewayReference String?
+  createdAt        DateTime @default(now())
+  isDestroyed      Boolean  @default(false)
+
+  // relations
+  user                User                 @relation(fields: [userId], references: [id])
+  studentTransactions TransactionStudent[]
+}
+
+model TransactionStudent {
+  id             Int      @id @default(autoincrement())
+  transactionId  Int
+  orderId        Int?
+  courseId       Int?
+  isDiscount     Boolean? @default(false)
+  discountAmount Float?
+  discountCode   String?
+  createdAt      DateTime @default(now())
+  isDestroyed    Boolean  @default(false)
+
+  // relations
+  transaction Transaction @relation(fields: [transactionId], references: [id])
+}
+
+model LecturerProfile {
+  id                Int       @id @default(autoincrement())
+  lecturerId        Int       @unique
+  resourceId        Int?
+  gender            String?
+  nationality       String?
+  professionalTitle String?
+  beginStudies      DateTime?
+  highestDegree     String?
+  totalStudents     Int?
+  totalCourses      Int?
+  avgRating         Float?
+  bio               String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime? @updatedAt
+  isDestroyed       Boolean   @default(false)
+
+  // relations
+  lecturer User @relation(fields: [lecturerId], references: [id])
+}
+
+model LecturerPayout {
+  id              Int       @id @default(autoincrement())
+  transactionId   Int?
+  lecturerId      Int
+  payoutAccountId Int?
+  currency        String?
+  amount          Float?
+  payoutMethod    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
+  isDestroyed     Boolean   @default(false)
+
+  // relations
+  lecturer User @relation(fields: [lecturerId], references: [id])
+}
+
+model LecturerPayoutAccount {
+  id             Int       @id @default(autoincrement())
+  lecturerId     Int
+  cardType       String?
+  cardNumber     String?
+  cardExpireDate DateTime?
+  cardCVV        Int?
+  cardHolderName String?
+  isDefault      Boolean?  @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  isDestroyed    Boolean   @default(false)
+
+  // relations
+  lecturer User @relation(fields: [lecturerId], references: [id])
+}
+
+// model Notification {
+//   id        Int      @id @default(autoincrement())
+//   userId    Int?
+//   title     String?
+//   message   String?
+//   isRead    Boolean? @default(false)
+//   createdAt DateTime @default(now())
+//   isDestroyed  Boolean  @default(false)
+
+//   user User? @relation(fields: [userId], references: [id])
+// }
+
+// model Message {
+//   id             Int      @id @default(autoincrement())
+//   conversationId Int?
+//   senderId       Int?
+//   recipientId    Int?
+//   content        String?
+//   createdAt      DateTime @default(now())
+//   isDestroyed       Boolean  @default(false)
+// }
+
+// model Revenue {
+//   id        Int      @id @default(autoincrement())
+//   source    String?
+//   amount    Float?
+//   currency  String?
+//   date      DateTime?
+//   createdAt DateTime? @default(now())
+// }
+
+// model Conversation {
+//   id            Int      @id @default(autoincrement())
+//   participants  Json?
+//   lastMessageAt DateTime?
+//   createdAt     DateTime? @default(now())
+// }
