@@ -43,4 +43,19 @@ app.use(
 //   });
 // });
 
+const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "Server đang chạy ngon lành! 🚀",
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`-----------------------------------------`);
+  console.log(`🚀 Server đang chạy tại: http://localhost:${PORT}`);
+  console.log(`-----------------------------------------`);
+});
+
 export default app;
