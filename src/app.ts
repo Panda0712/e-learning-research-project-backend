@@ -3,6 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import compression from "compression";
 import blogCategoryRouter from './routes/blog_category.route';
+import cartRouter from './routes/cart.route';
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(compression());
 app.use(express.json());
 
 app.use('/api/blog-categories', blogCategoryRouter);
+app.use('/api/cart', cartRouter);
+
 app.use(
   express.urlencoded({
     extended: true,
