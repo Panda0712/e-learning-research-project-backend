@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma.js";
 import { KeyStore } from "@/types/keyStore.type.js";
+import { RegisterLecturer } from "@/types/registerLecturer.type.js";
+import { UpdateProfile } from "@/types/updateProfile.type.js";
 import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
@@ -172,6 +174,90 @@ const login = async (reqBody: { email: string; password: string }) => {
   }
 };
 
+const updateProfile = async (
+  userId: number,
+  reqBody: UpdateProfile,
+  userAvatar = null,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    if (!existingUser.isVerified) {
+      throw new ApiError(
+        StatusCodes.UNAUTHORIZED,
+        "Your account is not active yet!",
+      );
+    }
+
+    let updateUser = existingUser;
+
+    if (userAvatar) {
+    } else if (reqBody.email) {
+    } else {
+      let hashedPassword = null;
+      if (reqBody.currentPassword && reqBody.newPassword) {
+        const isMatchedPassword = await bcrypt.compare(
+          reqBody.currentPassword,
+          existingUser.password,
+        );
+        if (!isMatchedPassword)
+          throw new ApiError(StatusCodes.UNAUTHORIZED, "Password not match!");
+
+        hashedPassword = await bcrypt.hash(reqBody.newPassword, 10);
+      }
+
+      updateUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          firstName: reqBody.firstName ?? existingUser.firstName,
+          lastName: reqBody.lastName ?? existingUser.lastName,
+          dateOfBirth: reqBody.dateOfBirth ?? existingUser.dateOfBirth,
+          phoneNumber: reqBody.phoneNumber ?? existingUser.phoneNumber,
+          password: hashedPassword ?? existingUser.password,
+        },
+      });
+    }
+
+    return pickUser(updateUser);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const registerLecturerProfile = async (
+  userId: number,
+  reqBody: RegisterLecturer,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+
+    return await prisma.lecturerProfile.create({
+      data: {
+        lecturerId: userId,
+        resourceId: reqBody.resourceId,
+        gender: reqBody.gender,
+        nationality: reqBody.nationality,
+        professionalTitle: reqBody.professionalTitle,
+        beginStudies: reqBody.beginStudies,
+        highestDegree: reqBody.highestDegree,
+        bio: reqBody.bio,
+      },
+      include: {
+        lecturer: true,
+      },
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 const findByEmail = async ({ email }: { email: string }) => {
   return await prisma.user.findFirst({
     where: { email },
@@ -184,4 +270,6 @@ export const userService = {
   logout,
   handleRefreshToken,
   findByEmail,
+  updateProfile,
+  registerLecturerProfile,
 };
