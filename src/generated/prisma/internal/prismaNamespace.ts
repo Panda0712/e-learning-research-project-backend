@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  KeyToken: 'KeyToken',
   Course: 'Course',
   CourseCategory: 'CourseCategory',
   CourseFAQ: 'CourseFAQ',
@@ -428,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount"
+    modelProps: "user" | "keyToken" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -495,6 +496,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    KeyToken: {
+      payload: Prisma.$KeyTokenPayload<ExtArgs>
+      fields: Prisma.KeyTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KeyTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KeyTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.KeyTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KeyTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        findMany: {
+          args: Prisma.KeyTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>[]
+        }
+        create: {
+          args: Prisma.KeyTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        createMany: {
+          args: Prisma.KeyTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.KeyTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        update: {
+          args: Prisma.KeyTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.KeyTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KeyTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.KeyTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.KeyTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKeyToken>
+        }
+        groupBy: {
+          args: Prisma.KeyTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KeyTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -2404,6 +2471,21 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const KeyTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  publicKey: 'publicKey',
+  privateKey: 'privateKey',
+  refreshToken: 'refreshToken',
+  refreshTokenUsed: 'refreshTokenUsed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type KeyTokenScalarFieldEnum = (typeof KeyTokenScalarFieldEnum)[keyof typeof KeyTokenScalarFieldEnum]
+
+
 export const CourseScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
@@ -2838,6 +2920,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
@@ -2865,6 +2954,32 @@ export const UserOrderByRelevanceFieldEnum = {
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const KeyTokenOrderByRelevanceFieldEnum = {
+  publicKey: 'publicKey',
+  privateKey: 'privateKey',
+  refreshToken: 'refreshToken'
+} as const
+
+export type KeyTokenOrderByRelevanceFieldEnum = (typeof KeyTokenOrderByRelevanceFieldEnum)[keyof typeof KeyTokenOrderByRelevanceFieldEnum]
 
 
 export const CourseOrderByRelevanceFieldEnum = {
@@ -2945,23 +3060,6 @@ export const QuizOrderByRelevanceFieldEnum = {
 } as const
 
 export type QuizOrderByRelevanceFieldEnum = (typeof QuizOrderByRelevanceFieldEnum)[keyof typeof QuizOrderByRelevanceFieldEnum]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-} as const
-
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
 export const QuestionOrderByRelevanceFieldEnum = {
@@ -3144,13 +3242,6 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -3161,6 +3252,13 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 /**
@@ -3259,6 +3357,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  keyToken?: Prisma.KeyTokenOmit
   course?: Prisma.CourseOmit
   courseCategory?: Prisma.CourseCategoryOmit
   courseFAQ?: Prisma.CourseFAQOmit

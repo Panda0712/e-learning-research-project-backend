@@ -1,6 +1,6 @@
-import "dotenv/config";
+import { PrismaClient } from "@/generated/prisma/client.js";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
-import { PrismaClient } from "../generated/prisma/client";
+import "dotenv/config";
 
 function requiredEnv(name: string): string {
   const value = process.env[name];

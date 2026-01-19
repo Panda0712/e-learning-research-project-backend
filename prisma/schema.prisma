@@ -43,6 +43,22 @@ model User {
   orders                 Order[]
   transactions           Transaction[]
   lecturerPayoutAccounts LecturerPayoutAccount[]
+  keyToken               KeyToken?
+}
+
+model KeyToken {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @unique
+  publicKey        String
+  privateKey       String
+  refreshToken     String?
+  refreshTokenUsed Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isDestroyed      Boolean  @default(false)
+
+  // relations
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Course {
@@ -210,9 +226,9 @@ model Quiz {
   isDestroyed  Boolean   @default(false)
 
   // relations
-  lesson    Lesson     @relation(fields: [lessonId], references: [id])
-  questions Question[]
-  submissions  Submission[]
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
+  questions   Question[]
+  submissions Submission[]
 }
 
 model Question {
@@ -242,18 +258,18 @@ model Order {
   isDestroyed   Boolean  @default(false)
 
   // relations
-  student User @relation(fields: [studentId], references: [id])
+  student User        @relation(fields: [studentId], references: [id])
   items   OrderItem[]
 }
 
 model OrderItem {
-  id        Int   @id @default(autoincrement())
-  orderId  Int
-  courseId Int
-  price    Float?
-  lecturerId Int?
-  createdAt     DateTime @default(now())
-  isDestroyed   Boolean  @default(false)
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  courseId    Int
+  price       Float?
+  lecturerId  Int?
+  createdAt   DateTime @default(now())
+  isDestroyed Boolean  @default(false)
 
   // relations
   order  Order  @relation(fields: [orderId], references: [id])
@@ -312,9 +328,9 @@ model Submission {
   isDestroyed  Boolean?  @default(false)
 
   // relations
-  student     User            @relation(fields: [studentId], references: [id])
-  assessment  Assessment      @relation(fields: [assessmentId], references: [id])
-  quiz        Quiz            @relation(fields: [quizId], references: [id])
+  student    User       @relation(fields: [studentId], references: [id])
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
+  quiz       Quiz       @relation(fields: [quizId], references: [id])
 }
 
 model Assessment {
@@ -331,7 +347,7 @@ model Assessment {
   isDestroyed      Boolean   @default(false)
 
   // relations
-  submissions      Submission[]
+  submissions Submission[]
 }
 
 model BlogPost {
