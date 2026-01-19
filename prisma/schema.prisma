@@ -5,13 +5,12 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  //output   = "../src/generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -39,11 +38,27 @@ model User {
   submissions            Submission[]
   blogComments           BlogComment[]
   wishlist               Wishlist[]
-  carts                  Cart[]
+  cart                   Cart?
   lecturerResources      LecturerResource[]
   orders                 Order[]
   transactions           Transaction[]
   lecturerPayoutAccounts LecturerPayoutAccount[]
+  keyToken               KeyToken?
+}
+
+model KeyToken {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @unique
+  publicKey        String
+  privateKey       String
+  refreshToken     String?
+  refreshTokenUsed Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isDestroyed      Boolean  @default(false)
+
+  // relations
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Course {
@@ -71,7 +86,7 @@ model Course {
   reviews     CourseReview[]
   enrollments Enrollment[]
   orderItems  OrderItem[]
-  carts       Cart[]  // <--- THÊM DÒNG NÀY VÀO
+  cartItems       CartItem[]
 }
 
 model CourseCategory {
@@ -212,9 +227,9 @@ model Quiz {
   isDestroyed  Boolean   @default(false)
 
   // relations
-  lesson    Lesson     @relation(fields: [lessonId], references: [id])
-  questions Question[]
-  submissions  Submission[]
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
+  questions   Question[]
+  submissions Submission[]
 }
 
 model Question {
@@ -244,18 +259,18 @@ model Order {
   isDestroyed   Boolean  @default(false)
 
   // relations
-  student User @relation(fields: [studentId], references: [id])
+  student User        @relation(fields: [studentId], references: [id])
   items   OrderItem[]
 }
 
 model OrderItem {
-  id        Int   @id @default(autoincrement())
-  orderId  Int
-  courseId Int
-  price    Float?
-  lecturerId Int?
-  createdAt     DateTime @default(now())
-  isDestroyed   Boolean  @default(false)
+  id          Int      @id @default(autoincrement())
+  orderId     Int
+  courseId    Int
+  price       Float?
+  lecturerId  Int?
+  createdAt   DateTime @default(now())
+  isDestroyed Boolean  @default(false)
 
   // relations
   order  Order  @relation(fields: [orderId], references: [id])
@@ -314,9 +329,9 @@ model Submission {
   isDestroyed  Boolean?  @default(false)
 
   // relations
-  student     User            @relation(fields: [studentId], references: [id])
-  assessment  Assessment      @relation(fields: [assessmentId], references: [id])
-  quiz        Quiz            @relation(fields: [quizId], references: [id])
+  student    User       @relation(fields: [studentId], references: [id])
+  assessment Assessment @relation(fields: [assessmentId], references: [id])
+  quiz       Quiz       @relation(fields: [quizId], references: [id])
 }
 
 model Assessment {
@@ -333,7 +348,7 @@ model Assessment {
   isDestroyed      Boolean   @default(false)
 
   // relations
-  submissions      Submission[]
+  submissions Submission[]
 }
 
 model BlogPost {
@@ -398,20 +413,32 @@ model Wishlist {
 
 model Cart {
   id          Int      @id @default(autoincrement())
-  userId      Int
-  courseId    Int
-  // Các trường thừa như courseName, lecturer có thể bỏ qua vì sẽ lấy từ quan hệ 'course'
-  // Nhưng nếu cậu muốn giữ để lưu lịch sử giá lúc add thì cứ để
+  userId      Int      @unique
   courseName  String?
   lecturer    String?
-  totalPrice  Float?   
-  
+  updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
   isDestroyed Boolean  @default(false)
 
   // Relations
   user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id]) // <--- THÊM DÒNG NÀY
+  items     CartItem[]
+}
+
+//Thêm model cartItem
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  courseId  Int
+  price     Float    // Lưu giá tại thời điểm thêm vào giỏ
+  createdAt DateTime @default(now())
+
+  // Relations
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id])
+  
+  // Đảm bảo 1 khóa học chỉ xuất hiện 1 lần trong 1 giỏ hàng
+  @@unique([cartId, courseId]) 
 }
 
 model Transaction {
