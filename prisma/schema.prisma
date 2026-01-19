@@ -468,6 +468,7 @@ model LecturerProfile {
   totalCourses      Int?
   avgRating         Float?
   bio               String?
+  isActive          Boolean   @default(false)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime? @updatedAt
   isDestroyed       Boolean   @default(false)

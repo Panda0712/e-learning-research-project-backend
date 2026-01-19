@@ -2871,6 +2871,7 @@ export const LecturerProfileScalarFieldEnum = {
   totalCourses: 'totalCourses',
   avgRating: 'avgRating',
   bio: 'bio',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
