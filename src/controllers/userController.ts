@@ -1,0 +1,74 @@
+import { userService } from "@/services/userService.js";
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import ms from "ms";
+
+const register = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const createdUser = await userService.register(req.body);
+
+    res.status(StatusCodes.CREATED).json(createdUser);
+  } catch (error: any) {
+    next(error);
+  }
+};
+
+const login = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await userService.login(req.body);
+
+    res.cookie("accessToken", result.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: ms("14 days"),
+    });
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: ms("14 days"),
+    });
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error: any) {
+    next(error);
+  }
+};
+
+const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    const result = await userService.logout({ keyStore: req.body });
+
+    res.status(StatusCodes.OK).json({
+      loggedOut: true,
+      ...result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const handleRefreshToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { refreshToken, user, keyStore } = req.body;
+    const result = await userService.handleRefreshToken({
+      refreshToken,
+      user,
+      keyStore,
+    });
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const userController = { register, login, logout, handleRefreshToken };

@@ -294,6 +294,7 @@ export type UserWhereInput = {
   orders?: Prisma.OrderListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountListRelationFilter
+  keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -324,6 +325,7 @@ export type UserOrderByWithRelationInput = {
   orders?: Prisma.OrderOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountOrderByRelationAggregateInput
+  keyToken?: Prisma.KeyTokenOrderByWithRelationInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -358,6 +360,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   orders?: Prisma.OrderListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountListRelationFilter
+  keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -427,6 +430,7 @@ export type UserCreateInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -457,6 +461,7 @@ export type UserUncheckedCreateInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -486,6 +491,7 @@ export type UserUpdateInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -516,6 +522,7 @@ export type UserUncheckedUpdateInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -658,6 +665,20 @@ export type IntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type UserCreateNestedOneWithoutKeyTokenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKeyTokenInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutKeyTokenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutKeyTokenInput
+  upsert?: Prisma.UserUpsertWithoutKeyTokenInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKeyTokenInput, Prisma.UserUpdateWithoutKeyTokenInput>, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>
 }
 
 export type UserCreateNestedOneWithoutCoursesInput = {
@@ -856,6 +877,140 @@ export type UserUpdateOneRequiredWithoutLecturerPayoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLecturerPayoutAccountsInput, Prisma.UserUpdateWithoutLecturerPayoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutLecturerPayoutAccountsInput>
 }
 
+export type UserCreateWithoutKeyTokenInput = {
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatar?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
+  orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+}
+
+export type UserUncheckedCreateWithoutKeyTokenInput = {
+  id?: number
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatar?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+}
+
+export type UserCreateOrConnectWithoutKeyTokenInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>
+}
+
+export type UserUpsertWithoutKeyTokenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutKeyTokenInput, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutKeyTokenInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutKeyTokenInput, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>
+}
+
+export type UserUpdateWithoutKeyTokenInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutKeyTokenInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+}
+
 export type UserCreateWithoutCoursesInput = {
   email: string
   password: string
@@ -882,6 +1037,7 @@ export type UserCreateWithoutCoursesInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCoursesInput = {
@@ -911,6 +1067,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCoursesInput = {
@@ -955,6 +1112,7 @@ export type UserUpdateWithoutCoursesInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -984,6 +1142,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -1012,6 +1171,7 @@ export type UserCreateWithoutReviewsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -1041,6 +1201,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -1085,6 +1246,7 @@ export type UserUpdateWithoutReviewsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -1114,6 +1276,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerResourcesInput = {
@@ -1142,6 +1305,7 @@ export type UserCreateWithoutLecturerResourcesInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerResourcesInput = {
@@ -1171,6 +1335,7 @@ export type UserUncheckedCreateWithoutLecturerResourcesInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerResourcesInput = {
@@ -1215,6 +1380,7 @@ export type UserUpdateWithoutLecturerResourcesInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerResourcesInput = {
@@ -1244,6 +1410,7 @@ export type UserUncheckedUpdateWithoutLecturerResourcesInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEnrollmentsInput = {
@@ -1272,6 +1439,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEnrollmentsInput = {
@@ -1301,6 +1469,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEnrollmentsInput = {
@@ -1345,6 +1514,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1374,6 +1544,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -1402,6 +1573,7 @@ export type UserCreateWithoutOrdersInput = {
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -1431,6 +1603,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -1475,6 +1648,7 @@ export type UserUpdateWithoutOrdersInput = {
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -1504,6 +1678,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -1532,6 +1707,7 @@ export type UserCreateWithoutSubmissionsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -1561,6 +1737,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -1605,6 +1782,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -1634,6 +1812,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogPostsInput = {
@@ -1662,6 +1841,7 @@ export type UserCreateWithoutBlogPostsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogPostsInput = {
@@ -1691,6 +1871,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogPostsInput = {
@@ -1735,6 +1916,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogPostsInput = {
@@ -1764,6 +1946,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogCommentsInput = {
@@ -1792,6 +1975,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogCommentsInput = {
@@ -1821,6 +2005,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogCommentsInput = {
@@ -1865,6 +2050,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogCommentsInput = {
@@ -1894,6 +2080,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWishlistInput = {
@@ -1922,6 +2109,7 @@ export type UserCreateWithoutWishlistInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWishlistInput = {
@@ -1951,6 +2139,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWishlistInput = {
@@ -1995,6 +2184,7 @@ export type UserUpdateWithoutWishlistInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -2024,6 +2214,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCartsInput = {
@@ -2052,6 +2243,7 @@ export type UserCreateWithoutCartsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCartsInput = {
@@ -2081,6 +2273,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCartsInput = {
@@ -2125,6 +2318,7 @@ export type UserUpdateWithoutCartsInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartsInput = {
@@ -2154,6 +2348,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -2182,6 +2377,7 @@ export type UserCreateWithoutTransactionsInput = {
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -2211,6 +2407,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -2255,6 +2452,7 @@ export type UserUpdateWithoutTransactionsInput = {
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -2284,6 +2482,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerProfileInput = {
@@ -2312,6 +2511,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerProfileInput = {
@@ -2341,6 +2541,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerProfileInput = {
@@ -2385,6 +2586,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerProfileInput = {
@@ -2414,6 +2616,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutInput = {
@@ -2442,6 +2645,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutInput = {
@@ -2471,6 +2675,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutInput = {
@@ -2515,6 +2720,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
@@ -2544,6 +2750,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutAccountsInput = {
@@ -2572,6 +2779,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
@@ -2601,6 +2809,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutAccountsInput = {
@@ -2645,6 +2854,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
@@ -2674,6 +2884,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -2843,6 +3054,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   lecturerPayoutAccounts?: boolean | Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>
+  keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2880,6 +3092,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   lecturerPayoutAccounts?: boolean | Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>
+  keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -2900,6 +3113,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     orders: Prisma.$OrderPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
     lecturerPayoutAccounts: Prisma.$LecturerPayoutAccountPayload<ExtArgs>[]
+    keyToken: Prisma.$KeyTokenPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -3269,6 +3483,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lecturerPayoutAccounts<T extends Prisma.User$lecturerPayoutAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LecturerPayoutAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  keyToken<T extends Prisma.User$keyTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$keyTokenArgs<ExtArgs>>): Prisma.Prisma__KeyTokenClient<runtime.Types.Result.GetResult<Prisma.$KeyTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3982,6 +4197,25 @@ export type User$lecturerPayoutAccountsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.LecturerPayoutAccountScalarFieldEnum | Prisma.LecturerPayoutAccountScalarFieldEnum[]
+}
+
+/**
+ * User.keyToken
+ */
+export type User$keyTokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KeyToken
+   */
+  select?: Prisma.KeyTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KeyToken
+   */
+  omit?: Prisma.KeyTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KeyTokenInclude<ExtArgs> | null
+  where?: Prisma.KeyTokenWhereInput
 }
 
 /**
