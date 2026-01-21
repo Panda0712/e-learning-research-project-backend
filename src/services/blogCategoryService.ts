@@ -14,7 +14,7 @@ const create = async (reqBody: { name: string; slug: string }) => {
 
   const newCategory = await prisma.blogCategory.create({
     data: {
-      name: reqBody.name, // Dùng 'name' theo schema của cậu
+      name: reqBody.name,
       slug: reqBody.slug,
     },
   });
@@ -24,16 +24,16 @@ const create = async (reqBody: { name: string; slug: string }) => {
 
 const getAll = async () => {
   return await prisma.blogCategory.findMany({
-    where: { isDestroyed: false }, // Chỉ lấy danh mục chưa bị xóa mềm
+    where: { isDestroyed: false },
     include: {
       _count: {
-        select: { posts: true }, // Đếm số bài viết (field là 'posts' trong schema của cậu)
+        select: { posts: true },
       },
     },
   });
 };
 
-const deleteCategory = async (id: number) => { // ID nhận vào là number
+const deleteCategory = async (id: number) => { 
   const checkCategory = await prisma.blogCategory.findUnique({
     where: { id },
   });
@@ -42,7 +42,6 @@ const deleteCategory = async (id: number) => { // ID nhận vào là number
     throw new ApiError(StatusCodes.NOT_FOUND, "Category not found!");
   }
 
-  // Xóa mềm (Soft delete) hoặc xóa cứng tùy cậu. Ở đây tớ dùng xóa cứng theo mẫu cũ
   await prisma.blogCategory.delete({
     where: { id },
   });
