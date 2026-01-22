@@ -86,6 +86,7 @@ model Course {
   reviews     CourseReview[]
   enrollments Enrollment[]
   orderItems  OrderItem[]
+  courseFAQs  CourseFAQ[]
 }
 
 model CourseCategory {
@@ -102,11 +103,15 @@ model CourseCategory {
 
 model CourseFAQ {
   id          Int       @id @default(autoincrement())
-  question    String
-  answer      String?
+  courseId    Int
+  question    String    @db.Text
+  answer      String?   @db.Text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
+
+  // relations
+  course Course @relation(fields: [courseId], references: [id])
 }
 
 model CourseReview {
