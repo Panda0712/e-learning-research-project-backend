@@ -28,14 +28,17 @@ export type AggregateCourseFAQ = {
 
 export type CourseFAQAvgAggregateOutputType = {
   id: number | null
+  courseId: number | null
 }
 
 export type CourseFAQSumAggregateOutputType = {
   id: number | null
+  courseId: number | null
 }
 
 export type CourseFAQMinAggregateOutputType = {
   id: number | null
+  courseId: number | null
   question: string | null
   answer: string | null
   createdAt: Date | null
@@ -45,6 +48,7 @@ export type CourseFAQMinAggregateOutputType = {
 
 export type CourseFAQMaxAggregateOutputType = {
   id: number | null
+  courseId: number | null
   question: string | null
   answer: string | null
   createdAt: Date | null
@@ -54,6 +58,7 @@ export type CourseFAQMaxAggregateOutputType = {
 
 export type CourseFAQCountAggregateOutputType = {
   id: number
+  courseId: number
   question: number
   answer: number
   createdAt: number
@@ -65,14 +70,17 @@ export type CourseFAQCountAggregateOutputType = {
 
 export type CourseFAQAvgAggregateInputType = {
   id?: true
+  courseId?: true
 }
 
 export type CourseFAQSumAggregateInputType = {
   id?: true
+  courseId?: true
 }
 
 export type CourseFAQMinAggregateInputType = {
   id?: true
+  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
@@ -82,6 +90,7 @@ export type CourseFAQMinAggregateInputType = {
 
 export type CourseFAQMaxAggregateInputType = {
   id?: true
+  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
@@ -91,6 +100,7 @@ export type CourseFAQMaxAggregateInputType = {
 
 export type CourseFAQCountAggregateInputType = {
   id?: true
+  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
@@ -187,6 +197,7 @@ export type CourseFAQGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type CourseFAQGroupByOutputType = {
   id: number
+  courseId: number
   question: string
   answer: string | null
   createdAt: Date
@@ -219,20 +230,24 @@ export type CourseFAQWhereInput = {
   OR?: Prisma.CourseFAQWhereInput[]
   NOT?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
   id?: Prisma.IntFilter<"CourseFAQ"> | number
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   question?: Prisma.StringFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type CourseFAQOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  course?: Prisma.CourseOrderByWithRelationInput
   _relevance?: Prisma.CourseFAQOrderByRelevanceInput
 }
 
@@ -241,15 +256,18 @@ export type CourseFAQWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
   OR?: Prisma.CourseFAQWhereInput[]
   NOT?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   question?: Prisma.StringFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }, "id">
 
 export type CourseFAQOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -267,6 +285,7 @@ export type CourseFAQScalarWhereWithAggregatesInput = {
   OR?: Prisma.CourseFAQScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CourseFAQScalarWhereWithAggregatesInput | Prisma.CourseFAQScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"CourseFAQ"> | number
+  courseId?: Prisma.IntWithAggregatesFilter<"CourseFAQ"> | number
   question?: Prisma.StringWithAggregatesFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableWithAggregatesFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseFAQ"> | Date | string
@@ -280,10 +299,12 @@ export type CourseFAQCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  course: Prisma.CourseCreateNestedOneWithoutCourseFAQsInput
 }
 
 export type CourseFAQUncheckedCreateInput = {
   id?: number
+  courseId: number
   question: string
   answer?: string | null
   createdAt?: Date | string
@@ -297,10 +318,12 @@ export type CourseFAQUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  course?: Prisma.CourseUpdateOneRequiredWithoutCourseFAQsNestedInput
 }
 
 export type CourseFAQUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   question?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -310,6 +333,7 @@ export type CourseFAQUncheckedUpdateInput = {
 
 export type CourseFAQCreateManyInput = {
   id?: number
+  courseId: number
   question: string
   answer?: string | null
   createdAt?: Date | string
@@ -327,11 +351,22 @@ export type CourseFAQUpdateManyMutationInput = {
 
 export type CourseFAQUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   question?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type CourseFAQListRelationFilter = {
+  every?: Prisma.CourseFAQWhereInput
+  some?: Prisma.CourseFAQWhereInput
+  none?: Prisma.CourseFAQWhereInput
+}
+
+export type CourseFAQOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type CourseFAQOrderByRelevanceInput = {
@@ -342,6 +377,7 @@ export type CourseFAQOrderByRelevanceInput = {
 
 export type CourseFAQCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -351,10 +387,12 @@ export type CourseFAQCountOrderByAggregateInput = {
 
 export type CourseFAQAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type CourseFAQMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -364,6 +402,7 @@ export type CourseFAQMaxOrderByAggregateInput = {
 
 export type CourseFAQMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -373,23 +412,160 @@ export type CourseFAQMinOrderByAggregateInput = {
 
 export type CourseFAQSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
+}
+
+export type CourseFAQCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput> | Prisma.CourseFAQCreateWithoutCourseInput[] | Prisma.CourseFAQUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CourseFAQCreateOrConnectWithoutCourseInput | Prisma.CourseFAQCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.CourseFAQCreateManyCourseInputEnvelope
+  connect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+}
+
+export type CourseFAQUncheckedCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput> | Prisma.CourseFAQCreateWithoutCourseInput[] | Prisma.CourseFAQUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CourseFAQCreateOrConnectWithoutCourseInput | Prisma.CourseFAQCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.CourseFAQCreateManyCourseInputEnvelope
+  connect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+}
+
+export type CourseFAQUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput> | Prisma.CourseFAQCreateWithoutCourseInput[] | Prisma.CourseFAQUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CourseFAQCreateOrConnectWithoutCourseInput | Prisma.CourseFAQCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.CourseFAQUpsertWithWhereUniqueWithoutCourseInput | Prisma.CourseFAQUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.CourseFAQCreateManyCourseInputEnvelope
+  set?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  disconnect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  delete?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  connect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  update?: Prisma.CourseFAQUpdateWithWhereUniqueWithoutCourseInput | Prisma.CourseFAQUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.CourseFAQUpdateManyWithWhereWithoutCourseInput | Prisma.CourseFAQUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.CourseFAQScalarWhereInput | Prisma.CourseFAQScalarWhereInput[]
+}
+
+export type CourseFAQUncheckedUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput> | Prisma.CourseFAQCreateWithoutCourseInput[] | Prisma.CourseFAQUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.CourseFAQCreateOrConnectWithoutCourseInput | Prisma.CourseFAQCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.CourseFAQUpsertWithWhereUniqueWithoutCourseInput | Prisma.CourseFAQUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.CourseFAQCreateManyCourseInputEnvelope
+  set?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  disconnect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  delete?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  connect?: Prisma.CourseFAQWhereUniqueInput | Prisma.CourseFAQWhereUniqueInput[]
+  update?: Prisma.CourseFAQUpdateWithWhereUniqueWithoutCourseInput | Prisma.CourseFAQUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.CourseFAQUpdateManyWithWhereWithoutCourseInput | Prisma.CourseFAQUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.CourseFAQScalarWhereInput | Prisma.CourseFAQScalarWhereInput[]
+}
+
+export type CourseFAQCreateWithoutCourseInput = {
+  question: string
+  answer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type CourseFAQUncheckedCreateWithoutCourseInput = {
+  id?: number
+  question: string
+  answer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type CourseFAQCreateOrConnectWithoutCourseInput = {
+  where: Prisma.CourseFAQWhereUniqueInput
+  create: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput>
+}
+
+export type CourseFAQCreateManyCourseInputEnvelope = {
+  data: Prisma.CourseFAQCreateManyCourseInput | Prisma.CourseFAQCreateManyCourseInput[]
+  skipDuplicates?: boolean
+}
+
+export type CourseFAQUpsertWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.CourseFAQWhereUniqueInput
+  update: Prisma.XOR<Prisma.CourseFAQUpdateWithoutCourseInput, Prisma.CourseFAQUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.CourseFAQCreateWithoutCourseInput, Prisma.CourseFAQUncheckedCreateWithoutCourseInput>
+}
+
+export type CourseFAQUpdateWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.CourseFAQWhereUniqueInput
+  data: Prisma.XOR<Prisma.CourseFAQUpdateWithoutCourseInput, Prisma.CourseFAQUncheckedUpdateWithoutCourseInput>
+}
+
+export type CourseFAQUpdateManyWithWhereWithoutCourseInput = {
+  where: Prisma.CourseFAQScalarWhereInput
+  data: Prisma.XOR<Prisma.CourseFAQUpdateManyMutationInput, Prisma.CourseFAQUncheckedUpdateManyWithoutCourseInput>
+}
+
+export type CourseFAQScalarWhereInput = {
+  AND?: Prisma.CourseFAQScalarWhereInput | Prisma.CourseFAQScalarWhereInput[]
+  OR?: Prisma.CourseFAQScalarWhereInput[]
+  NOT?: Prisma.CourseFAQScalarWhereInput | Prisma.CourseFAQScalarWhereInput[]
+  id?: Prisma.IntFilter<"CourseFAQ"> | number
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
+  question?: Prisma.StringFilter<"CourseFAQ"> | string
+  answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
+  isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+}
+
+export type CourseFAQCreateManyCourseInput = {
+  id?: number
+  question: string
+  answer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type CourseFAQUpdateWithoutCourseInput = {
+  question?: Prisma.StringFieldUpdateOperationsInput | string
+  answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type CourseFAQUncheckedUpdateWithoutCourseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  question?: Prisma.StringFieldUpdateOperationsInput | string
+  answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type CourseFAQUncheckedUpdateManyWithoutCourseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  question?: Prisma.StringFieldUpdateOperationsInput | string
+  answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
 
 export type CourseFAQSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  courseId?: boolean
   question?: boolean
   answer?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["courseFAQ"]>
 
 
 
 export type CourseFAQSelectScalar = {
   id?: boolean
+  courseId?: boolean
   question?: boolean
   answer?: boolean
   createdAt?: boolean
@@ -397,13 +573,19 @@ export type CourseFAQSelectScalar = {
   isDestroyed?: boolean
 }
 
-export type CourseFAQOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "question" | "answer" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["courseFAQ"]>
+export type CourseFAQOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "question" | "answer" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["courseFAQ"]>
+export type CourseFAQInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+}
 
 export type $CourseFAQPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CourseFAQ"
-  objects: {}
+  objects: {
+    course: Prisma.$CoursePayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    courseId: number
     question: string
     answer: string | null
     createdAt: Date
@@ -749,6 +931,7 @@ readonly fields: CourseFAQFieldRefs;
  */
 export interface Prisma__CourseFAQClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -779,6 +962,7 @@ export interface Prisma__CourseFAQClient<T, Null = never, ExtArgs extends runtim
  */
 export interface CourseFAQFieldRefs {
   readonly id: Prisma.FieldRef<"CourseFAQ", 'Int'>
+  readonly courseId: Prisma.FieldRef<"CourseFAQ", 'Int'>
   readonly question: Prisma.FieldRef<"CourseFAQ", 'String'>
   readonly answer: Prisma.FieldRef<"CourseFAQ", 'String'>
   readonly createdAt: Prisma.FieldRef<"CourseFAQ", 'DateTime'>
@@ -801,6 +985,10 @@ export type CourseFAQFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * Filter, which CourseFAQ to fetch.
    */
   where: Prisma.CourseFAQWhereUniqueInput
@@ -819,6 +1007,10 @@ export type CourseFAQFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * Filter, which CourseFAQ to fetch.
    */
   where: Prisma.CourseFAQWhereUniqueInput
@@ -836,6 +1028,10 @@ export type CourseFAQFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the CourseFAQ
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
   /**
    * Filter, which CourseFAQ to fetch.
    */
@@ -885,6 +1081,10 @@ export type CourseFAQFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * Filter, which CourseFAQ to fetch.
    */
   where?: Prisma.CourseFAQWhereInput
@@ -933,6 +1133,10 @@ export type CourseFAQFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * Filter, which CourseFAQS to fetch.
    */
   where?: Prisma.CourseFAQWhereInput
@@ -976,6 +1180,10 @@ export type CourseFAQCreateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * The data needed to create a CourseFAQ.
    */
   data: Prisma.XOR<Prisma.CourseFAQCreateInput, Prisma.CourseFAQUncheckedCreateInput>
@@ -1004,6 +1212,10 @@ export type CourseFAQUpdateArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the CourseFAQ
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
   /**
    * The data needed to update a CourseFAQ.
    */
@@ -1045,6 +1257,10 @@ export type CourseFAQUpsertArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
+  /**
    * The filter to search for the CourseFAQ to update in case it exists.
    */
   where: Prisma.CourseFAQWhereUniqueInput
@@ -1070,6 +1286,10 @@ export type CourseFAQDeleteArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the CourseFAQ
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
   /**
    * Filter which CourseFAQ to delete.
    */
@@ -1102,4 +1322,8 @@ export type CourseFAQDefaultArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the CourseFAQ
    */
   omit?: Prisma.CourseFAQOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseFAQInclude<ExtArgs> | null
 }

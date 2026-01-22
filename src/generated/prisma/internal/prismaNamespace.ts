@@ -2522,6 +2522,7 @@ export type CourseCategoryScalarFieldEnum = (typeof CourseCategoryScalarFieldEnu
 
 export const CourseFAQScalarFieldEnum = {
   id: 'id',
+  courseId: 'courseId',
   question: 'question',
   answer: 'answer',
   createdAt: 'createdAt',
