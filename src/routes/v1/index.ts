@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { userRoute } from "./userRoute.js";
+import { courseCategoryRoute } from "./courseCategoryRoute.js";
+import  courseFaqRoute from "./courseFaqRoute.js"
+import enrollmentRoute from "./enrollmentRoute.js"
 
 const Router = express.Router();
 
@@ -15,5 +18,15 @@ Router.get("/status", (req: Request, res: Response) => {
 
 // user route
 Router.use("/users", userRoute);
+
+// courseCategories route
+Router.use('/categories', courseCategoryRoute);
+
+// courseFaq route
+Router.use('/faqs', courseFaqRoute);
+
+//enrollment route
+Router.use('/enrollments', enrollmentRoute);
+
 
 export const APIs_V1 = Router;
