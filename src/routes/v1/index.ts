@@ -2,8 +2,10 @@ import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { userRoute } from "./userRoute.js";
 import { courseCategoryRoute } from "./courseCategoryRoute.js";
-import  courseFaqRoute from "./courseFaqRoute.js"
-import enrollmentRoute from "./enrollmentRoute.js"
+import  courseFaqRoute from "./courseFaqRoute.js";
+import enrollmentRoute from "./enrollmentRoute.js";
+import transactionRoute from './transactionRoute.js';
+import transactionStudentRoute from './transactionStudentRoute.js';
 
 const Router = express.Router();
 
@@ -28,5 +30,10 @@ Router.use('/faqs', courseFaqRoute);
 //enrollment route
 Router.use('/enrollments', enrollmentRoute);
 
+//transaction route
+Router.use('/transactions', transactionRoute);
+
+//transactionStuden route
+Router.use('/transaction-students', transactionStudentRoute);
 
 export const APIs_V1 = Router;
