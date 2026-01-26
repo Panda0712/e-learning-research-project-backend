@@ -1,4 +1,3 @@
-// src/routes/v1/assessmentRoute.ts
 import express from 'express';
 import { assessmentController } from '../../controllers/assessmentController.js';
 
