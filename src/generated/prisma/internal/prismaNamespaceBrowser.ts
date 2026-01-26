@@ -381,6 +381,7 @@ export const SubmissionScalarFieldEnum = {
   studentId: 'studentId',
   score: 'score',
   status: 'status',
+  feedback: 'feedback',
   submittedAt: 'submittedAt',
   isDestroyed: 'isDestroyed'
 } as const
@@ -399,6 +400,7 @@ export const AssessmentScalarFieldEnum = {
   totalSubmissions: 'totalSubmissions',
   averageScore: 'averageScore',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -754,7 +756,8 @@ export type CouponCategoryOrderByRelevanceFieldEnum = (typeof CouponCategoryOrde
 
 
 export const SubmissionOrderByRelevanceFieldEnum = {
-  status: 'status'
+  status: 'status',
+  feedback: 'feedback'
 } as const
 
 export type SubmissionOrderByRelevanceFieldEnum = (typeof SubmissionOrderByRelevanceFieldEnum)[keyof typeof SubmissionOrderByRelevanceFieldEnum]

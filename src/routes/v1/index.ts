@@ -6,6 +6,7 @@ import  courseFaqRoute from "./courseFaqRoute.js";
 import enrollmentRoute from "./enrollmentRoute.js";
 import transactionRoute from './transactionRoute.js';
 import transactionStudentRoute from './transactionStudentRoute.js';
+import assessmentRoute from './assessmentRoute.js';
 
 const Router = express.Router();
 
@@ -35,5 +36,8 @@ Router.use('/transactions', transactionRoute);
 
 //transactionStuden route
 Router.use('/transaction-students', transactionStudentRoute);
+
+//assessment route
+Router.use('/assessments', assessmentRoute);
 
 export const APIs_V1 = Router;
