@@ -275,6 +275,7 @@ export type LessonWhereInput = {
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   resources?: Prisma.LessonResourceListRelationFilter
   quizzes?: Prisma.QuizListRelationFilter
+  assessments?: Prisma.AssessmentListRelationFilter
 }
 
 export type LessonOrderByWithRelationInput = {
@@ -292,6 +293,7 @@ export type LessonOrderByWithRelationInput = {
   module?: Prisma.ModuleOrderByWithRelationInput
   resources?: Prisma.LessonResourceOrderByRelationAggregateInput
   quizzes?: Prisma.QuizOrderByRelationAggregateInput
+  assessments?: Prisma.AssessmentOrderByRelationAggregateInput
   _relevance?: Prisma.LessonOrderByRelevanceInput
 }
 
@@ -313,6 +315,7 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   resources?: Prisma.LessonResourceListRelationFilter
   quizzes?: Prisma.QuizListRelationFilter
+  assessments?: Prisma.AssessmentListRelationFilter
 }, "id">
 
 export type LessonOrderByWithAggregationInput = {
@@ -364,6 +367,7 @@ export type LessonCreateInput = {
   module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   resources?: Prisma.LessonResourceCreateNestedManyWithoutLessonInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateInput = {
@@ -380,6 +384,7 @@ export type LessonUncheckedCreateInput = {
   isDestroyed?: boolean
   resources?: Prisma.LessonResourceUncheckedCreateNestedManyWithoutLessonInput
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUpdateInput = {
@@ -395,6 +400,7 @@ export type LessonUpdateInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   resources?: Prisma.LessonResourceUpdateManyWithoutLessonNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateInput = {
@@ -411,6 +417,7 @@ export type LessonUncheckedUpdateInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resources?: Prisma.LessonResourceUncheckedUpdateManyWithoutLessonNestedInput
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateManyInput = {
@@ -528,6 +535,11 @@ export type LessonScalarRelationFilter = {
   isNot?: Prisma.LessonWhereInput
 }
 
+export type LessonNullableScalarRelationFilter = {
+  is?: Prisma.LessonWhereInput | null
+  isNot?: Prisma.LessonWhereInput | null
+}
+
 export type LessonCreateNestedManyWithoutModuleInput = {
   create?: Prisma.XOR<Prisma.LessonCreateWithoutModuleInput, Prisma.LessonUncheckedCreateWithoutModuleInput> | Prisma.LessonCreateWithoutModuleInput[] | Prisma.LessonUncheckedCreateWithoutModuleInput[]
   connectOrCreate?: Prisma.LessonCreateOrConnectWithoutModuleInput | Prisma.LessonCreateOrConnectWithoutModuleInput[]
@@ -598,6 +610,22 @@ export type LessonUpdateOneRequiredWithoutQuizzesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LessonUpdateToOneWithWhereWithoutQuizzesInput, Prisma.LessonUpdateWithoutQuizzesInput>, Prisma.LessonUncheckedUpdateWithoutQuizzesInput>
 }
 
+export type LessonCreateNestedOneWithoutAssessmentsInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutAssessmentsInput, Prisma.LessonUncheckedCreateWithoutAssessmentsInput>
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutAssessmentsInput
+  connect?: Prisma.LessonWhereUniqueInput
+}
+
+export type LessonUpdateOneWithoutAssessmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutAssessmentsInput, Prisma.LessonUncheckedCreateWithoutAssessmentsInput>
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutAssessmentsInput
+  upsert?: Prisma.LessonUpsertWithoutAssessmentsInput
+  disconnect?: Prisma.LessonWhereInput | boolean
+  delete?: Prisma.LessonWhereInput | boolean
+  connect?: Prisma.LessonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LessonUpdateToOneWithWhereWithoutAssessmentsInput, Prisma.LessonUpdateWithoutAssessmentsInput>, Prisma.LessonUncheckedUpdateWithoutAssessmentsInput>
+}
+
 export type LessonCreateWithoutModuleInput = {
   resourceId?: number | null
   title: string
@@ -610,6 +638,7 @@ export type LessonCreateWithoutModuleInput = {
   isDestroyed?: boolean
   resources?: Prisma.LessonResourceCreateNestedManyWithoutLessonInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutModuleInput = {
@@ -625,6 +654,7 @@ export type LessonUncheckedCreateWithoutModuleInput = {
   isDestroyed?: boolean
   resources?: Prisma.LessonResourceUncheckedCreateNestedManyWithoutLessonInput
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutModuleInput = {
@@ -682,6 +712,7 @@ export type LessonCreateWithoutResourcesInput = {
   isDestroyed?: boolean
   module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutResourcesInput = {
@@ -697,6 +728,7 @@ export type LessonUncheckedCreateWithoutResourcesInput = {
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutResourcesInput = {
@@ -727,6 +759,7 @@ export type LessonUpdateWithoutResourcesInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutResourcesInput = {
@@ -742,6 +775,7 @@ export type LessonUncheckedUpdateWithoutResourcesInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateWithoutQuizzesInput = {
@@ -756,6 +790,7 @@ export type LessonCreateWithoutQuizzesInput = {
   isDestroyed?: boolean
   module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   resources?: Prisma.LessonResourceCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutQuizzesInput = {
@@ -771,6 +806,7 @@ export type LessonUncheckedCreateWithoutQuizzesInput = {
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   resources?: Prisma.LessonResourceUncheckedCreateNestedManyWithoutLessonInput
+  assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutQuizzesInput = {
@@ -801,6 +837,7 @@ export type LessonUpdateWithoutQuizzesInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   resources?: Prisma.LessonResourceUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutQuizzesInput = {
@@ -816,6 +853,85 @@ export type LessonUncheckedUpdateWithoutQuizzesInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resources?: Prisma.LessonResourceUncheckedUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
+}
+
+export type LessonCreateWithoutAssessmentsInput = {
+  resourceId?: number | null
+  title: string
+  description?: string | null
+  note?: string | null
+  videoUrl?: string | null
+  duration?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
+  resources?: Prisma.LessonResourceCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
+}
+
+export type LessonUncheckedCreateWithoutAssessmentsInput = {
+  id?: number
+  resourceId?: number | null
+  moduleId: number
+  title: string
+  description?: string | null
+  note?: string | null
+  videoUrl?: string | null
+  duration?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  resources?: Prisma.LessonResourceUncheckedCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+}
+
+export type LessonCreateOrConnectWithoutAssessmentsInput = {
+  where: Prisma.LessonWhereUniqueInput
+  create: Prisma.XOR<Prisma.LessonCreateWithoutAssessmentsInput, Prisma.LessonUncheckedCreateWithoutAssessmentsInput>
+}
+
+export type LessonUpsertWithoutAssessmentsInput = {
+  update: Prisma.XOR<Prisma.LessonUpdateWithoutAssessmentsInput, Prisma.LessonUncheckedUpdateWithoutAssessmentsInput>
+  create: Prisma.XOR<Prisma.LessonCreateWithoutAssessmentsInput, Prisma.LessonUncheckedCreateWithoutAssessmentsInput>
+  where?: Prisma.LessonWhereInput
+}
+
+export type LessonUpdateToOneWithWhereWithoutAssessmentsInput = {
+  where?: Prisma.LessonWhereInput
+  data: Prisma.XOR<Prisma.LessonUpdateWithoutAssessmentsInput, Prisma.LessonUncheckedUpdateWithoutAssessmentsInput>
+}
+
+export type LessonUpdateWithoutAssessmentsInput = {
+  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
+  resources?: Prisma.LessonResourceUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
+}
+
+export type LessonUncheckedUpdateWithoutAssessmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  moduleId?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resources?: Prisma.LessonResourceUncheckedUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateManyModuleInput = {
@@ -843,6 +959,7 @@ export type LessonUpdateWithoutModuleInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resources?: Prisma.LessonResourceUpdateManyWithoutLessonNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutModuleInput = {
@@ -858,6 +975,7 @@ export type LessonUncheckedUpdateWithoutModuleInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resources?: Prisma.LessonResourceUncheckedUpdateManyWithoutLessonNestedInput
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateManyWithoutModuleInput = {
@@ -881,11 +999,13 @@ export type LessonUncheckedUpdateManyWithoutModuleInput = {
 export type LessonCountOutputType = {
   resources: number
   quizzes: number
+  assessments: number
 }
 
 export type LessonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   resources?: boolean | LessonCountOutputTypeCountResourcesArgs
   quizzes?: boolean | LessonCountOutputTypeCountQuizzesArgs
+  assessments?: boolean | LessonCountOutputTypeCountAssessmentsArgs
 }
 
 /**
@@ -912,6 +1032,13 @@ export type LessonCountOutputTypeCountQuizzesArgs<ExtArgs extends runtime.Types.
   where?: Prisma.QuizWhereInput
 }
 
+/**
+ * LessonCountOutputType without action
+ */
+export type LessonCountOutputTypeCountAssessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssessmentWhereInput
+}
+
 
 export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -928,6 +1055,7 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   resources?: boolean | Prisma.Lesson$resourcesArgs<ExtArgs>
   quizzes?: boolean | Prisma.Lesson$quizzesArgs<ExtArgs>
+  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lesson"]>
 
@@ -952,6 +1080,7 @@ export type LessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   resources?: boolean | Prisma.Lesson$resourcesArgs<ExtArgs>
   quizzes?: boolean | Prisma.Lesson$quizzesArgs<ExtArgs>
+  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -961,6 +1090,7 @@ export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     module: Prisma.$ModulePayload<ExtArgs>
     resources: Prisma.$LessonResourcePayload<ExtArgs>[]
     quizzes: Prisma.$QuizPayload<ExtArgs>[]
+    assessments: Prisma.$AssessmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1317,6 +1447,7 @@ export interface Prisma__LessonClient<T, Null = never, ExtArgs extends runtime.T
   module<T extends Prisma.ModuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   resources<T extends Prisma.Lesson$resourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quizzes<T extends Prisma.Lesson$quizzesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assessments<T extends Prisma.Lesson$assessmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1745,6 +1876,30 @@ export type Lesson$quizzesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.QuizScalarFieldEnum | Prisma.QuizScalarFieldEnum[]
+}
+
+/**
+ * Lesson.assessments
+ */
+export type Lesson$assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Assessment
+   */
+  select?: Prisma.AssessmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Assessment
+   */
+  omit?: Prisma.AssessmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssessmentInclude<ExtArgs> | null
+  where?: Prisma.AssessmentWhereInput
+  orderBy?: Prisma.AssessmentOrderByWithRelationInput | Prisma.AssessmentOrderByWithRelationInput[]
+  cursor?: Prisma.AssessmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssessmentScalarFieldEnum | Prisma.AssessmentScalarFieldEnum[]
 }
 
 /**

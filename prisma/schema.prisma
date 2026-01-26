@@ -86,6 +86,8 @@ model Course {
   reviews     CourseReview[]
   enrollments Enrollment[]
   orderItems  OrderItem[]
+  courseFAQs  CourseFAQ[]
+  assessments Assessment[]
 }
 
 model CourseCategory {
@@ -102,11 +104,15 @@ model CourseCategory {
 
 model CourseFAQ {
   id          Int       @id @default(autoincrement())
-  question    String
-  answer      String?
+  courseId    Int
+  question    String    @db.Text
+  answer      String?   @db.Text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
+
+  // relations
+  course Course @relation(fields: [courseId], references: [id])
 }
 
 model CourseReview {
@@ -159,6 +165,7 @@ model Lesson {
   module    Module           @relation(fields: [moduleId], references: [id])
   resources LessonResource[]
   quizzes   Quiz[]
+  assessments Assessment[]
 }
 
 model Resource {
@@ -324,6 +331,7 @@ model Submission {
   studentId    Int
   score        Float?
   status       String?
+  feedback     String?
   submittedAt  DateTime?
   isDestroyed  Boolean?  @default(false)
 
@@ -335,7 +343,7 @@ model Submission {
 
 model Assessment {
   id               Int       @id @default(autoincrement())
-  courseId         Int?
+  courseId         Int
   lessonId         Int?
   title            String
   type             String?
@@ -344,10 +352,13 @@ model Assessment {
   totalSubmissions Int?
   averageScore     Float?
   createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
   isDestroyed      Boolean   @default(false)
 
   // relations
   submissions Submission[]
+  course   Course  @relation(fields: [courseId], references: [id])
+  lesson   Lesson? @relation(fields: [lessonId], references: [id])
 }
 
 model BlogPost {

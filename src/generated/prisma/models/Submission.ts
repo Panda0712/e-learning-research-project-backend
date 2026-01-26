@@ -49,6 +49,7 @@ export type SubmissionMinAggregateOutputType = {
   studentId: number | null
   score: number | null
   status: string | null
+  feedback: string | null
   submittedAt: Date | null
   isDestroyed: boolean | null
 }
@@ -60,6 +61,7 @@ export type SubmissionMaxAggregateOutputType = {
   studentId: number | null
   score: number | null
   status: string | null
+  feedback: string | null
   submittedAt: Date | null
   isDestroyed: boolean | null
 }
@@ -71,6 +73,7 @@ export type SubmissionCountAggregateOutputType = {
   studentId: number
   score: number
   status: number
+  feedback: number
   submittedAt: number
   isDestroyed: number
   _all: number
@@ -100,6 +103,7 @@ export type SubmissionMinAggregateInputType = {
   studentId?: true
   score?: true
   status?: true
+  feedback?: true
   submittedAt?: true
   isDestroyed?: true
 }
@@ -111,6 +115,7 @@ export type SubmissionMaxAggregateInputType = {
   studentId?: true
   score?: true
   status?: true
+  feedback?: true
   submittedAt?: true
   isDestroyed?: true
 }
@@ -122,6 +127,7 @@ export type SubmissionCountAggregateInputType = {
   studentId?: true
   score?: true
   status?: true
+  feedback?: true
   submittedAt?: true
   isDestroyed?: true
   _all?: true
@@ -220,6 +226,7 @@ export type SubmissionGroupByOutputType = {
   studentId: number
   score: number | null
   status: string | null
+  feedback: string | null
   submittedAt: Date | null
   isDestroyed: boolean | null
   _count: SubmissionCountAggregateOutputType | null
@@ -254,6 +261,7 @@ export type SubmissionWhereInput = {
   studentId?: Prisma.IntFilter<"Submission"> | number
   score?: Prisma.FloatNullableFilter<"Submission"> | number | null
   status?: Prisma.StringNullableFilter<"Submission"> | string | null
+  feedback?: Prisma.StringNullableFilter<"Submission"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"Submission"> | Date | string | null
   isDestroyed?: Prisma.BoolNullableFilter<"Submission"> | boolean | null
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -268,6 +276,7 @@ export type SubmissionOrderByWithRelationInput = {
   studentId?: Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  feedback?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrderInput | Prisma.SortOrder
   student?: Prisma.UserOrderByWithRelationInput
@@ -286,6 +295,7 @@ export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   studentId?: Prisma.IntFilter<"Submission"> | number
   score?: Prisma.FloatNullableFilter<"Submission"> | number | null
   status?: Prisma.StringNullableFilter<"Submission"> | string | null
+  feedback?: Prisma.StringNullableFilter<"Submission"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"Submission"> | Date | string | null
   isDestroyed?: Prisma.BoolNullableFilter<"Submission"> | boolean | null
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -300,6 +310,7 @@ export type SubmissionOrderByWithAggregationInput = {
   studentId?: Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  feedback?: Prisma.SortOrderInput | Prisma.SortOrder
   submittedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SubmissionCountOrderByAggregateInput
@@ -319,6 +330,7 @@ export type SubmissionScalarWhereWithAggregatesInput = {
   studentId?: Prisma.IntWithAggregatesFilter<"Submission"> | number
   score?: Prisma.FloatNullableWithAggregatesFilter<"Submission"> | number | null
   status?: Prisma.StringNullableWithAggregatesFilter<"Submission"> | string | null
+  feedback?: Prisma.StringNullableWithAggregatesFilter<"Submission"> | string | null
   submittedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Submission"> | Date | string | null
   isDestroyed?: Prisma.BoolNullableWithAggregatesFilter<"Submission"> | boolean | null
 }
@@ -326,6 +338,7 @@ export type SubmissionScalarWhereWithAggregatesInput = {
 export type SubmissionCreateInput = {
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
@@ -340,6 +353,7 @@ export type SubmissionUncheckedCreateInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -347,6 +361,7 @@ export type SubmissionUncheckedCreateInput = {
 export type SubmissionUpdateInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
@@ -361,6 +376,7 @@ export type SubmissionUncheckedUpdateInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -372,6 +388,7 @@ export type SubmissionCreateManyInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -379,6 +396,7 @@ export type SubmissionCreateManyInput = {
 export type SubmissionUpdateManyMutationInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -390,6 +408,7 @@ export type SubmissionUncheckedUpdateManyInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -417,6 +436,7 @@ export type SubmissionCountOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feedback?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
@@ -436,6 +456,7 @@ export type SubmissionMaxOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feedback?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
@@ -447,6 +468,7 @@ export type SubmissionMinOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   score?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  feedback?: Prisma.SortOrder
   submittedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
@@ -588,6 +610,7 @@ export type SubmissionUncheckedUpdateManyWithoutAssessmentNestedInput = {
 export type SubmissionCreateWithoutStudentInput = {
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
   assessment: Prisma.AssessmentCreateNestedOneWithoutSubmissionsInput
@@ -600,6 +623,7 @@ export type SubmissionUncheckedCreateWithoutStudentInput = {
   quizId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -640,6 +664,7 @@ export type SubmissionScalarWhereInput = {
   studentId?: Prisma.IntFilter<"Submission"> | number
   score?: Prisma.FloatNullableFilter<"Submission"> | number | null
   status?: Prisma.StringNullableFilter<"Submission"> | string | null
+  feedback?: Prisma.StringNullableFilter<"Submission"> | string | null
   submittedAt?: Prisma.DateTimeNullableFilter<"Submission"> | Date | string | null
   isDestroyed?: Prisma.BoolNullableFilter<"Submission"> | boolean | null
 }
@@ -647,6 +672,7 @@ export type SubmissionScalarWhereInput = {
 export type SubmissionCreateWithoutQuizInput = {
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
@@ -659,6 +685,7 @@ export type SubmissionUncheckedCreateWithoutQuizInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -692,6 +719,7 @@ export type SubmissionUpdateManyWithWhereWithoutQuizInput = {
 export type SubmissionCreateWithoutAssessmentInput = {
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
   student: Prisma.UserCreateNestedOneWithoutSubmissionsInput
@@ -704,6 +732,7 @@ export type SubmissionUncheckedCreateWithoutAssessmentInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -740,6 +769,7 @@ export type SubmissionCreateManyStudentInput = {
   quizId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -747,6 +777,7 @@ export type SubmissionCreateManyStudentInput = {
 export type SubmissionUpdateWithoutStudentInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   assessment?: Prisma.AssessmentUpdateOneRequiredWithoutSubmissionsNestedInput
@@ -759,6 +790,7 @@ export type SubmissionUncheckedUpdateWithoutStudentInput = {
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -769,6 +801,7 @@ export type SubmissionUncheckedUpdateManyWithoutStudentInput = {
   quizId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -779,6 +812,7 @@ export type SubmissionCreateManyQuizInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -786,6 +820,7 @@ export type SubmissionCreateManyQuizInput = {
 export type SubmissionUpdateWithoutQuizInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
@@ -798,6 +833,7 @@ export type SubmissionUncheckedUpdateWithoutQuizInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -808,6 +844,7 @@ export type SubmissionUncheckedUpdateManyWithoutQuizInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -818,6 +855,7 @@ export type SubmissionCreateManyAssessmentInput = {
   studentId: number
   score?: number | null
   status?: string | null
+  feedback?: string | null
   submittedAt?: Date | string | null
   isDestroyed?: boolean | null
 }
@@ -825,6 +863,7 @@ export type SubmissionCreateManyAssessmentInput = {
 export type SubmissionUpdateWithoutAssessmentInput = {
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   student?: Prisma.UserUpdateOneRequiredWithoutSubmissionsNestedInput
@@ -837,6 +876,7 @@ export type SubmissionUncheckedUpdateWithoutAssessmentInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -847,6 +887,7 @@ export type SubmissionUncheckedUpdateManyWithoutAssessmentInput = {
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   submittedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
@@ -860,6 +901,7 @@ export type SubmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   studentId?: boolean
   score?: boolean
   status?: boolean
+  feedback?: boolean
   submittedAt?: boolean
   isDestroyed?: boolean
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -876,11 +918,12 @@ export type SubmissionSelectScalar = {
   studentId?: boolean
   score?: boolean
   status?: boolean
+  feedback?: boolean
   submittedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assessmentId" | "quizId" | "studentId" | "score" | "status" | "submittedAt" | "isDestroyed", ExtArgs["result"]["submission"]>
+export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assessmentId" | "quizId" | "studentId" | "score" | "status" | "feedback" | "submittedAt" | "isDestroyed", ExtArgs["result"]["submission"]>
 export type SubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   assessment?: boolean | Prisma.AssessmentDefaultArgs<ExtArgs>
@@ -901,6 +944,7 @@ export type $SubmissionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     studentId: number
     score: number | null
     status: string | null
+    feedback: string | null
     submittedAt: Date | null
     isDestroyed: boolean | null
   }, ExtArgs["result"]["submission"]>
@@ -1281,6 +1325,7 @@ export interface SubmissionFieldRefs {
   readonly studentId: Prisma.FieldRef<"Submission", 'Int'>
   readonly score: Prisma.FieldRef<"Submission", 'Float'>
   readonly status: Prisma.FieldRef<"Submission", 'String'>
+  readonly feedback: Prisma.FieldRef<"Submission", 'String'>
   readonly submittedAt: Prisma.FieldRef<"Submission", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Submission", 'Boolean'>
 }
