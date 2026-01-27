@@ -1,14 +1,17 @@
 import { prisma } from "@/lib/prisma.js";
+import { BrevoProvider } from "@/providers/BrevoProvider.js";
 import { KeyStore } from "@/types/keyStore.type.js";
 import { RegisterLecturer } from "@/types/registerLecturer.type.js";
 import { UpdateProfile } from "@/types/updateProfile.type.js";
 import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
+import { WEBSITE_DOMAINS } from "@/utils/constants.js";
 import { pickUser } from "@/utils/formatters.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
+import { v4 as uuidV4 } from "uuid";
 import KeyTokenService from "./keyTokenService.js";
 
 const handleRefreshToken = async ({
@@ -92,6 +95,7 @@ const register = async (reqBody: {
         lastName: reqBody.lastName,
         email: reqBody.email,
         password: hashedPassword,
+        verifyToken: uuidV4(),
       },
     });
 
@@ -108,10 +112,56 @@ const register = async (reqBody: {
       }
 
       // send verification email to user
+      const verificationLink = `${WEBSITE_DOMAINS}/account/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const customSubject = "ADMIN EduLearn: Vui lòng xác minh email!";
+      const htmlContent = `
+  <h3>Đây là đường dẫn xác thực email:</h3>
+  <h3>${verificationLink}</h3>
+  <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+`;
+
+      await BrevoProvider.sendEmail({
+        recipientEmail: getNewUser.email,
+        subject: customSubject,
+        htmlContent,
+      });
 
       // return data
       return pickUser(getNewUser);
     }
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const verifyAccount = async (reqBody: { email: string; token: string }) => {
+  try {
+    // check user existence
+    const existingUser = await prisma.user.findUnique({
+      where: { email: reqBody.email },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    if (existingUser.isVerified)
+      throw new ApiError(
+        StatusCodes.NOT_ACCEPTABLE,
+        "Your account is already activated!",
+      );
+    if (reqBody.token !== existingUser.verifyToken)
+      throw new ApiError(StatusCodes.NOT_ACCEPTABLE, "Token is invalid!");
+
+    // update user
+    const updateData = {
+      isVerified: true,
+      verifyToken: null,
+    };
+
+    const updatedUser = await prisma.user.update({
+      where: { id: existingUser.id },
+      data: updateData,
+    });
+
+    return pickUser(updatedUser);
   } catch (error: any) {
     throw new Error(error);
   }
@@ -266,6 +316,7 @@ const findByEmail = async ({ email }: { email: string }) => {
 
 export const userService = {
   register,
+  verifyAccount,
   login,
   logout,
   handleRefreshToken,

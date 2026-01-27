@@ -23,6 +23,7 @@ model User {
   phoneNumber String?
   dateOfBirth DateTime?
   role        String    @default("student")
+  verifyToken String?
   isVerified  Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
