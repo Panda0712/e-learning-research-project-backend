@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { userRoute } from "./userRoute.js";
+import { blogPostRoute } from "./blogPostRoute.js";
+import { blogCommentRoute } from "./blogCommentRoute.js";
 
 const Router = express.Router();
 
@@ -15,5 +17,11 @@ Router.get("/status", (req: Request, res: Response) => {
 
 // user route
 Router.use("/users", userRoute);
+
+// Blog Post
+Router.use("/blog-posts", blogPostRoute);
+
+// Blog Comment
+Router.use("/blog-comments", blogCommentRoute);
 
 export const APIs_V1 = Router;

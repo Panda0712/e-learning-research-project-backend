@@ -413,7 +413,8 @@ export const ModelName = {
   TransactionStudent: 'TransactionStudent',
   LecturerProfile: 'LecturerProfile',
   LecturerPayout: 'LecturerPayout',
-  LecturerPayoutAccount: 'LecturerPayoutAccount'
+  LecturerPayoutAccount: 'LecturerPayoutAccount',
+  Revenue: 'Revenue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -429,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount"
+    modelProps: "user" | "keyToken" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2413,6 +2414,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Revenue: {
+      payload: Prisma.$RevenuePayload<ExtArgs>
+      fields: Prisma.RevenueFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RevenueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RevenueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        findFirst: {
+          args: Prisma.RevenueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RevenueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        findMany: {
+          args: Prisma.RevenueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>[]
+        }
+        create: {
+          args: Prisma.RevenueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        createMany: {
+          args: Prisma.RevenueCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RevenueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        update: {
+          args: Prisma.RevenueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        deleteMany: {
+          args: Prisma.RevenueDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RevenueUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RevenueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RevenuePayload>
+        }
+        aggregate: {
+          args: Prisma.RevenueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRevenue>
+        }
+        groupBy: {
+          args: Prisma.RevenueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RevenueGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RevenueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RevenueCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2502,6 +2569,7 @@ export const CourseScalarFieldEnum = {
   price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  status: 'status',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -2912,6 +2980,20 @@ export const LecturerPayoutAccountScalarFieldEnum = {
 export type LecturerPayoutAccountScalarFieldEnum = (typeof LecturerPayoutAccountScalarFieldEnum)[keyof typeof LecturerPayoutAccountScalarFieldEnum]
 
 
+export const RevenueScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  lecturerId: 'lecturerId',
+  courseId: 'courseId',
+  totalAmount: 'totalAmount',
+  platformFee: 'platformFee',
+  lecturerEarn: 'lecturerEarn',
+  createdAt: 'createdAt'
+} as const
+
+export type RevenueScalarFieldEnum = (typeof RevenueScalarFieldEnum)[keyof typeof RevenueScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2988,7 +3070,8 @@ export const CourseOrderByRelevanceFieldEnum = {
   lecturerName: 'lecturerName',
   duration: 'duration',
   level: 'level',
-  overview: 'overview'
+  overview: 'overview',
+  status: 'status'
 } as const
 
 export type CourseOrderByRelevanceFieldEnum = (typeof CourseOrderByRelevanceFieldEnum)[keyof typeof CourseOrderByRelevanceFieldEnum]
@@ -3386,6 +3469,7 @@ export type GlobalOmitConfig = {
   lecturerProfile?: Prisma.LecturerProfileOmit
   lecturerPayout?: Prisma.LecturerPayoutOmit
   lecturerPayoutAccount?: Prisma.LecturerPayoutAccountOmit
+  revenue?: Prisma.RevenueOmit
 }
 
 /* Types for Logging */
