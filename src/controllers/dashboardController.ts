@@ -36,11 +36,19 @@ const getCharts = async (req: Request, res: Response, next: NextFunction) => {
 
 const getLecturerOverview = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Giả sử cậu đã có middleware xác thực gán user vào req.user
-    // const lecturerId = req.user.id; 
-    // Tạm thời tớ lấy từ query để cậu test, sau này nhớ đổi sang req.user.id nhé
-    const lecturerId = Number(req.query.lecturerId) || 1; 
+    // 1. Lấy thông tin User từ biến req 
+    const user = (req as any).user; 
 
+    // 2. Kiểm tra bảo mật
+    if (!user || !user.id) {
+       res.status(StatusCodes.UNAUTHORIZED).json({ message: "Bạn chưa đăng nhập!" });
+       return; 
+    }
+
+    // 3. Lấy ID chính chủ
+    const lecturerId = Number(user.id);
+
+    // 4. Gọi Service
     const data = await dashboardLecturerService.getLecturerStats(lecturerId);
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
@@ -50,9 +58,19 @@ const getLecturerOverview = async (req: Request, res: Response, next: NextFuncti
 
 const getLecturerCharts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const lecturerId = Number(req.query.lecturerId) || 1; // Nhớ đổi sang req.user.id khi chạy thật
+    // 1. Lấy thông tin User từ Token
+    const user = (req as any).user;
+
+    // 2. Kiểm tra bảo mật
+    if (!user || !user.id) {
+       res.status(StatusCodes.UNAUTHORIZED).json({ message: "Bạn chưa đăng nhập!" });
+       return;
+    }
+
+    const lecturerId = Number(user.id);
     const { period } = req.query;
 
+    // 3. Gọi Service
     const data = await dashboardLecturerService.getLecturerCharts(lecturerId, period as string);
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
@@ -60,4 +78,9 @@ const getLecturerCharts = async (req: Request, res: Response, next: NextFunction
   }
 };
 
-export const dashboardController = { getOverview, getCharts, getLecturerOverview, getLecturerCharts };
+export const dashboardController = { 
+  getOverview, 
+  getCharts, 
+  getLecturerOverview, 
+  getLecturerCharts 
+};
