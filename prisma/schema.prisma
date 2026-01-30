@@ -490,6 +490,7 @@ model LecturerPayout {
   payoutMethod    String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime? @updatedAt
+  status          String    @default("success") // success | failed
   isDestroyed     Boolean   @default(false)
 
   // relations
@@ -537,13 +538,13 @@ model LecturerPayoutAccount {
 
 model Revenue {
   id         Int  @id @default(autoincrement())
-  orderId    Int  @unique // Gắn liền với đơn hàng nào
-  lecturerId Int? // Tiền này của giảng viên nào (nếu có)
-  courseId   Int // Bán khóa học nào
+  orderId    Int  @unique 
+  lecturerId Int? 
+  courseId   Int 
 
-  totalAmount  Float // Tổng tiền khách trả (VD: 500k)
-  platformFee  Float // Phí sàn Admin thu (VD: 10% = 50k)
-  lecturerEarn Float // Giảng viên thực nhận (VD: 450k)
+  totalAmount  Float 
+  platformFee  Float 
+  lecturerEarn Float 
 
   createdAt DateTime @default(now())
 

@@ -52,6 +52,7 @@ export type LecturerPayoutMinAggregateOutputType = {
   payoutMethod: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: string | null
   isDestroyed: boolean | null
 }
 
@@ -65,6 +66,7 @@ export type LecturerPayoutMaxAggregateOutputType = {
   payoutMethod: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  status: string | null
   isDestroyed: boolean | null
 }
 
@@ -78,6 +80,7 @@ export type LecturerPayoutCountAggregateOutputType = {
   payoutMethod: number
   createdAt: number
   updatedAt: number
+  status: number
   isDestroyed: number
   _all: number
 }
@@ -109,6 +112,7 @@ export type LecturerPayoutMinAggregateInputType = {
   payoutMethod?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   isDestroyed?: true
 }
 
@@ -122,6 +126,7 @@ export type LecturerPayoutMaxAggregateInputType = {
   payoutMethod?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   isDestroyed?: true
 }
 
@@ -135,6 +140,7 @@ export type LecturerPayoutCountAggregateInputType = {
   payoutMethod?: true
   createdAt?: true
   updatedAt?: true
+  status?: true
   isDestroyed?: true
   _all?: true
 }
@@ -235,6 +241,7 @@ export type LecturerPayoutGroupByOutputType = {
   payoutMethod: string | null
   createdAt: Date
   updatedAt: Date | null
+  status: string
   isDestroyed: boolean
   _count: LecturerPayoutCountAggregateOutputType | null
   _avg: LecturerPayoutAvgAggregateOutputType | null
@@ -271,6 +278,7 @@ export type LecturerPayoutWhereInput = {
   payoutMethod?: Prisma.StringNullableFilter<"LecturerPayout"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LecturerPayout"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerPayout"> | Date | string | null
+  status?: Prisma.StringFilter<"LecturerPayout"> | string
   isDestroyed?: Prisma.BoolFilter<"LecturerPayout"> | boolean
   lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -285,6 +293,7 @@ export type LecturerPayoutOrderByWithRelationInput = {
   payoutMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   lecturer?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.LecturerPayoutOrderByRelevanceInput
@@ -303,6 +312,7 @@ export type LecturerPayoutWhereUniqueInput = Prisma.AtLeast<{
   payoutMethod?: Prisma.StringNullableFilter<"LecturerPayout"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LecturerPayout"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerPayout"> | Date | string | null
+  status?: Prisma.StringFilter<"LecturerPayout"> | string
   isDestroyed?: Prisma.BoolFilter<"LecturerPayout"> | boolean
   lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -317,6 +327,7 @@ export type LecturerPayoutOrderByWithAggregationInput = {
   payoutMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   _count?: Prisma.LecturerPayoutCountOrderByAggregateInput
   _avg?: Prisma.LecturerPayoutAvgOrderByAggregateInput
@@ -338,6 +349,7 @@ export type LecturerPayoutScalarWhereWithAggregatesInput = {
   payoutMethod?: Prisma.StringNullableWithAggregatesFilter<"LecturerPayout"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LecturerPayout"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LecturerPayout"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"LecturerPayout"> | string
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"LecturerPayout"> | boolean
 }
 
@@ -349,6 +361,7 @@ export type LecturerPayoutCreateInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
   lecturer: Prisma.UserCreateNestedOneWithoutLecturerPayoutInput
 }
@@ -363,6 +376,7 @@ export type LecturerPayoutUncheckedCreateInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
 }
 
@@ -374,6 +388,7 @@ export type LecturerPayoutUpdateInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerPayoutNestedInput
 }
@@ -388,6 +403,7 @@ export type LecturerPayoutUncheckedUpdateInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -401,6 +417,7 @@ export type LecturerPayoutCreateManyInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
 }
 
@@ -412,6 +429,7 @@ export type LecturerPayoutUpdateManyMutationInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -425,6 +443,7 @@ export type LecturerPayoutUncheckedUpdateManyInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -454,6 +473,7 @@ export type LecturerPayoutCountOrderByAggregateInput = {
   payoutMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -475,6 +495,7 @@ export type LecturerPayoutMaxOrderByAggregateInput = {
   payoutMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -488,6 +509,7 @@ export type LecturerPayoutMinOrderByAggregateInput = {
   payoutMethod?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -549,6 +571,7 @@ export type LecturerPayoutCreateWithoutLecturerInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
 }
 
@@ -561,6 +584,7 @@ export type LecturerPayoutUncheckedCreateWithoutLecturerInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
 }
 
@@ -603,6 +627,7 @@ export type LecturerPayoutScalarWhereInput = {
   payoutMethod?: Prisma.StringNullableFilter<"LecturerPayout"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LecturerPayout"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerPayout"> | Date | string | null
+  status?: Prisma.StringFilter<"LecturerPayout"> | string
   isDestroyed?: Prisma.BoolFilter<"LecturerPayout"> | boolean
 }
 
@@ -615,6 +640,7 @@ export type LecturerPayoutCreateManyLecturerInput = {
   payoutMethod?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
+  status?: string
   isDestroyed?: boolean
 }
 
@@ -626,6 +652,7 @@ export type LecturerPayoutUpdateWithoutLecturerInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -638,6 +665,7 @@ export type LecturerPayoutUncheckedUpdateWithoutLecturerInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -650,6 +678,7 @@ export type LecturerPayoutUncheckedUpdateManyWithoutLecturerInput = {
   payoutMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -665,6 +694,7 @@ export type LecturerPayoutSelect<ExtArgs extends runtime.Types.Extensions.Intern
   payoutMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   isDestroyed?: boolean
   lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lecturerPayout"]>
@@ -681,10 +711,11 @@ export type LecturerPayoutSelectScalar = {
   payoutMethod?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  status?: boolean
   isDestroyed?: boolean
 }
 
-export type LecturerPayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transactionId" | "lecturerId" | "payoutAccountId" | "currency" | "amount" | "payoutMethod" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lecturerPayout"]>
+export type LecturerPayoutOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transactionId" | "lecturerId" | "payoutAccountId" | "currency" | "amount" | "payoutMethod" | "createdAt" | "updatedAt" | "status" | "isDestroyed", ExtArgs["result"]["lecturerPayout"]>
 export type LecturerPayoutInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -704,6 +735,7 @@ export type $LecturerPayoutPayload<ExtArgs extends runtime.Types.Extensions.Inte
     payoutMethod: string | null
     createdAt: Date
     updatedAt: Date | null
+    status: string
     isDestroyed: boolean
   }, ExtArgs["result"]["lecturerPayout"]>
   composites: {}
@@ -1084,6 +1116,7 @@ export interface LecturerPayoutFieldRefs {
   readonly payoutMethod: Prisma.FieldRef<"LecturerPayout", 'String'>
   readonly createdAt: Prisma.FieldRef<"LecturerPayout", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LecturerPayout", 'DateTime'>
+  readonly status: Prisma.FieldRef<"LecturerPayout", 'String'>
   readonly isDestroyed: Prisma.FieldRef<"LecturerPayout", 'Boolean'>
 }
     
