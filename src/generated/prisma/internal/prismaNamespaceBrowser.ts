@@ -76,6 +76,7 @@ export const ModelName = {
   BlogComment: 'BlogComment',
   Wishlist: 'Wishlist',
   Cart: 'Cart',
+  CartItem: 'CartItem',
   Transaction: 'Transaction',
   TransactionStudent: 'TransactionStudent',
   LecturerProfile: 'LecturerProfile',
@@ -465,15 +466,25 @@ export type WishlistScalarFieldEnum = (typeof WishlistScalarFieldEnum)[keyof typ
 export const CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  courseId: 'courseId',
   courseName: 'courseName',
   lecturer: 'lecturer',
-  totalPrice: 'totalPrice',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt',
   isDestroyed: 'isDestroyed'
 } as const
 
 export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof CartScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  courseId: 'courseId',
+  price: 'price',
+  createdAt: 'createdAt'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const TransactionScalarFieldEnum = {
