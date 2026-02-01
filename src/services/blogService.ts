@@ -6,7 +6,7 @@ const createBlogCategory = async (reqBody: { name: string; slug: string }) => {
   try {
     // check slug existence
     const checkSlug = await prisma.blogCategory.findUnique({
-      where: { slug: reqBody.slug },
+      where: { slug: reqBody.slug, isDestroyed: false },
     });
 
     if (checkSlug) {
@@ -42,7 +42,7 @@ const deleteBlogCategory = async (id: number) => {
   try {
     // check category existence
     const checkCategory = await prisma.blogCategory.findUnique({
-      where: { id },
+      where: { id, isDestroyed: false },
     });
 
     if (!checkCategory) {

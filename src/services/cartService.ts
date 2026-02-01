@@ -6,7 +6,7 @@ const getCartByUserId = async (userId: number) => {
   try {
     // check cart existence
     const cart = await prisma.cart.findUnique({
-      where: { userId },
+      where: { userId, isDestroyed: false },
       include: {
         items: {
           include: {
@@ -42,7 +42,7 @@ const addToCart = async (reqBody: {
 
     // check cart existence by user id
     let cart = await prisma.cart.findUnique({
-      where: { userId },
+      where: { userId, isDestroyed: false },
     });
 
     if (!cart) {
