@@ -23,6 +23,7 @@ model User {
   phoneNumber String?
   dateOfBirth DateTime?
   role        String    @default("student")
+  verifyToken String?
   isVerified  Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
@@ -485,6 +486,7 @@ model LecturerProfile {
   totalCourses      Int?
   avgRating         Float?
   bio               String?
+  isActive          Boolean   @default(false)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime? @updatedAt
   isDestroyed       Boolean   @default(false)

@@ -2529,6 +2529,7 @@ export const UserScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
+  verifyToken: 'verifyToken',
   isVerified: 'isVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -2948,6 +2949,7 @@ export const LecturerProfileScalarFieldEnum = {
   totalCourses: 'totalCourses',
   avgRating: 'avgRating',
   bio: 'bio',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -3027,7 +3029,8 @@ export const UserOrderByRelevanceFieldEnum = {
   lastName: 'lastName',
   avatar: 'avatar',
   phoneNumber: 'phoneNumber',
-  role: 'role'
+  role: 'role',
+  verifyToken: 'verifyToken'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]

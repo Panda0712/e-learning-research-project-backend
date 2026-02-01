@@ -44,6 +44,7 @@ export type UserMinAggregateOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string | null
+  verifyToken: string | null
   isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -60,6 +61,7 @@ export type UserMaxAggregateOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string | null
+  verifyToken: string | null
   isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   phoneNumber: number
   dateOfBirth: number
   role: number
+  verifyToken: number
   isVerified: number
   createdAt: number
   updatedAt: number
@@ -102,6 +105,7 @@ export type UserMinAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -118,6 +122,7 @@ export type UserMaxAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -134,6 +139,7 @@ export type UserCountAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -237,6 +243,7 @@ export type UserGroupByOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string
+  verifyToken: string | null
   isVerified: boolean
   createdAt: Date
   updatedAt: Date | null
@@ -276,6 +283,7 @@ export type UserWhereInput = {
   phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.StringFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -307,6 +315,7 @@ export type UserOrderByWithRelationInput = {
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -342,6 +351,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.StringFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -373,6 +383,7 @@ export type UserOrderByWithAggregationInput = {
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -397,6 +408,7 @@ export type UserScalarWhereWithAggregatesInput = {
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -412,6 +424,7 @@ export type UserCreateInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -443,6 +456,7 @@ export type UserUncheckedCreateInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -473,6 +487,7 @@ export type UserUpdateInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -504,6 +519,7 @@ export type UserUncheckedUpdateInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -535,6 +551,7 @@ export type UserCreateManyInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -550,6 +567,7 @@ export type UserUpdateManyMutationInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -566,6 +584,7 @@ export type UserUncheckedUpdateManyInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -588,6 +607,7 @@ export type UserCountOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -608,6 +628,7 @@ export type UserMaxOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -624,6 +645,7 @@ export type UserMinOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -886,6 +908,7 @@ export type UserCreateWithoutKeyTokenInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -916,6 +939,7 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -961,6 +985,7 @@ export type UserUpdateWithoutKeyTokenInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -991,6 +1016,7 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1020,6 +1046,7 @@ export type UserCreateWithoutCoursesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1050,6 +1077,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1095,6 +1123,7 @@ export type UserUpdateWithoutCoursesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1125,6 +1154,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1154,6 +1184,7 @@ export type UserCreateWithoutReviewsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1184,6 +1215,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1229,6 +1261,7 @@ export type UserUpdateWithoutReviewsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1259,6 +1292,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1288,6 +1322,7 @@ export type UserCreateWithoutLecturerResourcesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1318,6 +1353,7 @@ export type UserUncheckedCreateWithoutLecturerResourcesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1363,6 +1399,7 @@ export type UserUpdateWithoutLecturerResourcesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1393,6 +1430,7 @@ export type UserUncheckedUpdateWithoutLecturerResourcesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1422,6 +1460,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1452,6 +1491,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1497,6 +1537,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1527,6 +1568,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1556,6 +1598,7 @@ export type UserCreateWithoutOrdersInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1586,6 +1629,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1631,6 +1675,7 @@ export type UserUpdateWithoutOrdersInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1661,6 +1706,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1690,6 +1736,7 @@ export type UserCreateWithoutSubmissionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1720,6 +1767,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1765,6 +1813,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1795,6 +1844,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1824,6 +1874,7 @@ export type UserCreateWithoutBlogPostsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1854,6 +1905,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1899,6 +1951,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1929,6 +1982,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1958,6 +2012,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1988,6 +2043,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2033,6 +2089,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2063,6 +2120,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2092,6 +2150,7 @@ export type UserCreateWithoutWishlistInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2122,6 +2181,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2167,6 +2227,7 @@ export type UserUpdateWithoutWishlistInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2197,6 +2258,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2226,6 +2288,7 @@ export type UserCreateWithoutCartInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2256,6 +2319,7 @@ export type UserUncheckedCreateWithoutCartInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2301,6 +2365,7 @@ export type UserUpdateWithoutCartInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2331,6 +2396,7 @@ export type UserUncheckedUpdateWithoutCartInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2360,6 +2426,7 @@ export type UserCreateWithoutTransactionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2390,6 +2457,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2435,6 +2503,7 @@ export type UserUpdateWithoutTransactionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2465,6 +2534,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2494,6 +2564,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2524,6 +2595,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2569,6 +2641,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2599,6 +2672,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2628,6 +2702,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2658,6 +2733,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2703,6 +2779,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2733,6 +2810,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2762,6 +2840,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2792,6 +2871,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2837,6 +2917,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2867,6 +2948,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3027,6 +3109,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   phoneNumber?: boolean
   dateOfBirth?: boolean
   role?: boolean
+  verifyToken?: boolean
   isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3061,13 +3144,14 @@ export type UserSelectScalar = {
   phoneNumber?: boolean
   dateOfBirth?: boolean
   role?: boolean
+  verifyToken?: boolean
   isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "avatar" | "phoneNumber" | "dateOfBirth" | "role" | "isVerified" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "avatar" | "phoneNumber" | "dateOfBirth" | "role" | "verifyToken" | "isVerified" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courses?: boolean | Prisma.User$coursesArgs<ExtArgs>
   enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>
@@ -3116,6 +3200,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     phoneNumber: string | null
     dateOfBirth: Date | null
     role: string
+    verifyToken: string | null
     isVerified: boolean
     createdAt: Date
     updatedAt: Date | null
@@ -3513,6 +3598,7 @@ export interface UserFieldRefs {
   readonly phoneNumber: Prisma.FieldRef<"User", 'String'>
   readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly verifyToken: Prisma.FieldRef<"User", 'String'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
