@@ -1,57 +1,65 @@
-import { Request, Response, NextFunction } from 'express';
-import { transactionService } from '../services/transactionService.js';
+import ApiError from "@/utils/ApiError.js";
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { transactionService } from "../services/transactionService.js";
 
-const create = async (req: Request, res: Response, next: NextFunction) => {
+const createTransaction = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { userId, items, paymentMethod } = req.body;
+    const { paymentMethod } = req.body;
 
-    if (!userId || !items || items.length === 0 || !paymentMethod) {
-      res.status(400).json({ 
-        message: "Dữ liệu không hợp lệ! Vui lòng cung cấp đầy đủ: userId, items và paymentMethod." 
-      });
-      return;
-    }
-
-    const validMethods = ['VNPAY', 'MOMO', 'BANK_TRANSFER', 'CASH'];
+    const validMethods = ["VNPAY", "MOMO", "BANK_TRANSFER", "CASH"];
     if (!validMethods.includes(paymentMethod)) {
-       res.status(400).json({ 
-        message: "Phương thức thanh toán không hợp lệ" 
-      });
-      return;
+      next(new ApiError(StatusCodes.BAD_REQUEST, "Invalid payment method!"));
     }
 
     const transaction = await transactionService.createTransaction(req.body);
 
-    res.status(201).json({
-      message: "Giao dịch thành công!",
-      data: transaction
-    });
+    res.status(StatusCodes.CREATED).json(transaction);
   } catch (error) {
     next(error);
   }
 };
 
-const getHistory = async (req: Request, res: Response, next: NextFunction) => {
+const getHistoryByUserId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const { userId } = req.query;
-
-    if (!userId) {
-      res.status(400).json({ message: "Vui lòng cung cấp userId" });
-      return;
-    }
+    const { userId } = req.params;
 
     const history = await transactionService.getHistoryByUserId(Number(userId));
 
-    res.status(200).json({
-      message: "Lấy lịch sử giao dịch thành công",
-      data: history
-    });
+    res.status(StatusCodes.OK).json(history);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getStudentTransactionsByCourseId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { courseId } = req.params;
+
+    const result = await transactionService.getStudentTransactionsByCourseId(
+      Number(courseId),
+    );
+
+    res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
   }
 };
 
 export const transactionController = {
-  create,
-  getHistory
+  createTransaction,
+  getHistoryByUserId,
+  getStudentTransactionsByCourseId,
 };
