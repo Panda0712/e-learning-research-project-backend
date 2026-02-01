@@ -44,6 +44,7 @@ export type UserMinAggregateOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string | null
+  verifyToken: string | null
   isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -60,6 +61,7 @@ export type UserMaxAggregateOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string | null
+  verifyToken: string | null
   isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   phoneNumber: number
   dateOfBirth: number
   role: number
+  verifyToken: number
   isVerified: number
   createdAt: number
   updatedAt: number
@@ -102,6 +105,7 @@ export type UserMinAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -118,6 +122,7 @@ export type UserMaxAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -134,6 +139,7 @@ export type UserCountAggregateInputType = {
   phoneNumber?: true
   dateOfBirth?: true
   role?: true
+  verifyToken?: true
   isVerified?: true
   createdAt?: true
   updatedAt?: true
@@ -237,6 +243,7 @@ export type UserGroupByOutputType = {
   phoneNumber: string | null
   dateOfBirth: Date | null
   role: string
+  verifyToken: string | null
   isVerified: boolean
   createdAt: Date
   updatedAt: Date | null
@@ -276,6 +283,7 @@ export type UserWhereInput = {
   phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.StringFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -289,7 +297,7 @@ export type UserWhereInput = {
   submissions?: Prisma.SubmissionListRelationFilter
   blogComments?: Prisma.BlogCommentListRelationFilter
   wishlist?: Prisma.WishlistListRelationFilter
-  carts?: Prisma.CartListRelationFilter
+  cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   lecturerResources?: Prisma.LecturerResourceListRelationFilter
   orders?: Prisma.OrderListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
@@ -307,6 +315,7 @@ export type UserOrderByWithRelationInput = {
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -320,7 +329,7 @@ export type UserOrderByWithRelationInput = {
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
   blogComments?: Prisma.BlogCommentOrderByRelationAggregateInput
   wishlist?: Prisma.WishlistOrderByRelationAggregateInput
-  carts?: Prisma.CartOrderByRelationAggregateInput
+  cart?: Prisma.CartOrderByWithRelationInput
   lecturerResources?: Prisma.LecturerResourceOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
@@ -342,6 +351,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.StringFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableFilter<"User"> | string | null
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
@@ -355,7 +365,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   submissions?: Prisma.SubmissionListRelationFilter
   blogComments?: Prisma.BlogCommentListRelationFilter
   wishlist?: Prisma.WishlistListRelationFilter
-  carts?: Prisma.CartListRelationFilter
+  cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   lecturerResources?: Prisma.LecturerResourceListRelationFilter
   orders?: Prisma.OrderListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
@@ -373,6 +383,7 @@ export type UserOrderByWithAggregationInput = {
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -397,6 +408,7 @@ export type UserScalarWhereWithAggregatesInput = {
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  verifyToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -412,6 +424,7 @@ export type UserCreateInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -425,7 +438,7 @@ export type UserCreateInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -443,6 +456,7 @@ export type UserUncheckedCreateInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -456,7 +470,7 @@ export type UserUncheckedCreateInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -473,6 +487,7 @@ export type UserUpdateInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -486,7 +501,7 @@ export type UserUpdateInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -504,6 +519,7 @@ export type UserUncheckedUpdateInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -517,7 +533,7 @@ export type UserUncheckedUpdateInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -535,6 +551,7 @@ export type UserCreateManyInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -550,6 +567,7 @@ export type UserUpdateManyMutationInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -566,6 +584,7 @@ export type UserUncheckedUpdateManyInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -588,6 +607,7 @@ export type UserCountOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -608,6 +628,7 @@ export type UserMaxOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -624,6 +645,7 @@ export type UserMinOrderByAggregateInput = {
   phoneNumber?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  verifyToken?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -807,18 +829,18 @@ export type UserUpdateOneRequiredWithoutWishlistNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWishlistInput, Prisma.UserUpdateWithoutWishlistInput>, Prisma.UserUncheckedUpdateWithoutWishlistInput>
 }
 
-export type UserCreateNestedOneWithoutCartsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCartsInput, Prisma.UserUncheckedCreateWithoutCartsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartsInput
+export type UserCreateNestedOneWithoutCartInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutCartsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCartsInput, Prisma.UserUncheckedCreateWithoutCartsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartsInput
-  upsert?: Prisma.UserUpsertWithoutCartsInput
+export type UserUpdateOneRequiredWithoutCartNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartInput
+  upsert?: Prisma.UserUpsertWithoutCartInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCartsInput, Prisma.UserUpdateWithoutCartsInput>, Prisma.UserUncheckedUpdateWithoutCartsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCartInput, Prisma.UserUpdateWithoutCartInput>, Prisma.UserUncheckedUpdateWithoutCartInput>
 }
 
 export type UserCreateNestedOneWithoutTransactionsInput = {
@@ -886,6 +908,7 @@ export type UserCreateWithoutKeyTokenInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -899,7 +922,7 @@ export type UserCreateWithoutKeyTokenInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -916,6 +939,7 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -929,7 +953,7 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -961,6 +985,7 @@ export type UserUpdateWithoutKeyTokenInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -974,7 +999,7 @@ export type UserUpdateWithoutKeyTokenInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -991,6 +1016,7 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1004,7 +1030,7 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1020,6 +1046,7 @@ export type UserCreateWithoutCoursesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1032,7 +1059,7 @@ export type UserCreateWithoutCoursesInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1050,6 +1077,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1062,7 +1090,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1095,6 +1123,7 @@ export type UserUpdateWithoutCoursesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1107,7 +1136,7 @@ export type UserUpdateWithoutCoursesInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1125,6 +1154,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1137,7 +1167,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1154,6 +1184,7 @@ export type UserCreateWithoutReviewsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1166,7 +1197,7 @@ export type UserCreateWithoutReviewsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1184,6 +1215,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1196,7 +1228,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1229,6 +1261,7 @@ export type UserUpdateWithoutReviewsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1241,7 +1274,7 @@ export type UserUpdateWithoutReviewsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1259,6 +1292,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1271,7 +1305,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1288,6 +1322,7 @@ export type UserCreateWithoutLecturerResourcesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1301,7 +1336,7 @@ export type UserCreateWithoutLecturerResourcesInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
@@ -1318,6 +1353,7 @@ export type UserUncheckedCreateWithoutLecturerResourcesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1331,7 +1367,7 @@ export type UserUncheckedCreateWithoutLecturerResourcesInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
@@ -1363,6 +1399,7 @@ export type UserUpdateWithoutLecturerResourcesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1376,7 +1413,7 @@ export type UserUpdateWithoutLecturerResourcesInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
@@ -1393,6 +1430,7 @@ export type UserUncheckedUpdateWithoutLecturerResourcesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1406,7 +1444,7 @@ export type UserUncheckedUpdateWithoutLecturerResourcesInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
@@ -1422,6 +1460,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1434,7 +1473,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1452,6 +1491,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1464,7 +1504,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1497,6 +1537,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1509,7 +1550,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1527,6 +1568,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1539,7 +1581,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1556,6 +1598,7 @@ export type UserCreateWithoutOrdersInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1569,7 +1612,7 @@ export type UserCreateWithoutOrdersInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
@@ -1586,6 +1629,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1599,7 +1643,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
@@ -1631,6 +1675,7 @@ export type UserUpdateWithoutOrdersInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1644,7 +1689,7 @@ export type UserUpdateWithoutOrdersInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
@@ -1661,6 +1706,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1674,7 +1720,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
@@ -1690,6 +1736,7 @@ export type UserCreateWithoutSubmissionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1702,7 +1749,7 @@ export type UserCreateWithoutSubmissionsInput = {
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1720,6 +1767,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1732,7 +1780,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1765,6 +1813,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1777,7 +1826,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1795,6 +1844,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1807,7 +1857,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1824,6 +1874,7 @@ export type UserCreateWithoutBlogPostsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1836,7 +1887,7 @@ export type UserCreateWithoutBlogPostsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1854,6 +1905,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1866,7 +1918,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -1899,6 +1951,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1911,7 +1964,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -1929,6 +1982,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1941,7 +1995,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -1958,6 +2012,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -1970,7 +2025,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -1988,6 +2043,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2000,7 +2056,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -2033,6 +2089,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2045,7 +2102,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -2063,6 +2120,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2075,7 +2133,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -2092,6 +2150,7 @@ export type UserCreateWithoutWishlistInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2104,7 +2163,7 @@ export type UserCreateWithoutWishlistInput = {
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -2122,6 +2181,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2134,7 +2194,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -2167,6 +2227,7 @@ export type UserUpdateWithoutWishlistInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2179,7 +2240,7 @@ export type UserUpdateWithoutWishlistInput = {
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -2197,6 +2258,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2209,7 +2271,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -2217,7 +2279,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
 }
 
-export type UserCreateWithoutCartsInput = {
+export type UserCreateWithoutCartInput = {
   email: string
   password: string
   firstName?: string | null
@@ -2226,6 +2288,7 @@ export type UserCreateWithoutCartsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2246,7 +2309,7 @@ export type UserCreateWithoutCartsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutCartsInput = {
+export type UserUncheckedCreateWithoutCartInput = {
   id?: number
   email: string
   password: string
@@ -2256,6 +2319,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2276,23 +2340,23 @@ export type UserUncheckedCreateWithoutCartsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutCartsInput = {
+export type UserCreateOrConnectWithoutCartInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCartsInput, Prisma.UserUncheckedCreateWithoutCartsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>
 }
 
-export type UserUpsertWithoutCartsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCartsInput, Prisma.UserUncheckedUpdateWithoutCartsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCartsInput, Prisma.UserUncheckedCreateWithoutCartsInput>
+export type UserUpsertWithoutCartInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCartInput, Prisma.UserUncheckedUpdateWithoutCartInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutCartsInput = {
+export type UserUpdateToOneWithWhereWithoutCartInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCartsInput, Prisma.UserUncheckedUpdateWithoutCartsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCartInput, Prisma.UserUncheckedUpdateWithoutCartInput>
 }
 
-export type UserUpdateWithoutCartsInput = {
+export type UserUpdateWithoutCartInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2301,6 +2365,7 @@ export type UserUpdateWithoutCartsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2321,7 +2386,7 @@ export type UserUpdateWithoutCartsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutCartsInput = {
+export type UserUncheckedUpdateWithoutCartInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2331,6 +2396,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2360,6 +2426,7 @@ export type UserCreateWithoutTransactionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2373,7 +2440,7 @@ export type UserCreateWithoutTransactionsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
@@ -2390,6 +2457,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2403,7 +2471,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
@@ -2435,6 +2503,7 @@ export type UserUpdateWithoutTransactionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2448,7 +2517,7 @@ export type UserUpdateWithoutTransactionsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
@@ -2465,6 +2534,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2478,7 +2548,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
@@ -2494,6 +2564,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2506,7 +2577,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -2524,6 +2595,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2536,7 +2608,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -2569,6 +2641,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2581,7 +2654,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -2599,6 +2672,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2611,7 +2685,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -2628,6 +2702,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2640,7 +2715,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -2658,6 +2733,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2670,7 +2746,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -2703,6 +2779,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2715,7 +2792,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -2733,6 +2810,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2745,7 +2823,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -2762,6 +2840,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2775,7 +2854,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -2792,6 +2871,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -2805,7 +2885,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -2837,6 +2917,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2850,7 +2931,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -2867,6 +2948,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2880,7 +2962,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -2901,7 +2983,6 @@ export type UserCountOutputType = {
   submissions: number
   blogComments: number
   wishlist: number
-  carts: number
   lecturerResources: number
   orders: number
   transactions: number
@@ -2917,7 +2998,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
   blogComments?: boolean | UserCountOutputTypeCountBlogCommentsArgs
   wishlist?: boolean | UserCountOutputTypeCountWishlistArgs
-  carts?: boolean | UserCountOutputTypeCountCartsArgs
   lecturerResources?: boolean | UserCountOutputTypeCountLecturerResourcesArgs
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
   transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
@@ -2993,13 +3073,6 @@ export type UserCountOutputTypeCountWishlistArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountCartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CartWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountLecturerResourcesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LecturerResourceWhereInput
 }
@@ -3036,6 +3109,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   phoneNumber?: boolean
   dateOfBirth?: boolean
   role?: boolean
+  verifyToken?: boolean
   isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -3049,7 +3123,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
   blogComments?: boolean | Prisma.User$blogCommentsArgs<ExtArgs>
   wishlist?: boolean | Prisma.User$wishlistArgs<ExtArgs>
-  carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
+  cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   lecturerResources?: boolean | Prisma.User$lecturerResourcesArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
@@ -3070,13 +3144,14 @@ export type UserSelectScalar = {
   phoneNumber?: boolean
   dateOfBirth?: boolean
   role?: boolean
+  verifyToken?: boolean
   isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "avatar" | "phoneNumber" | "dateOfBirth" | "role" | "isVerified" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "avatar" | "phoneNumber" | "dateOfBirth" | "role" | "verifyToken" | "isVerified" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   courses?: boolean | Prisma.User$coursesArgs<ExtArgs>
   enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>
@@ -3087,7 +3162,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
   blogComments?: boolean | Prisma.User$blogCommentsArgs<ExtArgs>
   wishlist?: boolean | Prisma.User$wishlistArgs<ExtArgs>
-  carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
+  cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   lecturerResources?: boolean | Prisma.User$lecturerResourcesArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
@@ -3108,7 +3183,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
     blogComments: Prisma.$BlogCommentPayload<ExtArgs>[]
     wishlist: Prisma.$WishlistPayload<ExtArgs>[]
-    carts: Prisma.$CartPayload<ExtArgs>[]
+    cart: Prisma.$CartPayload<ExtArgs> | null
     lecturerResources: Prisma.$LecturerResourcePayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
@@ -3125,6 +3200,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     phoneNumber: string | null
     dateOfBirth: Date | null
     role: string
+    verifyToken: string | null
     isVerified: boolean
     createdAt: Date
     updatedAt: Date | null
@@ -3478,7 +3554,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   submissions<T extends Prisma.User$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   blogComments<T extends Prisma.User$blogCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blogCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wishlist<T extends Prisma.User$wishlistArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$wishlistArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WishlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  carts<T extends Prisma.User$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cart<T extends Prisma.User$cartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lecturerResources<T extends Prisma.User$lecturerResourcesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerResourcesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LecturerResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3522,6 +3598,7 @@ export interface UserFieldRefs {
   readonly phoneNumber: Prisma.FieldRef<"User", 'String'>
   readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly verifyToken: Prisma.FieldRef<"User", 'String'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -4080,9 +4157,9 @@ export type User$wishlistArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * User.carts
+ * User.cart
  */
-export type User$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$cartArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Cart
    */
@@ -4096,11 +4173,6 @@ export type User$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.CartInclude<ExtArgs> | null
   where?: Prisma.CartWhereInput
-  orderBy?: Prisma.CartOrderByWithRelationInput | Prisma.CartOrderByWithRelationInput[]
-  cursor?: Prisma.CartWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CartScalarFieldEnum | Prisma.CartScalarFieldEnum[]
 }
 
 /**

@@ -76,6 +76,7 @@ export const ModelName = {
   BlogComment: 'BlogComment',
   Wishlist: 'Wishlist',
   Cart: 'Cart',
+  CartItem: 'CartItem',
   Transaction: 'Transaction',
   TransactionStudent: 'TransactionStudent',
   LecturerProfile: 'LecturerProfile',
@@ -109,6 +110,7 @@ export const UserScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
+  verifyToken: 'verifyToken',
   isVerified: 'isVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -465,15 +467,25 @@ export type WishlistScalarFieldEnum = (typeof WishlistScalarFieldEnum)[keyof typ
 export const CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  courseId: 'courseId',
   courseName: 'courseName',
   lecturer: 'lecturer',
-  totalPrice: 'totalPrice',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt',
   isDestroyed: 'isDestroyed'
 } as const
 
 export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof CartScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  courseId: 'courseId',
+  price: 'price',
+  createdAt: 'createdAt'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const TransactionScalarFieldEnum = {
@@ -599,7 +611,8 @@ export const UserOrderByRelevanceFieldEnum = {
   lastName: 'lastName',
   avatar: 'avatar',
   phoneNumber: 'phoneNumber',
-  role: 'role'
+  role: 'role',
+  verifyToken: 'verifyToken'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
