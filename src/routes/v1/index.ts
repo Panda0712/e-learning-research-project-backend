@@ -1,5 +1,11 @@
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { assessmentRoute } from "./assessmentRoute.js";
+import { blogRoute } from "./blogRoute.js";
+import { cartRoute } from "./cartRoute.js";
+import { courseRoute } from "./courseRoute.js";
+import { enrollmentRoute } from "./enrollmentRoute.js";
+import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 
 const Router = express.Router();
@@ -15,5 +21,23 @@ Router.get("/status", (req: Request, res: Response) => {
 
 // user route
 Router.use("/users", userRoute);
+
+// course route
+Router.use("/courses", courseRoute);
+
+// blog route
+Router.use("/blogs", blogRoute);
+
+//enrollment route
+Router.use("/enrollments", enrollmentRoute);
+
+//transaction route
+Router.use("/transactions", transactionRoute);
+
+// cart route
+Router.use("/carts", cartRoute);
+
+//assessment route
+Router.use("/assessments", assessmentRoute);
 
 export const APIs_V1 = Router;
