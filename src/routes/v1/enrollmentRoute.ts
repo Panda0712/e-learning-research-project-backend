@@ -1,10 +1,17 @@
-import express from 'express';
-import { enrollmentController } from '../../controllers/enrollmentController.js';
+import express from "express";
+import { enrollmentController } from "../../controllers/enrollmentController.js";
+import { enrollmentValidation } from "@/validations/enrollmentValidation.js";
 
 const Router = express.Router();
 
-Router.route('/')
-  .get(enrollmentController.getMyCourses)
-  .post(enrollmentController.create);     
+Router.route("/get-by-student-id/:studentId").get(
+  enrollmentValidation.getEnrollmentsByStudentId,
+  enrollmentController.getEnrollmentsByStudentId,
+);
 
-export default Router;
+Router.route("/create-new").post(
+  enrollmentValidation.createEnrollment,
+  enrollmentController.createEnrollment,
+);
+
+export const enrollmentRoute = Router;
