@@ -23,51 +23,55 @@ const handleRefreshToken = async ({
   user: User;
   keyStore: KeyStore;
 }) => {
-  const { id, email } = user;
+  try {
+    const { id, email } = user;
 
-  // check refreshTokenUsed array
-  if (keyStore.refreshTokenUsed.includes(refreshToken)) {
-    await KeyTokenService.deleteKeyById(id);
-    throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
-  }
+    // check refreshTokenUsed array
+    if (keyStore.refreshTokenUsed.includes(refreshToken)) {
+      await KeyTokenService.deleteKeyById(id);
+      throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
+    }
 
-  // check refreshToken
-  if (keyStore.refreshToken !== refreshToken) {
-    throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
-  }
+    // check refreshToken
+    if (keyStore.refreshToken !== refreshToken) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    }
 
-  // check user
-  const foundUser = await findByEmail({ email });
-  if (!foundUser)
-    throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    // check user
+    const foundUser = await findByEmail({ email });
+    if (!foundUser)
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
 
-  // create new tokens
-  const tokens = (await authUtils.createTokenPair(
-    {
-      id,
-      email,
-    },
-    keyStore.publicKey,
-    keyStore.privateKey,
-  )) as { accessToken: string; refreshToken: string };
-
-  // update key token table
-  await prisma.keyToken.update({
-    where: { id: keyStore.id },
-    data: {
-      refreshToken: tokens.refreshToken,
-      refreshTokenUsed: {
-        set: [...keyStore.refreshTokenUsed, refreshToken].filter(
-          (v, i, arr) => arr.indexOf(v) === i,
-        ),
+    // create new tokens
+    const tokens = (await authUtils.createTokenPair(
+      {
+        id,
+        email,
       },
-    },
-  });
+      keyStore.publicKey,
+      keyStore.privateKey,
+    )) as { accessToken: string; refreshToken: string };
 
-  return {
-    user: { id, email },
-    tokens,
-  };
+    // update key token table
+    await prisma.keyToken.update({
+      where: { id: keyStore.id },
+      data: {
+        refreshToken: tokens.refreshToken,
+        refreshTokenUsed: {
+          set: [...keyStore.refreshTokenUsed, refreshToken].filter(
+            (v, i, arr) => arr.indexOf(v) === i,
+          ),
+        },
+      },
+    });
+
+    return {
+      user: { id, email },
+      tokens,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
 
 const register = async (reqBody: {
