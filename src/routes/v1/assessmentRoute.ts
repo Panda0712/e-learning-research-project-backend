@@ -1,23 +1,41 @@
-import express from 'express';
-import { assessmentController } from '../../controllers/assessmentController.js';
+import { assessmentController } from "@/controllers/assessmentController.js";
+import { assessmentValidation } from "@/validations/assessmentValidation.js";
+import express from "express";
 
 const Router = express.Router();
 
-Router.route('/')
-  .post(assessmentController.create);
+Router.route("/create-new").post(
+  assessmentValidation.createAssessment,
+  assessmentController.createAssessment,
+);
 
-Router.route('/lecturer-list')
-  .get(assessmentController.getLecturerList);
+Router.route("/lecturer-list/:lecturerId").get(
+  assessmentValidation.getAssessmentsForLecturer,
+  assessmentController.getAssessmentsForLecturer,
+);
 
-Router.route('/feedback')
-  .put(assessmentController.giveFeedback);
+Router.route("/feedback").put(
+  assessmentValidation.updateFeedback,
+  assessmentController.updateFeedback,
+);
 
-Router.route('/:id/submissions')
-  .get(assessmentController.getSubmissionList);
+Router.route("/get-submissions-by-assessmentId/:assessmentId").get(
+  assessmentValidation.getSubmissionDetails,
+  assessmentController.getSubmissionDetails,
+);
 
-Router.route('/:id')
-  .get(assessmentController.getOne)
-  .put(assessmentController.update)
-  .delete(assessmentController.remove);
+Router.route("/:id")
+  .get(
+    assessmentValidation.getAssessmentById,
+    assessmentController.getAssessmentById,
+  )
+  .put(
+    assessmentValidation.updateAssessment,
+    assessmentController.updateAssessment,
+  )
+  .delete(
+    assessmentValidation.deleteAssessment,
+    assessmentController.deleteAssessment,
+  );
 
-export default Router;
+export const assessmentRoute = Router;
