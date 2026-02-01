@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { userRoute } from "./userRoute.js";
 import { cartRoute } from "./cartRoute.js";
-import { blogCategoryRoute } from "./blogCategoryRoute.js";
+import { blogRoute } from "./blogRoute.js";
 
 const Router = express.Router();
 
@@ -17,10 +17,11 @@ Router.get("/status", (req: Request, res: Response) => {
 
 // user route
 Router.use("/users", userRoute);
-// blog category route
-Router.use("/blog-categories", blogCategoryRoute);
 
-// cart route 
-Router.use("/cart", cartRoute);
+// blog route
+Router.use("/blogs", blogRoute);
+
+// cart route
+Router.use("/carts", cartRoute);
 
 export const APIs_V1 = Router;
