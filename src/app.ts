@@ -1,3 +1,4 @@
+
 import { errorHandlingMiddleware } from "@/middlewares/errorHandlingMiddleware.js";
 import { APIs_V1 } from "@/routes/v1/index.js";
 import compression from "compression";
