@@ -83,7 +83,7 @@ const register = async (reqBody: {
   try {
     // check user existence
     const checkUser = await prisma.user.findFirst({
-      where: { email: reqBody.email },
+      where: { email: reqBody.email, isDestroyed: false },
     });
     if (checkUser) {
       throw new ApiError(StatusCodes.CONFLICT, "User already exists!");
@@ -106,7 +106,7 @@ const register = async (reqBody: {
     if (newUser) {
       // get created user
       const getNewUser = await prisma.user.findUnique({
-        where: { id: newUser.id },
+        where: { id: newUser.id, isDestroyed: false },
       });
       if (!getNewUser) {
         throw new ApiError(
@@ -142,7 +142,7 @@ const verifyAccount = async (reqBody: { email: string; token: string }) => {
   try {
     // check user existence
     const existingUser = await prisma.user.findUnique({
-      where: { email: reqBody.email },
+      where: { email: reqBody.email, isDestroyed: false },
     });
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -181,7 +181,7 @@ const login = async (reqBody: { email: string; password: string }) => {
   try {
     // check user existence
     const checkUser = await prisma.user.findUnique({
-      where: { email: reqBody.email },
+      where: { email: reqBody.email, isDestroyed: false },
     });
     if (!checkUser) {
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -235,7 +235,7 @@ const updateProfile = async (
 ) => {
   try {
     const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: userId, isDestroyed: false },
     });
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -287,7 +287,7 @@ const registerLecturerProfile = async (
 ) => {
   try {
     const existingUser = await prisma.user.findUnique({
-      where: { id: userId },
+      where: { id: userId, isDestroyed: false },
     });
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -314,7 +314,7 @@ const registerLecturerProfile = async (
 
 const findByEmail = async ({ email }: { email: string }) => {
   return await prisma.user.findFirst({
-    where: { email },
+    where: { email, isDestroyed: false },
   });
 };
 
