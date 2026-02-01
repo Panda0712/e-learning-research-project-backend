@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { blogRoute } from "./blogRoute.js";
+import { cartRoute } from "./cartRoute.js";
+import { courseRoute } from "./courseRoute.js";
+import { enrollmentRoute } from "./enrollmentRoute.js";
+import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
-import { courseCategoryRoute } from "./courseCategoryRoute.js";
-import  courseFaqRoute from "./courseFaqRoute.js";
-import enrollmentRoute from "./enrollmentRoute.js";
-import transactionRoute from './transactionRoute.js';
-import transactionStudentRoute from './transactionStudentRoute.js';
 import assessmentRoute from './assessmentRoute.js';
 
 const Router = express.Router();
@@ -22,20 +22,20 @@ Router.get("/status", (req: Request, res: Response) => {
 // user route
 Router.use("/users", userRoute);
 
-// courseCategories route
-Router.use('/categories', courseCategoryRoute);
+// course route
+Router.use("/courses", courseRoute);
 
-// courseFaq route
-Router.use('/faqs', courseFaqRoute);
+// blog route
+Router.use("/blogs", blogRoute);
 
 //enrollment route
-Router.use('/enrollments', enrollmentRoute);
+Router.use("/enrollments", enrollmentRoute);
 
 //transaction route
-Router.use('/transactions', transactionRoute);
+Router.use("/transactions", transactionRoute);
 
-//transactionStuden route
-Router.use('/transaction-students', transactionStudentRoute);
+// cart route
+Router.use("/carts", cartRoute);
 
 //assessment route
 Router.use('/assessments', assessmentRoute);

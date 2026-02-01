@@ -9,6 +9,11 @@ Router.route("/register").post(
   userController.register,
 );
 
+Router.route("/verify").put(
+  userValidation.verifyAccount,
+  userController.verifyAccount,
+);
+
 Router.route("/register-lecturer").post(
   userValidation.registerLecturer,
   userController.registerLecturerProfile,

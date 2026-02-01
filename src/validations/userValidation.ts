@@ -38,6 +38,28 @@ export const register = async (
   }
 };
 
+export const verifyAccount = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    email: Joi.string()
+      .required()
+      .pattern(EMAIL_RULE)
+      .message(EMAIL_RULE_MESSAGE),
+    token: Joi.string().required(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message);
+  }
+};
+
 export const login = async (
   req: Request,
   res: Response,
@@ -142,4 +164,10 @@ export const registerLecturer = async (
   }
 };
 
-export const userValidation = { register, login, update, registerLecturer };
+export const userValidation = {
+  register,
+  verifyAccount,
+  login,
+  update,
+  registerLecturer,
+};
