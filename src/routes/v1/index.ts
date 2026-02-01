@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { userRoute } from "./userRoute.js";
-import { blogPostRoute } from "./blogPostRoute.js";
+import { blogPostRoute } from "./blogRoute.js";
 import { blogCommentRoute } from "./blogCommentRoute.js";
 
 const Router = express.Router();

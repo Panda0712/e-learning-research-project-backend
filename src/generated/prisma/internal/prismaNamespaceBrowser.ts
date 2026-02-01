@@ -440,6 +440,7 @@ export const BlogCommentScalarFieldEnum = {
   blogId: 'blogId',
   userId: 'userId',
   content: 'content',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'

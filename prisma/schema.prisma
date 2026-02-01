@@ -390,6 +390,7 @@ model BlogComment {
   blogId      Int
   userId      Int
   content     String?
+  parentId    Int?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
@@ -397,6 +398,8 @@ model BlogComment {
   // relations
   post BlogPost @relation(fields: [blogId], references: [id])
   user User     @relation(fields: [userId], references: [id])
+  parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  children BlogComment[] @relation("CommentReplies")
 }
 
 model Wishlist {
