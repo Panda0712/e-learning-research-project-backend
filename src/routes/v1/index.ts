@@ -4,6 +4,7 @@ import { blogRoute } from "./blogRoute.js";
 import { cartRoute } from "./cartRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { userRoute } from "./userRoute.js";
+import enrollmentRoute from "./enrollmentRoute.js"
 
 const Router = express.Router();
 
@@ -24,6 +25,9 @@ Router.use("/courses", courseRoute);
 
 // blog route
 Router.use("/blogs", blogRoute);
+
+//enrollment route
+Router.use('/enrollments', enrollmentRoute);
 
 // cart route
 Router.use("/carts", cartRoute);
