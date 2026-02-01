@@ -36,6 +36,20 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const verifyAccount = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await userService.verifyAccount(req.body);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.clearCookie("accessToken");
@@ -117,6 +131,7 @@ const registerLecturerProfile = async (
 
 export const userController = {
   register,
+  verifyAccount,
   login,
   logout,
   handleRefreshToken,
