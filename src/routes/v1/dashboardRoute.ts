@@ -5,8 +5,8 @@ import express from "express";
 const Router = express.Router();
 
 // --- Route Admin ---
-Router.get("/admin/overview", dashboardController.getOverview);
-Router.get("/admin/charts", dashboardController.getCharts);
+Router.get("/admin/overview", verifyToken, dashboardController.getOverview);
+Router.get("/admin/charts", verifyToken, dashboardController.getCharts);
 
 // --- Route Lecturer ---
 Router.get("/lecturer/overview", verifyToken, dashboardController.getLecturerOverview);
