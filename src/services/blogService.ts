@@ -10,33 +10,119 @@ const createBlogCategory = async (reqBody: { name: string; slug: string }) => {
       where: { slug: reqBody.slug, isDestroyed: false },
     });
 
-    if (checkSlug) {
-      throw new ApiError(StatusCodes.CONFLICT, "Category slug already exists!");
+// ===========================
+// 1. PHẦN CATEGORY
+// ===========================
+const createCategory = async (data: any) => {
+  const existing = await prisma.blogCategory.findFirst({ where: { name: data.name } });
+  if (existing) throw new ApiError(StatusCodes.BAD_REQUEST, "Danh mục này đã tồn tại!");
+
+  return await prisma.blogCategory.create({
+    data: {
+      name: data.name,
+      slug: generateSlug(data.name)
     }
-
-    // create new category
-    const newCategory = await prisma.blogCategory.create({
-      data: {
-        name: reqBody.name,
-        slug: reqBody.slug,
-      },
-    });
-
-    return newCategory;
-  } catch (error: any) {
-    throw new Error(error);
-  }
+  });
 };
 
-const getAllBlogCategories = async () => {
+const getAllCategories = async () => {
   return await prisma.blogCategory.findMany({
-    where: { isDestroyed: false },
-    include: {
-      _count: {
-        select: { posts: true },
-      },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      _count: { select: { posts: true } } 
+    },
+    where: { isDestroyed: false }
+  });
+};
+
+const updateCategory = async (id: number, data: any) => {
+  const category = await prisma.blogCategory.findUnique({ where: { id } });
+  if (!category) throw new ApiError(StatusCodes.NOT_FOUND, "Danh mục không tìm thấy!");
+
+  return await prisma.blogCategory.update({
+    where: { id },
+    data: {
+      ...data,
+      ...(data.name && { slug: generateSlug(data.name) }) 
+    }
+  });
+};
+
+const deleteCategory = async (id: number) => {
+  // Logic: Nếu danh mục đang có bài viết thì KHÔNG CHO XÓA 
+  const category = await prisma.blogCategory.findUnique({ 
+    where: { id },
+    include: { _count: { select: { posts: true } } }
+  });
+  
+  if (!category) throw new ApiError(StatusCodes.NOT_FOUND, "Danh mục không tìm thấy!");
+  
+  if (category._count.posts > 0) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Không thể xóa danh mục đang chứa bài viết!");
+  }
+
+  return await prisma.blogCategory.delete({ where: { id } });
+};
+
+// ===========================
+// 2. PHẦN BLOG POST
+// ===========================
+const createPost = async (userId: number, data: any) => {
+  return await prisma.blogPost.create({
+    data: {
+      title: data.title,
+      slug: generateSlug(data.title),
+      content: data.content,
+      thumbnail: data.thumbnail,
+      tags: data.tags,
+      author: { connect: { id: userId } },
+      ...(data.categoryId && {
+        category: { connect: { id: Number(data.categoryId) } }
+      })
     },
   });
+};
+
+const getAllPosts = async (query: any) => {
+  const { page = 1, limit = 10, search, categoryId } = query;
+  const skip = (Number(page) - 1) * Number(limit);
+
+  const whereCondition: any = {};
+  
+  if (search) {
+    whereCondition.OR = [
+      { title: { contains: search } },
+      { content: { contains: search } },
+    ];
+  }
+  if (categoryId) {
+    whereCondition.categoryId = Number(categoryId);
+  }
+
+  const posts = await prisma.blogPost.findMany({
+    where: whereCondition,
+    skip,
+    take: Number(limit),
+    orderBy: { createdAt: "desc" },
+    include: {
+      author: { select: { id: true, firstName: true, lastName: true, avatar: true } },
+      category: { select: { id: true, name: true } },
+      _count: { select: { comments: true } },
+    },
+  });
+
+  const total = await prisma.blogPost.count({ where: whereCondition });
+
+  return {
+    posts,
+    pagination: {
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / Number(limit)),
+    },
+  };
 };
 
 const updateBlogCategory = async (
@@ -75,19 +161,42 @@ const deleteBlogCategory = async (id: number) => {
       where: { id, isDestroyed: false },
     });
 
-    if (!checkCategory) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Category not found!");
+  const formattedPost = {
+    ...post,
+    author: {
+      ...post.author,
+      bio: post.author.lecturerProfile?.bio || null, 
+      lecturerProfile: undefined 
     }
+  };
 
-    // delete category
-    await prisma.blogCategory.delete({
-      where: { id },
-    });
+  return formattedPost;
+};
 
-    return { message: "Delete category successfully!" };
-  } catch (error: any) {
-    throw new Error(error);
+const updatePost = async (id: number, userId: number, data: any) => {
+  const post = await prisma.blogPost.findUnique({ where: { id } });
+  if (!post) throw new ApiError(StatusCodes.NOT_FOUND, "Bài viết không tìm thấy!");
+  
+  if (post.authorId !== userId) {
+      throw new ApiError(StatusCodes.FORBIDDEN, "Bạn không có quyền sửa bài này!");
   }
+
+  return await prisma.blogPost.update({ where: { id }, data });
+};
+
+const deletePost = async (id: number, userId: number) => {
+  const post = await prisma.blogPost.findUnique({ where: { id } });
+  if (!post) throw new ApiError(StatusCodes.NOT_FOUND, "Bài viết không tìm thấy!");
+
+  const requestUser = await prisma.user.findUnique({ where: { id: userId } });
+  const isAuthor = post.authorId === userId;
+  const isAdmin = requestUser?.role === 'admin';
+
+  if (!isAuthor && !isAdmin) {
+      throw new ApiError(StatusCodes.FORBIDDEN, "Bạn không có quyền xóa bài này!");
+  }
+
+  return await prisma.blogPost.delete({ where: { id } });
 };
 
 // BLOG POST SERVICE

@@ -1,6 +1,6 @@
-import { blogController } from "@/controllers/blogController.js";
-import { blogValidation } from "@/validations/blogValidation.js";
 import express from "express";
+import { blogController } from "@/controllers/blogController.js";
+import { verifyToken } from "@/middlewares/authMiddleware.js";
 
 const Router = express.Router();
 

@@ -250,6 +250,7 @@ export type OrderWhereInput = {
   isDestroyed?: Prisma.BoolFilter<"Order"> | boolean
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
+  revenue?: Prisma.XOR<Prisma.RevenueNullableScalarRelationFilter, Prisma.RevenueWhereInput> | null
 }
 
 export type OrderOrderByWithRelationInput = {
@@ -263,6 +264,7 @@ export type OrderOrderByWithRelationInput = {
   isDestroyed?: Prisma.SortOrder
   student?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
+  revenue?: Prisma.RevenueOrderByWithRelationInput
   _relevance?: Prisma.OrderOrderByRelevanceInput
 }
 
@@ -280,6 +282,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   isDestroyed?: Prisma.BoolFilter<"Order"> | boolean
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
+  revenue?: Prisma.XOR<Prisma.RevenueNullableScalarRelationFilter, Prisma.RevenueWhereInput> | null
 }, "id">
 
 export type OrderOrderByWithAggregationInput = {
@@ -321,6 +324,7 @@ export type OrderCreateInput = {
   isDestroyed?: boolean
   student: Prisma.UserCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  revenue?: Prisma.RevenueCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateInput = {
@@ -333,6 +337,7 @@ export type OrderUncheckedCreateInput = {
   createdAt?: Date | string
   isDestroyed?: boolean
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUpdateInput = {
@@ -344,6 +349,7 @@ export type OrderUpdateInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  revenue?: Prisma.RevenueUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateInput = {
@@ -356,6 +362,7 @@ export type OrderUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderCreateManyInput = {
@@ -519,6 +526,20 @@ export type OrderUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutItemsInput, Prisma.OrderUpdateWithoutItemsInput>, Prisma.OrderUncheckedUpdateWithoutItemsInput>
 }
 
+export type OrderCreateNestedOneWithoutRevenueInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutRevenueInput, Prisma.OrderUncheckedCreateWithoutRevenueInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutRevenueInput
+  connect?: Prisma.OrderWhereUniqueInput
+}
+
+export type OrderUpdateOneRequiredWithoutRevenueNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutRevenueInput, Prisma.OrderUncheckedCreateWithoutRevenueInput>
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutRevenueInput
+  upsert?: Prisma.OrderUpsertWithoutRevenueInput
+  connect?: Prisma.OrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutRevenueInput, Prisma.OrderUpdateWithoutRevenueInput>, Prisma.OrderUncheckedUpdateWithoutRevenueInput>
+}
+
 export type OrderCreateWithoutStudentInput = {
   lecturer?: string | null
   totalPrice?: number | null
@@ -527,6 +548,7 @@ export type OrderCreateWithoutStudentInput = {
   createdAt?: Date | string
   isDestroyed?: boolean
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+  revenue?: Prisma.RevenueCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutStudentInput = {
@@ -538,6 +560,7 @@ export type OrderUncheckedCreateWithoutStudentInput = {
   createdAt?: Date | string
   isDestroyed?: boolean
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+  revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
 }
 
 export type OrderCreateOrConnectWithoutStudentInput = {
@@ -588,6 +611,7 @@ export type OrderCreateWithoutItemsInput = {
   createdAt?: Date | string
   isDestroyed?: boolean
   student: Prisma.UserCreateNestedOneWithoutOrdersInput
+  revenue?: Prisma.RevenueCreateNestedOneWithoutOrderInput
 }
 
 export type OrderUncheckedCreateWithoutItemsInput = {
@@ -599,6 +623,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   status?: string | null
   createdAt?: Date | string
   isDestroyed?: boolean
+  revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
 }
 
 export type OrderCreateOrConnectWithoutItemsInput = {
@@ -625,6 +650,7 @@ export type OrderUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
+  revenue?: Prisma.RevenueUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutItemsInput = {
@@ -636,6 +662,69 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
+}
+
+export type OrderCreateWithoutRevenueInput = {
+  lecturer?: string | null
+  totalPrice?: number | null
+  paymentMethod?: string | null
+  status?: string | null
+  createdAt?: Date | string
+  isDestroyed?: boolean
+  student: Prisma.UserCreateNestedOneWithoutOrdersInput
+  items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
+}
+
+export type OrderUncheckedCreateWithoutRevenueInput = {
+  id?: number
+  studentId: number
+  lecturer?: string | null
+  totalPrice?: number | null
+  paymentMethod?: string | null
+  status?: string | null
+  createdAt?: Date | string
+  isDestroyed?: boolean
+  items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutRevenueInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutRevenueInput, Prisma.OrderUncheckedCreateWithoutRevenueInput>
+}
+
+export type OrderUpsertWithoutRevenueInput = {
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutRevenueInput, Prisma.OrderUncheckedUpdateWithoutRevenueInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutRevenueInput, Prisma.OrderUncheckedCreateWithoutRevenueInput>
+  where?: Prisma.OrderWhereInput
+}
+
+export type OrderUpdateToOneWithWhereWithoutRevenueInput = {
+  where?: Prisma.OrderWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutRevenueInput, Prisma.OrderUncheckedUpdateWithoutRevenueInput>
+}
+
+export type OrderUpdateWithoutRevenueInput = {
+  lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
+  items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutRevenueInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+  lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
 }
 
 export type OrderCreateManyStudentInput = {
@@ -656,6 +745,7 @@ export type OrderUpdateWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
+  revenue?: Prisma.RevenueUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateWithoutStudentInput = {
@@ -667,6 +757,7 @@ export type OrderUncheckedUpdateWithoutStudentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
+  revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
 }
 
 export type OrderUncheckedUpdateManyWithoutStudentInput = {
@@ -721,6 +812,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   isDestroyed?: boolean
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
+  revenue?: boolean | Prisma.Order$revenueArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -741,6 +833,7 @@ export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
+  revenue?: boolean | Prisma.Order$revenueArgs<ExtArgs>
   _count?: boolean | Prisma.OrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -749,6 +842,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     student: Prisma.$UserPayload<ExtArgs>
     items: Prisma.$OrderItemPayload<ExtArgs>[]
+    revenue: Prisma.$RevenuePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1101,6 +1195,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  revenue<T extends Prisma.Order$revenueArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$revenueArgs<ExtArgs>>): Prisma.Prisma__RevenueClient<runtime.Types.Result.GetResult<Prisma.$RevenuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1502,6 +1597,25 @@ export type Order$itemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.OrderItemScalarFieldEnum | Prisma.OrderItemScalarFieldEnum[]
+}
+
+/**
+ * Order.revenue
+ */
+export type Order$revenueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Revenue
+   */
+  select?: Prisma.RevenueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Revenue
+   */
+  omit?: Prisma.RevenueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RevenueInclude<ExtArgs> | null
+  where?: Prisma.RevenueWhereInput
 }
 
 /**

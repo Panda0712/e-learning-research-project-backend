@@ -45,6 +45,7 @@ model User {
   transactions           Transaction[]
   lecturerPayoutAccounts LecturerPayoutAccount[]
   keyToken               KeyToken?
+  revenues               Revenue[]
 }
 
 model KeyToken {
@@ -78,8 +79,9 @@ model Course {
   price         Float     @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
+  status        String   @default("draft") // draft | pending | published | rejected
   isDestroyed   Boolean   @default(false)
-
+  
   // relations
   lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
   category    CourseCategory? @relation(fields: [categoryId], references: [id])
@@ -87,6 +89,7 @@ model Course {
   reviews     CourseReview[]
   enrollments Enrollment[]
   orderItems  OrderItem[]
+  revenues    Revenue[]
   courseFAQs  CourseFAQ[]
   assessments Assessment[]
   cartItems   CartItem[]
@@ -269,6 +272,7 @@ model Order {
   // relations
   student User        @relation(fields: [studentId], references: [id])
   items   OrderItem[]
+  revenue Revenue?
 }
 
 model OrderItem {
@@ -399,6 +403,7 @@ model BlogComment {
   blogId      Int
   userId      Int
   content     String?
+  parentId    Int?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
@@ -406,6 +411,8 @@ model BlogComment {
   // relations
   post BlogPost @relation(fields: [blogId], references: [id])
   user User     @relation(fields: [userId], references: [id])
+  parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  children BlogComment[] @relation("CommentReplies")
 }
 
 model Wishlist {
@@ -561,14 +568,23 @@ model LecturerPayoutAccount {
 //   isDestroyed       Boolean  @default(false)
 // }
 
-// model Revenue {
-//   id        Int      @id @default(autoincrement())
-//   source    String?
-//   amount    Float?
-//   currency  String?
-//   date      DateTime?
-//   createdAt DateTime? @default(now())
-// }
+model Revenue {
+  id         Int  @id @default(autoincrement())
+  orderId    Int  @unique // Gắn liền với đơn hàng nào
+  lecturerId Int? // Tiền này của giảng viên nào (nếu có)
+  courseId   Int // Bán khóa học nào
+
+  totalAmount  Float // Tổng tiền khách trả (VD: 500k)
+  platformFee  Float // Phí sàn Admin thu (VD: 10% = 50k)
+  lecturerEarn Float // Giảng viên thực nhận (VD: 450k)
+
+  createdAt DateTime @default(now())
+
+  // Relations
+  order    Order  @relation(fields: [orderId], references: [id])
+  lecturer User?  @relation(fields: [lecturerId], references: [id])
+  course   Course @relation(fields: [courseId], references: [id])
+}
 
 // model Conversation {
 //   id            Int      @id @default(autoincrement())
