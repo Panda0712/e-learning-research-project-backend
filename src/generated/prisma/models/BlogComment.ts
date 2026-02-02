@@ -30,12 +30,14 @@ export type BlogCommentAvgAggregateOutputType = {
   id: number | null
   blogId: number | null
   userId: number | null
+  parentId: number | null
 }
 
 export type BlogCommentSumAggregateOutputType = {
   id: number | null
   blogId: number | null
   userId: number | null
+  parentId: number | null
 }
 
 export type BlogCommentMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type BlogCommentMinAggregateOutputType = {
   blogId: number | null
   userId: number | null
   content: string | null
+  parentId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -53,6 +56,7 @@ export type BlogCommentMaxAggregateOutputType = {
   blogId: number | null
   userId: number | null
   content: string | null
+  parentId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -63,6 +67,7 @@ export type BlogCommentCountAggregateOutputType = {
   blogId: number
   userId: number
   content: number
+  parentId: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
@@ -74,12 +79,14 @@ export type BlogCommentAvgAggregateInputType = {
   id?: true
   blogId?: true
   userId?: true
+  parentId?: true
 }
 
 export type BlogCommentSumAggregateInputType = {
   id?: true
   blogId?: true
   userId?: true
+  parentId?: true
 }
 
 export type BlogCommentMinAggregateInputType = {
@@ -87,6 +94,7 @@ export type BlogCommentMinAggregateInputType = {
   blogId?: true
   userId?: true
   content?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -97,6 +105,7 @@ export type BlogCommentMaxAggregateInputType = {
   blogId?: true
   userId?: true
   content?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -107,6 +116,7 @@ export type BlogCommentCountAggregateInputType = {
   blogId?: true
   userId?: true
   content?: true
+  parentId?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -204,6 +214,7 @@ export type BlogCommentGroupByOutputType = {
   blogId: number
   userId: number
   content: string | null
+  parentId: number | null
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
@@ -237,11 +248,14 @@ export type BlogCommentWhereInput = {
   blogId?: Prisma.IntFilter<"BlogComment"> | number
   userId?: Prisma.IntFilter<"BlogComment"> | number
   content?: Prisma.StringNullableFilter<"BlogComment"> | string | null
+  parentId?: Prisma.IntNullableFilter<"BlogComment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BlogComment"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"BlogComment"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"BlogComment"> | boolean
   post?: Prisma.XOR<Prisma.BlogPostScalarRelationFilter, Prisma.BlogPostWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  parent?: Prisma.XOR<Prisma.BlogCommentNullableScalarRelationFilter, Prisma.BlogCommentWhereInput> | null
+  children?: Prisma.BlogCommentListRelationFilter
 }
 
 export type BlogCommentOrderByWithRelationInput = {
@@ -249,11 +263,14 @@ export type BlogCommentOrderByWithRelationInput = {
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   post?: Prisma.BlogPostOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  parent?: Prisma.BlogCommentOrderByWithRelationInput
+  children?: Prisma.BlogCommentOrderByRelationAggregateInput
   _relevance?: Prisma.BlogCommentOrderByRelevanceInput
 }
 
@@ -265,11 +282,14 @@ export type BlogCommentWhereUniqueInput = Prisma.AtLeast<{
   blogId?: Prisma.IntFilter<"BlogComment"> | number
   userId?: Prisma.IntFilter<"BlogComment"> | number
   content?: Prisma.StringNullableFilter<"BlogComment"> | string | null
+  parentId?: Prisma.IntNullableFilter<"BlogComment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BlogComment"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"BlogComment"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"BlogComment"> | boolean
   post?: Prisma.XOR<Prisma.BlogPostScalarRelationFilter, Prisma.BlogPostWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  parent?: Prisma.XOR<Prisma.BlogCommentNullableScalarRelationFilter, Prisma.BlogCommentWhereInput> | null
+  children?: Prisma.BlogCommentListRelationFilter
 }, "id">
 
 export type BlogCommentOrderByWithAggregationInput = {
@@ -277,6 +297,7 @@ export type BlogCommentOrderByWithAggregationInput = {
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  parentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -295,6 +316,7 @@ export type BlogCommentScalarWhereWithAggregatesInput = {
   blogId?: Prisma.IntWithAggregatesFilter<"BlogComment"> | number
   userId?: Prisma.IntWithAggregatesFilter<"BlogComment"> | number
   content?: Prisma.StringNullableWithAggregatesFilter<"BlogComment"> | string | null
+  parentId?: Prisma.IntNullableWithAggregatesFilter<"BlogComment"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BlogComment"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"BlogComment"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"BlogComment"> | boolean
@@ -307,6 +329,8 @@ export type BlogCommentCreateInput = {
   isDestroyed?: boolean
   post: Prisma.BlogPostCreateNestedOneWithoutCommentsInput
   user: Prisma.UserCreateNestedOneWithoutBlogCommentsInput
+  parent?: Prisma.BlogCommentCreateNestedOneWithoutChildrenInput
+  children?: Prisma.BlogCommentCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentUncheckedCreateInput = {
@@ -314,9 +338,11 @@ export type BlogCommentUncheckedCreateInput = {
   blogId: number
   userId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  children?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentUpdateInput = {
@@ -326,6 +352,8 @@ export type BlogCommentUpdateInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   post?: Prisma.BlogPostUpdateOneRequiredWithoutCommentsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutBlogCommentsNestedInput
+  parent?: Prisma.BlogCommentUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.BlogCommentUpdateManyWithoutParentNestedInput
 }
 
 export type BlogCommentUncheckedUpdateInput = {
@@ -333,9 +361,11 @@ export type BlogCommentUncheckedUpdateInput = {
   blogId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  children?: Prisma.BlogCommentUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type BlogCommentCreateManyInput = {
@@ -343,6 +373,7 @@ export type BlogCommentCreateManyInput = {
   blogId: number
   userId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -360,6 +391,7 @@ export type BlogCommentUncheckedUpdateManyInput = {
   blogId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -375,6 +407,11 @@ export type BlogCommentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type BlogCommentNullableScalarRelationFilter = {
+  is?: Prisma.BlogCommentWhereInput | null
+  isNot?: Prisma.BlogCommentWhereInput | null
+}
+
 export type BlogCommentOrderByRelevanceInput = {
   fields: Prisma.BlogCommentOrderByRelevanceFieldEnum | Prisma.BlogCommentOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
@@ -386,6 +423,7 @@ export type BlogCommentCountOrderByAggregateInput = {
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -395,6 +433,7 @@ export type BlogCommentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
 }
 
 export type BlogCommentMaxOrderByAggregateInput = {
@@ -402,6 +441,7 @@ export type BlogCommentMaxOrderByAggregateInput = {
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -412,6 +452,7 @@ export type BlogCommentMinOrderByAggregateInput = {
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -421,6 +462,7 @@ export type BlogCommentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   blogId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  parentId?: Prisma.SortOrder
 }
 
 export type BlogCommentCreateNestedManyWithoutUserInput = {
@@ -507,21 +549,83 @@ export type BlogCommentUncheckedUpdateManyWithoutPostNestedInput = {
   deleteMany?: Prisma.BlogCommentScalarWhereInput | Prisma.BlogCommentScalarWhereInput[]
 }
 
+export type BlogCommentCreateNestedOneWithoutChildrenInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutChildrenInput, Prisma.BlogCommentUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutChildrenInput
+  connect?: Prisma.BlogCommentWhereUniqueInput
+}
+
+export type BlogCommentCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput> | Prisma.BlogCommentCreateWithoutParentInput[] | Prisma.BlogCommentUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutParentInput | Prisma.BlogCommentCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.BlogCommentCreateManyParentInputEnvelope
+  connect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+}
+
+export type BlogCommentUncheckedCreateNestedManyWithoutParentInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput> | Prisma.BlogCommentCreateWithoutParentInput[] | Prisma.BlogCommentUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutParentInput | Prisma.BlogCommentCreateOrConnectWithoutParentInput[]
+  createMany?: Prisma.BlogCommentCreateManyParentInputEnvelope
+  connect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+}
+
+export type BlogCommentUpdateOneWithoutChildrenNestedInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutChildrenInput, Prisma.BlogCommentUncheckedCreateWithoutChildrenInput>
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutChildrenInput
+  upsert?: Prisma.BlogCommentUpsertWithoutChildrenInput
+  disconnect?: Prisma.BlogCommentWhereInput | boolean
+  delete?: Prisma.BlogCommentWhereInput | boolean
+  connect?: Prisma.BlogCommentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BlogCommentUpdateToOneWithWhereWithoutChildrenInput, Prisma.BlogCommentUpdateWithoutChildrenInput>, Prisma.BlogCommentUncheckedUpdateWithoutChildrenInput>
+}
+
+export type BlogCommentUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput> | Prisma.BlogCommentCreateWithoutParentInput[] | Prisma.BlogCommentUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutParentInput | Prisma.BlogCommentCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.BlogCommentUpsertWithWhereUniqueWithoutParentInput | Prisma.BlogCommentUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.BlogCommentCreateManyParentInputEnvelope
+  set?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  disconnect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  delete?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  connect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  update?: Prisma.BlogCommentUpdateWithWhereUniqueWithoutParentInput | Prisma.BlogCommentUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.BlogCommentUpdateManyWithWhereWithoutParentInput | Prisma.BlogCommentUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.BlogCommentScalarWhereInput | Prisma.BlogCommentScalarWhereInput[]
+}
+
+export type BlogCommentUncheckedUpdateManyWithoutParentNestedInput = {
+  create?: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput> | Prisma.BlogCommentCreateWithoutParentInput[] | Prisma.BlogCommentUncheckedCreateWithoutParentInput[]
+  connectOrCreate?: Prisma.BlogCommentCreateOrConnectWithoutParentInput | Prisma.BlogCommentCreateOrConnectWithoutParentInput[]
+  upsert?: Prisma.BlogCommentUpsertWithWhereUniqueWithoutParentInput | Prisma.BlogCommentUpsertWithWhereUniqueWithoutParentInput[]
+  createMany?: Prisma.BlogCommentCreateManyParentInputEnvelope
+  set?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  disconnect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  delete?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  connect?: Prisma.BlogCommentWhereUniqueInput | Prisma.BlogCommentWhereUniqueInput[]
+  update?: Prisma.BlogCommentUpdateWithWhereUniqueWithoutParentInput | Prisma.BlogCommentUpdateWithWhereUniqueWithoutParentInput[]
+  updateMany?: Prisma.BlogCommentUpdateManyWithWhereWithoutParentInput | Prisma.BlogCommentUpdateManyWithWhereWithoutParentInput[]
+  deleteMany?: Prisma.BlogCommentScalarWhereInput | Prisma.BlogCommentScalarWhereInput[]
+}
+
 export type BlogCommentCreateWithoutUserInput = {
   content?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   post: Prisma.BlogPostCreateNestedOneWithoutCommentsInput
+  parent?: Prisma.BlogCommentCreateNestedOneWithoutChildrenInput
+  children?: Prisma.BlogCommentCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentUncheckedCreateWithoutUserInput = {
   id?: number
   blogId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  children?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentCreateOrConnectWithoutUserInput = {
@@ -558,6 +662,7 @@ export type BlogCommentScalarWhereInput = {
   blogId?: Prisma.IntFilter<"BlogComment"> | number
   userId?: Prisma.IntFilter<"BlogComment"> | number
   content?: Prisma.StringNullableFilter<"BlogComment"> | string | null
+  parentId?: Prisma.IntNullableFilter<"BlogComment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"BlogComment"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"BlogComment"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"BlogComment"> | boolean
@@ -569,15 +674,19 @@ export type BlogCommentCreateWithoutPostInput = {
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   user: Prisma.UserCreateNestedOneWithoutBlogCommentsInput
+  parent?: Prisma.BlogCommentCreateNestedOneWithoutChildrenInput
+  children?: Prisma.BlogCommentCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentUncheckedCreateWithoutPostInput = {
   id?: number
   userId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  children?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type BlogCommentCreateOrConnectWithoutPostInput = {
@@ -606,10 +715,116 @@ export type BlogCommentUpdateManyWithWhereWithoutPostInput = {
   data: Prisma.XOR<Prisma.BlogCommentUpdateManyMutationInput, Prisma.BlogCommentUncheckedUpdateManyWithoutPostInput>
 }
 
+export type BlogCommentCreateWithoutChildrenInput = {
+  content?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  post: Prisma.BlogPostCreateNestedOneWithoutCommentsInput
+  user: Prisma.UserCreateNestedOneWithoutBlogCommentsInput
+  parent?: Prisma.BlogCommentCreateNestedOneWithoutChildrenInput
+}
+
+export type BlogCommentUncheckedCreateWithoutChildrenInput = {
+  id?: number
+  blogId: number
+  userId: number
+  content?: string | null
+  parentId?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type BlogCommentCreateOrConnectWithoutChildrenInput = {
+  where: Prisma.BlogCommentWhereUniqueInput
+  create: Prisma.XOR<Prisma.BlogCommentCreateWithoutChildrenInput, Prisma.BlogCommentUncheckedCreateWithoutChildrenInput>
+}
+
+export type BlogCommentCreateWithoutParentInput = {
+  content?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  post: Prisma.BlogPostCreateNestedOneWithoutCommentsInput
+  user: Prisma.UserCreateNestedOneWithoutBlogCommentsInput
+  children?: Prisma.BlogCommentCreateNestedManyWithoutParentInput
+}
+
+export type BlogCommentUncheckedCreateWithoutParentInput = {
+  id?: number
+  blogId: number
+  userId: number
+  content?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  children?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutParentInput
+}
+
+export type BlogCommentCreateOrConnectWithoutParentInput = {
+  where: Prisma.BlogCommentWhereUniqueInput
+  create: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput>
+}
+
+export type BlogCommentCreateManyParentInputEnvelope = {
+  data: Prisma.BlogCommentCreateManyParentInput | Prisma.BlogCommentCreateManyParentInput[]
+  skipDuplicates?: boolean
+}
+
+export type BlogCommentUpsertWithoutChildrenInput = {
+  update: Prisma.XOR<Prisma.BlogCommentUpdateWithoutChildrenInput, Prisma.BlogCommentUncheckedUpdateWithoutChildrenInput>
+  create: Prisma.XOR<Prisma.BlogCommentCreateWithoutChildrenInput, Prisma.BlogCommentUncheckedCreateWithoutChildrenInput>
+  where?: Prisma.BlogCommentWhereInput
+}
+
+export type BlogCommentUpdateToOneWithWhereWithoutChildrenInput = {
+  where?: Prisma.BlogCommentWhereInput
+  data: Prisma.XOR<Prisma.BlogCommentUpdateWithoutChildrenInput, Prisma.BlogCommentUncheckedUpdateWithoutChildrenInput>
+}
+
+export type BlogCommentUpdateWithoutChildrenInput = {
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  post?: Prisma.BlogPostUpdateOneRequiredWithoutCommentsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutBlogCommentsNestedInput
+  parent?: Prisma.BlogCommentUpdateOneWithoutChildrenNestedInput
+}
+
+export type BlogCommentUncheckedUpdateWithoutChildrenInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  blogId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type BlogCommentUpsertWithWhereUniqueWithoutParentInput = {
+  where: Prisma.BlogCommentWhereUniqueInput
+  update: Prisma.XOR<Prisma.BlogCommentUpdateWithoutParentInput, Prisma.BlogCommentUncheckedUpdateWithoutParentInput>
+  create: Prisma.XOR<Prisma.BlogCommentCreateWithoutParentInput, Prisma.BlogCommentUncheckedCreateWithoutParentInput>
+}
+
+export type BlogCommentUpdateWithWhereUniqueWithoutParentInput = {
+  where: Prisma.BlogCommentWhereUniqueInput
+  data: Prisma.XOR<Prisma.BlogCommentUpdateWithoutParentInput, Prisma.BlogCommentUncheckedUpdateWithoutParentInput>
+}
+
+export type BlogCommentUpdateManyWithWhereWithoutParentInput = {
+  where: Prisma.BlogCommentScalarWhereInput
+  data: Prisma.XOR<Prisma.BlogCommentUpdateManyMutationInput, Prisma.BlogCommentUncheckedUpdateManyWithoutParentInput>
+}
+
 export type BlogCommentCreateManyUserInput = {
   id?: number
   blogId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -621,21 +836,26 @@ export type BlogCommentUpdateWithoutUserInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   post?: Prisma.BlogPostUpdateOneRequiredWithoutCommentsNestedInput
+  parent?: Prisma.BlogCommentUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.BlogCommentUpdateManyWithoutParentNestedInput
 }
 
 export type BlogCommentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   blogId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  children?: Prisma.BlogCommentUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type BlogCommentUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   blogId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -645,6 +865,7 @@ export type BlogCommentCreateManyPostInput = {
   id?: number
   userId: number
   content?: string | null
+  parentId?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -656,19 +877,65 @@ export type BlogCommentUpdateWithoutPostInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutBlogCommentsNestedInput
+  parent?: Prisma.BlogCommentUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.BlogCommentUpdateManyWithoutParentNestedInput
 }
 
 export type BlogCommentUncheckedUpdateWithoutPostInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  children?: Prisma.BlogCommentUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type BlogCommentUncheckedUpdateManyWithoutPostInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type BlogCommentUncheckedUpdateManyWithoutPostInput = {
+export type BlogCommentCreateManyParentInput = {
+  id?: number
+  blogId: number
+  userId: number
+  content?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type BlogCommentUpdateWithoutParentInput = {
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  post?: Prisma.BlogPostUpdateOneRequiredWithoutCommentsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutBlogCommentsNestedInput
+  children?: Prisma.BlogCommentUpdateManyWithoutParentNestedInput
+}
+
+export type BlogCommentUncheckedUpdateWithoutParentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  blogId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  children?: Prisma.BlogCommentUncheckedUpdateManyWithoutParentNestedInput
+}
+
+export type BlogCommentUncheckedUpdateManyWithoutParentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  blogId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -676,6 +943,35 @@ export type BlogCommentUncheckedUpdateManyWithoutPostInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
+
+/**
+ * Count Type BlogCommentCountOutputType
+ */
+
+export type BlogCommentCountOutputType = {
+  children: number
+}
+
+export type BlogCommentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  children?: boolean | BlogCommentCountOutputTypeCountChildrenArgs
+}
+
+/**
+ * BlogCommentCountOutputType without action
+ */
+export type BlogCommentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BlogCommentCountOutputType
+   */
+  select?: Prisma.BlogCommentCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BlogCommentCountOutputType without action
+ */
+export type BlogCommentCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BlogCommentWhereInput
+}
 
 
 export type BlogCommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -683,11 +979,15 @@ export type BlogCommentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   blogId?: boolean
   userId?: boolean
   content?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
   post?: boolean | Prisma.BlogPostDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  parent?: boolean | Prisma.BlogComment$parentArgs<ExtArgs>
+  children?: boolean | Prisma.BlogComment$childrenArgs<ExtArgs>
+  _count?: boolean | Prisma.BlogCommentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["blogComment"]>
 
 
@@ -697,15 +997,19 @@ export type BlogCommentSelectScalar = {
   blogId?: boolean
   userId?: boolean
   content?: boolean
+  parentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type BlogCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "blogId" | "userId" | "content" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["blogComment"]>
+export type BlogCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "blogId" | "userId" | "content" | "parentId" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["blogComment"]>
 export type BlogCommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   post?: boolean | Prisma.BlogPostDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  parent?: boolean | Prisma.BlogComment$parentArgs<ExtArgs>
+  children?: boolean | Prisma.BlogComment$childrenArgs<ExtArgs>
+  _count?: boolean | Prisma.BlogCommentCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $BlogCommentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -713,12 +1017,15 @@ export type $BlogCommentPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     post: Prisma.$BlogPostPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    parent: Prisma.$BlogCommentPayload<ExtArgs> | null
+    children: Prisma.$BlogCommentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     blogId: number
     userId: number
     content: string | null
+    parentId: number | null
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
@@ -1064,6 +1371,8 @@ export interface Prisma__BlogCommentClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   post<T extends Prisma.BlogPostDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BlogPostDefaultArgs<ExtArgs>>): Prisma.Prisma__BlogPostClient<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  parent<T extends Prisma.BlogComment$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BlogComment$parentArgs<ExtArgs>>): Prisma.Prisma__BlogCommentClient<runtime.Types.Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  children<T extends Prisma.BlogComment$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BlogComment$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1097,6 +1406,7 @@ export interface BlogCommentFieldRefs {
   readonly blogId: Prisma.FieldRef<"BlogComment", 'Int'>
   readonly userId: Prisma.FieldRef<"BlogComment", 'Int'>
   readonly content: Prisma.FieldRef<"BlogComment", 'String'>
+  readonly parentId: Prisma.FieldRef<"BlogComment", 'Int'>
   readonly createdAt: Prisma.FieldRef<"BlogComment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BlogComment", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"BlogComment", 'Boolean'>
@@ -1440,6 +1750,49 @@ export type BlogCommentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many BlogComments to delete.
    */
   limit?: number
+}
+
+/**
+ * BlogComment.parent
+ */
+export type BlogComment$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BlogComment
+   */
+  select?: Prisma.BlogCommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BlogComment
+   */
+  omit?: Prisma.BlogCommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogCommentInclude<ExtArgs> | null
+  where?: Prisma.BlogCommentWhereInput
+}
+
+/**
+ * BlogComment.children
+ */
+export type BlogComment$childrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BlogComment
+   */
+  select?: Prisma.BlogCommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BlogComment
+   */
+  omit?: Prisma.BlogCommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogCommentInclude<ExtArgs> | null
+  where?: Prisma.BlogCommentWhereInput
+  orderBy?: Prisma.BlogCommentOrderByWithRelationInput | Prisma.BlogCommentOrderByWithRelationInput[]
+  cursor?: Prisma.BlogCommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BlogCommentScalarFieldEnum | Prisma.BlogCommentScalarFieldEnum[]
 }
 
 /**

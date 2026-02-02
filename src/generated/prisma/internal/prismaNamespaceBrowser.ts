@@ -81,7 +81,8 @@ export const ModelName = {
   TransactionStudent: 'TransactionStudent',
   LecturerProfile: 'LecturerProfile',
   LecturerPayout: 'LecturerPayout',
-  LecturerPayoutAccount: 'LecturerPayoutAccount'
+  LecturerPayoutAccount: 'LecturerPayoutAccount',
+  Revenue: 'Revenue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -151,6 +152,7 @@ export const CourseScalarFieldEnum = {
   price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  status: 'status',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -443,6 +445,7 @@ export const BlogCommentScalarFieldEnum = {
   blogId: 'blogId',
   userId: 'userId',
   content: 'content',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -575,6 +578,20 @@ export const LecturerPayoutAccountScalarFieldEnum = {
 export type LecturerPayoutAccountScalarFieldEnum = (typeof LecturerPayoutAccountScalarFieldEnum)[keyof typeof LecturerPayoutAccountScalarFieldEnum]
 
 
+export const RevenueScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  lecturerId: 'lecturerId',
+  courseId: 'courseId',
+  totalAmount: 'totalAmount',
+  platformFee: 'platformFee',
+  lecturerEarn: 'lecturerEarn',
+  createdAt: 'createdAt'
+} as const
+
+export type RevenueScalarFieldEnum = (typeof RevenueScalarFieldEnum)[keyof typeof RevenueScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -652,7 +669,8 @@ export const CourseOrderByRelevanceFieldEnum = {
   lecturerName: 'lecturerName',
   duration: 'duration',
   level: 'level',
-  overview: 'overview'
+  overview: 'overview',
+  status: 'status'
 } as const
 
 export type CourseOrderByRelevanceFieldEnum = (typeof CourseOrderByRelevanceFieldEnum)[keyof typeof CourseOrderByRelevanceFieldEnum]

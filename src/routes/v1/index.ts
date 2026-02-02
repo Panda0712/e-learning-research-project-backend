@@ -7,6 +7,8 @@ import { courseRoute } from "./courseRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
+import { blogPostRoute } from "./blogRoute.js";
+import { blogCommentRoute } from "./blogCommentRoute.js";
 
 const Router = express.Router();
 
@@ -22,6 +24,11 @@ Router.get("/status", (req: Request, res: Response) => {
 // user route
 Router.use("/users", userRoute);
 
+// Blog Post
+Router.use("/blog-posts", blogPostRoute);
+
+// Blog Comment
+Router.use("/blog-comments", blogCommentRoute);
 // course route
 Router.use("/courses", courseRoute);
 
