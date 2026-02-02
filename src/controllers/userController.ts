@@ -36,6 +36,20 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const verifyAccount = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await userService.verifyAccount(req.body);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
     res.clearCookie("accessToken");
@@ -71,4 +85,56 @@ const handleRefreshToken = async (
   }
 };
 
-export const userController = { register, login, logout, handleRefreshToken };
+const updateProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = 1;
+
+    const userAvatar = null;
+
+    const result = await userService.updateProfile(
+      userId,
+      req.body,
+      userAvatar,
+    );
+
+    res.status(StatusCodes.OK).json({
+      message: "Updated profile successfully!",
+      ...result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const registerLecturerProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = 1;
+
+    const result = await userService.registerLecturerProfile(userId, req.body);
+
+    res.status(StatusCodes.OK).json({
+      message: "Submitted lecturer profile successfully!",
+      ...result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const userController = {
+  register,
+  verifyAccount,
+  login,
+  logout,
+  handleRefreshToken,
+  updateProfile,
+  registerLecturerProfile,
+};

@@ -1,12 +1,17 @@
 import { prisma } from "@/lib/prisma.js";
+import { BrevoProvider } from "@/providers/BrevoProvider.js";
 import { KeyStore } from "@/types/keyStore.type.js";
+import { RegisterLecturer } from "@/types/registerLecturer.type.js";
+import { UpdateProfile } from "@/types/updateProfile.type.js";
 import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
+import { WEBSITE_DOMAINS } from "@/utils/constants.js";
 import { pickUser } from "@/utils/formatters.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
+import { v4 as uuidV4 } from "uuid";
 import KeyTokenService from "./keyTokenService.js";
 
 const handleRefreshToken = async ({
@@ -18,51 +23,55 @@ const handleRefreshToken = async ({
   user: User;
   keyStore: KeyStore;
 }) => {
-  const { id, email } = user;
+  try {
+    const { id, email } = user;
 
-  // check refreshTokenUsed array
-  if (keyStore.refreshTokenUsed.includes(refreshToken)) {
-    await KeyTokenService.deleteKeyById(id);
-    throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
-  }
+    // check refreshTokenUsed array
+    if (keyStore.refreshTokenUsed.includes(refreshToken)) {
+      await KeyTokenService.deleteKeyById(id);
+      throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
+    }
 
-  // check refreshToken
-  if (keyStore.refreshToken !== refreshToken) {
-    throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
-  }
+    // check refreshToken
+    if (keyStore.refreshToken !== refreshToken) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    }
 
-  // check user
-  const foundUser = await findByEmail({ email });
-  if (!foundUser)
-    throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    // check user
+    const foundUser = await findByEmail({ email });
+    if (!foundUser)
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
 
-  // create new tokens
-  const tokens = (await authUtils.createTokenPair(
-    {
-      id,
-      email,
-    },
-    keyStore.publicKey,
-    keyStore.privateKey,
-  )) as { accessToken: string; refreshToken: string };
-
-  // update key token table
-  await prisma.keyToken.update({
-    where: { id: keyStore.id },
-    data: {
-      refreshToken: tokens.refreshToken,
-      refreshTokenUsed: {
-        set: [...keyStore.refreshTokenUsed, refreshToken].filter(
-          (v, i, arr) => arr.indexOf(v) === i,
-        ),
+    // create new tokens
+    const tokens = (await authUtils.createTokenPair(
+      {
+        id,
+        email,
       },
-    },
-  });
+      keyStore.publicKey,
+      keyStore.privateKey,
+    )) as { accessToken: string; refreshToken: string };
 
-  return {
-    user: { id, email },
-    tokens,
-  };
+    // update key token table
+    await prisma.keyToken.update({
+      where: { id: keyStore.id },
+      data: {
+        refreshToken: tokens.refreshToken,
+        refreshTokenUsed: {
+          set: [...keyStore.refreshTokenUsed, refreshToken].filter(
+            (v, i, arr) => arr.indexOf(v) === i,
+          ),
+        },
+      },
+    });
+
+    return {
+      user: { id, email },
+      tokens,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
 
 const register = async (reqBody: {
@@ -74,7 +83,7 @@ const register = async (reqBody: {
   try {
     // check user existence
     const checkUser = await prisma.user.findFirst({
-      where: { email: reqBody.email },
+      where: { email: reqBody.email, isDestroyed: false },
     });
     if (checkUser) {
       throw new ApiError(StatusCodes.CONFLICT, "User already exists!");
@@ -90,13 +99,14 @@ const register = async (reqBody: {
         lastName: reqBody.lastName,
         email: reqBody.email,
         password: hashedPassword,
+        verifyToken: uuidV4(),
       },
     });
 
     if (newUser) {
       // get created user
       const getNewUser = await prisma.user.findUnique({
-        where: { id: newUser.id },
+        where: { id: newUser.id, isDestroyed: false },
       });
       if (!getNewUser) {
         throw new ApiError(
@@ -106,10 +116,56 @@ const register = async (reqBody: {
       }
 
       // send verification email to user
+      const verificationLink = `${WEBSITE_DOMAINS}/account/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const customSubject = "ADMIN EduLearn: Vui lòng xác minh email!";
+      const htmlContent = `
+  <h3>Đây là đường dẫn xác thực email:</h3>
+  <h3>${verificationLink}</h3>
+  <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+`;
+
+      await BrevoProvider.sendEmail({
+        recipientEmail: getNewUser.email,
+        subject: customSubject,
+        htmlContent,
+      });
 
       // return data
       return pickUser(getNewUser);
     }
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const verifyAccount = async (reqBody: { email: string; token: string }) => {
+  try {
+    // check user existence
+    const existingUser = await prisma.user.findUnique({
+      where: { email: reqBody.email, isDestroyed: false },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    if (existingUser.isVerified)
+      throw new ApiError(
+        StatusCodes.NOT_ACCEPTABLE,
+        "Your account is already activated!",
+      );
+    if (reqBody.token !== existingUser.verifyToken)
+      throw new ApiError(StatusCodes.NOT_ACCEPTABLE, "Token is invalid!");
+
+    // update user
+    const updateData = {
+      isVerified: true,
+      verifyToken: null,
+    };
+
+    const updatedUser = await prisma.user.update({
+      where: { id: existingUser.id },
+      data: updateData,
+    });
+
+    return pickUser(updatedUser);
   } catch (error: any) {
     throw new Error(error);
   }
@@ -125,7 +181,7 @@ const login = async (reqBody: { email: string; password: string }) => {
   try {
     // check user existence
     const checkUser = await prisma.user.findUnique({
-      where: { email: reqBody.email },
+      where: { email: reqBody.email, isDestroyed: false },
     });
     if (!checkUser) {
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -172,16 +228,103 @@ const login = async (reqBody: { email: string; password: string }) => {
   }
 };
 
+const updateProfile = async (
+  userId: number,
+  reqBody: UpdateProfile,
+  userAvatar = null,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId, isDestroyed: false },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    if (!existingUser.isVerified) {
+      throw new ApiError(
+        StatusCodes.UNAUTHORIZED,
+        "Your account is not active yet!",
+      );
+    }
+
+    let updateUser = existingUser;
+
+    if (userAvatar) {
+    } else if (reqBody.email) {
+    } else {
+      let hashedPassword = null;
+      if (reqBody.currentPassword && reqBody.newPassword) {
+        const isMatchedPassword = await bcrypt.compare(
+          reqBody.currentPassword,
+          existingUser.password,
+        );
+        if (!isMatchedPassword)
+          throw new ApiError(StatusCodes.UNAUTHORIZED, "Password not match!");
+
+        hashedPassword = await bcrypt.hash(reqBody.newPassword, 10);
+      }
+
+      updateUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          firstName: reqBody.firstName ?? existingUser.firstName,
+          lastName: reqBody.lastName ?? existingUser.lastName,
+          dateOfBirth: reqBody.dateOfBirth ?? existingUser.dateOfBirth,
+          phoneNumber: reqBody.phoneNumber ?? existingUser.phoneNumber,
+          password: hashedPassword ?? existingUser.password,
+        },
+      });
+    }
+
+    return pickUser(updateUser);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const registerLecturerProfile = async (
+  userId: number,
+  reqBody: RegisterLecturer,
+) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId, isDestroyed: false },
+    });
+    if (!existingUser)
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+
+    return await prisma.lecturerProfile.create({
+      data: {
+        lecturerId: userId,
+        resourceId: reqBody.resourceId,
+        gender: reqBody.gender,
+        nationality: reqBody.nationality,
+        professionalTitle: reqBody.professionalTitle,
+        beginStudies: reqBody.beginStudies,
+        highestDegree: reqBody.highestDegree,
+        bio: reqBody.bio,
+      },
+      include: {
+        lecturer: true,
+      },
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 const findByEmail = async ({ email }: { email: string }) => {
   return await prisma.user.findFirst({
-    where: { email },
+    where: { email, isDestroyed: false },
   });
 };
 
 export const userService = {
   register,
+  verifyAccount,
   login,
   logout,
   handleRefreshToken,
   findByEmail,
+  updateProfile,
+  registerLecturerProfile,
 };

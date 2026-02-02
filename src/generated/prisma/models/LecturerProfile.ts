@@ -57,6 +57,7 @@ export type LecturerProfileMinAggregateOutputType = {
   totalCourses: number | null
   avgRating: number | null
   bio: string | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -75,6 +76,7 @@ export type LecturerProfileMaxAggregateOutputType = {
   totalCourses: number | null
   avgRating: number | null
   bio: string | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -93,6 +95,7 @@ export type LecturerProfileCountAggregateOutputType = {
   totalCourses: number
   avgRating: number
   bio: number
+  isActive: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
@@ -131,6 +134,7 @@ export type LecturerProfileMinAggregateInputType = {
   totalCourses?: true
   avgRating?: true
   bio?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -149,6 +153,7 @@ export type LecturerProfileMaxAggregateInputType = {
   totalCourses?: true
   avgRating?: true
   bio?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -167,6 +172,7 @@ export type LecturerProfileCountAggregateInputType = {
   totalCourses?: true
   avgRating?: true
   bio?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -272,6 +278,7 @@ export type LecturerProfileGroupByOutputType = {
   totalCourses: number | null
   avgRating: number | null
   bio: string | null
+  isActive: boolean
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
@@ -313,6 +320,7 @@ export type LecturerProfileWhereInput = {
   totalCourses?: Prisma.IntNullableFilter<"LecturerProfile"> | number | null
   avgRating?: Prisma.FloatNullableFilter<"LecturerProfile"> | number | null
   bio?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
+  isActive?: Prisma.BoolFilter<"LecturerProfile"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LecturerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerProfile"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"LecturerProfile"> | boolean
@@ -332,6 +340,7 @@ export type LecturerProfileOrderByWithRelationInput = {
   totalCourses?: Prisma.SortOrderInput | Prisma.SortOrder
   avgRating?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -355,6 +364,7 @@ export type LecturerProfileWhereUniqueInput = Prisma.AtLeast<{
   totalCourses?: Prisma.IntNullableFilter<"LecturerProfile"> | number | null
   avgRating?: Prisma.FloatNullableFilter<"LecturerProfile"> | number | null
   bio?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
+  isActive?: Prisma.BoolFilter<"LecturerProfile"> | boolean
   createdAt?: Prisma.DateTimeFilter<"LecturerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerProfile"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"LecturerProfile"> | boolean
@@ -374,6 +384,7 @@ export type LecturerProfileOrderByWithAggregationInput = {
   totalCourses?: Prisma.SortOrderInput | Prisma.SortOrder
   avgRating?: Prisma.SortOrderInput | Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -400,6 +411,7 @@ export type LecturerProfileScalarWhereWithAggregatesInput = {
   totalCourses?: Prisma.IntNullableWithAggregatesFilter<"LecturerProfile"> | number | null
   avgRating?: Prisma.FloatNullableWithAggregatesFilter<"LecturerProfile"> | number | null
   bio?: Prisma.StringNullableWithAggregatesFilter<"LecturerProfile"> | string | null
+  isActive?: Prisma.BoolWithAggregatesFilter<"LecturerProfile"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LecturerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LecturerProfile"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"LecturerProfile"> | boolean
@@ -416,6 +428,7 @@ export type LecturerProfileCreateInput = {
   totalCourses?: number | null
   avgRating?: number | null
   bio?: string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -435,6 +448,7 @@ export type LecturerProfileUncheckedCreateInput = {
   totalCourses?: number | null
   avgRating?: number | null
   bio?: string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -451,6 +465,7 @@ export type LecturerProfileUpdateInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -470,6 +485,7 @@ export type LecturerProfileUncheckedUpdateInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -488,6 +504,7 @@ export type LecturerProfileCreateManyInput = {
   totalCourses?: number | null
   avgRating?: number | null
   bio?: string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -504,6 +521,7 @@ export type LecturerProfileUpdateManyMutationInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -522,6 +540,7 @@ export type LecturerProfileUncheckedUpdateManyInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -551,6 +570,7 @@ export type LecturerProfileCountOrderByAggregateInput = {
   totalCourses?: Prisma.SortOrder
   avgRating?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -578,6 +598,7 @@ export type LecturerProfileMaxOrderByAggregateInput = {
   totalCourses?: Prisma.SortOrder
   avgRating?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -596,6 +617,7 @@ export type LecturerProfileMinOrderByAggregateInput = {
   totalCourses?: Prisma.SortOrder
   avgRating?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -653,6 +675,7 @@ export type LecturerProfileCreateWithoutLecturerInput = {
   totalCourses?: number | null
   avgRating?: number | null
   bio?: string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -670,6 +693,7 @@ export type LecturerProfileUncheckedCreateWithoutLecturerInput = {
   totalCourses?: number | null
   avgRating?: number | null
   bio?: string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -702,6 +726,7 @@ export type LecturerProfileUpdateWithoutLecturerInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -719,6 +744,7 @@ export type LecturerProfileUncheckedUpdateWithoutLecturerInput = {
   totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -739,6 +765,7 @@ export type LecturerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   totalCourses?: boolean
   avgRating?: boolean
   bio?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
@@ -760,12 +787,13 @@ export type LecturerProfileSelectScalar = {
   totalCourses?: boolean
   avgRating?: boolean
   bio?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type LecturerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lecturerId" | "resourceId" | "gender" | "nationality" | "professionalTitle" | "beginStudies" | "highestDegree" | "totalStudents" | "totalCourses" | "avgRating" | "bio" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lecturerProfile"]>
+export type LecturerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lecturerId" | "resourceId" | "gender" | "nationality" | "professionalTitle" | "beginStudies" | "highestDegree" | "totalStudents" | "totalCourses" | "avgRating" | "bio" | "isActive" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lecturerProfile"]>
 export type LecturerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -788,6 +816,7 @@ export type $LecturerProfilePayload<ExtArgs extends runtime.Types.Extensions.Int
     totalCourses: number | null
     avgRating: number | null
     bio: string | null
+    isActive: boolean
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
@@ -1173,6 +1202,7 @@ export interface LecturerProfileFieldRefs {
   readonly totalCourses: Prisma.FieldRef<"LecturerProfile", 'Int'>
   readonly avgRating: Prisma.FieldRef<"LecturerProfile", 'Float'>
   readonly bio: Prisma.FieldRef<"LecturerProfile", 'String'>
+  readonly isActive: Prisma.FieldRef<"LecturerProfile", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"LecturerProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"LecturerProfile", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"LecturerProfile", 'Boolean'>
