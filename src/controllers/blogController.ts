@@ -1,16 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import { StatusCodes } from "http-status-codes";
 import { blogService } from "@/services/blogService.js";
-import { blogValidation } from "@/validations/blogValidation.js";
-import ApiError from "@/utils/ApiError.js";
-
-const validateData = (schema: any, data: any) => {
-  const { error } = schema.validate(data, { abortEarly: false });
-  if (error) {
-    const errorMessage = error.details.map((detail: any) => detail.message).join(", ");
-    throw new ApiError(StatusCodes.BAD_REQUEST, errorMessage);
-  }
-};
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
 // BLOG CATEGORY CONTROLLER
 const createBlogCategory = async (
@@ -19,17 +9,24 @@ const createBlogCategory = async (
   next: NextFunction,
 ) => {
   try {
-    validateData(blogValidation.createCategory, req.body);
-    const result = await blogService.createCategory(req.body);
+    const result = await blogService.createBlogCategory(req.body);
     res.status(StatusCodes.CREATED).json(result);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
-const getAllCategories = async (req: Request, res: Response, next: NextFunction) => {
+const getAllBlogCategories = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const result = await blogService.getAllCategories();
+    const result = await blogService.getAllBlogCategories();
     res.status(StatusCodes.OK).json(result);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
 const updateBlogCategory = async (
@@ -55,35 +52,12 @@ const deleteBlogCategory = async (
 ) => {
   try {
     const { id } = req.params;
-    validateData(blogValidation.updateCategory, req.body);
-    const result = await blogService.updateCategory(Number(id), req.body);
+
+    const result = await blogService.deleteBlogCategory(Number(id));
     res.status(StatusCodes.OK).json(result);
-  } catch (error) { next(error); }
-};
-
-const deleteCategory = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    await blogService.deleteCategory(Number(id));
-    res.status(StatusCodes.OK).json({ message: "Xóa danh mục thành công" });
-  } catch (error) { next(error); }
-};
-
-// --- POST & COMMENT CONTROLLERS (Giữ nguyên) ---
-const createPost = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const userId = (req as any).user.userId;
-    validateData(blogValidation.createPost, req.body);
-    const result = await blogService.createPost(userId, req.body);
-    res.status(StatusCodes.CREATED).json(result);
-  } catch (error) { next(error); }
-};
-
-const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const result = await blogService.getAllPosts(req.query);
-    res.status(StatusCodes.OK).json(result);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 };
 
 // BLOG POST CONTROLLER
