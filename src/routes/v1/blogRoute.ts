@@ -4,35 +4,33 @@ import { verifyToken } from "@/middlewares/authMiddleware.js";
 
 const Router = express.Router();
 
-// ==========================
-// 1. ROUTES CHO CATEGORY
-// ==========================
-// Public
-Router.get("/categories", blogController.getAllCategories);
+// BLOG CATEGORY ROUTE
+Router.route("/categories")
+  .get(blogController.getAllBlogCategories)
+  .post(blogValidation.createBlogCategory, blogController.createBlogCategory);
 
-// Private
-Router.post("/categories", verifyToken, blogController.createCategory);
-Router.put("/categories/:id", verifyToken, blogController.updateCategory);
-Router.delete("/categories/:id", verifyToken, blogController.deleteCategory);
+Router.route("/categories/:id")
+  .put(blogValidation.updateBlogCategory, blogController.updateBlogCategory)
+  .delete(blogValidation.deleteBlogCategory, blogController.deleteBlogCategory);
 
+// BLOG POST ROUTE
+Router.route("/blogPost")
+  .get(blogController.getAllPosts)
+  .post(blogValidation.createPost, blogController.createPost);
 
-// ==========================
-// 2. ROUTES CHO COMMENT
-// ==========================
-Router.post("/comments", verifyToken, blogController.createComment);
-Router.delete("/comments/:id", verifyToken, blogController.deleteComment);
+Router.route("/blogPost/:id")
+  .get(blogController.getPostDetail)
+  .put(blogValidation.updatePost, blogController.updatePost)
+  .delete(blogValidation.deletePost, blogController.deletePost);
 
+// BLOG COMMENT ROUTE
+Router.route("/blogComments").post(
+  blogValidation.createComment,
+  blogController.createComment,
+);
 
-// ==========================
-// 3. ROUTES CHO POST
-// ==========================
-// Public
-Router.get("/", blogController.getAllPosts);
-Router.get("/:id", blogController.getPostDetail);
-
-// Private
-Router.post("/", verifyToken, blogController.createPost);
-Router.put("/:id", verifyToken, blogController.updatePost);
-Router.delete("/:id", verifyToken, blogController.deletePost);
+Router.route("/blogComments/:id")
+  .put(blogValidation.updateComment, blogController.updateComment)
+  .delete(blogValidation.deleteComment, blogController.deleteComment);
 
 export const blogRoute = Router;

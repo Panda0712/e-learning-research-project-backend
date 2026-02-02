@@ -1,26 +1,74 @@
+import ApiError from "@/utils/ApiError.js";
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import Joi from "joi";
 
-// --- VALIDATION CATEGORY ---
-const createCategory = Joi.object({
-  name: Joi.string().required().min(2).messages({
-    "string.empty": "Tên danh mục không được để trống",
-  }),
-});
+// CATEGORY VALIDATION
+const createBlogCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    name: Joi.string().required().min(2).max(50).trim().strict(),
+    slug: Joi.string()
+      .required()
+      .min(2)
+      .max(50)
+      .trim()
+      .lowercase()
+      .pattern(/^[a-z0-9-]+$/)
+      .message("Slug must be lowercase and alphanumeric"),
+  });
 
 const updateCategory = Joi.object({
   name: Joi.string().min(2).optional(),
 });
 
-// --- VALIDATION POST ---
-const createPost = Joi.object({
-  title: Joi.string().required().min(5).max(255).messages({
-    "string.empty": "Tiêu đề không được để trống",
-  }),
-  content: Joi.string().required().min(10),
-  thumbnail: Joi.string().uri().optional().allow(null, ""),
-  tags: Joi.array().items(Joi.string()).optional(),
-  categoryId: Joi.number().integer().optional(),
-});
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const updateBlogCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    name: Joi.string().required().min(2).max(50).trim().strict(),
+    slug: Joi.string()
+      .required()
+      .min(2)
+      .max(50)
+      .trim()
+      .lowercase()
+      .pattern(/^[a-z0-9-]+$/)
+      .message("Slug must be lowercase and alphanumeric"),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const deleteBlogCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive(),
+  });
 
 const updatePost = Joi.object({
   title: Joi.string().min(5).max(255).optional(),
@@ -40,10 +88,144 @@ const createComment = Joi.object({
   parentId: Joi.number().integer().optional().allow(null),
 });
 
+// POST VALIDATION
+const createPost = async (req: Request, res: Response, next: NextFunction) => {
+  const correctCondition = Joi.object({
+    title: Joi.string().required().min(2).max(50).trim().strict(),
+    slug: Joi.string()
+      .required()
+      .min(2)
+      .max(50)
+      .trim()
+      .lowercase()
+      .pattern(/^[a-z0-9-]+$/)
+      .message("Slug must be lowercase and alphanumeric"),
+    content: Joi.string().required().min(2).max(5000).trim().strict(),
+    thumbnail: Joi.string().uri().optional().allow(null, ""),
+    categoryId: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const updatePost = async (req: Request, res: Response, next: NextFunction) => {
+  const correctCondition = Joi.object({
+    title: Joi.string().required().min(2).max(50).trim().strict(),
+    content: Joi.string().required().min(2).max(5000).trim().strict(),
+    thumbnail: Joi.string().uri().optional().allow(null, ""),
+    categoryId: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const deletePost = async (req: Request, res: Response, next: NextFunction) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.params, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+// COMMENT VALIDATION
+const createComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    content: Joi.string().required().min(2).max(5000).trim().strict(),
+    blogId: Joi.number().required().positive(),
+    parentId: Joi.number().integer().optional().allow(null),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const updateComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    content: Joi.string().required().min(2).max(5000).trim().strict(),
+    blogId: Joi.number().required().positive(),
+    parentId: Joi.number().integer().optional().allow(null),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const deleteComment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.params, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const blogValidation = {
-  createCategory,
-  updateCategory,
+  createBlogCategory,
+  updateBlogCategory,
+  deleteBlogCategory,
+
   createPost,
   updatePost,
+  deletePost,
+
   createComment,
+  updateComment,
+  deleteComment,
 };
