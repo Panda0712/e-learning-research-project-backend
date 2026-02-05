@@ -76,6 +76,7 @@ export const ModelName = {
   BlogComment: 'BlogComment',
   Wishlist: 'Wishlist',
   Cart: 'Cart',
+  CartItem: 'CartItem',
   Transaction: 'Transaction',
   TransactionStudent: 'TransactionStudent',
   LecturerProfile: 'LecturerProfile',
@@ -110,6 +111,7 @@ export const UserScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
+  verifyToken: 'verifyToken',
   isVerified: 'isVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -171,6 +173,7 @@ export type CourseCategoryScalarFieldEnum = (typeof CourseCategoryScalarFieldEnu
 
 export const CourseFAQScalarFieldEnum = {
   id: 'id',
+  courseId: 'courseId',
   question: 'question',
   answer: 'answer',
   createdAt: 'createdAt',
@@ -382,6 +385,7 @@ export const SubmissionScalarFieldEnum = {
   studentId: 'studentId',
   score: 'score',
   status: 'status',
+  feedback: 'feedback',
   submittedAt: 'submittedAt',
   isDestroyed: 'isDestroyed'
 } as const
@@ -400,6 +404,7 @@ export const AssessmentScalarFieldEnum = {
   totalSubmissions: 'totalSubmissions',
   averageScore: 'averageScore',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -440,6 +445,7 @@ export const BlogCommentScalarFieldEnum = {
   blogId: 'blogId',
   userId: 'userId',
   content: 'content',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -466,15 +472,25 @@ export type WishlistScalarFieldEnum = (typeof WishlistScalarFieldEnum)[keyof typ
 export const CartScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  courseId: 'courseId',
   courseName: 'courseName',
   lecturer: 'lecturer',
-  totalPrice: 'totalPrice',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt',
   isDestroyed: 'isDestroyed'
 } as const
 
 export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof CartScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  courseId: 'courseId',
+  price: 'price',
+  createdAt: 'createdAt'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const TransactionScalarFieldEnum = {
@@ -520,6 +536,7 @@ export const LecturerProfileScalarFieldEnum = {
   totalCourses: 'totalCourses',
   avgRating: 'avgRating',
   bio: 'bio',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -614,7 +631,8 @@ export const UserOrderByRelevanceFieldEnum = {
   lastName: 'lastName',
   avatar: 'avatar',
   phoneNumber: 'phoneNumber',
-  role: 'role'
+  role: 'role',
+  verifyToken: 'verifyToken'
 } as const
 
 export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -770,7 +788,8 @@ export type CouponCategoryOrderByRelevanceFieldEnum = (typeof CouponCategoryOrde
 
 
 export const SubmissionOrderByRelevanceFieldEnum = {
-  status: 'status'
+  status: 'status',
+  feedback: 'feedback'
 } as const
 
 export type SubmissionOrderByRelevanceFieldEnum = (typeof SubmissionOrderByRelevanceFieldEnum)[keyof typeof SubmissionOrderByRelevanceFieldEnum]

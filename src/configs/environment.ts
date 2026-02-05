@@ -6,6 +6,9 @@ export const env = {
   MYSQL_USER: process.env.MYSQL_USER,
   MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
 
+  WEBSITE_DOMAIN_DEVELOPMENT: process.env.WEBSITE_DOMAIN_DEVELOPMENT,
+  WEBSITE_DOMAIN_PRODUCTION: process.env.WEBSITE_DOMAIN_PRODUCTION,
+
   APP_HOST: process.env.APP_HOST,
   APP_PORT: process.env.APP_PORT,
 
@@ -20,4 +23,13 @@ export const env = {
   DATABASE_PORT: process.env.DATABASE_PORT,
 
   PORT: process.env.PORT,
+
+  BREVO_API_KEY: process.env.BREVO_API_KEY,
+  ADMIN_EMAIL_ADDRESS: process.env.ADMIN_EMAIL_ADDRESS,
+  ADMIN_EMAIL_NAME: process.env.ADMIN_EMAIL_NAME,
+
+  RESEND_API_KEY: process.env.RESEND_API_KEY,
+  RESEND_ADMIN_SENDER_EMAIL: process.env.RESEND_ADMIN_SENDER_EMAIL,
+
+  MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,
 };
