@@ -555,6 +555,7 @@ export const LecturerPayoutScalarFieldEnum = {
   payoutMethod: 'payoutMethod',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  status: 'status',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -875,7 +876,8 @@ export type LecturerProfileOrderByRelevanceFieldEnum = (typeof LecturerProfileOr
 
 export const LecturerPayoutOrderByRelevanceFieldEnum = {
   currency: 'currency',
-  payoutMethod: 'payoutMethod'
+  payoutMethod: 'payoutMethod',
+  status: 'status'
 } as const
 
 export type LecturerPayoutOrderByRelevanceFieldEnum = (typeof LecturerPayoutOrderByRelevanceFieldEnum)[keyof typeof LecturerPayoutOrderByRelevanceFieldEnum]

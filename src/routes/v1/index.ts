@@ -7,6 +7,7 @@ import { courseRoute } from "./courseRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
+import { dashboardRoute } from "./dashboardRoute.js";
 import { blogPostRoute } from "./blogRoute.js";
 import { blogCommentRoute } from "./blogCommentRoute.js";
 
@@ -24,6 +25,8 @@ Router.get("/status", (req: Request, res: Response) => {
 // user route
 Router.use("/users", userRoute);
 
+// Dashboard Route
+Router.use("/dashboard", dashboardRoute);
 // Blog Post
 Router.use("/blog-posts", blogPostRoute);
 
