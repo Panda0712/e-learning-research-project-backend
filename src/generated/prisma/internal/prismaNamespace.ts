@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   KeyToken: 'KeyToken',
+  Role: 'Role',
   Course: 'Course',
   CourseCategory: 'CourseCategory',
   CourseFAQ: 'CourseFAQ',
@@ -431,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue"
+    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -564,6 +565,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.KeyTokenCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.KeyTokenCountAggregateOutputType> | number
+        }
+      }
+    }
+    Role: {
+      payload: Prisma.$RolePayload<ExtArgs>
+      fields: Prisma.RoleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        findFirst: {
+          args: Prisma.RoleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        findMany: {
+          args: Prisma.RoleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>[]
+        }
+        create: {
+          args: Prisma.RoleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        createMany: {
+          args: Prisma.RoleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.RoleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        update: {
+          args: Prisma.RoleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        deleteMany: {
+          args: Prisma.RoleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.RoleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RolePayload>
+        }
+        aggregate: {
+          args: Prisma.RoleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRole>
+        }
+        groupBy: {
+          args: Prisma.RoleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoleCountAggregateOutputType> | number
         }
       }
     }
@@ -2622,6 +2689,19 @@ export const KeyTokenScalarFieldEnum = {
 export type KeyTokenScalarFieldEnum = (typeof KeyTokenScalarFieldEnum)[keyof typeof KeyTokenScalarFieldEnum]
 
 
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  permissions: 'permissions',
+  inherits: 'inherits',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
 export const CourseScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
@@ -3151,6 +3231,13 @@ export const KeyTokenOrderByRelevanceFieldEnum = {
 export type KeyTokenOrderByRelevanceFieldEnum = (typeof KeyTokenOrderByRelevanceFieldEnum)[keyof typeof KeyTokenOrderByRelevanceFieldEnum]
 
 
+export const RoleOrderByRelevanceFieldEnum = {
+  name: 'name'
+} as const
+
+export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
+
+
 export const CourseOrderByRelevanceFieldEnum = {
   thumbnail: 'thumbnail',
   name: 'name',
@@ -3530,6 +3617,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   keyToken?: Prisma.KeyTokenOmit
+  role?: Prisma.RoleOmit
   course?: Prisma.CourseOmit
   courseCategory?: Prisma.CourseCategoryOmit
   courseFAQ?: Prisma.CourseFAQOmit

@@ -2,6 +2,7 @@ import { User } from "@/types/user.type.js";
 import { StatusCodes } from "http-status-codes";
 import _ from "lodash";
 import ApiError from "./ApiError.js";
+import { prisma } from "@/lib/prisma.js";
 
 // create a slug based on a string
 export const slugify = (val: string) => {
@@ -117,4 +118,33 @@ export const getDateIndex = (date: Date, startDate: Date, groupBy: string) => {
   if (groupBy === "month") return date.getMonth();
   const diffTime = Math.abs(date.getTime() - startDate.getTime());
   return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+};
+
+export const getPermissionsFromRole = async (roleName: string) => {
+  try {
+    const role = await prisma.role.findUnique({
+      where: { name: roleName, isDestroyed: false },
+    });
+    if (!role) return [];
+    if (typeof role.permissions !== "string") return [];
+
+    let permissions = new Set(JSON.parse(role.permissions));
+    const inheritsArray =
+      typeof role.inherits === "string" ? JSON.parse(role.inherits) : [];
+
+    if (inheritsArray.length > 0) {
+      for (const inheritRoleName of inheritsArray) {
+        const inheritedPermissions =
+          await getPermissionsFromRole(inheritRoleName);
+        inheritedPermissions?.forEach((i) => permissions.add(i));
+      }
+    }
+
+    return Array.from(permissions);
+  } catch (error: any) {
+    throw new ApiError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      "Oops! Something went wrong!",
+    );
+  }
 };

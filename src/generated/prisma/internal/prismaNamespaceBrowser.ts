@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   KeyToken: 'KeyToken',
+  Role: 'Role',
   Course: 'Course',
   CourseCategory: 'CourseCategory',
   CourseFAQ: 'CourseFAQ',
@@ -135,6 +136,19 @@ export const KeyTokenScalarFieldEnum = {
 } as const
 
 export type KeyTokenScalarFieldEnum = (typeof KeyTokenScalarFieldEnum)[keyof typeof KeyTokenScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  permissions: 'permissions',
+  inherits: 'inherits',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
 
 
 export const CourseScalarFieldEnum = {
@@ -664,6 +678,13 @@ export const KeyTokenOrderByRelevanceFieldEnum = {
 } as const
 
 export type KeyTokenOrderByRelevanceFieldEnum = (typeof KeyTokenOrderByRelevanceFieldEnum)[keyof typeof KeyTokenOrderByRelevanceFieldEnum]
+
+
+export const RoleOrderByRelevanceFieldEnum = {
+  name: 'name'
+} as const
+
+export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
 
 
 export const CourseOrderByRelevanceFieldEnum = {

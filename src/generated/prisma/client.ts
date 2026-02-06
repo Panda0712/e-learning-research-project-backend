@@ -50,6 +50,11 @@ export type User = Prisma.UserModel
  */
 export type KeyToken = Prisma.KeyTokenModel
 /**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
  * Model Course
  * 
  */
