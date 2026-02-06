@@ -6,11 +6,13 @@ class KeyTokenService {
     publicKey,
     privateKey,
     refreshToken = null,
+    kid,
   }: {
     userId: number;
     publicKey: string;
     privateKey: string;
     refreshToken?: string | null;
+    kid: string;
   }) => {
     const existingKeyToken = await prisma.keyToken.findUnique({
       where: { userId, isDestroyed: false },
@@ -30,6 +32,7 @@ class KeyTokenService {
         privateKey,
         refreshToken,
         refreshTokenUsed: [],
+        kid,
       },
     });
 

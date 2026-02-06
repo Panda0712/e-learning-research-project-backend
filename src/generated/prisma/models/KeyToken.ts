@@ -42,6 +42,7 @@ export type KeyTokenMinAggregateOutputType = {
   publicKey: string | null
   privateKey: string | null
   refreshToken: string | null
+  kid: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -53,6 +54,7 @@ export type KeyTokenMaxAggregateOutputType = {
   publicKey: string | null
   privateKey: string | null
   refreshToken: string | null
+  kid: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -65,6 +67,7 @@ export type KeyTokenCountAggregateOutputType = {
   privateKey: number
   refreshToken: number
   refreshTokenUsed: number
+  kid: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
@@ -88,6 +91,7 @@ export type KeyTokenMinAggregateInputType = {
   publicKey?: true
   privateKey?: true
   refreshToken?: true
+  kid?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -99,6 +103,7 @@ export type KeyTokenMaxAggregateInputType = {
   publicKey?: true
   privateKey?: true
   refreshToken?: true
+  kid?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -111,6 +116,7 @@ export type KeyTokenCountAggregateInputType = {
   privateKey?: true
   refreshToken?: true
   refreshTokenUsed?: true
+  kid?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -210,6 +216,7 @@ export type KeyTokenGroupByOutputType = {
   privateKey: string
   refreshToken: string | null
   refreshTokenUsed: runtime.JsonValue
+  kid: string
   createdAt: Date
   updatedAt: Date
   isDestroyed: boolean
@@ -245,6 +252,7 @@ export type KeyTokenWhereInput = {
   privateKey?: Prisma.StringFilter<"KeyToken"> | string
   refreshToken?: Prisma.StringNullableFilter<"KeyToken"> | string | null
   refreshTokenUsed?: Prisma.JsonFilter<"KeyToken">
+  kid?: Prisma.StringFilter<"KeyToken"> | string
   createdAt?: Prisma.DateTimeFilter<"KeyToken"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KeyToken"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"KeyToken"> | boolean
@@ -258,6 +266,7 @@ export type KeyTokenOrderByWithRelationInput = {
   privateKey?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
   refreshTokenUsed?: Prisma.SortOrder
+  kid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -275,6 +284,7 @@ export type KeyTokenWhereUniqueInput = Prisma.AtLeast<{
   privateKey?: Prisma.StringFilter<"KeyToken"> | string
   refreshToken?: Prisma.StringNullableFilter<"KeyToken"> | string | null
   refreshTokenUsed?: Prisma.JsonFilter<"KeyToken">
+  kid?: Prisma.StringFilter<"KeyToken"> | string
   createdAt?: Prisma.DateTimeFilter<"KeyToken"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"KeyToken"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"KeyToken"> | boolean
@@ -288,6 +298,7 @@ export type KeyTokenOrderByWithAggregationInput = {
   privateKey?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
   refreshTokenUsed?: Prisma.SortOrder
+  kid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -308,6 +319,7 @@ export type KeyTokenScalarWhereWithAggregatesInput = {
   privateKey?: Prisma.StringWithAggregatesFilter<"KeyToken"> | string
   refreshToken?: Prisma.StringNullableWithAggregatesFilter<"KeyToken"> | string | null
   refreshTokenUsed?: Prisma.JsonWithAggregatesFilter<"KeyToken">
+  kid?: Prisma.StringWithAggregatesFilter<"KeyToken"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"KeyToken"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"KeyToken"> | Date | string
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"KeyToken"> | boolean
@@ -318,6 +330,7 @@ export type KeyTokenCreateInput = {
   privateKey: string
   refreshToken?: string | null
   refreshTokenUsed: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid: string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
@@ -331,6 +344,7 @@ export type KeyTokenUncheckedCreateInput = {
   privateKey: string
   refreshToken?: string | null
   refreshTokenUsed: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid: string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
@@ -341,6 +355,7 @@ export type KeyTokenUpdateInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -354,6 +369,7 @@ export type KeyTokenUncheckedUpdateInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -366,6 +382,7 @@ export type KeyTokenCreateManyInput = {
   privateKey: string
   refreshToken?: string | null
   refreshTokenUsed: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid: string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
@@ -376,6 +393,7 @@ export type KeyTokenUpdateManyMutationInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -388,6 +406,7 @@ export type KeyTokenUncheckedUpdateManyInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -411,6 +430,7 @@ export type KeyTokenCountOrderByAggregateInput = {
   privateKey?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
   refreshTokenUsed?: Prisma.SortOrder
+  kid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -427,6 +447,7 @@ export type KeyTokenMaxOrderByAggregateInput = {
   publicKey?: Prisma.SortOrder
   privateKey?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
+  kid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -438,6 +459,7 @@ export type KeyTokenMinOrderByAggregateInput = {
   publicKey?: Prisma.SortOrder
   privateKey?: Prisma.SortOrder
   refreshToken?: Prisma.SortOrder
+  kid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -485,6 +507,7 @@ export type KeyTokenCreateWithoutUserInput = {
   privateKey: string
   refreshToken?: string | null
   refreshTokenUsed: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid: string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
@@ -496,6 +519,7 @@ export type KeyTokenUncheckedCreateWithoutUserInput = {
   privateKey: string
   refreshToken?: string | null
   refreshTokenUsed: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid: string
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
@@ -522,6 +546,7 @@ export type KeyTokenUpdateWithoutUserInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -533,6 +558,7 @@ export type KeyTokenUncheckedUpdateWithoutUserInput = {
   privateKey?: Prisma.StringFieldUpdateOperationsInput | string
   refreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   refreshTokenUsed?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  kid?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -547,6 +573,7 @@ export type KeyTokenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   privateKey?: boolean
   refreshToken?: boolean
   refreshTokenUsed?: boolean
+  kid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
@@ -562,12 +589,13 @@ export type KeyTokenSelectScalar = {
   privateKey?: boolean
   refreshToken?: boolean
   refreshTokenUsed?: boolean
+  kid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type KeyTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "publicKey" | "privateKey" | "refreshToken" | "refreshTokenUsed" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["keyToken"]>
+export type KeyTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "publicKey" | "privateKey" | "refreshToken" | "refreshTokenUsed" | "kid" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["keyToken"]>
 export type KeyTokenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -584,6 +612,7 @@ export type $KeyTokenPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     privateKey: string
     refreshToken: string | null
     refreshTokenUsed: runtime.JsonValue
+    kid: string
     createdAt: Date
     updatedAt: Date
     isDestroyed: boolean
@@ -963,6 +992,7 @@ export interface KeyTokenFieldRefs {
   readonly privateKey: Prisma.FieldRef<"KeyToken", 'String'>
   readonly refreshToken: Prisma.FieldRef<"KeyToken", 'String'>
   readonly refreshTokenUsed: Prisma.FieldRef<"KeyToken", 'Json'>
+  readonly kid: Prisma.FieldRef<"KeyToken", 'String'>
   readonly createdAt: Prisma.FieldRef<"KeyToken", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"KeyToken", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"KeyToken", 'Boolean'>

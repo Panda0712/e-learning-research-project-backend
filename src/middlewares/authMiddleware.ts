@@ -17,41 +17,42 @@ const isAuthorized = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const clientAccessToken = req.cookies?.accessToken;
-  const clientRefreshToken = req.cookies?.refreshToken;
+  const accessToken = req.cookies?.accessToken;
 
-  if (!clientAccessToken || !clientRefreshToken) {
+  if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
     return;
   }
 
   try {
-    // check key token data
+    // decode token
+    const decoded = authUtils.decodeToken(accessToken);
+
+    if (!decoded) {
+      next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
+      return;
+    }
+    if (!decoded.kid) {
+      next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
+      return;
+    }
+
+    // check kid and look up key token model
     const keyToken = await prisma.keyToken.findFirst({
-      where: { refreshToken: clientRefreshToken },
+      where: { kid: decoded.kid, isDestroyed: false },
     });
     if (!keyToken) {
       next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
       return;
     }
 
-    // check refresh token is included in the refreshTokenUsed array
-    const refreshTokenUsed =
-      typeof keyToken.refreshTokenUsed === "string"
-        ? JSON.parse(keyToken.refreshTokenUsed)
-        : [];
-    if (refreshTokenUsed.includes(clientRefreshToken)) {
-      next(new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!"));
-      return;
-    }
-
-    // decode accessToken
-    const accessTokenDecoded = await authUtils.verifyToken(
-      clientAccessToken,
-      keyToken.publicKey,
+    // verify accessToken
+    const jwtDecoded = await authUtils.verifyToken(
+      accessToken,
+      keyToken?.publicKey,
     );
 
-    req.jwtDecoded = accessTokenDecoded;
+    req.jwtDecoded = jwtDecoded;
 
     next();
   } catch (error: any) {

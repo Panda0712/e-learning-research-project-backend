@@ -7,7 +7,7 @@ import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
 import { WEBSITE_DOMAINS } from "@/utils/constants.js";
-import { pickUser } from "@/utils/formatters.js";
+import { pickUser } from "@/utils/helpers.js";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
@@ -24,7 +24,7 @@ const handleRefreshToken = async ({
   keyStore: KeyStore;
 }) => {
   try {
-    const { id, email } = user;
+    const { id, email, role } = user;
 
     // check refreshTokenUsed array
     if (keyStore.refreshTokenUsed.includes(refreshToken)) {
@@ -47,6 +47,8 @@ const handleRefreshToken = async ({
       {
         id,
         email,
+        role,
+        kid: keyStore.kid,
       },
       keyStore.publicKey,
       keyStore.privateKey,
@@ -66,7 +68,7 @@ const handleRefreshToken = async ({
     });
 
     return {
-      user: { id, email },
+      user: { id, email, role, kid: keyStore.kid },
       tokens,
     };
   } catch (error: any) {
@@ -199,11 +201,16 @@ const login = async (reqBody: { email: string; password: string }) => {
     const publicKey = crypto.randomBytes(64).toString("hex");
     const privateKey = crypto.randomBytes(64).toString("hex");
 
+    // create kid
+    const kid = uuidV4();
+
     // generate access and refreshToken based on public and private key
     const tokens = (await authUtils.createTokenPair(
       {
         id: checkUser.id,
         email: checkUser.email,
+        role: checkUser.role,
+        kid,
       },
       publicKey,
       privateKey,
@@ -215,6 +222,7 @@ const login = async (reqBody: { email: string; password: string }) => {
       refreshToken: tokens.refreshToken,
       publicKey,
       privateKey,
+      kid,
     });
 
     // return data
@@ -222,6 +230,7 @@ const login = async (reqBody: { email: string; password: string }) => {
       ...pickUser(checkUser),
       refreshToken: tokens.refreshToken,
       accessToken: tokens.accessToken,
+      kid,
     };
   } catch (error: any) {
     throw new Error(error);
