@@ -1,27 +1,18 @@
-import { Request, Response, NextFunction } from "express";
-import { StatusCodes } from "http-status-codes";
-import { dashboardService } from "@/services/dashboardService.js"; 
-import { dashboardValidation } from "@/validations/dashboardValidation.js";
+import { dashboardService } from "@/services/dashboardService.js";
 import ApiError from "@/utils/ApiError.js";
-
-// --- HELPER: VALIDATE QUERY PARAMS ---
-const validateQuery = (schema: any, query: any) => {
-  const { error } = schema.validate(query, { abortEarly: false });
-  if (error) {
-    const errorMessage = error.details.map((detail: any) => detail.message).join(", ");
-    throw new ApiError(StatusCodes.BAD_REQUEST, errorMessage);
-  }
-};
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 
 // ===========================
 // ADMIN DASHBOARD
 // ===========================
 
-// 1. Tổng quan
-const getOverview = async (req: Request, res: Response, next: NextFunction) => {
+const getAdminOverview = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    // validateQuery(dashboardValidation.getGeneralStats, req.query);
-
     const data = await dashboardService.getAdminStats();
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
@@ -29,20 +20,20 @@ const getOverview = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// 2. Biểu đồ Admin
-const getCharts = async (req: Request, res: Response, next: NextFunction) => {
+const getAdminCharts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    // Validate đầu vào
-    validateQuery(dashboardValidation.getRevenueChart, req.query);
-
     const { period, from, to } = req.query;
 
     const data = await dashboardService.getAdminCharts(
-      period as string, 
-      from as string, 
-      to as string
+      period as string,
+      from as string,
+      to as string,
     );
-    
+
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
     next(error);
@@ -53,45 +44,49 @@ const getCharts = async (req: Request, res: Response, next: NextFunction) => {
 // LECTURER DASHBOARD
 // ===========================
 
-// 3. Tổng quan Giảng viên
-const getLecturerOverview = async (req: Request, res: Response, next: NextFunction) => {
+const getLecturerOverview = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const user = (req as any).user;
-    if (!user || !user.id) throw new ApiError(StatusCodes.UNAUTHORIZED, "Bạn chưa đăng nhập!");
+    const userId = req.jwtDecoded?.id;
+    if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
-    const data = await dashboardService.getLecturerStats(Number(user.id));
+    const data = await dashboardService.getLecturerStats(Number(userId));
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-// 4. Biểu đồ Giảng viên
-const getLecturerCharts = async (req: Request, res: Response, next: NextFunction) => {
+const getLecturerCharts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
-    const user = (req as any).user;
-    if (!user || !user.id) throw new ApiError(StatusCodes.UNAUTHORIZED, "Bạn chưa đăng nhập!");
-
-    validateQuery(dashboardValidation.getRevenueChart, req.query);
+    const userId = req.jwtDecoded?.id;
+    if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
     const { period, from, to } = req.query;
 
     const data = await dashboardService.getLecturerCharts(
-        Number(user.id), 
-        period as string, 
-        from as string, 
-        to as string
+      Number(userId),
+      period as string,
+      from as string,
+      to as string,
     );
-    
+
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
     next(error);
   }
 };
 
-export const dashboardController = { 
-  getOverview, 
-  getCharts, 
-  getLecturerOverview, 
-  getLecturerCharts 
+export const dashboardController = {
+  getAdminOverview,
+  getAdminCharts,
+  getLecturerOverview,
+  getLecturerCharts,
 };

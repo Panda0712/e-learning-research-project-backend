@@ -3066,6 +3066,7 @@ export type UserCreateWithoutRevenuesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -3079,7 +3080,7 @@ export type UserCreateWithoutRevenuesInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
@@ -3097,6 +3098,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   phoneNumber?: string | null
   dateOfBirth?: Date | string | null
   role?: string
+  verifyToken?: string | null
   isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string | null
@@ -3110,7 +3112,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
   wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
-  carts?: Prisma.CartUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   lecturerResources?: Prisma.LecturerResourceUncheckedCreateNestedManyWithoutLecturerInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -3143,6 +3145,7 @@ export type UserUpdateWithoutRevenuesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3156,7 +3159,7 @@ export type UserUpdateWithoutRevenuesInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
@@ -3174,6 +3177,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3187,7 +3191,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
-  carts?: Prisma.CartUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   lecturerResources?: Prisma.LecturerResourceUncheckedUpdateManyWithoutLecturerNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput

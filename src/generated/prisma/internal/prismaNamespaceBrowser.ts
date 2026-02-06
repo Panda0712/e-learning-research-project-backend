@@ -128,6 +128,7 @@ export const KeyTokenScalarFieldEnum = {
   privateKey: 'privateKey',
   refreshToken: 'refreshToken',
   refreshTokenUsed: 'refreshTokenUsed',
+  kid: 'kid',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -658,7 +659,8 @@ export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 export const KeyTokenOrderByRelevanceFieldEnum = {
   publicKey: 'publicKey',
   privateKey: 'privateKey',
-  refreshToken: 'refreshToken'
+  refreshToken: 'refreshToken',
+  kid: 'kid'
 } as const
 
 export type KeyTokenOrderByRelevanceFieldEnum = (typeof KeyTokenOrderByRelevanceFieldEnum)[keyof typeof KeyTokenOrderByRelevanceFieldEnum]

@@ -5,6 +5,7 @@ export interface KeyStore {
   privateKey: string;
   refreshTokenUsed: string[];
   refreshToken?: string | null;
+  kid: string;
   createdAt: Date;
   updatedAt?: Date | null;
   _destroy?: boolean;

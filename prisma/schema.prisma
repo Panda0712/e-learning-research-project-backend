@@ -55,6 +55,7 @@ model KeyToken {
   privateKey       String
   refreshToken     String?
   refreshTokenUsed Json
+  kid              String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   isDestroyed      Boolean  @default(false)
@@ -79,9 +80,9 @@ model Course {
   price         Float     @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
-  status        String   @default("draft") // draft | pending | published | rejected
+  status        String    @default("draft") // draft | pending | published | rejected
   isDestroyed   Boolean   @default(false)
-  
+
   // relations
   lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
   category    CourseCategory? @relation(fields: [categoryId], references: [id])
@@ -167,9 +168,9 @@ model Lesson {
   isDestroyed Boolean   @default(false)
 
   // relations
-  module    Module           @relation(fields: [moduleId], references: [id])
-  resources LessonResource[]
-  quizzes   Quiz[]
+  module      Module           @relation(fields: [moduleId], references: [id])
+  resources   LessonResource[]
+  quizzes     Quiz[]
   assessments Assessment[]
 }
 
@@ -363,8 +364,8 @@ model Assessment {
 
   // relations
   submissions Submission[]
-  course   Course  @relation(fields: [courseId], references: [id])
-  lesson   Lesson? @relation(fields: [lessonId], references: [id])
+  course      Course       @relation(fields: [courseId], references: [id])
+  lesson      Lesson?      @relation(fields: [lessonId], references: [id])
 }
 
 model BlogPost {
@@ -409,8 +410,8 @@ model BlogComment {
   isDestroyed Boolean   @default(false)
 
   // relations
-  post BlogPost @relation(fields: [blogId], references: [id])
-  user User     @relation(fields: [userId], references: [id])
+  post     BlogPost      @relation(fields: [blogId], references: [id])
+  user     User          @relation(fields: [userId], references: [id])
   parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
   children BlogComment[] @relation("CommentReplies")
 }
@@ -440,8 +441,8 @@ model Cart {
   isDestroyed Boolean  @default(false)
 
   // Relations
-  user   User   @relation(fields: [userId], references: [id])
-  items     CartItem[]
+  user  User       @relation(fields: [userId], references: [id])
+  items CartItem[]
 }
 
 //Thêm model cartItem
@@ -449,15 +450,15 @@ model CartItem {
   id        Int      @id @default(autoincrement())
   cartId    Int
   courseId  Int
-  price     Float    // Lưu giá tại thời điểm thêm vào giỏ
+  price     Float // Lưu giá tại thời điểm thêm vào giỏ
   createdAt DateTime @default(now())
 
   // Relations
-  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  course    Course   @relation(fields: [courseId], references: [id])
-  
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id])
+
   // Đảm bảo 1 khóa học chỉ xuất hiện 1 lần trong 1 giỏ hàng
-  @@unique([cartId, courseId]) 
+  @@unique([cartId, courseId])
 }
 
 model Transaction {
@@ -571,13 +572,13 @@ model LecturerPayoutAccount {
 
 model Revenue {
   id         Int  @id @default(autoincrement())
-  orderId    Int  @unique 
-  lecturerId Int? 
-  courseId   Int 
+  orderId    Int  @unique
+  lecturerId Int?
+  courseId   Int
 
-  totalAmount  Float 
-  platformFee  Float 
-  lecturerEarn Float 
+  totalAmount  Float
+  platformFee  Float
+  lecturerEarn Float
 
   createdAt DateTime @default(now())
 

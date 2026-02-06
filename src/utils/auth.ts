@@ -36,4 +36,17 @@ const verifyToken = async (token: string, keySecret: string) => {
   return JWT.verify(token, keySecret);
 };
 
-export const authUtils = { createTokenPair, verifyToken };
+const decodeToken = (token: string) => {
+  const decoded = JWT.decode(token, { complete: true });
+
+  if (!decoded || typeof decoded !== "object") {
+    throw new Error("Token is not valid!");
+  }
+  if (!decoded.header?.kid) {
+    throw new Error("Token missing kid!");
+  }
+
+  return decoded.header;
+};
+
+export const authUtils = { createTokenPair, verifyToken, decodeToken };
