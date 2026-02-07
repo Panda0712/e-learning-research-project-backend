@@ -30,4 +30,14 @@ Router.route("/update").put(
   userController.updateProfile,
 );
 
+Router.route("/forgot-password").post(
+  userValidation.forgotPassword,
+  userController.forgotPassword,
+);
+
+Router.route("/reset-password").post(
+  userValidation.resetPassword,
+  userController.resetPassword,
+);
+
 export const userRoute = Router;

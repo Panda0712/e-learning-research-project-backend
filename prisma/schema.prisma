@@ -14,20 +14,22 @@ datasource db {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  avatar      String?
-  phoneNumber String?
-  dateOfBirth DateTime?
-  role        String    @default("student")
-  verifyToken String?
-  isVerified  Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  isDestroyed Boolean   @default(false)
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique
+  password             String
+  firstName            String?
+  lastName             String?
+  avatar               String?
+  phoneNumber          String?
+  dateOfBirth          DateTime?
+  role                 String    @default("student")
+  verifyToken          String?
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  isVerified           Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime? @updatedAt
+  isDestroyed          Boolean   @default(false)
 
   // relations
   courses                Course[]                @relation("LecturerCourses")

@@ -119,9 +119,9 @@ const register = async (reqBody: {
 
       // send verification email to user
       const verificationLink = `${WEBSITE_DOMAINS}/account/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
-      const customSubject = "ADMIN EduLearn: Vui lòng xác minh email!";
+      const customSubject = "ADMIN EduLearn: Please verify your email!";
       const htmlContent = `
-  <h3>Đây là đường dẫn xác thực email:</h3>
+  <h3>This is verification email link:</h3>
   <h3>${verificationLink}</h3>
   <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
 `;
@@ -321,6 +321,111 @@ const registerLecturerProfile = async (
   }
 };
 
+const forgotPassword = async (email: string) => {
+  try {
+    // check user existence
+    const user = await prisma.user.findFirst({
+      where: { email, isDestroyed: false },
+    });
+    if (!user) {
+      throw new ApiError(
+        StatusCodes.OK,
+        "If an account with this email exists, we will send you a reset link!",
+      );
+    }
+
+    // generate token for reset password
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const tokenHash = crypto
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+
+    // update user model
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        resetPasswordToken: tokenHash,
+        resetPasswordExpires: new Date(Date.now() + 15 * 60 * 1000), // 15 minutes
+      },
+    });
+
+    // send reset password email
+    const resetPasswordLink = `${WEBSITE_DOMAINS}/reset-password?token=${tokenHash}`;
+    const customSubject = "ADMIN EduLearn: Reset Password!";
+    const htmlContent = `
+  <h3>This is reset password link:</h3>
+  <h3>${resetPasswordLink}</h3>
+  <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+`;
+
+    await BrevoProvider.sendEmail({
+      recipientEmail: user.email,
+      subject: customSubject,
+      htmlContent,
+    });
+
+    return {
+      message:
+        "If an account with this email exists, we will send you a reset link!",
+      ...pickUser(updatedUser),
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const resetPassword = async ({
+  token,
+  newPassword,
+}: {
+  token: string;
+  newPassword: string;
+}) => {
+  try {
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+
+    // check user existence
+    const user = await prisma.user.findFirst({
+      where: {
+        resetPasswordToken: tokenHash,
+        isDestroyed: false,
+      },
+    });
+    if (!user) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    }
+
+    // check token expiration
+    if (!user.resetPasswordExpires || user.resetPasswordExpires < new Date()) {
+      throw new ApiError(
+        StatusCodes.NOT_ACCEPTABLE,
+        "Token expired! Please request a new one.",
+      );
+    }
+
+    // hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // update user model
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetPasswordToken: null,
+        resetPasswordExpires: null,
+      },
+    });
+
+    return {
+      message: "Password reset successfully!",
+      ...pickUser(updatedUser),
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 const findByEmail = async ({ email }: { email: string }) => {
   return await prisma.user.findFirst({
     where: { email, isDestroyed: false },
@@ -336,4 +441,6 @@ export const userService = {
   findByEmail,
   updateProfile,
   registerLecturerProfile,
+  forgotPassword,
+  resetPassword,
 };
