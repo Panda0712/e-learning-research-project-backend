@@ -129,6 +129,36 @@ const registerLecturerProfile = async (
   }
 };
 
+const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { email } = req.body;
+
+    const result = await userService.forgotPassword(email);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    const result = await userService.resetPassword({ token, newPassword });
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const userController = {
   register,
   verifyAccount,
@@ -137,4 +167,6 @@ export const userController = {
   handleRefreshToken,
   updateProfile,
   registerLecturerProfile,
+  forgotPassword,
+  resetPassword,
 };

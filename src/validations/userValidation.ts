@@ -164,10 +164,59 @@ export const registerLecturer = async (
   }
 };
 
+const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    email: Joi.string()
+      .required()
+      .pattern(EMAIL_RULE)
+      .message(EMAIL_RULE_MESSAGE),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    token: Joi.string().required(),
+    newPassword: Joi.string()
+      .required()
+      .pattern(PASSWORD_RULE)
+      .message(PASSWORD_RULE_MESSAGE),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const userValidation = {
   register,
   verifyAccount,
   login,
   update,
   registerLecturer,
+  forgotPassword,
+  resetPassword,
 };
