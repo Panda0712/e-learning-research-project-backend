@@ -1,5 +1,7 @@
 import JWT from "jsonwebtoken";
 import { authUtilsPayload } from "@/types/authUtilsPayload.type.js";
+import { env } from "@/configs/environment.js";
+import { OAuth2Client } from "google-auth-library";
 
 const createTokenPair = async (
   payload: authUtilsPayload,
@@ -49,4 +51,25 @@ const decodeToken = (token: string) => {
   return decoded.header;
 };
 
-export const authUtils = { createTokenPair, verifyToken, decodeToken };
+const getGoogleClient = () => {
+  const clientId = env.GOOGLE_CLIENT_ID;
+  const clientSecret = env.GOOGLE_CLIENT_SECRET;
+  const redirectUri = env.GOOGLE_REDIRECT_URL;
+
+  if (!clientId || !clientSecret || !redirectUri) {
+    throw new Error("Google client id and secret are both missing!");
+  }
+
+  return new OAuth2Client({
+    clientId,
+    clientSecret,
+    redirectUri,
+  });
+};
+
+export const authUtils = {
+  createTokenPair,
+  verifyToken,
+  decodeToken,
+  getGoogleClient,
+};

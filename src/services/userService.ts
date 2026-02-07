@@ -1,3 +1,4 @@
+import { env } from "@/configs/environment.js";
 import { prisma } from "@/lib/prisma.js";
 import { BrevoProvider } from "@/providers/BrevoProvider.js";
 import { KeyStore } from "@/types/keyStore.type.js";
@@ -237,6 +238,96 @@ const login = async (reqBody: { email: string; password: string }) => {
   }
 };
 
+const getGoogleAuthUrl = async () => {
+  const googleClient = authUtils.getGoogleClient();
+
+  return googleClient.generateAuthUrl({
+    access_type: "offline",
+    prompt: "consent",
+    scope: ["openid", "email", "profile"],
+  });
+};
+
+const handleGoogleCallback = async (code: string) => {
+  try {
+    const googleClient = authUtils.getGoogleClient();
+
+    const { tokens } = await googleClient.getToken(code);
+
+    if (!tokens.id_token) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, "No google id_token present!");
+    }
+
+    const googleTicket = await googleClient.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: env.GOOGLE_CLIENT_ID as string,
+    });
+
+    const payload = googleTicket.getPayload();
+
+    const email = payload?.email;
+    const emailVerified = payload?.email_verified;
+
+    if (!email || !emailVerified) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Google email account is not verified!",
+      );
+    }
+
+    let user = await findByEmail({ email });
+
+    if (!user) {
+      const randomPassword = crypto.randomBytes(16).toString("hex");
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+      user = await createUserDocument({
+        email,
+        firstName: payload?.given_name,
+        lastName: payload?.family_name,
+        password: hashedPassword,
+        role: "student",
+        isVerified: true,
+      });
+    } else if (!user.isVerified) {
+      user = await updateUserDocument(user.id, { isVerified: true });
+    }
+
+    const publicKey = crypto.randomBytes(64).toString("hex");
+    const privateKey = crypto.randomBytes(64).toString("hex");
+
+    const kid = uuidV4();
+
+    const tokensPair = (await authUtils.createTokenPair(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        kid,
+      },
+      publicKey,
+      privateKey,
+    )) as { refreshToken: string; accessToken: string };
+
+    await KeyTokenService.createKeyToken({
+      userId: user.id,
+      refreshToken: tokensPair.refreshToken,
+      publicKey,
+      privateKey,
+      kid,
+    });
+
+    return {
+      ...pickUser(user),
+      refreshToken: tokensPair.refreshToken,
+      accessToken: tokensPair.accessToken,
+      kid,
+    };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 const updateProfile = async (
   userId: number,
   reqBody: UpdateProfile,
@@ -432,15 +523,32 @@ const findByEmail = async ({ email }: { email: string }) => {
   });
 };
 
+const createUserDocument = async (data: any) => {
+  return await prisma.user.create({
+    data,
+  });
+};
+
+const updateUserDocument = async (id: number, data: any) => {
+  return await prisma.user.update({
+    where: { id },
+    data,
+  });
+};
+
 export const userService = {
   register,
   verifyAccount,
   login,
   logout,
+  getGoogleAuthUrl,
+  handleGoogleCallback,
   handleRefreshToken,
   findByEmail,
   updateProfile,
   registerLecturerProfile,
   forgotPassword,
   resetPassword,
+  createUserDocument,
+  updateUserDocument,
 };
