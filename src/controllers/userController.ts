@@ -159,6 +159,54 @@ const resetPassword = async (
   }
 };
 
+const googleAuthStartHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const googleUrl = await userService.getGoogleAuthUrl();
+
+    return res.redirect(googleUrl);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const googleAuthCallbackHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const code = req.query.code as string | undefined;
+  if (!code) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      message: "Missing code in callback!",
+    });
+  }
+
+  try {
+    const result = await userService.handleGoogleCallback(code);
+
+    res.cookie("accessToken", result.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: ms("14 days"),
+    });
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: ms("14 days"),
+    });
+
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const userController = {
   register,
   verifyAccount,
@@ -169,4 +217,6 @@ export const userController = {
   registerLecturerProfile,
   forgotPassword,
   resetPassword,
+  googleAuthStartHandler,
+  googleAuthCallbackHandler,
 };

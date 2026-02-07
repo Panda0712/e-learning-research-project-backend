@@ -55,7 +55,7 @@ model KeyToken {
   userId           Int      @unique
   publicKey        String
   privateKey       String
-  refreshToken     String?
+  refreshToken     String?  @db.Text
   refreshTokenUsed Json
   kid              String
   createdAt        DateTime @default(now())

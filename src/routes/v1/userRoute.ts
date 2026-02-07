@@ -40,4 +40,8 @@ Router.route("/reset-password").post(
   userController.resetPassword,
 );
 
+Router.route("/google").get(userController.googleAuthStartHandler);
+
+Router.route("/google/callback").get(userController.googleAuthCallbackHandler);
+
 export const userRoute = Router;

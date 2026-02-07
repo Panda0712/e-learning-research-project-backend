@@ -22,6 +22,10 @@ export const env = {
   DATABASE_HOST: process.env.DATABASE_HOST,
   DATABASE_PORT: process.env.DATABASE_PORT,
 
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URL: process.env.GOOGLE_REDIRECT_URL,
+
   PORT: process.env.PORT,
 
   BREVO_API_KEY: process.env.BREVO_API_KEY,
