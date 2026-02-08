@@ -73,10 +73,107 @@ const getCourseFaqById = async (
   }
 };
 
+const createCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.jwtDecoded.id;
+
+    const createdCourse = await courseService.createCourse({
+      ...req.body,
+      lecturerId: Number(id),
+    });
+
+    res.status(StatusCodes.CREATED).json(createdCourse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    const updatedCourse = await courseService.updateCourse(
+      Number(id),
+      req.body,
+    );
+
+    res.status(StatusCodes.OK).json(updatedCourse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    await courseService.deleteCourse(Number(id));
+
+    res.status(StatusCodes.OK).json({ message: "Course deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const approveCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    await courseService.approveCourse(Number(id));
+
+    res
+      .status(StatusCodes.OK)
+      .json({ message: "Course approved successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const rejectCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    await courseService.rejectCourse(Number(id));
+
+    res
+      .status(StatusCodes.OK)
+      .json({ message: "Course rejected successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourseCategory,
   getAllCourseCategories,
+
   getCourseFaqById,
   createCourseFaq,
   getCourseFaqByCourseId,
+
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  approveCourse,
+  rejectCourse,
 };
