@@ -6,6 +6,13 @@ export const GENDER_SELECT = {
   OTHER: "other",
 };
 
+export const COURSE_STATUS = {
+  DRAFT: "draft",
+  PENDING: "pending",
+  PUBLISHED: "published",
+  REJECTED: "rejected",
+};
+
 export const DEGREE_OPTIONS = {
   BACHELOR: "bachelor",
   MASTER: "master",

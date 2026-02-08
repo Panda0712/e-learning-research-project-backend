@@ -1,6 +1,8 @@
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
 import { prisma } from "../lib/prisma.js";
+import { CreateCourse, UpdateCourse } from "@/types/course.type.js";
+import { COURSE_STATUS } from "@/utils/constants.js";
 
 const createCourseCategory = async (data: { name: string; slug: string }) => {
   try {
@@ -106,10 +108,161 @@ const getCourseFaqById = async (id: number) => {
   }
 };
 
+const createCourse = async (data: CreateCourse) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findFirst({
+      where: { name: data.name, isDestroyed: false },
+    });
+    if (course) {
+      throw new ApiError(StatusCodes.CONFLICT, "Course already exists!");
+    }
+
+    // create course
+    const createdCourse = await prisma.course.create({
+      data: {
+        ...data,
+        totalStudents: 0,
+        totalLessons: 0,
+        totalQuizzes: 0,
+      },
+    });
+
+    return createdCourse;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const updateCourse = async (id: number, updateData: UpdateCourse) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    const updatedCourse = await prisma.course.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return updatedCourse;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const deleteCourse = async (id: number) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    return await prisma.course.update({
+      where: { id },
+      data: { isDestroyed: true },
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const approveCourse = async (id: number) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    // check course status
+    if (
+      course.status !== COURSE_STATUS.PENDING &&
+      course.status !== COURSE_STATUS.DRAFT
+    ) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Course is not pending or draft!",
+      );
+    }
+    if (course.status === COURSE_STATUS.PUBLISHED) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Course is already published!",
+      );
+    }
+
+    // update course status
+    const approvedCourse = await prisma.course.update({
+      where: { id },
+      data: { status: COURSE_STATUS.PUBLISHED },
+    });
+
+    return approvedCourse;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const rejectCourse = async (id: number) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    // check course status
+    if (
+      course.status !== COURSE_STATUS.PENDING &&
+      course.status !== COURSE_STATUS.DRAFT
+    ) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Course is not pending or draft!",
+      );
+    }
+    if (course.status === COURSE_STATUS.REJECTED) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Course is already rejected!",
+      );
+    }
+
+    // update course status
+    const rejectedCourse = await prisma.course.update({
+      where: { id },
+      data: { status: COURSE_STATUS.REJECTED },
+    });
+
+    return rejectedCourse;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const courseService = {
   createCourseCategory,
-  createCourseFaq,
   getAllCourseCategories,
+
+  createCourseFaq,
   getFaqsByCourseId,
   getCourseFaqById,
+
+  createCourse,
+  updateCourse,
+  deleteCourse,
+  approveCourse,
+  rejectCourse,
 };

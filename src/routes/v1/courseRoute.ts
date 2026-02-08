@@ -25,4 +25,26 @@ Router.route("/create-faq").post(
   courseController.createCourseFaq,
 );
 
+// course
+Router.route("/create-course").post(
+  courseValidation.createCourse,
+  courseController.createCourse,
+);
+Router.route("/update-course/:id").put(
+  courseValidation.updateCourse,
+  courseController.updateCourse,
+);
+Router.route("/delete-course/:id").delete(
+  courseValidation.deleteCourse,
+  courseController.deleteCourse,
+);
+Router.route("/approve-course/:id").put(
+  courseValidation.approveCourse,
+  courseController.approveCourse,
+);
+Router.route("/reject-course/:id").put(
+  courseValidation.rejectCourse,
+  courseController.rejectCourse,
+);
+
 export const courseRoute = Router;
