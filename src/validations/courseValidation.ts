@@ -219,6 +219,101 @@ const rejectCourse = async (
   }
 };
 
+const getCourseById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().integer().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(Number(req.params), {
+      abortEarly: false,
+    });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getAllCoursesByLecturerId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    lecturerId: Joi.number().integer().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(Number(req.params), {
+      abortEarly: false,
+    });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getAllCoursesByCategoryId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    categoryId: Joi.number().integer().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(Number(req.params), {
+      abortEarly: false,
+    });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getListCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    page: Joi.number().integer().required().positive(),
+    itemsPerPage: Joi.number().integer().required().positive(),
+    q: Joi.string().required().min(2).max(50).trim().strict(),
+  });
+
+  try {
+    const { page, itemsPerPage, q } = req.query;
+
+    await correctCondition.validateAsync(
+      { page: Number(page), itemsPerPage: Number(itemsPerPage), q },
+      {
+        abortEarly: false,
+      },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const courseValidation = {
   createCourseCategory,
 
@@ -231,4 +326,8 @@ export const courseValidation = {
   deleteCourse,
   approveCourse,
   rejectCourse,
+  getCourseById,
+  getListCourses,
+  getAllCoursesByCategoryId,
+  getAllCoursesByLecturerId,
 };

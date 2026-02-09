@@ -5,11 +5,12 @@ import express from "express";
 const Router = express.Router();
 
 // course category
-Router.route("/get-categories").get(courseController.getAllCourseCategories);
-Router.route("/create-category").post(
-  courseValidation.createCourseCategory,
-  courseController.createCourseCategory,
-);
+Router.route("/categories")
+  .get(courseController.getAllCourseCategories)
+  .post(
+    courseValidation.createCourseCategory,
+    courseController.createCourseCategory,
+  );
 
 // course faq
 Router.route("/faq/get-by-course-id/:courseId").get(
@@ -20,24 +21,18 @@ Router.route("/faq/:id").get(
   courseValidation.getCourseFaqById,
   courseController.getCourseFaqById,
 );
-Router.route("/create-faq").post(
+Router.route("/faq").post(
   courseValidation.createCourseFaq,
   courseController.createCourseFaq,
 );
 
 // course
-Router.route("/create-course").post(
-  courseValidation.createCourse,
-  courseController.createCourse,
-);
-Router.route("/update-course/:id").put(
-  courseValidation.updateCourse,
-  courseController.updateCourse,
-);
-Router.route("/delete-course/:id").delete(
-  courseValidation.deleteCourse,
-  courseController.deleteCourse,
-);
+Router.route("/")
+  .post(courseValidation.createCourse, courseController.createCourse)
+  .get(courseValidation.getListCourses, courseController.getListCourses);
+Router.route("/:id")
+  .put(courseValidation.updateCourse, courseController.updateCourse)
+  .delete(courseValidation.deleteCourse, courseController.deleteCourse);
 Router.route("/approve-course/:id").put(
   courseValidation.approveCourse,
   courseController.approveCourse,
@@ -45,6 +40,18 @@ Router.route("/approve-course/:id").put(
 Router.route("/reject-course/:id").put(
   courseValidation.rejectCourse,
   courseController.rejectCourse,
+);
+Router.route("/get-course-by-id/:id").get(
+  courseValidation.getCourseById,
+  courseController.getCourseById,
+);
+Router.route("/get-courses-by-lecturer-id/:lecturerId").get(
+  courseValidation.getAllCoursesByLecturerId,
+  courseController.getAllCoursesByLecturerId,
+);
+Router.route("/get-courses-by-category-id/:categoryId").get(
+  courseValidation.getAllCoursesByCategoryId,
+  courseController.getAllCoursesByCategoryId,
 );
 
 export const courseRoute = Router;
