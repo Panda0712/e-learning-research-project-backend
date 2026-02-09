@@ -2,7 +2,11 @@ import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
 import { prisma } from "../lib/prisma.js";
 import { CreateCourse, UpdateCourse } from "@/types/course.type.js";
-import { COURSE_STATUS } from "@/utils/constants.js";
+import {
+  COURSE_STATUS,
+  DEFAULT_ITEMS_PER_PAGE,
+  DEFAULT_PAGE,
+} from "@/utils/constants.js";
 
 const createCourseCategory = async (data: { name: string; slug: string }) => {
   try {
@@ -252,6 +256,108 @@ const rejectCourse = async (id: number) => {
   }
 };
 
+const getCourseById = async (id: number) => {
+  try {
+    // check course existence
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    return course;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const getAllCoursesByLecturerId = async (lecturerId: number) => {
+  try {
+    // check lecturer existence
+    const lecturer = await prisma.user.findUnique({
+      where: { id: lecturerId, isDestroyed: false },
+    });
+    if (!lecturer) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer not found!");
+    }
+
+    // get courses
+    const courses = await prisma.course.findMany({
+      where: { lecturerId, isDestroyed: false },
+    });
+
+    return courses;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const getAllCoursesByCategoryId = async (categoryId: number) => {
+  try {
+    // check category existence
+    const category = await prisma.courseCategory.findUnique({
+      where: { id: categoryId, isDestroyed: false },
+    });
+    if (!category) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Category not found!");
+    }
+
+    // get courses
+    const courses = await prisma.course.findMany({
+      where: { categoryId, isDestroyed: false },
+    });
+
+    return courses;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+const getListCourses = async (
+  page: number,
+  itemsPerPage: number,
+  q: string,
+) => {
+  try {
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+
+    const skip = (currentPage - 1) * perPage;
+
+    const where = {
+      isDestroyed: false,
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { lecturerName: { contains: q, mode: "insensitive" } },
+              { overview: { contains: q, mode: "insensitive" } },
+              { level: { contains: q, mode: "insensitive" } },
+              { status: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [courses, totalCourses] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        orderBy: { name: "asc" },
+        skip,
+        take: perPage,
+      }),
+      prisma.course.count({ where }),
+    ]);
+
+    return { courses, totalCourses };
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const courseService = {
   createCourseCategory,
   getAllCourseCategories,
@@ -265,4 +371,8 @@ export const courseService = {
   deleteCourse,
   approveCourse,
   rejectCourse,
+  getListCourses,
+  getCourseById,
+  getAllCoursesByLecturerId,
+  getAllCoursesByCategoryId,
 };

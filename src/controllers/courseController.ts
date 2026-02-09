@@ -163,6 +163,78 @@ const rejectCourse = async (
   }
 };
 
+const getCourseById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    const course = await courseService.getCourseById(Number(id));
+
+    res.status(StatusCodes.OK).json(course);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllCoursesByLecturerId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { lecturerId } = req.params;
+
+    const courses = await courseService.getAllCoursesByLecturerId(
+      Number(lecturerId),
+    );
+
+    res.status(StatusCodes.OK).json(courses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllCoursesByCategoryId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { categoryId } = req.params;
+
+    const courses = await courseService.getAllCoursesByCategoryId(
+      Number(categoryId),
+    );
+
+    res.status(StatusCodes.OK).json(courses);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getListCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { page, itemsPerPage, q } = req.query;
+
+    const results = await courseService.getListCourses(
+      Number(page),
+      Number(itemsPerPage),
+      (q as string) || "",
+    );
+
+    res.status(StatusCodes.OK).json(results);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourseCategory,
   getAllCourseCategories,
@@ -176,4 +248,8 @@ export const courseController = {
   deleteCourse,
   approveCourse,
   rejectCourse,
+  getCourseById,
+  getListCourses,
+  getAllCoursesByLecturerId,
+  getAllCoursesByCategoryId,
 };
