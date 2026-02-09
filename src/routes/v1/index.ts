@@ -6,6 +6,8 @@ import { cartRoute } from "./cartRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
+import { questionRoute } from "./questionRoute.js";
+import { quizRoute } from "./quizRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 
@@ -43,5 +45,11 @@ Router.use("/carts", cartRoute);
 
 // Assessment route
 Router.use("/assessments", assessmentRoute);
+
+// Quiz route
+Router.use("/quizzes", quizRoute);
+
+// Question route
+Router.use("/questions", questionRoute);
 
 export const APIs_V1 = Router;
