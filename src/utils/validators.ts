@@ -13,5 +13,16 @@ export const PHONE_RULE =
 export const PHONE_RULE_MESSAGE =
   "Invalid phone number! Please enter a valid phone number!";
 
-export const LIMIT_COMMON_FILE_SIZE = 10485760; // byte = 10 MB
-export const ALLOW_COMMON_FILE_TYPES = ["image/jpg", "image/jpeg", "image/png"];
+export const MAX_VIDEO_SIZE = 200 * 1024 * 1024; // 200MB
+export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+export const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+export const MAX_SIZE_GB = 4;
+export const MIN_VIDEO_HEIGHT = 720;
+
+export const ALLOW_IMAGE_TYPES = ["image/jpg", "image/jpeg", "image/png"];
+export const ALLOW_DOC_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+export const ALLOW_VIDEO_TYPES = ["video/mp4", "video/quicktime"];
