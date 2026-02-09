@@ -6,6 +6,8 @@ import { cartRoute } from "./cartRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
+import { lessonRoute } from "./lessonRoute.js";
+import { moduleRoute } from "./moduleRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
@@ -51,5 +53,11 @@ Router.use("/quizzes", quizRoute);
 
 // Question route
 Router.use("/questions", questionRoute);
+
+// Module route
+Router.use("/modules", moduleRoute);
+
+// Lesson route
+Router.use("/lessons", lessonRoute);
 
 export const APIs_V1 = Router;
