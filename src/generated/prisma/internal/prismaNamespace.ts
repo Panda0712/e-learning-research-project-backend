@@ -394,8 +394,6 @@ export const ModelName = {
   Module: 'Module',
   Lesson: 'Lesson',
   Resource: 'Resource',
-  LessonResource: 'LessonResource',
-  LecturerResource: 'LecturerResource',
   Enrollment: 'Enrollment',
   Quiz: 'Quiz',
   Question: 'Question',
@@ -432,7 +430,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "lessonResource" | "lecturerResource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue"
+    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1093,138 +1091,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ResourceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ResourceCountAggregateOutputType> | number
-        }
-      }
-    }
-    LessonResource: {
-      payload: Prisma.$LessonResourcePayload<ExtArgs>
-      fields: Prisma.LessonResourceFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.LessonResourceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.LessonResourceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        findFirst: {
-          args: Prisma.LessonResourceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.LessonResourceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        findMany: {
-          args: Prisma.LessonResourceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>[]
-        }
-        create: {
-          args: Prisma.LessonResourceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        createMany: {
-          args: Prisma.LessonResourceCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.LessonResourceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        update: {
-          args: Prisma.LessonResourceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        deleteMany: {
-          args: Prisma.LessonResourceDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.LessonResourceUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.LessonResourceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LessonResourcePayload>
-        }
-        aggregate: {
-          args: Prisma.LessonResourceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLessonResource>
-        }
-        groupBy: {
-          args: Prisma.LessonResourceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LessonResourceGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.LessonResourceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LessonResourceCountAggregateOutputType> | number
-        }
-      }
-    }
-    LecturerResource: {
-      payload: Prisma.$LecturerResourcePayload<ExtArgs>
-      fields: Prisma.LecturerResourceFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.LecturerResourceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.LecturerResourceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        findFirst: {
-          args: Prisma.LecturerResourceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.LecturerResourceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        findMany: {
-          args: Prisma.LecturerResourceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>[]
-        }
-        create: {
-          args: Prisma.LecturerResourceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        createMany: {
-          args: Prisma.LecturerResourceCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        delete: {
-          args: Prisma.LecturerResourceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        update: {
-          args: Prisma.LecturerResourceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        deleteMany: {
-          args: Prisma.LecturerResourceDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.LecturerResourceUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        upsert: {
-          args: Prisma.LecturerResourceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$LecturerResourcePayload>
-        }
-        aggregate: {
-          args: Prisma.LecturerResourceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLecturerResource>
-        }
-        groupBy: {
-          args: Prisma.LecturerResourceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LecturerResourceGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.LecturerResourceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.LecturerResourceCountAggregateOutputType> | number
         }
       }
     }
@@ -2659,7 +2525,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
-  avatar: 'avatar',
+  avatarId: 'avatarId',
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
@@ -2708,7 +2574,7 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
   categoryId: 'categoryId',
-  thumbnail: 'thumbnail',
+  thumbnailId: 'thumbnailId',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',
@@ -2785,12 +2651,12 @@ export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof 
 
 export const LessonScalarFieldEnum = {
   id: 'id',
-  resourceId: 'resourceId',
+  lessonFileId: 'lessonFileId',
   moduleId: 'moduleId',
   title: 'title',
   description: 'description',
   note: 'note',
-  videoUrl: 'videoUrl',
+  lessonVideoId: 'lessonVideoId',
   duration: 'duration',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -2802,6 +2668,7 @@ export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof 
 
 export const ResourceScalarFieldEnum = {
   id: 'id',
+  publicId: 'publicId',
   fileSize: 'fileSize',
   fileType: 'fileType',
   fileUrl: 'fileUrl',
@@ -2811,28 +2678,6 @@ export const ResourceScalarFieldEnum = {
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
-
-
-export const LessonResourceScalarFieldEnum = {
-  id: 'id',
-  lessonId: 'lessonId',
-  resourceId: 'resourceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LessonResourceScalarFieldEnum = (typeof LessonResourceScalarFieldEnum)[keyof typeof LessonResourceScalarFieldEnum]
-
-
-export const LecturerResourceScalarFieldEnum = {
-  id: 'id',
-  lecturerId: 'lecturerId',
-  resourceId: 'resourceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LecturerResourceScalarFieldEnum = (typeof LecturerResourceScalarFieldEnum)[keyof typeof LecturerResourceScalarFieldEnum]
 
 
 export const EnrollmentScalarFieldEnum = {
@@ -2986,7 +2831,7 @@ export const BlogPostScalarFieldEnum = {
   title: 'title',
   slug: 'slug',
   content: 'content',
-  thumbnail: 'thumbnail',
+  thumbnailId: 'thumbnailId',
   totalComments: 'totalComments',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -3094,7 +2939,7 @@ export type TransactionStudentScalarFieldEnum = (typeof TransactionStudentScalar
 export const LecturerProfileScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
-  resourceId: 'resourceId',
+  lecturerFileId: 'lecturerFileId',
   gender: 'gender',
   nationality: 'nationality',
   professionalTitle: 'professionalTitle',
@@ -3197,7 +3042,6 @@ export const UserOrderByRelevanceFieldEnum = {
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
-  avatar: 'avatar',
   phoneNumber: 'phoneNumber',
   role: 'role',
   verifyToken: 'verifyToken',
@@ -3242,7 +3086,6 @@ export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnu
 
 
 export const CourseOrderByRelevanceFieldEnum = {
-  thumbnail: 'thumbnail',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',
@@ -3292,7 +3135,6 @@ export const LessonOrderByRelevanceFieldEnum = {
   title: 'title',
   description: 'description',
   note: 'note',
-  videoUrl: 'videoUrl',
   duration: 'duration'
 } as const
 
@@ -3300,6 +3142,7 @@ export type LessonOrderByRelevanceFieldEnum = (typeof LessonOrderByRelevanceFiel
 
 
 export const ResourceOrderByRelevanceFieldEnum = {
+  publicId: 'publicId',
   fileType: 'fileType',
   fileUrl: 'fileUrl'
 } as const
@@ -3384,8 +3227,7 @@ export type AssessmentOrderByRelevanceFieldEnum = (typeof AssessmentOrderByRelev
 export const BlogPostOrderByRelevanceFieldEnum = {
   title: 'title',
   slug: 'slug',
-  content: 'content',
-  thumbnail: 'thumbnail'
+  content: 'content'
 } as const
 
 export type BlogPostOrderByRelevanceFieldEnum = (typeof BlogPostOrderByRelevanceFieldEnum)[keyof typeof BlogPostOrderByRelevanceFieldEnum]
@@ -3628,8 +3470,6 @@ export type GlobalOmitConfig = {
   module?: Prisma.ModuleOmit
   lesson?: Prisma.LessonOmit
   resource?: Prisma.ResourceOmit
-  lessonResource?: Prisma.LessonResourceOmit
-  lecturerResource?: Prisma.LecturerResourceOmit
   enrollment?: Prisma.EnrollmentOmit
   quiz?: Prisma.QuizOmit
   question?: Prisma.QuestionOmit

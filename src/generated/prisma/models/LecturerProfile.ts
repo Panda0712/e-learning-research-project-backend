@@ -29,7 +29,7 @@ export type AggregateLecturerProfile = {
 export type LecturerProfileAvgAggregateOutputType = {
   id: number | null
   lecturerId: number | null
-  resourceId: number | null
+  lecturerFileId: number | null
   totalStudents: number | null
   totalCourses: number | null
   avgRating: number | null
@@ -38,7 +38,7 @@ export type LecturerProfileAvgAggregateOutputType = {
 export type LecturerProfileSumAggregateOutputType = {
   id: number | null
   lecturerId: number | null
-  resourceId: number | null
+  lecturerFileId: number | null
   totalStudents: number | null
   totalCourses: number | null
   avgRating: number | null
@@ -47,7 +47,7 @@ export type LecturerProfileSumAggregateOutputType = {
 export type LecturerProfileMinAggregateOutputType = {
   id: number | null
   lecturerId: number | null
-  resourceId: number | null
+  lecturerFileId: number | null
   gender: string | null
   nationality: string | null
   professionalTitle: string | null
@@ -66,7 +66,7 @@ export type LecturerProfileMinAggregateOutputType = {
 export type LecturerProfileMaxAggregateOutputType = {
   id: number | null
   lecturerId: number | null
-  resourceId: number | null
+  lecturerFileId: number | null
   gender: string | null
   nationality: string | null
   professionalTitle: string | null
@@ -85,7 +85,7 @@ export type LecturerProfileMaxAggregateOutputType = {
 export type LecturerProfileCountAggregateOutputType = {
   id: number
   lecturerId: number
-  resourceId: number
+  lecturerFileId: number
   gender: number
   nationality: number
   professionalTitle: number
@@ -106,7 +106,7 @@ export type LecturerProfileCountAggregateOutputType = {
 export type LecturerProfileAvgAggregateInputType = {
   id?: true
   lecturerId?: true
-  resourceId?: true
+  lecturerFileId?: true
   totalStudents?: true
   totalCourses?: true
   avgRating?: true
@@ -115,7 +115,7 @@ export type LecturerProfileAvgAggregateInputType = {
 export type LecturerProfileSumAggregateInputType = {
   id?: true
   lecturerId?: true
-  resourceId?: true
+  lecturerFileId?: true
   totalStudents?: true
   totalCourses?: true
   avgRating?: true
@@ -124,7 +124,7 @@ export type LecturerProfileSumAggregateInputType = {
 export type LecturerProfileMinAggregateInputType = {
   id?: true
   lecturerId?: true
-  resourceId?: true
+  lecturerFileId?: true
   gender?: true
   nationality?: true
   professionalTitle?: true
@@ -143,7 +143,7 @@ export type LecturerProfileMinAggregateInputType = {
 export type LecturerProfileMaxAggregateInputType = {
   id?: true
   lecturerId?: true
-  resourceId?: true
+  lecturerFileId?: true
   gender?: true
   nationality?: true
   professionalTitle?: true
@@ -162,7 +162,7 @@ export type LecturerProfileMaxAggregateInputType = {
 export type LecturerProfileCountAggregateInputType = {
   id?: true
   lecturerId?: true
-  resourceId?: true
+  lecturerFileId?: true
   gender?: true
   nationality?: true
   professionalTitle?: true
@@ -268,7 +268,7 @@ export type LecturerProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 export type LecturerProfileGroupByOutputType = {
   id: number
   lecturerId: number
-  resourceId: number | null
+  lecturerFileId: number | null
   gender: string | null
   nationality: string | null
   professionalTitle: string | null
@@ -310,7 +310,7 @@ export type LecturerProfileWhereInput = {
   NOT?: Prisma.LecturerProfileWhereInput | Prisma.LecturerProfileWhereInput[]
   id?: Prisma.IntFilter<"LecturerProfile"> | number
   lecturerId?: Prisma.IntFilter<"LecturerProfile"> | number
-  resourceId?: Prisma.IntNullableFilter<"LecturerProfile"> | number | null
+  lecturerFileId?: Prisma.IntNullableFilter<"LecturerProfile"> | number | null
   gender?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
   nationality?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
   professionalTitle?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
@@ -325,12 +325,13 @@ export type LecturerProfileWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerProfile"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"LecturerProfile"> | boolean
   lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  lecturerFile?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
 }
 
 export type LecturerProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   nationality?: Prisma.SortOrderInput | Prisma.SortOrder
   professionalTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -345,16 +346,17 @@ export type LecturerProfileOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   lecturer?: Prisma.UserOrderByWithRelationInput
+  lecturerFile?: Prisma.ResourceOrderByWithRelationInput
   _relevance?: Prisma.LecturerProfileOrderByRelevanceInput
 }
 
 export type LecturerProfileWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   lecturerId?: number
+  lecturerFileId?: number
   AND?: Prisma.LecturerProfileWhereInput | Prisma.LecturerProfileWhereInput[]
   OR?: Prisma.LecturerProfileWhereInput[]
   NOT?: Prisma.LecturerProfileWhereInput | Prisma.LecturerProfileWhereInput[]
-  resourceId?: Prisma.IntNullableFilter<"LecturerProfile"> | number | null
   gender?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
   nationality?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
   professionalTitle?: Prisma.StringNullableFilter<"LecturerProfile"> | string | null
@@ -369,12 +371,13 @@ export type LecturerProfileWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeNullableFilter<"LecturerProfile"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"LecturerProfile"> | boolean
   lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "lecturerId">
+  lecturerFile?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
+}, "id" | "lecturerId" | "lecturerFileId">
 
 export type LecturerProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   nationality?: Prisma.SortOrderInput | Prisma.SortOrder
   professionalTitle?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -401,7 +404,7 @@ export type LecturerProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.LecturerProfileScalarWhereWithAggregatesInput | Prisma.LecturerProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"LecturerProfile"> | number
   lecturerId?: Prisma.IntWithAggregatesFilter<"LecturerProfile"> | number
-  resourceId?: Prisma.IntNullableWithAggregatesFilter<"LecturerProfile"> | number | null
+  lecturerFileId?: Prisma.IntNullableWithAggregatesFilter<"LecturerProfile"> | number | null
   gender?: Prisma.StringNullableWithAggregatesFilter<"LecturerProfile"> | string | null
   nationality?: Prisma.StringNullableWithAggregatesFilter<"LecturerProfile"> | string | null
   professionalTitle?: Prisma.StringNullableWithAggregatesFilter<"LecturerProfile"> | string | null
@@ -418,7 +421,6 @@ export type LecturerProfileScalarWhereWithAggregatesInput = {
 }
 
 export type LecturerProfileCreateInput = {
-  resourceId?: number | null
   gender?: string | null
   nationality?: string | null
   professionalTitle?: string | null
@@ -433,12 +435,13 @@ export type LecturerProfileCreateInput = {
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   lecturer: Prisma.UserCreateNestedOneWithoutLecturerProfileInput
+  lecturerFile?: Prisma.ResourceCreateNestedOneWithoutLecturerProfileFileInput
 }
 
 export type LecturerProfileUncheckedCreateInput = {
   id?: number
   lecturerId: number
-  resourceId?: number | null
+  lecturerFileId?: number | null
   gender?: string | null
   nationality?: string | null
   professionalTitle?: string | null
@@ -455,7 +458,6 @@ export type LecturerProfileUncheckedCreateInput = {
 }
 
 export type LecturerProfileUpdateInput = {
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -470,12 +472,13 @@ export type LecturerProfileUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerProfileNestedInput
+  lecturerFile?: Prisma.ResourceUpdateOneWithoutLecturerProfileFileNestedInput
 }
 
 export type LecturerProfileUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lecturerFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -494,7 +497,7 @@ export type LecturerProfileUncheckedUpdateInput = {
 export type LecturerProfileCreateManyInput = {
   id?: number
   lecturerId: number
-  resourceId?: number | null
+  lecturerFileId?: number | null
   gender?: string | null
   nationality?: string | null
   professionalTitle?: string | null
@@ -511,7 +514,6 @@ export type LecturerProfileCreateManyInput = {
 }
 
 export type LecturerProfileUpdateManyMutationInput = {
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -530,7 +532,7 @@ export type LecturerProfileUpdateManyMutationInput = {
 export type LecturerProfileUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lecturerFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -560,7 +562,7 @@ export type LecturerProfileOrderByRelevanceInput = {
 export type LecturerProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
   professionalTitle?: Prisma.SortOrder
@@ -579,7 +581,7 @@ export type LecturerProfileCountOrderByAggregateInput = {
 export type LecturerProfileAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrder
   totalStudents?: Prisma.SortOrder
   totalCourses?: Prisma.SortOrder
   avgRating?: Prisma.SortOrder
@@ -588,7 +590,7 @@ export type LecturerProfileAvgOrderByAggregateInput = {
 export type LecturerProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
   professionalTitle?: Prisma.SortOrder
@@ -607,7 +609,7 @@ export type LecturerProfileMaxOrderByAggregateInput = {
 export type LecturerProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   nationality?: Prisma.SortOrder
   professionalTitle?: Prisma.SortOrder
@@ -626,7 +628,7 @@ export type LecturerProfileMinOrderByAggregateInput = {
 export type LecturerProfileSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lecturerId?: Prisma.SortOrder
-  resourceId?: Prisma.SortOrder
+  lecturerFileId?: Prisma.SortOrder
   totalStudents?: Prisma.SortOrder
   totalCourses?: Prisma.SortOrder
   avgRating?: Prisma.SortOrder
@@ -664,8 +666,39 @@ export type LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LecturerProfileUpdateToOneWithWhereWithoutLecturerInput, Prisma.LecturerProfileUpdateWithoutLecturerInput>, Prisma.LecturerProfileUncheckedUpdateWithoutLecturerInput>
 }
 
+export type LecturerProfileCreateNestedOneWithoutLecturerFileInput = {
+  create?: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+  connectOrCreate?: Prisma.LecturerProfileCreateOrConnectWithoutLecturerFileInput
+  connect?: Prisma.LecturerProfileWhereUniqueInput
+}
+
+export type LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput = {
+  create?: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+  connectOrCreate?: Prisma.LecturerProfileCreateOrConnectWithoutLecturerFileInput
+  connect?: Prisma.LecturerProfileWhereUniqueInput
+}
+
+export type LecturerProfileUpdateOneWithoutLecturerFileNestedInput = {
+  create?: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+  connectOrCreate?: Prisma.LecturerProfileCreateOrConnectWithoutLecturerFileInput
+  upsert?: Prisma.LecturerProfileUpsertWithoutLecturerFileInput
+  disconnect?: Prisma.LecturerProfileWhereInput | boolean
+  delete?: Prisma.LecturerProfileWhereInput | boolean
+  connect?: Prisma.LecturerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LecturerProfileUpdateToOneWithWhereWithoutLecturerFileInput, Prisma.LecturerProfileUpdateWithoutLecturerFileInput>, Prisma.LecturerProfileUncheckedUpdateWithoutLecturerFileInput>
+}
+
+export type LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput = {
+  create?: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+  connectOrCreate?: Prisma.LecturerProfileCreateOrConnectWithoutLecturerFileInput
+  upsert?: Prisma.LecturerProfileUpsertWithoutLecturerFileInput
+  disconnect?: Prisma.LecturerProfileWhereInput | boolean
+  delete?: Prisma.LecturerProfileWhereInput | boolean
+  connect?: Prisma.LecturerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LecturerProfileUpdateToOneWithWhereWithoutLecturerFileInput, Prisma.LecturerProfileUpdateWithoutLecturerFileInput>, Prisma.LecturerProfileUncheckedUpdateWithoutLecturerFileInput>
+}
+
 export type LecturerProfileCreateWithoutLecturerInput = {
-  resourceId?: number | null
   gender?: string | null
   nationality?: string | null
   professionalTitle?: string | null
@@ -679,11 +712,12 @@ export type LecturerProfileCreateWithoutLecturerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  lecturerFile?: Prisma.ResourceCreateNestedOneWithoutLecturerProfileFileInput
 }
 
 export type LecturerProfileUncheckedCreateWithoutLecturerInput = {
   id?: number
-  resourceId?: number | null
+  lecturerFileId?: number | null
   gender?: string | null
   nationality?: string | null
   professionalTitle?: string | null
@@ -716,7 +750,25 @@ export type LecturerProfileUpdateToOneWithWhereWithoutLecturerInput = {
 }
 
 export type LecturerProfileUpdateWithoutLecturerInput = {
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beginStudies?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  highestDegree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalStudents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lecturerFile?: Prisma.ResourceUpdateOneWithoutLecturerProfileFileNestedInput
+}
+
+export type LecturerProfileUncheckedUpdateWithoutLecturerInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  lecturerFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -732,9 +784,77 @@ export type LecturerProfileUpdateWithoutLecturerInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type LecturerProfileUncheckedUpdateWithoutLecturerInput = {
+export type LecturerProfileCreateWithoutLecturerFileInput = {
+  gender?: string | null
+  nationality?: string | null
+  professionalTitle?: string | null
+  beginStudies?: Date | string | null
+  highestDegree?: string | null
+  totalStudents?: number | null
+  totalCourses?: number | null
+  avgRating?: number | null
+  bio?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerProfileInput
+}
+
+export type LecturerProfileUncheckedCreateWithoutLecturerFileInput = {
+  id?: number
+  lecturerId: number
+  gender?: string | null
+  nationality?: string | null
+  professionalTitle?: string | null
+  beginStudies?: Date | string | null
+  highestDegree?: string | null
+  totalStudents?: number | null
+  totalCourses?: number | null
+  avgRating?: number | null
+  bio?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type LecturerProfileCreateOrConnectWithoutLecturerFileInput = {
+  where: Prisma.LecturerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+}
+
+export type LecturerProfileUpsertWithoutLecturerFileInput = {
+  update: Prisma.XOR<Prisma.LecturerProfileUpdateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedUpdateWithoutLecturerFileInput>
+  create: Prisma.XOR<Prisma.LecturerProfileCreateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedCreateWithoutLecturerFileInput>
+  where?: Prisma.LecturerProfileWhereInput
+}
+
+export type LecturerProfileUpdateToOneWithWhereWithoutLecturerFileInput = {
+  where?: Prisma.LecturerProfileWhereInput
+  data: Prisma.XOR<Prisma.LecturerProfileUpdateWithoutLecturerFileInput, Prisma.LecturerProfileUncheckedUpdateWithoutLecturerFileInput>
+}
+
+export type LecturerProfileUpdateWithoutLecturerFileInput = {
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  beginStudies?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  highestDegree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalStudents?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalCourses?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  avgRating?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerProfileNestedInput
+}
+
+export type LecturerProfileUncheckedUpdateWithoutLecturerFileInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  resourceId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   professionalTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -755,7 +875,7 @@ export type LecturerProfileUncheckedUpdateWithoutLecturerInput = {
 export type LecturerProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lecturerId?: boolean
-  resourceId?: boolean
+  lecturerFileId?: boolean
   gender?: boolean
   nationality?: boolean
   professionalTitle?: boolean
@@ -770,6 +890,7 @@ export type LecturerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
   updatedAt?: boolean
   isDestroyed?: boolean
   lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lecturerFile?: boolean | Prisma.LecturerProfile$lecturerFileArgs<ExtArgs>
 }, ExtArgs["result"]["lecturerProfile"]>
 
 
@@ -777,7 +898,7 @@ export type LecturerProfileSelect<ExtArgs extends runtime.Types.Extensions.Inter
 export type LecturerProfileSelectScalar = {
   id?: boolean
   lecturerId?: boolean
-  resourceId?: boolean
+  lecturerFileId?: boolean
   gender?: boolean
   nationality?: boolean
   professionalTitle?: boolean
@@ -793,20 +914,22 @@ export type LecturerProfileSelectScalar = {
   isDestroyed?: boolean
 }
 
-export type LecturerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lecturerId" | "resourceId" | "gender" | "nationality" | "professionalTitle" | "beginStudies" | "highestDegree" | "totalStudents" | "totalCourses" | "avgRating" | "bio" | "isActive" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lecturerProfile"]>
+export type LecturerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lecturerId" | "lecturerFileId" | "gender" | "nationality" | "professionalTitle" | "beginStudies" | "highestDegree" | "totalStudents" | "totalCourses" | "avgRating" | "bio" | "isActive" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lecturerProfile"]>
 export type LecturerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  lecturerFile?: boolean | Prisma.LecturerProfile$lecturerFileArgs<ExtArgs>
 }
 
 export type $LecturerProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LecturerProfile"
   objects: {
     lecturer: Prisma.$UserPayload<ExtArgs>
+    lecturerFile: Prisma.$ResourcePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     lecturerId: number
-    resourceId: number | null
+    lecturerFileId: number | null
     gender: string | null
     nationality: string | null
     professionalTitle: string | null
@@ -1161,6 +1284,7 @@ readonly fields: LecturerProfileFieldRefs;
 export interface Prisma__LecturerProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lecturer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lecturerFile<T extends Prisma.LecturerProfile$lecturerFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LecturerProfile$lecturerFileArgs<ExtArgs>>): Prisma.Prisma__ResourceClient<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1192,7 +1316,7 @@ export interface Prisma__LecturerProfileClient<T, Null = never, ExtArgs extends 
 export interface LecturerProfileFieldRefs {
   readonly id: Prisma.FieldRef<"LecturerProfile", 'Int'>
   readonly lecturerId: Prisma.FieldRef<"LecturerProfile", 'Int'>
-  readonly resourceId: Prisma.FieldRef<"LecturerProfile", 'Int'>
+  readonly lecturerFileId: Prisma.FieldRef<"LecturerProfile", 'Int'>
   readonly gender: Prisma.FieldRef<"LecturerProfile", 'String'>
   readonly nationality: Prisma.FieldRef<"LecturerProfile", 'String'>
   readonly professionalTitle: Prisma.FieldRef<"LecturerProfile", 'String'>
@@ -1546,6 +1670,25 @@ export type LecturerProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many LecturerProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * LecturerProfile.lecturerFile
+ */
+export type LecturerProfile$lecturerFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Resource
+   */
+  select?: Prisma.ResourceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Resource
+   */
+  omit?: Prisma.ResourceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResourceInclude<ExtArgs> | null
+  where?: Prisma.ResourceWhereInput
 }
 
 /**

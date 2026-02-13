@@ -68,16 +68,6 @@ export type Lesson = Prisma.LessonModel
  */
 export type Resource = Prisma.ResourceModel
 /**
- * Model LessonResource
- * 
- */
-export type LessonResource = Prisma.LessonResourceModel
-/**
- * Model LecturerResource
- * 
- */
-export type LecturerResource = Prisma.LecturerResourceModel
-/**
  * Model Enrollment
  * 
  */

@@ -10,6 +10,7 @@ import { lessonRoute } from "./lessonRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
+import { resourceRoute } from "./resourceRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 
@@ -59,5 +60,8 @@ Router.use("/modules", moduleRoute);
 
 // Lesson route
 Router.use("/lessons", lessonRoute);
+
+// Resource route
+Router.use("/resources", resourceRoute);
 
 export const APIs_V1 = Router;
