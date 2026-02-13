@@ -1,5 +1,8 @@
+import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { lessonService } from "@/services/lessonService.js";
+import { MIN_VIDEO_CHECK_SIZE } from "@/utils/validators.js";
 import { NextFunction, Request, Response } from "express";
+import fs from "fs/promises";
 import { StatusCodes } from "http-status-codes";
 
 const createLesson = async (
@@ -105,6 +108,49 @@ const getLessonByResourceId = async (
   }
 };
 
+const uploadLessonFiles = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const files = req.files as Express.Multer.File[];
+    const uploaded = await Promise.all(
+      files.map((f) => CloudinaryProvider.uploadDoc(f.buffer)),
+    );
+    res.status(StatusCodes.OK).json(uploaded);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const uploadLessonVideos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const videos = req.files as Express.Multer.File[];
+
+    const uploaded = await Promise.all(
+      videos.map(async (video) => {
+        try {
+          if (video.size >= MIN_VIDEO_CHECK_SIZE) {
+            return await CloudinaryProvider.uploadVideoLarge(video.path);
+          }
+          return await CloudinaryProvider.uploadVideo(video.buffer);
+        } finally {
+          if (video.path) await fs.unlink(video.path).catch(() => undefined);
+        }
+      }),
+    );
+
+    res.status(StatusCodes.OK).json(uploaded);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const lessonController = {
   createLesson,
   updateLesson,
@@ -112,4 +158,6 @@ export const lessonController = {
   getLessonById,
   getAllLessonsByModuleId,
   getLessonByResourceId,
+  uploadLessonFiles,
+  uploadLessonVideos,
 };

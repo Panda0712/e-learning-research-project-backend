@@ -1,4 +1,5 @@
 import { userController } from "@/controllers/userController.js";
+import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { userValidation } from "@/validations/userValidation.js";
 import express from "express";
 
@@ -38,6 +39,16 @@ Router.route("/forgot-password").post(
 Router.route("/reset-password").post(
   userValidation.resetPassword,
   userController.resetPassword,
+);
+
+Router.route("/avatar").post(
+  multerUploadMiddleware.uploadImage.single("images"),
+  userController.uploadAvatar,
+);
+
+Router.route("/lecturer-file").post(
+  multerUploadMiddleware.uploadDoc.single("files"),
+  userController.uploadLecturerFile,
 );
 
 Router.route("/google").get(userController.googleAuthStartHandler);

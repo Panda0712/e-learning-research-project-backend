@@ -1,3 +1,4 @@
+import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { userService } from "@/services/userService.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -159,6 +160,38 @@ const resetPassword = async (
   }
 };
 
+const uploadAvatar = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file as Express.Multer.File;
+
+    const uploadedAvatar = await CloudinaryProvider.uploadImage(file.buffer);
+
+    res.status(StatusCodes.OK).json(uploadedAvatar);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const uploadLecturerFile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file as Express.Multer.File;
+
+    const uploadedFile = await CloudinaryProvider.uploadDoc(file.buffer);
+
+    res.status(StatusCodes.OK).json(uploadedFile);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const googleAuthStartHandler = async (
   req: Request,
   res: Response,
@@ -217,6 +250,8 @@ export const userController = {
   registerLecturerProfile,
   forgotPassword,
   resetPassword,
+  uploadAvatar,
+  uploadLecturerFile,
   googleAuthStartHandler,
   googleAuthCallbackHandler,
 };

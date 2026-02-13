@@ -1,4 +1,5 @@
 import { courseController } from "@/controllers/courseController.js";
+import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { courseValidation } from "@/validations/courseValidation.js";
 import express from "express";
 
@@ -52,6 +53,9 @@ Router.route("/get-courses-by-lecturer-id/:lecturerId").get(
 Router.route("/get-courses-by-category-id/:categoryId").get(
   courseValidation.getAllCoursesByCategoryId,
   courseController.getAllCoursesByCategoryId,
+);
+Router.route("/thumbnail").post(
+  multerUploadMiddleware.uploadImage.single("images"),
 );
 
 export const courseRoute = Router;
