@@ -19,7 +19,7 @@ model User {
   password             String
   firstName            String?
   lastName             String?
-  avatar               String?
+  avatarId             Int?      @unique
   phoneNumber          String?
   dateOfBirth          DateTime?
   role                 String    @default("student")
@@ -32,6 +32,7 @@ model User {
   isDestroyed          Boolean   @default(false)
 
   // relations
+  avatar                 Resource?               @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
   courses                Course[]                @relation("LecturerCourses")
   enrollments            Enrollment[]
   reviews                CourseReview[]
@@ -42,7 +43,6 @@ model User {
   blogComments           BlogComment[]
   wishlist               Wishlist[]
   cart                   Cart?
-  lecturerResources      LecturerResource[]
   orders                 Order[]
   transactions           Transaction[]
   lecturerPayoutAccounts LecturerPayoutAccount[]
@@ -80,7 +80,7 @@ model Course {
   id            Int       @id @default(autoincrement())
   lecturerId    Int
   categoryId    Int?
-  thumbnail     String?
+  thumbnailId   Int?      @unique
   name          String
   lecturerName  String?
   duration      String?
@@ -98,6 +98,7 @@ model Course {
   // relations
   lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
   category    CourseCategory? @relation(fields: [categoryId], references: [id])
+  thumbnail   Resource?       @relation("CourseThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
   modules     Module[]
   reviews     CourseReview[]
   enrollments Enrollment[]
@@ -167,27 +168,29 @@ model Module {
 }
 
 model Lesson {
-  id          Int       @id @default(autoincrement())
-  resourceId  Int?
-  moduleId    Int
-  title       String
-  description String?
-  note        String?
-  videoUrl    String?
-  duration    String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  isDestroyed Boolean   @default(false)
+  id            Int       @id @default(autoincrement())
+  lessonFileId  Int?      @unique
+  moduleId      Int
+  title         String
+  description   String?
+  note          String?
+  lessonVideoId Int?      @unique
+  duration      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
 
   // relations
-  module      Module           @relation(fields: [moduleId], references: [id])
-  resources   LessonResource[]
+  module      Module       @relation(fields: [moduleId], references: [id])
+  lessonFile  Resource?    @relation("LessonFile", fields: [lessonFileId], references: [id], onDelete: SetNull)
+  lessonVideo Resource?    @relation("LessonVideo", fields: [lessonVideoId], references: [id], onDelete: SetNull)
   quizzes     Quiz[]
   assessments Assessment[]
 }
 
 model Resource {
   id          Int       @id @default(autoincrement())
+  publicId    String    @unique
   fileSize    Int?
   fileType    String?
   fileUrl     String
@@ -196,32 +199,12 @@ model Resource {
   isDestroyed Boolean   @default(false)
 
   // relations
-  lessonResources   LessonResource[]
-  lecturerResources LecturerResource[]
-}
-
-model LessonResource {
-  id         Int       @id @default(autoincrement())
-  lessonId   Int
-  resourceId Int
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
-
-  // relations
-  lesson   Lesson   @relation(fields: [lessonId], references: [id])
-  resource Resource @relation(fields: [resourceId], references: [id])
-}
-
-model LecturerResource {
-  id         Int       @id @default(autoincrement())
-  lecturerId Int
-  resourceId Int
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
-
-  // relations
-  lecturer User     @relation(fields: [lecturerId], references: [id])
-  resource Resource @relation(fields: [resourceId], references: [id])
+  userAvatar          User?            @relation("UserAvatar")
+  courseThumbnail     Course?          @relation("CourseThumbnail")
+  lessonFile          Lesson?          @relation("LessonFile")
+  lessonVideo         Lesson?          @relation("LessonVideo")
+  blogThumbnail       BlogPost?        @relation("BlogThumbnail")
+  lecturerProfileFile LecturerProfile? @relation("LecturerProfileFile")
 }
 
 model Enrollment {
@@ -387,16 +370,17 @@ model BlogPost {
   title         String
   slug          String?
   content       String?
-  thumbnail     String?
+  thumbnailId   Int?      @unique
   totalComments Int?      @default(0)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
   isDestroyed   Boolean   @default(false)
 
   // relations
-  author   User          @relation(fields: [authorId], references: [id], name: "AuthorPosts")
-  category BlogCategory? @relation(fields: [categoryId], references: [id])
-  comments BlogComment[]
+  author    User          @relation(fields: [authorId], references: [id], name: "AuthorPosts")
+  category  BlogCategory? @relation(fields: [categoryId], references: [id])
+  thumbnail Resource?     @relation("BlogThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
+  comments  BlogComment[]
 }
 
 model BlogCategory {
@@ -507,7 +491,7 @@ model TransactionStudent {
 model LecturerProfile {
   id                Int       @id @default(autoincrement())
   lecturerId        Int       @unique
-  resourceId        Int?
+  lecturerFileId    Int?      @unique
   gender            String?
   nationality       String?
   professionalTitle String?
@@ -523,7 +507,8 @@ model LecturerProfile {
   isDestroyed       Boolean   @default(false)
 
   // relations
-  lecturer User @relation(fields: [lecturerId], references: [id])
+  lecturer     User      @relation(fields: [lecturerId], references: [id])
+  lecturerFile Resource? @relation("LecturerProfileFile", fields: [lecturerFileId], references: [id], onDelete: SetNull)
 }
 
 model LecturerPayout {

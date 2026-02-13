@@ -61,8 +61,6 @@ export const ModelName = {
   Module: 'Module',
   Lesson: 'Lesson',
   Resource: 'Resource',
-  LessonResource: 'LessonResource',
-  LecturerResource: 'LecturerResource',
   Enrollment: 'Enrollment',
   Quiz: 'Quiz',
   Question: 'Question',
@@ -108,7 +106,7 @@ export const UserScalarFieldEnum = {
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
-  avatar: 'avatar',
+  avatarId: 'avatarId',
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
@@ -157,7 +155,7 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
   categoryId: 'categoryId',
-  thumbnail: 'thumbnail',
+  thumbnailId: 'thumbnailId',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',
@@ -234,12 +232,12 @@ export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof 
 
 export const LessonScalarFieldEnum = {
   id: 'id',
-  resourceId: 'resourceId',
+  lessonFileId: 'lessonFileId',
   moduleId: 'moduleId',
   title: 'title',
   description: 'description',
   note: 'note',
-  videoUrl: 'videoUrl',
+  lessonVideoId: 'lessonVideoId',
   duration: 'duration',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -251,6 +249,7 @@ export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof 
 
 export const ResourceScalarFieldEnum = {
   id: 'id',
+  publicId: 'publicId',
   fileSize: 'fileSize',
   fileType: 'fileType',
   fileUrl: 'fileUrl',
@@ -260,28 +259,6 @@ export const ResourceScalarFieldEnum = {
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
-
-
-export const LessonResourceScalarFieldEnum = {
-  id: 'id',
-  lessonId: 'lessonId',
-  resourceId: 'resourceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LessonResourceScalarFieldEnum = (typeof LessonResourceScalarFieldEnum)[keyof typeof LessonResourceScalarFieldEnum]
-
-
-export const LecturerResourceScalarFieldEnum = {
-  id: 'id',
-  lecturerId: 'lecturerId',
-  resourceId: 'resourceId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LecturerResourceScalarFieldEnum = (typeof LecturerResourceScalarFieldEnum)[keyof typeof LecturerResourceScalarFieldEnum]
 
 
 export const EnrollmentScalarFieldEnum = {
@@ -435,7 +412,7 @@ export const BlogPostScalarFieldEnum = {
   title: 'title',
   slug: 'slug',
   content: 'content',
-  thumbnail: 'thumbnail',
+  thumbnailId: 'thumbnailId',
   totalComments: 'totalComments',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -543,7 +520,7 @@ export type TransactionStudentScalarFieldEnum = (typeof TransactionStudentScalar
 export const LecturerProfileScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
-  resourceId: 'resourceId',
+  lecturerFileId: 'lecturerFileId',
   gender: 'gender',
   nationality: 'nationality',
   professionalTitle: 'professionalTitle',
@@ -646,7 +623,6 @@ export const UserOrderByRelevanceFieldEnum = {
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
-  avatar: 'avatar',
   phoneNumber: 'phoneNumber',
   role: 'role',
   verifyToken: 'verifyToken',
@@ -691,7 +667,6 @@ export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnu
 
 
 export const CourseOrderByRelevanceFieldEnum = {
-  thumbnail: 'thumbnail',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',
@@ -741,7 +716,6 @@ export const LessonOrderByRelevanceFieldEnum = {
   title: 'title',
   description: 'description',
   note: 'note',
-  videoUrl: 'videoUrl',
   duration: 'duration'
 } as const
 
@@ -749,6 +723,7 @@ export type LessonOrderByRelevanceFieldEnum = (typeof LessonOrderByRelevanceFiel
 
 
 export const ResourceOrderByRelevanceFieldEnum = {
+  publicId: 'publicId',
   fileType: 'fileType',
   fileUrl: 'fileUrl'
 } as const
@@ -833,8 +808,7 @@ export type AssessmentOrderByRelevanceFieldEnum = (typeof AssessmentOrderByRelev
 export const BlogPostOrderByRelevanceFieldEnum = {
   title: 'title',
   slug: 'slug',
-  content: 'content',
-  thumbnail: 'thumbnail'
+  content: 'content'
 } as const
 
 export type BlogPostOrderByRelevanceFieldEnum = (typeof BlogPostOrderByRelevanceFieldEnum)[keyof typeof BlogPostOrderByRelevanceFieldEnum]
