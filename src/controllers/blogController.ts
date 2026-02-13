@@ -1,3 +1,4 @@
+import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { blogService } from "@/services/blogService.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
@@ -167,6 +168,22 @@ const deleteComment = async (
   }
 };
 
+const uploadBlogThumbnail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file as Express.Multer.File;
+
+    const uploadedThumbnail = await CloudinaryProvider.uploadImage(file.buffer);
+
+    res.status(StatusCodes.OK).json(uploadedThumbnail);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const blogController = {
   createBlogCategory,
   getAllBlogCategories,
@@ -178,6 +195,7 @@ export const blogController = {
   deletePost,
   getAllPosts,
   getPostDetail,
+  uploadBlogThumbnail,
 
   createComment,
   updateComment,

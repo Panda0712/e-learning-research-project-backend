@@ -1,4 +1,5 @@
 import { blogController } from "@/controllers/blogController.js";
+import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { blogValidation } from "@/validations/blogValidation.js";
 import express from "express";
 
@@ -22,6 +23,11 @@ Router.route("/blogPost/:id")
   .get(blogController.getPostDetail)
   .put(blogValidation.updatePost, blogController.updatePost)
   .delete(blogValidation.deletePost, blogController.deletePost);
+
+Router.route("/thumbnail").post(
+  multerUploadMiddleware.uploadImage.single("images"),
+  blogController.uploadBlogThumbnail,
+);
 
 // BLOG COMMENT ROUTE
 Router.route("/blogComments").post(

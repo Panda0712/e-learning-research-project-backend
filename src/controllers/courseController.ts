@@ -1,3 +1,4 @@
+import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { courseService } from "../services/courseService.js";
@@ -235,6 +236,22 @@ const getListCourses = async (
   }
 };
 
+const uploadCourseThumbnail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file as Express.Multer.File;
+
+    const uploadedThumbnail = await CloudinaryProvider.uploadImage(file.buffer);
+
+    res.status(StatusCodes.OK).json(uploadedThumbnail);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourseCategory,
   getAllCourseCategories,
@@ -252,4 +269,5 @@ export const courseController = {
   getListCourses,
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
+  uploadCourseThumbnail,
 };

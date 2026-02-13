@@ -18,6 +18,7 @@ export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
 export const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
 export const MAX_SIZE_GB = 4;
 export const MIN_VIDEO_HEIGHT = 720;
+export const MIN_VIDEO_CHECK_SIZE = 70 * 1024 * 1024; // 70MB;
 
 export const ALLOW_IMAGE_TYPES = ["image/jpg", "image/jpeg", "image/png"];
 export const ALLOW_DOC_TYPES = [
