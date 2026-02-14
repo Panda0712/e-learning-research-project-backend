@@ -90,7 +90,12 @@ const createCourse = async (
 ) => {
   const correctCondition = Joi.object({
     categoryId: Joi.number().integer().required().positive(),
-    thumbnail: Joi.string(),
+    thumbnail: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }),
     name: Joi.string().required().min(2).max(50).trim().strict(),
     lecturerName: Joi.string().required().min(2).max(50).trim().strict(),
     duration: Joi.string().required().min(2).max(50).trim().strict(),
@@ -124,7 +129,12 @@ const updateCourse = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    thumbnail: Joi.string(),
+    thumbnail: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }),
     name: Joi.string().min(2).max(50).trim().strict(),
     lecturerName: Joi.string().min(2).max(50).trim().strict(),
     duration: Joi.string().min(2).max(50).trim().strict(),

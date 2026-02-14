@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import { CreateLesson, UpdateLesson } from "@/types/lesson.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { resourceService } from "./resourceService.js";
 
 const createLesson = async (data: CreateLesson) => {
   try {
@@ -11,13 +12,6 @@ const createLesson = async (data: CreateLesson) => {
     });
     if (!module) throw new ApiError(StatusCodes.NOT_FOUND, "Module not found!");
 
-    // check resource existence
-    const resource = await prisma.resource.findUnique({
-      where: { id: data.resourceId, isDestroyed: false },
-    });
-    if (!resource)
-      throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
-
     // check lesson existence
     const lesson = await prisma.lesson.findFirst({
       where: { title: data.title, moduleId: module.id, isDestroyed: false },
@@ -26,19 +20,45 @@ const createLesson = async (data: CreateLesson) => {
       throw new ApiError(StatusCodes.CONFLICT, "Lesson already exists!");
 
     // create lesson
-    const createdLesson = await prisma.lesson.create({
-      data: {
-        resourceId: resource.id,
-        moduleId: module.id,
-        title: data.title,
-        description: data.description,
-        note: data.note,
-        videoUrl: data.videoUrl,
-        duration: data.duration,
-      },
-    });
+    return await prisma.$transaction(async (tx) => {
+      let lessonFile;
+      if (data.resource) {
+        lessonFile = await resourceService.createResourceWithTransaction(
+          {
+            publicId: data.resource.publicId,
+            fileSize: data.resource.fileSize ?? null,
+            fileType: data.resource.fileType ?? null,
+            fileUrl: data.resource.fileUrl,
+          },
+          tx,
+        );
+      }
 
-    return createdLesson;
+      const createdVideoResource =
+        await resourceService.createResourceWithTransaction(
+          {
+            publicId: data.video.publicId,
+            fileSize: data.video.fileSize ?? null,
+            fileType: data.video.fileType ?? null,
+            fileUrl: data.video.fileUrl,
+          },
+          tx,
+        );
+
+      const newLesson = await tx.lesson.create({
+        data: {
+          lessonFileId: lessonFile?.id || null,
+          lessonVideoId: createdVideoResource.id,
+          moduleId: module.id,
+          title: data.title,
+          description: data.description,
+          note: data.note,
+          duration: data.duration,
+        },
+      });
+
+      return newLesson;
+    });
   } catch (error: any) {
     throw new Error(error);
   }
@@ -52,6 +72,51 @@ const updateLesson = async (id: number, updateData: UpdateLesson) => {
     });
     if (!existingLesson)
       throw new ApiError(StatusCodes.NOT_FOUND, "Lesson not found!");
+
+    // update lesson file
+    if (updateData?.resource || updateData?.video) {
+      return await prisma.$transaction(async (tx) => {
+        let lessonFile;
+        if (updateData.resource) {
+          lessonFile = await resourceService.createResourceWithTransaction(
+            {
+              publicId: updateData.resource.publicId,
+              fileSize: updateData.resource.fileSize ?? null,
+              fileType: updateData.resource.fileType ?? null,
+              fileUrl: updateData.resource.fileUrl,
+            },
+            tx,
+          );
+        }
+
+        let lessonVideo;
+        if (updateData.video) {
+          lessonVideo = await resourceService.createResourceWithTransaction(
+            {
+              publicId: updateData.video.publicId,
+              fileSize: updateData.video.fileSize ?? null,
+              fileType: updateData.video.fileType ?? null,
+              fileUrl: updateData.video.fileUrl,
+            },
+            tx,
+          );
+        }
+
+        const updatedLesson = await tx.lesson.update({
+          where: { id },
+          data: {
+            lessonFileId: lessonFile?.id || existingLesson.lessonFileId,
+            lessonVideoId: lessonVideo?.id || existingLesson.lessonVideoId,
+            title: updateData.title ?? existingLesson.title,
+            description: updateData.description ?? existingLesson.description,
+            note: updateData.note ?? existingLesson.note,
+            duration: updateData.duration ?? existingLesson.duration,
+          },
+        });
+
+        return updatedLesson;
+      });
+    }
 
     // update lesson
     const updatedLesson = await prisma.lesson.update({
@@ -129,7 +194,7 @@ const getLessonByResourceId = async (resourceId: number) => {
 
     // get lesson
     const lesson = await prisma.lesson.findFirst({
-      where: { resourceId, isDestroyed: false },
+      where: { lessonVideoId: resourceId, isDestroyed: false },
     });
 
     return lesson;

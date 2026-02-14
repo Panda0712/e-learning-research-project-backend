@@ -93,7 +93,12 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
       .pattern(/^[a-z0-9-]+$/)
       .message("Slug must be lowercase and alphanumeric"),
     content: Joi.string().required().min(2).max(5000).trim().strict(),
-    thumbnail: Joi.string().uri().optional().allow(null, ""),
+    thumbnail: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }),
     categoryId: Joi.number().required().positive(),
   });
 
@@ -110,14 +115,22 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 
 const updatePost = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
-    title: Joi.string().required().min(2).max(50).trim().strict(),
-    content: Joi.string().required().min(2).max(5000).trim().strict(),
-    thumbnail: Joi.string().uri().optional().allow(null, ""),
-    categoryId: Joi.number().required().positive(),
+    title: Joi.string().min(2).max(50).trim().strict(),
+    content: Joi.string().min(2).max(5000).trim().strict(),
+    thumbnail: Joi.object({
+      publicId: Joi.string(),
+      fileUrl: Joi.string(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
+    categoryId: Joi.number().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    await correctCondition.validateAsync(req.body, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
 
     next();
   } catch (error: any) {

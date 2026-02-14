@@ -14,6 +14,7 @@ import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
 import { v4 as uuidV4 } from "uuid";
 import KeyTokenService from "./keyTokenService.js";
+import { resourceService } from "./resourceService.js";
 
 const handleRefreshToken = async ({
   refreshToken,
@@ -255,7 +256,10 @@ const handleGoogleCallback = async (code: string) => {
     const { tokens } = await googleClient.getToken(code);
 
     if (!tokens.id_token) {
-      throw new ApiError(StatusCodes.BAD_REQUEST, "No google id_token present!");
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "No google id_token present!",
+      );
     }
 
     const googleTicket = await googleClient.verifyIdToken({
@@ -331,7 +335,12 @@ const handleGoogleCallback = async (code: string) => {
 const updateProfile = async (
   userId: number,
   reqBody: UpdateProfile,
-  userAvatar = null,
+  userAvatar: {
+    publicId: string;
+    fileUrl: string;
+    fileSize?: number;
+    fileType?: string;
+  } | null = null,
 ) => {
   try {
     const existingUser = await prisma.user.findUnique({
@@ -349,6 +358,34 @@ const updateProfile = async (
     let updateUser = existingUser;
 
     if (userAvatar) {
+      return await prisma.$transaction(async (tx) => {
+        const createdResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: userAvatar.publicId,
+              fileSize: userAvatar.fileSize ?? null,
+              fileType: userAvatar.fileType ?? null,
+              fileUrl: userAvatar.fileUrl,
+            },
+            tx,
+          );
+
+        if (existingUser.avatarId) {
+          await resourceService.deleteResourceWithTransaction(
+            existingUser.avatarId,
+            tx,
+          );
+        }
+
+        const updatedUser = await tx.user.update({
+          where: { id: userId },
+          data: {
+            avatarId: createdResource.id,
+          },
+        });
+
+        return pickUser(updatedUser);
+      });
     } else if (reqBody.email) {
     } else {
       let hashedPassword = null;
@@ -392,20 +429,35 @@ const registerLecturerProfile = async (
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
-    return await prisma.lecturerProfile.create({
-      data: {
-        lecturerId: userId,
-        resourceId: reqBody.resourceId,
-        gender: reqBody.gender,
-        nationality: reqBody.nationality,
-        professionalTitle: reqBody.professionalTitle,
-        beginStudies: reqBody.beginStudies,
-        highestDegree: reqBody.highestDegree,
-        bio: reqBody.bio,
-      },
-      include: {
-        lecturer: true,
-      },
+    return await prisma.$transaction(async (tx) => {
+      const createdResource =
+        await resourceService.createResourceWithTransaction(
+          {
+            publicId: reqBody.lecturerFile.publicId,
+            fileSize: reqBody.lecturerFile.fileSize ?? null,
+            fileType: reqBody.lecturerFile.fileType ?? null,
+            fileUrl: reqBody.lecturerFile.fileUrl,
+          },
+          tx,
+        );
+
+      const newLecturerProfile = await tx.lecturerProfile.create({
+        data: {
+          lecturerId: userId,
+          lecturerFileId: createdResource.id,
+          gender: reqBody.gender,
+          nationality: reqBody.nationality,
+          professionalTitle: reqBody.professionalTitle,
+          beginStudies: reqBody.beginStudies,
+          highestDegree: reqBody.highestDegree,
+          bio: reqBody.bio,
+        },
+        include: {
+          lecturer: true,
+        },
+      });
+
+      return newLecturerProfile;
     });
   } catch (error: any) {
     throw new Error(error);

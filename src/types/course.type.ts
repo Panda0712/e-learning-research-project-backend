@@ -1,7 +1,14 @@
+export interface CourseThumbnail {
+  publicId: string;
+  fileUrl: string;
+  fileSize?: number | null;
+  fileType?: string | null;
+}
+
 export interface CreateCourse {
   lecturerId: number;
   categoryId: number;
-  thumbnail: string;
+  thumbnail: CourseThumbnail;
   name: string;
   lecturerName: string;
   duration: string;
@@ -12,7 +19,7 @@ export interface CreateCourse {
 }
 
 export interface UpdateCourse {
-  thumbnail?: string;
+  thumbnail?: CourseThumbnail;
   name?: string;
   lecturerName?: string;
   duration?: string;

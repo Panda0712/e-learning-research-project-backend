@@ -1,5 +1,6 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { userService } from "@/services/userService.js";
+import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import ms from "ms";
@@ -166,11 +167,28 @@ const uploadAvatar = async (
   next: NextFunction,
 ) => {
   try {
+    const userId = req.jwtDecoded.id;
     const file = req.file as Express.Multer.File;
+
+    if (!file) next(new ApiError(StatusCodes.BAD_REQUEST, "No file uploaded!"));
 
     const uploadedAvatar = await CloudinaryProvider.uploadImage(file.buffer);
 
-    res.status(StatusCodes.OK).json(uploadedAvatar);
+    const result = await userService.updateProfile(
+      userId,
+      {},
+      {
+        publicId: (uploadedAvatar as any).public_id,
+        fileUrl: (uploadedAvatar as any).secure_url,
+        fileSize: file.size,
+        fileType: file.mimetype,
+      },
+    );
+
+    res.status(StatusCodes.OK).json({
+      message: "Avatar uploaded successfully!",
+      ...result,
+    });
   } catch (error) {
     next(error);
   }

@@ -103,6 +103,12 @@ export const update = async (
     newPassword: Joi.string()
       .pattern(PASSWORD_RULE)
       .message(`new password: ${PASSWORD_RULE_MESSAGE}`),
+    avatar: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
   });
 
   try {
@@ -127,7 +133,12 @@ export const registerLecturer = async (
     firstName: Joi.string().required().min(2).max(20).trim().strict(),
     lastName: Joi.string().required().min(2).max(40).trim().strict(),
     dateOfBirth: Joi.date().required().timestamp("javascript").default(null),
-    resourceId: Joi.number().required(),
+    lecturerFile: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }),
     phoneNumber: Joi.string()
       .required()
       .pattern(PHONE_RULE)
