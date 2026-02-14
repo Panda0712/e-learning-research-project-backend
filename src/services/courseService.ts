@@ -7,6 +7,7 @@ import {
   DEFAULT_ITEMS_PER_PAGE,
   DEFAULT_PAGE,
 } from "@/utils/constants.js";
+import { resourceService } from "./resourceService.js";
 
 const createCourseCategory = async (data: { name: string; slug: string }) => {
   try {
@@ -123,16 +124,38 @@ const createCourse = async (data: CreateCourse) => {
     }
 
     // create course
-    const createdCourse = await prisma.course.create({
-      data: {
-        ...data,
-        totalStudents: 0,
-        totalLessons: 0,
-        totalQuizzes: 0,
-      },
-    });
+    return await prisma.$transaction(async (tx) => {
+      const createdResource =
+        await resourceService.createResourceWithTransaction(
+          {
+            publicId: data.thumbnail.publicId,
+            fileSize: data.thumbnail.fileSize ?? null,
+            fileType: data.thumbnail.fileType ?? null,
+            fileUrl: data.thumbnail.fileUrl,
+          },
+          tx,
+        );
 
-    return createdCourse;
+      const newCourse = await prisma.course.create({
+        data: {
+          lecturerId: data.lecturerId,
+          categoryId: data.categoryId,
+          name: data.name,
+          lecturerName: data.lecturerName,
+          duration: data.duration,
+          level: data.level,
+          overview: data.overview,
+          price: data.price,
+          status: data.status,
+          thumbnailId: createdResource.id,
+          totalStudents: 0,
+          totalLessons: 0,
+          totalQuizzes: 0,
+        },
+      });
+
+      return newCourse;
+    });
   } catch (error: any) {
     throw new Error(error);
   }
@@ -148,9 +171,58 @@ const updateCourse = async (id: number, updateData: UpdateCourse) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
     }
 
+    if (updateData?.thumbnail) {
+      return await prisma.$transaction(async (tx) => {
+        let courseThumbnailId = course.thumbnailId;
+
+        const createdResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: updateData.thumbnail!.publicId,
+              fileSize: updateData.thumbnail!.fileSize ?? null,
+              fileType: updateData.thumbnail!.fileType ?? null,
+              fileUrl: updateData.thumbnail!.fileUrl,
+            },
+            tx,
+          );
+
+        courseThumbnailId = createdResource.id;
+
+        if (course.thumbnailId)
+          await resourceService.deleteResourceWithTransaction(
+            course.thumbnailId,
+            tx,
+          );
+
+        const updatedCourse = await tx.course.update({
+          where: { id },
+          data: {
+            name: updateData.name ?? course.name,
+            lecturerName: updateData.lecturerName ?? course.lecturerName,
+            duration: updateData.duration ?? course.duration,
+            level: updateData.level ?? course.level,
+            overview: updateData.overview ?? course.overview,
+            price: updateData.price ?? course.price,
+            status: updateData.status ?? course.status,
+            thumbnailId: courseThumbnailId,
+          },
+        });
+
+        return updatedCourse;
+      });
+    }
+
     const updatedCourse = await prisma.course.update({
       where: { id },
-      data: updateData,
+      data: {
+        name: updateData.name ?? course.name,
+        lecturerName: updateData.lecturerName ?? course.lecturerName,
+        duration: updateData.duration ?? course.duration,
+        level: updateData.level ?? course.level,
+        overview: updateData.overview ?? course.overview,
+        price: updateData.price ?? course.price,
+        status: updateData.status ?? course.status,
+      },
     });
 
     return updatedCourse;

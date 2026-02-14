@@ -1,7 +1,7 @@
 export interface CreateResource {
   publicId: string;
-  fileSize?: number;
-  fileType?: string;
+  fileSize?: number | null;
+  fileType?: string | null;
   fileUrl: string;
 }
 

@@ -9,12 +9,22 @@ const createLesson = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    resourceId: Joi.number().required().positive(),
+    resource: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
     moduleId: Joi.number().required().positive(),
     title: Joi.string().required().min(2).max(200).trim().strict(),
     description: Joi.string().required().min(2).max(5000).trim().strict(),
     note: Joi.string().min(2).max(5000).trim().strict(),
-    videoUrl: Joi.string().min(2).max(5000).trim().strict(),
+    video: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }),
     duration: Joi.string().required().min(2).max(50).trim().strict(),
   });
 
@@ -38,7 +48,18 @@ const updateLesson = async (
     title: Joi.string().min(2).max(200).trim().strict(),
     description: Joi.string().min(2).max(5000).trim().strict(),
     note: Joi.string().min(2).max(5000).trim().strict(),
-    videoUrl: Joi.string().min(2).max(5000).trim().strict(),
+    resource: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
+    video: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
     duration: Joi.string().min(2).max(50).trim().strict(),
   });
 

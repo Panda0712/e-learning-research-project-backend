@@ -125,6 +125,28 @@ const deleteResource = async (id: number) => {
   }
 };
 
+const deleteResourceWithTransaction = async (
+  id: number,
+  tx: Prisma.TransactionClient,
+) => {
+  try {
+    // check resource existence
+    const resource = await tx.resource.findUnique({
+      where: { id, isDestroyed: false },
+    });
+    if (!resource)
+      throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+
+    // delete resource
+    return await tx.resource.update({
+      where: { id },
+      data: { isDestroyed: true },
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 const deleteResourceByPublicId = async (publicId: string) => {
   try {
     // check resource existence
@@ -151,5 +173,6 @@ export const resourceService = {
   getResourceByPublicId,
   getAllResourcesByFileType,
   deleteResource,
+  deleteResourceWithTransaction,
   deleteResourceByPublicId,
 };

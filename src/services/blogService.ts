@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma.js";
+import { CreateBlogPost, UpdateBlogPost } from "@/types/blog.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { resourceService } from "./resourceService.js";
 
 // BLOG CATEGORY SERVICE
 const createBlogCategory = async (reqBody: { name: string; slug: string }) => {
@@ -91,14 +93,7 @@ const deleteBlogCategory = async (id: number) => {
 };
 
 // BLOG POST SERVICE
-const createPost = async (reqBody: {
-  authorId: number;
-  title: string;
-  slug: string;
-  content: string;
-  thumbnail: string;
-  categoryId: number;
-}) => {
+const createPost = async (reqBody: CreateBlogPost) => {
   try {
     // check category existence
     const checkCategory = await prisma.blogCategory.findUnique({
@@ -119,18 +114,31 @@ const createPost = async (reqBody: {
     }
 
     // create new post
-    const newPost = await prisma.blogPost.create({
-      data: {
-        authorId: reqBody.authorId,
-        title: reqBody.title,
-        slug: reqBody.slug,
-        content: reqBody.content,
-        thumbnail: reqBody.thumbnail,
-        categoryId: reqBody.categoryId,
-      },
-    });
+    return await prisma.$transaction(async (tx) => {
+      const createdResource =
+        await resourceService.createResourceWithTransaction(
+          {
+            publicId: reqBody.thumbnail.publicId,
+            fileSize: reqBody.thumbnail.fileSize ?? null,
+            fileType: reqBody.thumbnail.fileType ?? null,
+            fileUrl: reqBody.thumbnail.fileUrl,
+          },
+          tx,
+        );
 
-    return newPost;
+      const newPost = await tx.blogPost.create({
+        data: {
+          authorId: reqBody.authorId,
+          title: reqBody.title,
+          slug: reqBody.slug,
+          content: reqBody.content,
+          thumbnailId: createdResource.id,
+          categoryId: reqBody.categoryId,
+        },
+      });
+
+      return newPost;
+    });
   } catch (error: any) {
     throw new Error(error);
   }
@@ -164,15 +172,7 @@ const getPostDetail = async (id: number) => {
   }
 };
 
-const updatePost = async (
-  id: number,
-  reqBody: {
-    title: string;
-    content: string;
-    thumbnail: string;
-    categoryId: number;
-  },
-) => {
+const updatePost = async (id: number, reqBody: UpdateBlogPost) => {
   try {
     // check post existence
     const checkPost = await prisma.blogPost.findUnique({
@@ -184,13 +184,49 @@ const updatePost = async (
     }
 
     // update post
+    if (reqBody?.thumbnail) {
+      return await prisma.$transaction(async (tx) => {
+        let blogThumbnailId = checkPost.thumbnailId;
+
+        const createdResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: reqBody.thumbnail!.publicId,
+              fileSize: reqBody.thumbnail!.fileSize ?? null,
+              fileType: reqBody.thumbnail!.fileType ?? null,
+              fileUrl: reqBody.thumbnail!.fileUrl,
+            },
+            tx,
+          );
+
+        blogThumbnailId = createdResource.id;
+
+        if (checkPost.thumbnailId)
+          await resourceService.deleteResourceWithTransaction(
+            checkPost.thumbnailId,
+            tx,
+          );
+
+        const updatedPost = await tx.blogPost.update({
+          where: { id },
+          data: {
+            title: reqBody.title ?? checkPost.title,
+            content: reqBody.content ?? checkPost.content,
+            categoryId: reqBody.categoryId ?? checkPost.categoryId,
+            thumbnailId: blogThumbnailId,
+          },
+        });
+
+        return updatedPost;
+      });
+    }
+
     const updatedPost = await prisma.blogPost.update({
       where: { id },
       data: {
-        title: reqBody.title,
-        content: reqBody.content,
-        thumbnail: reqBody.thumbnail,
-        categoryId: reqBody.categoryId,
+        title: reqBody.title ?? checkPost.title,
+        content: reqBody.content ?? checkPost.content,
+        categoryId: reqBody.categoryId ?? checkPost.categoryId,
       },
     });
 

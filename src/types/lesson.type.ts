@@ -1,18 +1,26 @@
 export interface CreateLesson {
-  resourceId: number;
+  resource: LessonFile;
   moduleId: number;
   title: string;
   description: string;
   note: string;
-  videoUrl: string;
+  video: LessonFile;
   duration: string;
+}
+
+export interface LessonFile {
+  publicId: string;
+  fileUrl: string;
+  fileSize?: number | null;
+  fileType?: string | null;
 }
 
 export interface UpdateLesson {
   title?: string;
   description?: string;
   note?: string;
-  videoUrl?: string;
+  video?: LessonFile;
+  resource?: LessonFile;
   duration?: string;
 }
 
