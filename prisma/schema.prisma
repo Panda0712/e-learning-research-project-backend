@@ -13,6 +13,11 @@ datasource db {
   provider = "mysql"
 }
 
+enum ConversationRole {
+  STUDENT
+  LECTURER
+}
+
 model User {
   id                   Int       @id @default(autoincrement())
   email                String    @unique
@@ -34,6 +39,11 @@ model User {
   // relations
   avatar                 Resource?               @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
   courses                Course[]                @relation("LecturerCourses")
+  studentConversations   Conversation[]          @relation("StudentConversations")
+  lecturerConversations  Conversation[]          @relation("LecturerConversations")
+  memberConversations    ConversationMember[]
+  sentMessages           Message[]               @relation("MessageSender")
+  lastSentConversations  Conversation[]          @relation("ConversationLastMessageSender")
   enrollments            Enrollment[]
   reviews                CourseReview[]
   blogPosts              BlogPost[]              @relation("AuthorPosts")
@@ -585,9 +595,67 @@ model Revenue {
   course   Course @relation(fields: [courseId], references: [id])
 }
 
-// model Conversation {
-//   id            Int      @id @default(autoincrement())
-//   participants  Json?
-//   lastMessageAt DateTime?
-//   createdAt     DateTime? @default(now())
-// }
+model Conversation {
+  id                  Int       @id @default(autoincrement())
+  studentId           Int
+  lecturerId          Int
+  lastMessageId       Int?      @unique
+  lastMessageSenderId Int?
+  lastMessageContent  String?   @db.Text
+  lastMessageAt       DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  isDestroyed         Boolean   @default(false)
+
+  // relations
+  student           User                 @relation("StudentConversations", fields: [studentId], references: [id])
+  lecturer          User                 @relation("LecturerConversations", fields: [lecturerId], references: [id])
+  lastMessage       Message?             @relation("ConversationLastMessage", fields: [lastMessageId], references: [id], onDelete: SetNull)
+  lastMessageSender User?                @relation("ConversationLastMessageSender", fields: [lastMessageSenderId], references: [id], onDelete: SetNull)
+  members           ConversationMember[]
+  messages          Message[]
+
+  @@unique([studentId, lecturerId])
+  @@index([studentId, lastMessageAt(sort: Desc)])
+  @@index([lecturerId, lastMessageAt(sort: Desc)])
+  @@index([lastMessageAt(sort: Desc)])
+}
+
+model ConversationMember {
+  conversationId    Int
+  userId            Int
+  role              ConversationRole
+  unreadCount       Int              @default(0)
+  joinedAt          DateTime         @default(now())
+  lastReadAt        DateTime?
+  lastSeenMessageId Int?
+
+  // relations
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastSeenMessage Message?     @relation("MemberLastSeenMessage", fields: [lastSeenMessageId], references: [id], onDelete: SetNull)
+
+  @@id([conversationId, userId])
+  @@index([userId, conversationId])
+  @@index([userId, unreadCount])
+}
+
+model Message {
+  id             Int      @id @default(autoincrement())
+  conversationId Int
+  senderId       Int
+  content        String?  @db.Text
+  imgUrl         String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  isDestroyed    Boolean  @default(false)
+
+  // relations
+  conversation         Conversation         @relation(fields: [conversationId], references: [id])
+  sender               User                 @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  asLastOfConversation Conversation?        @relation("ConversationLastMessage")
+  seenByMembers        ConversationMember[] @relation("MemberLastSeenMessage")
+
+  @@index([conversationId, createdAt(sort: Desc)])
+  @@index([senderId, createdAt(sort: Desc)])
+}

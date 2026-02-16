@@ -194,3 +194,18 @@ export type LecturerPayoutAccount = Prisma.LecturerPayoutAccountModel
  * 
  */
 export type Revenue = Prisma.RevenueModel
+/**
+ * Model Conversation
+ * 
+ */
+export type Conversation = Prisma.ConversationModel
+/**
+ * Model ConversationMember
+ * 
+ */
+export type ConversationMember = Prisma.ConversationMemberModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
