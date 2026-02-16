@@ -9,6 +9,7 @@ import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
+import { orderItemRoute } from "./orderItemRoute.js";
 import { orderRoute } from "./orderRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
@@ -53,6 +54,9 @@ Router.use("/coupons", couponRoute);
 
 // Order route
 Router.use("/orders", orderRoute);
+
+// OrderItem route
+Router.use("/order-items", orderItemRoute);
 
 // Assessment route
 Router.use("/assessments", assessmentRoute);
