@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { assessmentRoute } from "./assessmentRoute.js";
 import { blogRoute } from "./blogRoute.js";
 import { cartRoute } from "./cartRoute.js";
+import { couponRoute } from "./couponRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
@@ -45,6 +46,9 @@ Router.use("/transactions", transactionRoute);
 
 // Cart route
 Router.use("/carts", cartRoute);
+
+// Coupon route
+Router.use("/coupons", couponRoute);
 
 // Assessment route
 Router.use("/assessments", assessmentRoute);
