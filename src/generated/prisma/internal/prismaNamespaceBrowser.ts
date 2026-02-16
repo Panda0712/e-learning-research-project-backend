@@ -81,7 +81,10 @@ export const ModelName = {
   LecturerProfile: 'LecturerProfile',
   LecturerPayout: 'LecturerPayout',
   LecturerPayoutAccount: 'LecturerPayoutAccount',
-  Revenue: 'Revenue'
+  Revenue: 'Revenue',
+  Conversation: 'Conversation',
+  ConversationMember: 'ConversationMember',
+  Message: 'Message'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -587,6 +590,49 @@ export const RevenueScalarFieldEnum = {
 export type RevenueScalarFieldEnum = (typeof RevenueScalarFieldEnum)[keyof typeof RevenueScalarFieldEnum]
 
 
+export const ConversationScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  lecturerId: 'lecturerId',
+  lastMessageId: 'lastMessageId',
+  lastMessageSenderId: 'lastMessageSenderId',
+  lastMessageContent: 'lastMessageContent',
+  lastMessageAt: 'lastMessageAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+
+
+export const ConversationMemberScalarFieldEnum = {
+  conversationId: 'conversationId',
+  userId: 'userId',
+  role: 'role',
+  unreadCount: 'unreadCount',
+  joinedAt: 'joinedAt',
+  lastReadAt: 'lastReadAt',
+  lastSeenMessageId: 'lastSeenMessageId'
+} as const
+
+export type ConversationMemberScalarFieldEnum = (typeof ConversationMemberScalarFieldEnum)[keyof typeof ConversationMemberScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  content: 'content',
+  imgUrl: 'imgUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -890,4 +936,19 @@ export const LecturerPayoutAccountOrderByRelevanceFieldEnum = {
 } as const
 
 export type LecturerPayoutAccountOrderByRelevanceFieldEnum = (typeof LecturerPayoutAccountOrderByRelevanceFieldEnum)[keyof typeof LecturerPayoutAccountOrderByRelevanceFieldEnum]
+
+
+export const ConversationOrderByRelevanceFieldEnum = {
+  lastMessageContent: 'lastMessageContent'
+} as const
+
+export type ConversationOrderByRelevanceFieldEnum = (typeof ConversationOrderByRelevanceFieldEnum)[keyof typeof ConversationOrderByRelevanceFieldEnum]
+
+
+export const MessageOrderByRelevanceFieldEnum = {
+  content: 'content',
+  imgUrl: 'imgUrl'
+} as const
+
+export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
 
