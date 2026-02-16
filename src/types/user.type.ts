@@ -13,3 +13,15 @@ export interface User {
   updatedAt?: Date | null;
   isDestroyed?: boolean;
 }
+
+export interface IUser {
+  id: number;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  avatar?: string | null;
+  role: string;
+  isVerified: boolean;
+  createdAt: Date;
+  updatedAt?: Date | null;
+}

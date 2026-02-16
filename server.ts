@@ -1,10 +1,8 @@
-import app from "@/app.js";
 import { env } from "@/configs/environment.js";
+import { server } from "@/socket/index.js";
 import "dotenv/config";
-import http from "http";
 
 const PORT = process.env.PORT;
-const server = http.createServer(app);
 
 if (env.BUILD_MODE === "production") {
   server.listen(PORT, () => {

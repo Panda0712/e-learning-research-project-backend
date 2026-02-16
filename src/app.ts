@@ -5,8 +5,7 @@ import cookieParser from "cookie-parser";
 import express, { NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-
-const app = express();
+import { app } from "./socket/index.js";
 
 // init middleware
 app.use(morgan("dev"));
@@ -29,5 +28,3 @@ app.use("/v1", APIs_V1);
 
 // handle error
 app.use(errorHandlingMiddleware);
-
-export default app;
