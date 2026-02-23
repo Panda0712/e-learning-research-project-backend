@@ -49,7 +49,7 @@ const createWishlist = async (data: {
       data: {
         userId: data.userId,
         courseId: data.courseId,
-        courseThumbnail: data.courseThumbnail,
+        courseThumbnail: data.courseThumbnail ?? null,
         courseName: data.courseName || course.name,
         lecturer: data.lecturer || course.lecturerName,
       },
@@ -232,13 +232,14 @@ const updateWishlist = async (
       throw new ApiError(StatusCodes.NOT_FOUND, "Wishlist item not found!");
     }
 
+    const updateData: any = {};
+    if (data.courseThumbnail !== undefined) updateData.courseThumbnail = data.courseThumbnail;
+    if (data.courseName !== undefined) updateData.courseName = data.courseName;
+    if (data.lecturer !== undefined) updateData.lecturer = data.lecturer;
+
     const updatedWishlist = await prisma.wishlist.update({
       where: { id },
-      data: {
-        courseThumbnail: data.courseThumbnail,
-        courseName: data.courseName,
-        lecturer: data.lecturer,
-      },
+      data: updateData,
       include: {
         user: {
           select: {

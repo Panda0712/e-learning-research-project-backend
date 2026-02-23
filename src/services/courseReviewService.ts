@@ -59,9 +59,9 @@ const createCourseReview = async (data: {
         courseId: data.courseId,
         studentId: data.studentId,
         studentName: data.studentName || `${student.firstName} ${student.lastName}`,
-        studentAvatar: data.studentAvatar,
+        studentAvatar: data.studentAvatar ?? null,
         rating: data.rating,
-        content: data.content,
+        content: data.content ?? null,
       },
       include: {
         course: {
@@ -344,12 +344,13 @@ const updateCourseReview = async (
       );
     }
 
+    const updateData: any = {};
+    if (data.rating !== undefined) updateData.rating = data.rating;
+    if (data.content !== undefined) updateData.content = data.content;
+
     const updatedReview = await prisma.courseReview.update({
       where: { id },
-      data: {
-        rating: data.rating,
-        content: data.content,
-      },
+      data: updateData,
       include: {
         course: {
           select: {

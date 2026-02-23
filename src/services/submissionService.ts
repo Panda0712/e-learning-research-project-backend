@@ -45,9 +45,9 @@ const createSubmission = async (data: {
         assessmentId: data.assessmentId,
         quizId: data.quizId,
         studentId: data.studentId,
-        score: data.score,
-        status: data.status,
-        feedback: data.feedback,
+        score: data.score ?? null,
+        status: data.status ?? null,
+        feedback: data.feedback ?? null,
         submittedAt: data.submittedAt || new Date(),
       },
       include: {
@@ -279,14 +279,15 @@ const updateSubmission = async (
       throw new ApiError(StatusCodes.NOT_FOUND, "Submission not found!");
     }
 
+    const updateData: any = {};
+    if (data.score !== undefined) updateData.score = data.score;
+    if (data.status !== undefined) updateData.status = data.status;
+    if (data.feedback !== undefined) updateData.feedback = data.feedback;
+    if (data.submittedAt !== undefined) updateData.submittedAt = data.submittedAt;
+
     const updatedSubmission = await prisma.submission.update({
       where: { id },
-      data: {
-        score: data.score,
-        status: data.status,
-        feedback: data.feedback,
-        submittedAt: data.submittedAt,
-      },
+      data: updateData,
       include: {
         student: {
           select: {
@@ -334,13 +335,15 @@ const gradeSubmission = async (
       throw new ApiError(StatusCodes.NOT_FOUND, "Submission not found!");
     }
 
+    const updateData: any = {
+      score: data.score,
+      status: data.status || "graded",
+    };
+    if (data.feedback !== undefined) updateData.feedback = data.feedback;
+
     const updatedSubmission = await prisma.submission.update({
       where: { id },
-      data: {
-        score: data.score,
-        feedback: data.feedback,
-        status: data.status || "graded",
-      },
+      data: updateData,
       include: {
         student: {
           select: {
