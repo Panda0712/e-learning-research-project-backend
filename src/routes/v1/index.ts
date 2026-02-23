@@ -8,6 +8,8 @@ import { couponRoute } from "./couponRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
+import { lecturerPayoutRoute } from "./lecturerPayoutRoute.js";
+import { lecturerPayoutAccountRoute } from "./lecturerPayoutAccountRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { messageRoute } from "./messageRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
@@ -83,5 +85,11 @@ Router.use("/messages", messageRoute);
 
 // Resource route
 Router.use("/resources", resourceRoute);
+
+// Lecturer Payout route
+Router.use("/lecturer-payouts", lecturerPayoutRoute);
+
+// Lecturer Payout Account route
+Router.use("/lecturer-payout-accounts", lecturerPayoutAccountRoute);
 
 export const APIs_V1 = Router;
