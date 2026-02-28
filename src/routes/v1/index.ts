@@ -1,13 +1,18 @@
+import { publishMessage } from "@/lib/rabbitmq/rabbitmq.producer.js";
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { assessmentRoute } from "./assessmentRoute.js";
 import { blogRoute } from "./blogRoute.js";
 import { cartRoute } from "./cartRoute.js";
+import { couponRoute } from "./couponRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
+import { notificationRoute } from "./notificationRoute.js";
+import { orderItemRoute } from "./orderItemRoute.js";
+import { orderRoute } from "./orderRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
 import { resourceRoute } from "./resourceRoute.js";
@@ -23,6 +28,15 @@ Router.get("/status", (req: Request, res: Response) => {
     code: StatusCodes.OK,
     timestamp: new Date().toISOString(),
   });
+});
+
+// Test RabbitMQ connection
+
+Router.get("/test-rabbitmq", async (req: Request, res: Response) => {
+  await publishMessage("test-queue", {
+    message: "Hello from API",
+  });
+  res.json({ message: "Message sent to queue" });
 });
 
 // User route
@@ -45,6 +59,18 @@ Router.use("/transactions", transactionRoute);
 
 // Cart route
 Router.use("/carts", cartRoute);
+
+// Coupon route
+Router.use("/coupons", couponRoute);
+
+// Order route
+Router.use("/orders", orderRoute);
+
+// OrderItem route
+Router.use("/order-items", orderItemRoute);
+
+// Notification route
+Router.use("/notifications", notificationRoute);
 
 // Assessment route
 Router.use("/assessments", assessmentRoute);

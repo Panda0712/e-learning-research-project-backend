@@ -1,10 +1,16 @@
 import app from "@/app.js";
 import { env } from "@/configs/environment.js";
+import { connectRabbitMQ } from "@/lib/rabbitmq/rabbitmq.connection.js";
+import { consumeMessage } from "@/lib/rabbitmq/rabbitmq.consumer.js";
+import { setupSocket } from "@/lib/socket/socket.js";
 import "dotenv/config";
 import http from "http";
 
 const PORT = process.env.PORT;
 const server = http.createServer(app);
+
+// Setup Socket.io
+setupSocket(server);
 
 if (env.BUILD_MODE === "production") {
   server.listen(PORT, () => {
@@ -29,3 +35,6 @@ if (env.BUILD_MODE === "production") {
 process.on("SIGINT", () => {
   server.close(() => console.log("Exit express server!"));
 });
+
+await connectRabbitMQ();
+await consumeMessage("test-queue");

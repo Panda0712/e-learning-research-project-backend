@@ -48,6 +48,7 @@ model User {
   lecturerPayoutAccounts LecturerPayoutAccount[]
   keyToken               KeyToken?
   revenues               Revenue[]
+  notifications          Notification[]
 }
 
 model KeyToken {
@@ -545,28 +546,6 @@ model LecturerPayoutAccount {
   lecturer User @relation(fields: [lecturerId], references: [id])
 }
 
-// model Notification {
-//   id        Int      @id @default(autoincrement())
-//   userId    Int?
-//   title     String?
-//   message   String?
-//   isRead    Boolean? @default(false)
-//   createdAt DateTime @default(now())
-//   isDestroyed  Boolean  @default(false)
-
-//   user User? @relation(fields: [userId], references: [id])
-// }
-
-// model Message {
-//   id             Int      @id @default(autoincrement())
-//   conversationId Int?
-//   senderId       Int?
-//   recipientId    Int?
-//   content        String?
-//   createdAt      DateTime @default(now())
-//   isDestroyed       Boolean  @default(false)
-// }
-
 model Revenue {
   id         Int  @id @default(autoincrement())
   orderId    Int  @unique
@@ -583,6 +562,24 @@ model Revenue {
   order    Order  @relation(fields: [orderId], references: [id])
   lecturer User?  @relation(fields: [lecturerId], references: [id])
   course   Course @relation(fields: [courseId], references: [id])
+}
+
+model Notification {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  title     String
+  message   String  @db.Text
+  type      String  @default("info") // "order", "payment", "message", "info"
+  relatedId Int?    // Link to order, payment, etc.
+  isRead    Boolean @default(false)
+  createdAt DateTime @default(now())
+  isDestroyed Boolean @default(false)
+
+  // Relations
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
 }
 
 // model Conversation {
