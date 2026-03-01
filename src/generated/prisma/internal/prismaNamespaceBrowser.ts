@@ -82,6 +82,7 @@ export const ModelName = {
   LecturerPayout: 'LecturerPayout',
   LecturerPayoutAccount: 'LecturerPayoutAccount',
   Revenue: 'Revenue',
+  Notification: 'Notification',
   Conversation: 'Conversation',
   ConversationMember: 'ConversationMember',
   Message: 'Message'
@@ -590,6 +591,21 @@ export const RevenueScalarFieldEnum = {
 export type RevenueScalarFieldEnum = (typeof RevenueScalarFieldEnum)[keyof typeof RevenueScalarFieldEnum]
 
 
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  relatedId: 'relatedId',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const ConversationScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -936,6 +952,15 @@ export const LecturerPayoutAccountOrderByRelevanceFieldEnum = {
 } as const
 
 export type LecturerPayoutAccountOrderByRelevanceFieldEnum = (typeof LecturerPayoutAccountOrderByRelevanceFieldEnum)[keyof typeof LecturerPayoutAccountOrderByRelevanceFieldEnum]
+
+
+export const NotificationOrderByRelevanceFieldEnum = {
+  title: 'title',
+  message: 'message',
+  type: 'type'
+} as const
+
+export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum]
 
 
 export const ConversationOrderByRelevanceFieldEnum = {

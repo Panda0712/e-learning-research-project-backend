@@ -1,8 +1,5 @@
 import { env } from "@/configs/environment.js";
-import { connectRabbitMQ } from "@/lib/rabbitmq/rabbitmq.connection.js";
-import { consumeMessage } from "@/lib/rabbitmq/rabbitmq.consumer.js";
-import { setupSocket } from "@/lib/socket/socket.js";
-import { server } from "@/socket/index.js";
+import { server, setupSocket } from "@/socket/index.js";
 import "dotenv/config";
 
 const PORT = process.env.PORT;
@@ -31,8 +28,15 @@ if (env.BUILD_MODE === "production") {
 }
 
 process.on("SIGINT", () => {
-  server.close(() => console.log("Exit express server!"));
+  server.close(() => {
+    console.log("Exit express server!");
+    process.exit(0);
+  });
 });
 
-await connectRabbitMQ();
-await consumeMessage("test-queue");
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Exit express server!");
+    process.exit(0);
+  });
+});

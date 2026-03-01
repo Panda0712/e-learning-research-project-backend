@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
-import { io } from "@/socket/index.js";
+import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+
+const getSocketIO = () => getIO();
 
 type SendDirectMessageInput = {
   conversationId?: number;
@@ -89,7 +91,10 @@ const sendDirectMessage = async (
       });
 
       if (!conversation) {
-        throw new ApiError(StatusCodes.NOT_FOUND, "Conversation does not exist.");
+        throw new ApiError(
+          StatusCodes.NOT_FOUND,
+          "Conversation does not exist.",
+        );
       }
 
       const senderMember = conversation.members.find(
@@ -326,14 +331,16 @@ const sendDirectMessage = async (
     };
   });
 
-  io.to(`conversation:${result.conversation.id}`).emit("new-message", {
-    message: result.message,
-    conversation: result.conversation,
-    unreadCounts: result.unreadCounts,
-  });
+  getSocketIO()
+    .to(`conversation:${result.conversation.id}`)
+    .emit("new-message", {
+      message: result.message,
+      conversation: result.conversation,
+      unreadCounts: result.unreadCounts,
+    });
 
   if (result.createdConversation && result.recipientId) {
-    io.to(`user:${result.recipientId}`).emit("new-conversation", {
+    getSocketIO().to(`user:${result.recipientId}`).emit("new-conversation", {
       conversation: result.conversation,
     });
   }

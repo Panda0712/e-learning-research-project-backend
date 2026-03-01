@@ -173,6 +173,11 @@ export type LecturerPayoutAccount = Prisma.LecturerPayoutAccountModel
  */
 export type Revenue = Prisma.RevenueModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
  * Model Conversation
  * 
  */

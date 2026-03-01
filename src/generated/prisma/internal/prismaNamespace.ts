@@ -415,6 +415,7 @@ export const ModelName = {
   LecturerPayout: 'LecturerPayout',
   LecturerPayoutAccount: 'LecturerPayoutAccount',
   Revenue: 'Revenue',
+  Notification: 'Notification',
   Conversation: 'Conversation',
   ConversationMember: 'ConversationMember',
   Message: 'Message'
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "conversation" | "conversationMember" | "message"
+    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "notification" | "conversation" | "conversationMember" | "message"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2483,6 +2484,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Notification: {
+      payload: Prisma.$NotificationPayload<ExtArgs>
+      fields: Prisma.NotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.NotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        update: {
+          args: Prisma.NotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.NotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+        }
+        groupBy: {
+          args: Prisma.NotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
+        }
+      }
+    }
     Conversation: {
       payload: Prisma.$ConversationPayload<ExtArgs>
       fields: Prisma.ConversationFieldRefs
@@ -3207,6 +3274,21 @@ export const RevenueScalarFieldEnum = {
 export type RevenueScalarFieldEnum = (typeof RevenueScalarFieldEnum)[keyof typeof RevenueScalarFieldEnum]
 
 
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  relatedId: 'relatedId',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  isDestroyed: 'isDestroyed'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const ConversationScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
@@ -3555,6 +3637,15 @@ export const LecturerPayoutAccountOrderByRelevanceFieldEnum = {
 export type LecturerPayoutAccountOrderByRelevanceFieldEnum = (typeof LecturerPayoutAccountOrderByRelevanceFieldEnum)[keyof typeof LecturerPayoutAccountOrderByRelevanceFieldEnum]
 
 
+export const NotificationOrderByRelevanceFieldEnum = {
+  title: 'title',
+  message: 'message',
+  type: 'type'
+} as const
+
+export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum]
+
+
 export const ConversationOrderByRelevanceFieldEnum = {
   lastMessageContent: 'lastMessageContent'
 } as const
@@ -3757,6 +3848,7 @@ export type GlobalOmitConfig = {
   lecturerPayout?: Prisma.LecturerPayoutOmit
   lecturerPayoutAccount?: Prisma.LecturerPayoutAccountOmit
   revenue?: Prisma.RevenueOmit
+  notification?: Prisma.NotificationOmit
   conversation?: Prisma.ConversationOmit
   conversationMember?: Prisma.ConversationMemberOmit
   message?: Prisma.MessageOmit
