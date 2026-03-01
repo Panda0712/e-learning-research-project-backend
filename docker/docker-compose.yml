@@ -12,6 +12,16 @@ services:
     networks:
       - e-learning_app_network
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_e-learning_container
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+
 volumes:
   mysql_data:
 
