@@ -1,13 +1,11 @@
-import app from "@/app.js";
 import { env } from "@/configs/environment.js";
 import { connectRabbitMQ } from "@/lib/rabbitmq/rabbitmq.connection.js";
 import { consumeMessage } from "@/lib/rabbitmq/rabbitmq.consumer.js";
 import { setupSocket } from "@/lib/socket/socket.js";
+import { server } from "@/socket/index.js";
 import "dotenv/config";
-import http from "http";
 
 const PORT = process.env.PORT;
-const server = http.createServer(app);
 
 // Setup Socket.io
 setupSocket(server);

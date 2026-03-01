@@ -12,6 +12,8 @@ export const env = {
   APP_HOST: process.env.APP_HOST,
   APP_PORT: process.env.APP_PORT,
 
+  CLIENT_URL: process.env.CLIENT_URL,
+
   BUILD_MODE: process.env.BUILD_MODE,
 
   DATABASE_URL: process.env.DATABASE_URL,

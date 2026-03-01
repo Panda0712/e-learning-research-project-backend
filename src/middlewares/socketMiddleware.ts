@@ -1,25 +1,22 @@
 import { prisma } from "@/lib/prisma.js";
-import { IUser } from "@/types/user.type.js";
+import { AuthenticatedSocket } from "@/types/socket.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
-import { NextFunction, Request, Response } from "express";
+import { pickUser } from "@/utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
 
-declare global {
-  namespace Express {
-    interface Request {
-      jwtDecoded?: any;
-      user: IUser;
-    }
-  }
-}
+type JwtDecoded = {
+  id: number;
+  email: string;
+  role: string;
+  kid: string;
+};
 
-const isAuthorized = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
+export const socketAuthMiddleware = async (
+  socket: AuthenticatedSocket,
+  next: (err?: Error) => void,
 ) => {
-  const accessToken = req.cookies?.accessToken;
+  const accessToken = socket.handshake.auth?.token;
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
@@ -54,19 +51,21 @@ const isAuthorized = async (
       keyToken?.publicKey,
     );
 
-    req.jwtDecoded = jwtDecoded;
+    const userId = (jwtDecoded as JwtDecoded)?.id;
 
-    next();
-  } catch (error: any) {
-    if (error?.message?.includes("jwt expired")) {
-      next(new ApiError(StatusCodes.GONE, "Need to refresh token!"));
+    const user = await prisma.user.findUnique({
+      where: { id: userId, isDestroyed: false },
+    });
+
+    if (!user) {
+      next(new ApiError(StatusCodes.BAD_REQUEST, "User not found!"));
       return;
     }
 
+    socket.user = pickUser(user)!;
+
+    next();
+  } catch (error) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
   }
-};
-
-export const authMiddleware = {
-  isAuthorized,
 };

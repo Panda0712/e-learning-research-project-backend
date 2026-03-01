@@ -4,11 +4,13 @@ import { StatusCodes } from "http-status-codes";
 import { assessmentRoute } from "./assessmentRoute.js";
 import { blogRoute } from "./blogRoute.js";
 import { cartRoute } from "./cartRoute.js";
+import { conversationRoute } from "./conversationRoute.js";
 import { couponRoute } from "./couponRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
+import { messageRoute } from "./messageRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
 import { notificationRoute } from "./notificationRoute.js";
 import { orderItemRoute } from "./orderItemRoute.js";
@@ -31,7 +33,6 @@ Router.get("/status", (req: Request, res: Response) => {
 });
 
 // Test RabbitMQ connection
-
 Router.get("/test-rabbitmq", async (req: Request, res: Response) => {
   await publishMessage("test-queue", {
     message: "Hello from API",
@@ -86,6 +87,12 @@ Router.use("/modules", moduleRoute);
 
 // Lesson route
 Router.use("/lessons", lessonRoute);
+
+// Conversation route
+Router.use("/conversations", conversationRoute);
+
+// Message route
+Router.use("/messages", messageRoute);
 
 // Resource route
 Router.use("/resources", resourceRoute);
