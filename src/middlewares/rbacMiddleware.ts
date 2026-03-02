@@ -8,10 +8,10 @@ const isValidPermission =
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       // get user roles
-      const userRoles = req.jwtDecoded.role;
+      const userRole = req.jwtDecoded.role;
 
       // check user roles
-      if (!Array.isArray(userRoles) || userRoles.length === 0) {
+      if (!userRole || typeof userRole !== "string") {
         next(
           new ApiError(
             StatusCodes.FORBIDDEN,
@@ -20,12 +20,10 @@ const isValidPermission =
         );
       }
 
-      // get userPermissions from each user role
+      // get userPermissions from user role
       let userPermissions = new Set();
-      for (const roleName of userRoles) {
-        const rolePermissions = await getPermissionsFromRole(roleName);
-        rolePermissions.forEach((i) => userPermissions.add(i));
-      }
+      const rolePermissions = await getPermissionsFromRole(userRole);
+      rolePermissions.forEach((i) => userPermissions.add(i));
 
       // check permissions
       const hasPermission = requiredPermissions.every((i) =>
