@@ -57,11 +57,10 @@ const logout = async (req: Request, res: Response, next: NextFunction) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    const result = await userService.logout({ keyStore: req.body });
+    await userService.logout({ keyStore: req.body });
 
     res.status(StatusCodes.OK).json({
       loggedOut: true,
-      ...result,
     });
   } catch (error) {
     next(error);

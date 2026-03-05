@@ -120,7 +120,7 @@ const register = async (reqBody: {
       }
 
       // send verification email to user
-      const verificationLink = `${WEBSITE_DOMAINS}/account/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
       const customSubject = "ADMIN EduLearn: Please verify your email!";
       const htmlContent = `
   <h3>This is verification email link:</h3>
@@ -176,6 +176,8 @@ const verifyAccount = async (reqBody: { email: string; token: string }) => {
 };
 
 const logout = async ({ keyStore }: { keyStore: KeyStore }) => {
+  if (!keyStore) return true;
+
   const delKey = await KeyTokenService.removeKeyById(keyStore.id);
 
   return delKey;
@@ -494,7 +496,7 @@ const forgotPassword = async (email: string) => {
     });
 
     // send reset password email
-    const resetPasswordLink = `${WEBSITE_DOMAINS}/auth/forgot-password?token=${tokenHash}`;
+    const resetPasswordLink = `${WEBSITE_DOMAINS}/auth/forgot-password?token=${rawToken}`;
     const customSubject = "ADMIN EduLearn: Reset Password!";
     const htmlContent = `
   <h3>This is reset password link:</h3>
