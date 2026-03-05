@@ -28,7 +28,7 @@ const getCartByUserId = async (userId: number) => {
     }
     return cart;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -76,7 +76,7 @@ const addToCart = async (reqBody: {
 
     return newItem;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -98,7 +98,7 @@ const removeItem = async (itemId: number) => {
 
     return { message: "Item removed from cart!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

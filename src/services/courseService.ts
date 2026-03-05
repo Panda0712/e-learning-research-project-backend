@@ -33,7 +33,7 @@ const createCourseCategory = async (data: { name: string; slug: string }) => {
 
     return createdCategory;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -67,7 +67,7 @@ const createCourseFaq = async (data: {
 
     return createdCourseFaq;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -91,7 +91,7 @@ const getFaqsByCourseId = async (courseId: number) => {
 
     return faqsList;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -109,7 +109,7 @@ const getCourseFaqById = async (id: number) => {
 
     return faq;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -157,7 +157,7 @@ const createCourse = async (data: CreateCourse) => {
       return newCourse;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -227,7 +227,7 @@ const updateCourse = async (id: number, updateData: UpdateCourse) => {
 
     return updatedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -246,7 +246,7 @@ const deleteCourse = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -285,7 +285,7 @@ const approveCourse = async (id: number) => {
 
     return approvedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -324,7 +324,7 @@ const rejectCourse = async (id: number) => {
 
     return rejectedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -340,7 +340,7 @@ const getCourseById = async (id: number) => {
 
     return course;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -361,7 +361,7 @@ const getAllCoursesByLecturerId = async (lecturerId: number) => {
 
     return courses;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -382,7 +382,7 @@ const getAllCoursesByCategoryId = async (categoryId: number) => {
 
     return courses;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -426,7 +426,7 @@ const getListCourses = async (
 
     return { courses, totalCourses };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

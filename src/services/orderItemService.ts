@@ -100,7 +100,7 @@ const addItemToOrder = async (data: {
 
     return newItem;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -135,7 +135,7 @@ const getOrderItemsByOrderId = async (orderId: number) => {
 
     return items;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -174,7 +174,7 @@ const getOrderItemById = async (itemId: number) => {
 
     return item;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -209,7 +209,7 @@ const removeItemFromOrder = async (itemId: number) => {
 
     return deletedItem;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -263,7 +263,7 @@ const updateOrderItem = async (
 
     return updatedItem;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -287,7 +287,7 @@ const deleteOrderItem = async (itemId: number) => {
 
     return { message: "OrderItem deleted successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

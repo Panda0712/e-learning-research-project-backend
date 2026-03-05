@@ -31,7 +31,7 @@ const createModule = async (data: CreateModule) => {
 
     return createdModule;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -52,7 +52,7 @@ const updateModule = async (id: number, updateData: UpdateModule) => {
 
     return updatedModule;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -71,7 +71,7 @@ const deleteModule = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -86,7 +86,7 @@ const getModuleById = async (id: number) => {
 
     return existingModule;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -105,7 +105,7 @@ const getAllModulesByCourseId = async (courseId: number) => {
 
     return modules;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

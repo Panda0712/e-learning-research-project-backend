@@ -74,7 +74,7 @@ const handleRefreshToken = async ({
       tokens,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -138,7 +138,7 @@ const register = async (reqBody: {
       return pickUser(getNewUser);
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -171,7 +171,7 @@ const verifyAccount = async (reqBody: { email: string; token: string }) => {
 
     return pickUser(updatedUser);
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -235,7 +235,7 @@ const login = async (reqBody: { email: string; password: string }) => {
       kid,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -328,7 +328,7 @@ const handleGoogleCallback = async (code: string) => {
       kid,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -414,7 +414,7 @@ const updateProfile = async (
 
     return pickUser(updateUser);
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -460,7 +460,7 @@ const registerLecturerProfile = async (
       return newLecturerProfile;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -494,7 +494,7 @@ const forgotPassword = async (email: string) => {
     });
 
     // send reset password email
-    const resetPasswordLink = `${WEBSITE_DOMAINS}/reset-password?token=${tokenHash}`;
+    const resetPasswordLink = `${WEBSITE_DOMAINS}/auth/forgot-password?token=${tokenHash}`;
     const customSubject = "ADMIN EduLearn: Reset Password!";
     const htmlContent = `
   <h3>This is reset password link:</h3>
@@ -514,7 +514,7 @@ const forgotPassword = async (email: string) => {
       ...pickUser(updatedUser),
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -565,7 +565,7 @@ const resetPassword = async ({
       ...pickUser(updatedUser),
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

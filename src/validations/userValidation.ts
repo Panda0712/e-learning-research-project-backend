@@ -34,7 +34,9 @@ export const register = async (
     await correctCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
-    new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message);
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
   }
 };
 
@@ -56,7 +58,9 @@ export const verifyAccount = async (
 
     next();
   } catch (error: any) {
-    new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message);
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
   }
 };
 

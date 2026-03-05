@@ -2,9 +2,11 @@ import { errorHandlingMiddleware } from "@/middlewares/errorHandlingMiddleware.j
 import { APIs_V1 } from "@/routes/v1/index.js";
 import compression from "compression";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express, { Application, NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import { corsOptions } from "./configs/cors.js";
 import { connectRabbitMQ } from "./lib/rabbitmq/rabbitmq.connection.js";
 import { consumeMessage } from "./lib/rabbitmq/rabbitmq.consumer.js";
 
@@ -26,6 +28,7 @@ export const setupApp = async (app: Application) => {
   app.use(morgan("dev"));
   app.use(helmet());
   app.use(cookieParser());
+  app.use(cors(corsOptions));
   app.use(compression());
   app.use(express.json());
   app.use((req: Request, res: Response, next: NextFunction) => {
@@ -45,7 +48,7 @@ export const setupApp = async (app: Application) => {
   app.use(errorHandlingMiddleware);
 
   // init rabbitmq
-  await initRabbitMQ();
+  // await initRabbitMQ();
 
   appConfigured = true;
 };

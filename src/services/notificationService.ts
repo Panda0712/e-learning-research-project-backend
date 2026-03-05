@@ -42,7 +42,7 @@ const createNotification = async (data: {
 
     return notification;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -96,7 +96,7 @@ const getNotificationsByUserId = async (filters: {
       },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -122,7 +122,7 @@ const getNotificationById = async (notificationId: number) => {
 
     return notification;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -143,7 +143,7 @@ const markAsRead = async (notificationId: number) => {
 
     return updated;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -168,7 +168,7 @@ const markAllAsRead = async (userId: number) => {
       count: result.count,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -190,7 +190,7 @@ const deleteNotification = async (notificationId: number) => {
 
     return { message: "Notification deleted successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -211,7 +211,7 @@ const getUnreadCount = async (userId: number) => {
 
     return { unreadCount: count };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
