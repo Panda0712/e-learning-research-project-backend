@@ -241,13 +241,14 @@ const login = async (reqBody: { email: string; password: string }) => {
   }
 };
 
-const getGoogleAuthUrl = async () => {
+const getGoogleAuthUrl = async (state: string) => {
   const googleClient = authUtils.getGoogleClient();
 
   return googleClient.generateAuthUrl({
     access_type: "offline",
     prompt: "consent",
     scope: ["openid", "email", "profile"],
+    state,
   });
 };
 
@@ -333,6 +334,20 @@ const handleGoogleCallback = async (code: string) => {
     throw error;
   }
 };
+
+const getMe = async (userId: number)=>{
+  try{
+    const user = await prisma.user.findUnique({
+      where: {id: userId, isDestroyed: false},
+    });
+
+    if(!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+
+    return pickUser(user);
+  }catch(error: any){
+    throw error;
+  }
+}
 
 const updateProfile = async (
   userId: number,
@@ -597,6 +612,7 @@ export const userService = {
   logout,
   getGoogleAuthUrl,
   handleGoogleCallback,
+  getMe,
   handleRefreshToken,
   findByEmail,
   updateProfile,
