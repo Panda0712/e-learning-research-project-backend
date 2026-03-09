@@ -1,3 +1,4 @@
+import { authMiddleware } from './../../middlewares/authMiddleware.js';
 import { userController } from "@/controllers/userController.js";
 import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { userValidation } from "@/validations/userValidation.js";
@@ -54,5 +55,10 @@ Router.route("/lecturer-file").post(
 Router.route("/google").get(userController.googleAuthStartHandler);
 
 Router.route("/google/callback").get(userController.googleAuthCallbackHandler);
+
+Router.route("/me").get(
+  authMiddleware.isAuthorized,
+  userController.getMe
+);
 
 export const userRoute = Router;
