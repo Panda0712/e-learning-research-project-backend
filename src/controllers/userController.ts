@@ -3,37 +3,37 @@ import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { userService } from "@/services/userService.js";
 import ApiError from "@/utils/ApiError.js";
 import { FE_OAUTH_CALLBACK } from "@/utils/constants.js";
-import crypto from 'crypto';
+import crypto from "crypto";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import ms from "ms";
 
-const isProd = env.BUILD_MODE === 'production';
+const isProd = env.BUILD_MODE === "production";
 
 const authCookieOptions = {
   httpOnly: true,
   secure: true,
   sameSite: "none" as const,
   maxAge: ms("14 days"),
-}
+};
 
 const oauthTempCookieOptions = {
   httpOnly: true,
   secure: isProd,
   sameSite: isProd ? ("none" as const) : ("lax" as const),
   maxAge: ms("10 minutes"),
-}
+};
 
-const normalizeRedirect = (raw?:string)=>{
-  if(!raw) return FE_OAUTH_CALLBACK;
-  try{
+const normalizeRedirect = (raw?: string) => {
+  if (!raw) return FE_OAUTH_CALLBACK;
+  try {
     const url = new URL(raw);
-    if(url.origin !== FE_OAUTH_CALLBACK) return FE_OAUTH_CALLBACK;
+    if (url.origin !== FE_OAUTH_CALLBACK) return FE_OAUTH_CALLBACK;
     return url.toString();
-  }catch{
+  } catch {
     return FE_OAUTH_CALLBACK;
   }
-}
+};
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -235,11 +235,17 @@ const googleAuthStartHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const frontendRedirect = normalizeRedirect(req.query?.redirect as string | undefined);
+    const frontendRedirect = normalizeRedirect(
+      req.query?.redirect as string | undefined,
+    );
     const state = crypto.randomBytes(24).toString("hex");
 
     res.cookie("google_oauth_state", state, oauthTempCookieOptions);
-    res.cookie("google_oauth_redirect", frontendRedirect, oauthTempCookieOptions);
+    res.cookie(
+      "google_oauth_redirect",
+      frontendRedirect,
+      oauthTempCookieOptions,
+    );
 
     const googleUrl = await userService.getGoogleAuthUrl(state);
 
@@ -258,7 +264,9 @@ const googleAuthCallbackHandler = async (
   const state = req.query.state as string | undefined;
 
   const cookieState = req.cookies?.google_oauth_state as string | undefined;
-  const frontendRedirect = normalizeRedirect(req.cookies?.google_oauth_redirect as string | undefined);
+  const frontendRedirect = normalizeRedirect(
+    req.cookies?.google_oauth_redirect as string | undefined,
+  );
 
   if (!code || !state || !cookieState || state !== cookieState) {
     return res.redirect(`${frontendRedirect}?oauth=failed`);
@@ -273,23 +281,46 @@ const googleAuthCallbackHandler = async (
     res.clearCookie("google_oauth_state");
     res.clearCookie("google_oauth_redirect");
 
-    return res.redirect(`${frontendRedirect}?oauth=success`)
+    return res.redirect(`${frontendRedirect}?oauth=success`);
   } catch (error) {
     next(error);
   }
 };
 
-const getMe = async (req: Request, res: Response, next: NextFunction)=>{
-  try{
+const getMe = async (req: Request, res: Response, next: NextFunction) => {
+  try {
     const userId = req.jwtDecoded?.id;
-    if(!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
     const user = await userService.getMe(userId);
     return res.status(StatusCodes.OK).json(user);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-}
+};
+
+const facebookAuthHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const { accessToken } = req.body;
+
+  if (!accessToken) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Access token is required!");
+  }
+
+  try {
+    const result = await userService.facebookAuthHandler(accessToken);
+
+    res.cookie("accessToken", result.accessToken, authCookieOptions);
+    res.cookie("refreshToken", result.refreshToken, authCookieOptions);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const userController = {
   register,
@@ -306,4 +337,5 @@ export const userController = {
   googleAuthStartHandler,
   googleAuthCallbackHandler,
   getMe,
+  facebookAuthHandler,
 };
