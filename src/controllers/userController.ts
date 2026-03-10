@@ -289,7 +289,7 @@ const googleAuthCallbackHandler = async (
 
 const getMe = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req.jwtDecoded?.id;
+    const userId = req.jwtDecoded.id;
     if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
     const user = await userService.getMe(userId);
