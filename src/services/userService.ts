@@ -9,6 +9,7 @@ import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
 import { WEBSITE_DOMAINS } from "@/utils/constants.js";
 import { pickUser } from "@/utils/helpers.js";
+import axios from "axios";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
@@ -335,19 +336,100 @@ const handleGoogleCallback = async (code: string) => {
   }
 };
 
-const getMe = async (userId: number)=>{
-  try{
+const getMe = async (userId: number) => {
+  try {
     const user = await prisma.user.findUnique({
-      where: {id: userId, isDestroyed: false},
+      where: { id: userId, isDestroyed: false },
     });
 
-    if(!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    if (!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
     return pickUser(user);
-  }catch(error: any){
+  } catch (error: any) {
     throw error;
   }
-}
+};
+
+const facebookAuthHandler = async (accessToken: string) => {
+  try {
+    // handle get response from facebook
+    let response = await axios.get(
+      `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email`,
+    );
+    const { id, email, name } = response.data;
+
+    if (!id) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Authentication failed! Please try again later!",
+      );
+    }
+
+    // check account existence
+    const checkUser = await prisma.user.findUnique({
+      where: { email, isDestroyed: false },
+    });
+    if (checkUser) {
+      throw new ApiError(StatusCodes.CONFLICT, "User already exists!");
+    }
+
+    // create password
+    const randomPassword = crypto.randomBytes(16).toString("hex");
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+    // format first name and last name
+    const formattedName = name.split(" ");
+    const firstName = formattedName[0];
+    const lastName = formattedName.slice(1).join(" ") || firstName;
+
+    // create new user
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        role: "student",
+        isVerified: true,
+      },
+    });
+
+    // generate public and private key for tokens
+    const publicKey = crypto.randomBytes(64).toString("hex");
+    const privateKey = crypto.randomBytes(64).toString("hex");
+
+    const kid = uuidV4();
+
+    const tokensPair = (await authUtils.createTokenPair(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        kid,
+      },
+      publicKey,
+      privateKey,
+    )) as { refreshToken: string; accessToken: string };
+
+    // create key token
+    await KeyTokenService.createKeyToken({
+      userId: user.id,
+      refreshToken: tokensPair.refreshToken,
+      publicKey,
+      privateKey,
+      kid,
+    });
+
+    return {
+      ...pickUser(user),
+      refreshToken: tokensPair.refreshToken,
+      accessToken: tokensPair.accessToken,
+      kid,
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
 
 const updateProfile = async (
   userId: number,
@@ -621,4 +703,5 @@ export const userService = {
   resetPassword,
   createUserDocument,
   updateUserDocument,
+  facebookAuthHandler,
 };
