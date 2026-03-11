@@ -9,6 +9,7 @@ import { couponRoute } from "./couponRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
+import { homepageRoute } from "./homepageRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { messageRoute } from "./messageRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
@@ -18,6 +19,7 @@ import { orderRoute } from "./orderRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
 import { resourceRoute } from "./resourceRoute.js";
+import { reviewRoute } from "./reviewRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 
@@ -96,5 +98,11 @@ Router.use("/messages", messageRoute);
 
 // Resource route
 Router.use("/resources", resourceRoute);
+
+// Review route
+Router.use("/reviews", reviewRoute);
+
+// Homepage route
+Router.use("/homepage", homepageRoute);
 
 export const APIs_V1 = Router;
