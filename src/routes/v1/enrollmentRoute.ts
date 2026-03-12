@@ -14,4 +14,9 @@ Router.route("/create-new").post(
   enrollmentController.createEnrollment,
 );
 
+Router.route("/lecturer/:lecturerId/students").get(
+  enrollmentValidation.getStudentsByLecturerId, 
+  enrollmentController.getStudentsByLecturerId 
+);
+
 export const enrollmentRoute = Router;
