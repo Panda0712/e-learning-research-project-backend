@@ -180,6 +180,51 @@ const getCourseById = async (
   }
 };
 
+const getListLecturersByStudentId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { studentId } = req.params;
+    const { page, itemsPerPage, q } = req.query;
+
+    const result = await courseService.getListLecturersByStudentId(
+      Number(studentId),
+      Number(page),
+      Number(itemsPerPage),
+      (q as string) || "",
+    );
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAllCoursesByStudentId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { studentId } = req.params;
+    const { page, itemsPerPage, q } = req.query;
+
+    const { courses, totalCourses } =
+      await courseService.getAllCoursesByStudentId(
+        Number(studentId),
+        Number(page),
+        Number(itemsPerPage),
+        (q as string) || "",
+      );
+
+    res.status(StatusCodes.OK).json({ courses, totalCourses });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllCoursesByLecturerId = async (
   req: Request,
   res: Response,
@@ -267,6 +312,8 @@ export const courseController = {
   rejectCourse,
   getCourseById,
   getListCourses,
+  getListLecturersByStudentId,
+  getAllCoursesByStudentId,
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
   uploadCourseThumbnail,

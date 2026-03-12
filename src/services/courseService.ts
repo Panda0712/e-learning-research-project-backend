@@ -344,6 +344,128 @@ const getCourseById = async (id: number) => {
   }
 };
 
+const getListLecturersByStudentId = async (
+  studentId: number,
+  page: number,
+  itemsPerPage: number,
+  q: string,
+) => {
+  try {
+    const student = await prisma.user.findUnique({
+      where: { id: studentId, isDestroyed: false },
+    });
+    if (!student)
+      throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
+
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+
+    const where = {
+      isDestroyed: false,
+      orderItems: {
+        some: {
+          order: {
+            studentId,
+            isDestroyed: false,
+          },
+        },
+      },
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { lecturerName: { contains: q, mode: "insensitive" } },
+              { overview: { contains: q, mode: "insensitive" } },
+              { level: { contains: q, mode: "insensitive" } },
+              { status: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [lecturers] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        include: {
+          lecturer: true,
+        },
+        orderBy: { name: "asc" },
+        skip,
+        take: perPage,
+      }),
+    ]);
+
+    return {
+      lecturers: lecturers.map((course) => course.lecturer),
+      totalLecturers: lecturers.length,
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getAllCoursesByStudentId = async (
+  studentId: number,
+  page: number,
+  itemsPerPage: number,
+  q: string,
+) => {
+  try {
+    const student = await prisma.user.findUnique({
+      where: { id: studentId, isDestroyed: false },
+    });
+    if (!student) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
+    }
+
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+
+    const where = {
+      isDestroyed: false,
+      orderItems: {
+        some: {
+          order: {
+            studentId,
+            isDestroyed: false,
+          },
+        },
+      },
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { lecturerName: { contains: q, mode: "insensitive" } },
+              { overview: { contains: q, mode: "insensitive" } },
+              { level: { contains: q, mode: "insensitive" } },
+              { status: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [courses, totalCourses] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        orderBy: { name: "asc" },
+        skip,
+        take: perPage,
+      }),
+      prisma.course.count({ where }),
+    ]);
+
+    return { courses, totalCourses };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 const getAllCoursesByLecturerId = async (lecturerId: number) => {
   try {
     // check lecturer existence
@@ -445,6 +567,8 @@ export const courseService = {
   rejectCourse,
   getListCourses,
   getCourseById,
+  getListLecturersByStudentId,
+  getAllCoursesByStudentId,
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
 };

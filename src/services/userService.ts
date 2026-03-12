@@ -8,7 +8,7 @@ import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
 import { WEBSITE_DOMAINS } from "@/utils/constants.js";
-import { pickUser } from "@/utils/helpers.js";
+import { pickUser, pickUserWithAvatar } from "@/utils/helpers.js";
 import axios from "axios";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
@@ -189,6 +189,7 @@ const login = async (reqBody: { email: string; password: string }) => {
     // check user existence
     const checkUser = await prisma.user.findUnique({
       where: { email: reqBody.email, isDestroyed: false },
+      include: { avatar: { select: { fileUrl: true } } },
     });
     if (!checkUser) {
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -232,7 +233,7 @@ const login = async (reqBody: { email: string; password: string }) => {
 
     // return data
     return {
-      ...pickUser(checkUser),
+      ...pickUserWithAvatar(checkUser),
       refreshToken: tokens.refreshToken,
       accessToken: tokens.accessToken,
       kid,
@@ -340,11 +341,12 @@ const getMe = async (userId: number) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId, isDestroyed: false },
+      include: { avatar: { select: { fileUrl: true } } },
     });
 
     if (!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
-    return pickUser(user);
+    return pickUserWithAvatar(user);
   } catch (error: any) {
     throw error;
   }
