@@ -273,6 +273,86 @@ const getAllCoursesByLecturerId = async (
   }
 };
 
+const getAllCoursesByStudentId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    studentId: Joi.number().integer().required().positive(),
+  });
+
+  const correctConditionParams = Joi.object({
+    page: Joi.number().integer().required().positive(),
+    itemsPerPage: Joi.number().integer().required().positive(),
+    q: Joi.string().required().min(2).max(50).trim().strict(),
+  });
+
+  try {
+    const { studentId } = req.params;
+    const { page, itemsPerPage, q } = req.query;
+
+    await correctCondition.validateAsync(
+      { studentId: Number(studentId) },
+      {
+        abortEarly: false,
+      },
+    );
+    await correctConditionParams.validateAsync(
+      { page: Number(page), itemsPerPage: Number(itemsPerPage), q },
+      {
+        abortEarly: false,
+      },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getListLecturersByStudentId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    studentId: Joi.number().integer().required().positive(),
+  });
+
+  const correctConditionParams = Joi.object({
+    page: Joi.number().integer().required().positive(),
+    itemsPerPage: Joi.number().integer().required().positive(),
+    q: Joi.string().required().min(2).max(50).trim().strict(),
+  });
+
+  try {
+    const { studentId } = req.params;
+    const { page, itemsPerPage, q } = req.query;
+
+    await correctCondition.validateAsync(
+      { studentId: Number(studentId) },
+      {
+        abortEarly: false,
+      },
+    );
+    await correctConditionParams.validateAsync(
+      { page: Number(page), itemsPerPage: Number(itemsPerPage), q },
+      {
+        abortEarly: false,
+      },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 const getAllCoursesByCategoryId = async (
   req: Request,
   res: Response,
@@ -338,6 +418,8 @@ export const courseValidation = {
   rejectCourse,
   getCourseById,
   getListCourses,
+  getListLecturersByStudentId,
+  getAllCoursesByStudentId,
   getAllCoursesByCategoryId,
   getAllCoursesByLecturerId,
 };

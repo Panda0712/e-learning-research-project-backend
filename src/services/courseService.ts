@@ -363,45 +363,54 @@ const getListLecturersByStudentId = async (
       : DEFAULT_ITEMS_PER_PAGE;
     const skip = (currentPage - 1) * perPage;
 
-    const where = {
+    const lecturerWhere = {
       isDestroyed: false,
-      orderItems: {
+      role: "lecturer",
+      courses: {
         some: {
-          order: {
-            studentId,
-            isDestroyed: false,
+          isDestroyed: false,
+          orderItems: {
+            some: {
+              order: {
+                studentId,
+                isDestroyed: false,
+              },
+            },
           },
         },
       },
       ...(q
         ? {
             OR: [
-              { name: { contains: q, mode: "insensitive" } },
-              { lecturerName: { contains: q, mode: "insensitive" } },
-              { overview: { contains: q, mode: "insensitive" } },
-              { level: { contains: q, mode: "insensitive" } },
-              { status: { contains: q, mode: "insensitive" } },
+              { firstName: { contains: q, mode: "insensitive" } },
+              { lastName: { contains: q, mode: "insensitive" } },
+              { email: { contains: q, mode: "insensitive" } },
+              {
+                courses: {
+                  some: {
+                    OR: [
+                      { name: { contains: q, mode: "insensitive" } },
+                      { overview: { contains: q, mode: "insensitive" } },
+                    ],
+                  },
+                },
+              },
             ],
           }
         : {}),
     };
 
-    const [lecturers] = await Promise.all([
-      prisma.course.findMany({
-        where,
-        include: {
-          lecturer: true,
-        },
-        orderBy: { name: "asc" },
+    const [lecturers, totalLecturers] = await Promise.all([
+      prisma.user.findMany({
+        where: lecturerWhere,
+        orderBy: { firstName: "asc" },
         skip,
         take: perPage,
       }),
+      prisma.user.count({ where: lecturerWhere }),
     ]);
 
-    return {
-      lecturers: lecturers.map((course) => course.lecturer),
-      totalLecturers: lecturers.length,
-    };
+    return { lecturers, totalLecturers };
   } catch (error: any) {
     throw error;
   }
