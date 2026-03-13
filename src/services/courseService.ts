@@ -403,6 +403,13 @@ const getListLecturersByStudentId = async (
     const [lecturers, totalLecturers] = await Promise.all([
       prisma.user.findMany({
         where: lecturerWhere,
+        include: {
+          avatar: {
+            select: {
+              fileUrl: true,
+            },
+          },
+        },
         orderBy: { firstName: "asc" },
         skip,
         take: perPage,
@@ -462,6 +469,20 @@ const getAllCoursesByStudentId = async (
     const [courses, totalCourses] = await Promise.all([
       prisma.course.findMany({
         where,
+        include: {
+          thumbnail: {
+            select: {
+              fileUrl: true,
+            },
+          },
+          enrollments: {
+            where: { studentId },
+            select: {
+              progress: true,
+              lastAccessedAt: true,
+            },
+          },
+        },
         orderBy: { name: "asc" },
         skip,
         take: perPage,

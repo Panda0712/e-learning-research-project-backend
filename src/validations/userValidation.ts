@@ -120,6 +120,7 @@ export const update = async (
       abortEarly: false,
       allowUnknown: true,
     });
+
     next();
   } catch (error: any) {
     next(

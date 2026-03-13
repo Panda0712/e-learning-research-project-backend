@@ -112,12 +112,12 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = 1;
+    const { userId } = req.jwtDecoded.id;
 
-    const userAvatar = null;
+    const userAvatar = req.body?.avatar;
 
     const result = await userService.updateProfile(
-      userId,
+      Number(userId),
       req.body,
       userAvatar,
     );

@@ -28,6 +28,7 @@ Router.route("/logout").delete(userController.logout);
 Router.route("/refresh_token").get(userController.handleRefreshToken);
 
 Router.route("/update").put(
+  authMiddleware.isAuthorized,
   userValidation.update,
   userController.updateProfile,
 );
