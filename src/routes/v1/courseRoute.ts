@@ -46,6 +46,14 @@ Router.route("/get-course-by-id/:id").get(
   courseValidation.getCourseById,
   courseController.getCourseById,
 );
+Router.route("/list-lecturers-by-student-id/:studentId").get(
+  courseValidation.getListLecturersByStudentId,
+  courseController.getListLecturersByStudentId,
+);
+Router.route("/get-courses-by-student-id/:studentId").get(
+  courseValidation.getAllCoursesByStudentId,
+  courseController.getAllCoursesByStudentId,
+);
 Router.route("/get-courses-by-lecturer-id/:lecturerId").get(
   courseValidation.getAllCoursesByLecturerId,
   courseController.getAllCoursesByLecturerId,
