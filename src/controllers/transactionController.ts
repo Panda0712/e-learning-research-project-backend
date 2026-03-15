@@ -58,8 +58,22 @@ const getStudentTransactionsByCourseId = async (
   }
 };
 
+const getAllTransactions = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const transactions = await transactionService.getAllTransactions();
+    res.status(StatusCodes.OK).json(transactions);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const transactionController = {
   createTransaction,
   getHistoryByUserId,
   getStudentTransactionsByCourseId,
+  getAllTransactions,
 };

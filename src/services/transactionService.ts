@@ -154,8 +154,69 @@ const getStudentTransactionsByCourseId = async (courseId: number) => {
   }
 };
 
+const getAllTransactions = async () => {
+  try {
+    // 1. Lấy tất cả giao dịch kèm thông tin user (Học viên) và chi tiết giao dịch
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        isDestroyed: false,
+      },
+      include: {
+        user: true, 
+        studentTransactions: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    // 2. Gom tất cả courseId có trong các giao dịch 
+    const courseIds = transactions.flatMap(t =>
+      t.studentTransactions.map(st => st.courseId).filter(id => id !== null)
+    ) as number[];
+
+    // 3. Tìm các Khóa học kèm theo thông tin Giảng viên
+    const courses = await prisma.course.findMany({
+      where: { id: { in: courseIds } },
+      include: { lecturer: true }
+    });
+
+    const courseMap = new Map(courses.map(c => [c.id, c]));
+
+    // 4. Ghép nối dữ liệu trả về cho Frontend 
+    const result = transactions.map(t => ({
+      id: t.id,
+      userId: t.userId,
+      userEmail: t.user?.email,
+      userFullName: `${t.user?.lastName || ''} ${t.user?.firstName || ''}`.trim(),
+      amount: t.amount,
+      paymentMethod: t.paymentMethod,
+      status: t.status,
+      gatewayReference: t.gatewayReference,
+      createdAt: t.createdAt,
+      
+      // Chi tiết các khóa học được mua trong giao dịch này
+      items: t.studentTransactions.map(st => {
+        const course = st.courseId ? courseMap.get(st.courseId) : null;
+        return {
+          courseId: st.courseId,
+          courseTitle: course?.name || "Khóa học đã xóa",
+          instructorName: course ? `${course.lecturer?.lastName || ''} ${course.lecturer?.firstName || ''}`.trim() : "N/A",
+          discountAmount: st.discountAmount,
+          discountCode: st.discountCode
+        };
+      })
+    }));
+
+    return result || [];
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const transactionService = {
   createTransaction,
   getHistoryByUserId,
   getStudentTransactionsByCourseId,
+  getAllTransactions,
 };

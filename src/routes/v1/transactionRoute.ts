@@ -1,3 +1,5 @@
+import { authMiddleware } from "../../middlewares/authMiddleware.js";
+import { rbacMiddleware } from "../../middlewares/rbacMiddleware.js";
 import { transactionValidation } from "@/validations/transactionValidation.js";
 import express from "express";
 import { transactionController } from "../../controllers/transactionController.js";
@@ -17,5 +19,12 @@ Router.route("/get-transaction-students/:courseId").get(
   transactionValidation.getStudentTransactionsByCourseId,
   transactionController.getStudentTransactionsByCourseId,
 );
+
+Router.route("/get-all-transactions").get(
+  authMiddleware.isAuthorized,
+  rbacMiddleware.isValidPermission(["ADMIN"]), 
+  transactionController.getAllTransactions,
+);
+
 
 export const transactionRoute = Router;
