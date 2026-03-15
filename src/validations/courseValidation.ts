@@ -285,7 +285,7 @@ const getAllCoursesByStudentId = async (
   const correctConditionParams = Joi.object({
     page: Joi.number().integer().required().positive(),
     itemsPerPage: Joi.number().integer().required().positive(),
-    q: Joi.string().required().min(2).max(50).trim().strict(),
+    q: Joi.string().allow("").optional(),
   });
 
   try {
@@ -325,7 +325,7 @@ const getListLecturersByStudentId = async (
   const correctConditionParams = Joi.object({
     page: Joi.number().integer().required().positive(),
     itemsPerPage: Joi.number().integer().required().positive(),
-    q: Joi.string().required().min(2).max(50).trim().strict(),
+    q: Joi.string().allow("").optional(),
   });
 
   try {
@@ -383,7 +383,7 @@ const getListCourses = async (
   const correctCondition = Joi.object({
     page: Joi.number().integer().required().positive(),
     itemsPerPage: Joi.number().integer().required().positive(),
-    q: Joi.string().required().min(2).max(50).trim().strict(),
+    q: Joi.string().allow("").optional(),
   });
 
   try {
