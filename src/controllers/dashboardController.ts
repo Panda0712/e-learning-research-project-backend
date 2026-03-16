@@ -26,13 +26,11 @@ const getAdminCharts = async (
   next: NextFunction,
 ) => {
   try {
-    const { period, from, to } = req.query;
+    const period = (req.query.period as string) || "this_year";
+    const from = req.query.from as string | undefined;
+    const to = req.query.to as string | undefined;
 
-    const data = await dashboardService.getAdminCharts(
-      period as string,
-      from as string,
-      to as string,
-    );
+    const data = await dashboardService.getAdminCharts(period, from, to);
 
     res.status(StatusCodes.OK).json(data);
   } catch (error) {
@@ -69,13 +67,15 @@ const getLecturerCharts = async (
     const userId = req.jwtDecoded?.id;
     if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
-    const { period, from, to } = req.query;
+    const period = (req.query.period as string) || "this_year";
+    const from = req.query.from as string | undefined;
+    const to = req.query.to as string | undefined;
 
     const data = await dashboardService.getLecturerCharts(
       Number(userId),
-      period as string,
-      from as string,
-      to as string,
+      period,
+      from,
+      to,
     );
 
     res.status(StatusCodes.OK).json(data);
