@@ -22,7 +22,6 @@ const getGeneralStats = async (
 
   try {
     await correctCondition.validateAsync(req.query, { abortEarly: false });
-
     next();
   } catch (error: any) {
     next(
@@ -38,14 +37,22 @@ const getRevenueChart = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    period: Joi.string().valid("week", "month", "year").required(),
+    period: Joi.string()
+      .valid("all_time", "last_month", "this_month", "this_year", "custom")
+      .required(),
     from: Joi.date().iso().optional(),
     to: Joi.date().iso().optional(),
+  }).custom((value, helpers) => {
+    if (value.period === "custom" && (!value.from || !value.to)) {
+      return helpers.error("any.custom", {
+        message: "From and to dates are required for custom period",
+      });
+    }
+    return value;
   });
 
   try {
     await correctCondition.validateAsync(req.query, { abortEarly: false });
-
     next();
   } catch (error: any) {
     next(
@@ -72,7 +79,6 @@ const getTopRanking = async (
 
   try {
     await correctCondition.validateAsync(req.query, { abortEarly: false });
-
     next();
   } catch (error: any) {
     next(
