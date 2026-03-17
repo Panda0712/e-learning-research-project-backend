@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
-import { io } from "@/socket/index.js";
+import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+
+const getSocketIO = () => getIO();
 
 type ConversationWithRelations = {
   id: number;
@@ -163,7 +165,10 @@ const resolveStudentLecturerPair = async (userAId: number, userBId: number) => {
   );
 };
 
-const ensureConversationMember = async (conversationId: number, userId: number) => {
+const ensureConversationMember = async (
+  conversationId: number,
+  userId: number,
+) => {
   const member = await prisma.conversationMember.findUnique({
     where: {
       conversationId_userId: {
@@ -183,7 +188,10 @@ const ensureConversationMember = async (conversationId: number, userId: number) 
   return member;
 };
 
-const createConversation = async (currentUserId: number, recipientId: number) => {
+const createConversation = async (
+  currentUserId: number,
+  recipientId: number,
+) => {
   const { studentId, lecturerId } = await resolveStudentLecturerPair(
     currentUserId,
     recipientId,
@@ -292,7 +300,7 @@ const createConversation = async (currentUserId: number, recipientId: number) =>
 
   const targetUserId = currentUserId === studentId ? lecturerId : studentId;
 
-  io.to(`user:${targetUserId}`).emit("new-conversation", {
+  getSocketIO().to(`user:${targetUserId}`).emit("new-conversation", {
     conversation: payload,
   });
 
@@ -432,7 +440,8 @@ const markAsSeen = async (conversationId: number, currentUserId: number) => {
 
   const seenBy = refreshedConversation.members
     .filter(
-      (member) => member.lastSeenMessageId === refreshedConversation.lastMessageId,
+      (member) =>
+        member.lastSeenMessageId === refreshedConversation.lastMessageId,
     )
     .map((member) => ({
       id: member.user.id,
@@ -441,19 +450,21 @@ const markAsSeen = async (conversationId: number, currentUserId: number) => {
       avatarUrl: member.user.avatar?.fileUrl ?? null,
     }));
 
-  io.to(`conversation:${conversationId}`).emit("read-message", {
-    conversation: {
-      id: refreshedConversation.id,
-      lastMessageId: refreshedConversation.lastMessageId,
-      lastMessageAt: refreshedConversation.lastMessageAt,
-    },
-    seenBy,
-    member: {
-      userId: currentUserId,
-      unreadCount: updatedMember.unreadCount,
-      lastReadAt: updatedMember.lastReadAt,
-    },
-  });
+  getSocketIO()
+    .to(`conversation:${conversationId}`)
+    .emit("read-message", {
+      conversation: {
+        id: refreshedConversation.id,
+        lastMessageId: refreshedConversation.lastMessageId,
+        lastMessageAt: refreshedConversation.lastMessageAt,
+      },
+      seenBy,
+      member: {
+        userId: currentUserId,
+        unreadCount: updatedMember.unreadCount,
+        lastReadAt: updatedMember.lastReadAt,
+      },
+    });
 
   return {
     message: "Marked as seen",

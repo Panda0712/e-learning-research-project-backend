@@ -1,4 +1,4 @@
-import { User } from "@/types/user.type.js";
+import { User, UserWithAvatar } from "@/types/user.type.js";
 import { StatusCodes } from "http-status-codes";
 import _ from "lodash";
 import ApiError from "./ApiError.js";
@@ -27,10 +27,34 @@ export const pickUser = (user: User) => {
     "email",
     "avatar",
     "role",
+    "phoneNumber",
+    "dateOfBirth",
     "isVerified",
     "createdAt",
     "updatedAt",
   ]);
+};
+
+export const pickUserWithAvatar = (user: UserWithAvatar) => {
+  if (!user) return;
+
+  const picked = _.pick(user, [
+    "id",
+    "firstName",
+    "lastName",
+    "email",
+    "role",
+    "phoneNumber",
+    "dateOfBirth",
+    "isVerified",
+    "createdAt",
+    "updatedAt",
+  ]);
+
+  return {
+    ...picked,
+    avatar: user.avatar ? { fileUrl: user.avatar?.fileUrl } : null,
+  };
 };
 
 export const calculateDateRange = (

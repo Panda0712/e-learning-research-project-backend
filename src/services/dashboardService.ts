@@ -112,7 +112,7 @@ const getAdminStats = async () => {
       lists: { pendingApprovals: approvalsList, topCourses },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -165,7 +165,7 @@ const getAdminCharts = async (
       datasets: { signups: signupData, revenue: revenueData },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -282,7 +282,7 @@ const getLecturerStats = async (lecturerId: number) => {
       topCourses,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -342,7 +342,7 @@ const getLecturerCharts = async (
       datasets: { engagement: engagementData, revenue: revenueData },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

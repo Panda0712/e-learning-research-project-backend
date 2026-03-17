@@ -28,5 +28,13 @@ export const WEBSITE_DOMAINS =
     ? env.WEBSITE_DOMAIN_PRODUCTION
     : env.WEBSITE_DOMAIN_DEVELOPMENT;
 
+export const WHITELIST_DOMAINS = [
+  "http://localhost:5173",
+  "http://localhost:8017",
+];
+
 export const DEFAULT_PAGE = 1;
 export const DEFAULT_ITEMS_PER_PAGE = 8;
+
+export const FE_OAUTH_CALLBACK = `${WEBSITE_DOMAINS}/auth/google/callback`;
+export const FE_ORIGIN = new URL(WEBSITE_DOMAINS as string).origin;

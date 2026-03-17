@@ -44,11 +44,11 @@ const decodeToken = (token: string) => {
   if (!decoded || typeof decoded !== "object") {
     throw new Error("Token is not valid!");
   }
-  if (!decoded.header?.kid) {
+  if (!(decoded as any).payload?.kid) {
     throw new Error("Token missing kid!");
   }
 
-  return decoded.header;
+  return decoded.payload;
 };
 
 const getGoogleClient = () => {

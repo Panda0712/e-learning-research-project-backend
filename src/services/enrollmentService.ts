@@ -33,7 +33,7 @@ const createEnrollment = async (data: {
 
     return newEnrollment;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -53,7 +53,7 @@ const getEnrollmentsByStudentId = async (studentId: number) => {
 
     return enrollments || [];
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
