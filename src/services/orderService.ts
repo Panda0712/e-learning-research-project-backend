@@ -102,7 +102,7 @@ const createOrder = async (data: {
 
     return newOrder;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -141,7 +141,7 @@ const getOrderById = async (orderId: number) => {
 
     return order;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -198,7 +198,7 @@ const getOrdersByStudentId = async (filters: {
       },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -260,7 +260,7 @@ const getAllOrders = async (filters: {
       },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -351,7 +351,7 @@ const updateOrderStatus = async (orderId: number, newStatus: string) => {
 
     return updatedOrder;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -381,7 +381,7 @@ const cancelOrder = async (orderId: number) => {
 
     return { message: "Order cancelled successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -404,7 +404,7 @@ const deleteOrder = async (orderId: number) => {
 
     return { message: "Order deleted successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

@@ -1,3 +1,4 @@
+import { publishMessage } from "@/lib/rabbitmq/rabbitmq.producer.js";
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { assessmentRoute } from "./assessmentRoute.js";
@@ -10,14 +11,17 @@ import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
 import { lecturerPayoutRoute } from "./lecturerPayoutRoute.js";
 import { lecturerPayoutAccountRoute } from "./lecturerPayoutAccountRoute.js";
+import { homepageRoute } from "./homepageRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { messageRoute } from "./messageRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
+import { notificationRoute } from "./notificationRoute.js";
 import { orderItemRoute } from "./orderItemRoute.js";
 import { orderRoute } from "./orderRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
 import { resourceRoute } from "./resourceRoute.js";
+import { reviewRoute } from "./reviewRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 
@@ -30,6 +34,14 @@ Router.get("/status", (req: Request, res: Response) => {
     code: StatusCodes.OK,
     timestamp: new Date().toISOString(),
   });
+});
+
+// Test RabbitMQ connection
+Router.get("/test-rabbitmq", async (req: Request, res: Response) => {
+  await publishMessage("test-queue", {
+    message: "Hello from API",
+  });
+  res.json({ message: "Message sent to queue" });
 });
 
 // User route
@@ -62,6 +74,9 @@ Router.use("/orders", orderRoute);
 // OrderItem route
 Router.use("/order-items", orderItemRoute);
 
+// Notification route
+Router.use("/notifications", notificationRoute);
+
 // Assessment route
 Router.use("/assessments", assessmentRoute);
 
@@ -91,5 +106,10 @@ Router.use("/lecturer-payouts", lecturerPayoutRoute);
 
 // Lecturer Payout Account route
 Router.use("/lecturer-payout-accounts", lecturerPayoutAccountRoute);
+// Review route
+Router.use("/reviews", reviewRoute);
+
+// Homepage route
+Router.use("/homepage", homepageRoute);
 
 export const APIs_V1 = Router;

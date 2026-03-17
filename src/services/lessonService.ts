@@ -60,7 +60,7 @@ const createLesson = async (data: CreateLesson) => {
       return newLesson;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -126,7 +126,7 @@ const updateLesson = async (id: number, updateData: UpdateLesson) => {
 
     return updatedLesson;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -145,7 +145,7 @@ const deleteLesson = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -160,7 +160,7 @@ const getLessonById = async (id: number) => {
 
     return existingLesson;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -179,7 +179,7 @@ const getAllLessonsByModuleId = async (moduleId: number) => {
 
     return lessons;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -199,7 +199,7 @@ const getLessonByResourceId = async (resourceId: number) => {
 
     return lesson;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

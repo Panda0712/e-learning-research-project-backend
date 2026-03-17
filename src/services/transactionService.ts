@@ -94,7 +94,7 @@ const createTransaction = async (data: {
     }
     return newTransaction;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -115,7 +115,7 @@ const getHistoryByUserId = async (userId: number) => {
 
     return historyList;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -150,7 +150,7 @@ const getStudentTransactionsByCourseId = async (courseId: number) => {
 
     return studentTransactions;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

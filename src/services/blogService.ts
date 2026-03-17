@@ -26,7 +26,7 @@ const createBlogCategory = async (reqBody: { name: string; slug: string }) => {
 
     return newCategory;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -66,7 +66,7 @@ const updateBlogCategory = async (
 
     return updatedCategory;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -88,7 +88,7 @@ const deleteBlogCategory = async (id: number) => {
 
     return { message: "Delete category successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -140,7 +140,7 @@ const createPost = async (reqBody: CreateBlogPost) => {
       return newPost;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -168,7 +168,7 @@ const getPostDetail = async (id: number) => {
 
     return post;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -232,7 +232,7 @@ const updatePost = async (id: number, reqBody: UpdateBlogPost) => {
 
     return updatedPost;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -254,7 +254,7 @@ const deletePost = async (id: number) => {
 
     return { message: "Deleted blog post successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -287,7 +287,7 @@ const createComment = async (reqBody: {
 
     return newComment;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -317,7 +317,7 @@ const updateComment = async (
 
     return updatedComment;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -339,7 +339,7 @@ const deleteComment = async (id: number) => {
 
     return { message: "Deleted blog comment successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

@@ -8,7 +8,8 @@ import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
 import { WEBSITE_DOMAINS } from "@/utils/constants.js";
-import { pickUser } from "@/utils/helpers.js";
+import { pickUser, pickUserWithAvatar } from "@/utils/helpers.js";
+import axios from "axios";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
 import { StatusCodes } from "http-status-codes";
@@ -74,7 +75,7 @@ const handleRefreshToken = async ({
       tokens,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -120,7 +121,7 @@ const register = async (reqBody: {
       }
 
       // send verification email to user
-      const verificationLink = `${WEBSITE_DOMAINS}/account/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
       const customSubject = "ADMIN EduLearn: Please verify your email!";
       const htmlContent = `
   <h3>This is verification email link:</h3>
@@ -138,7 +139,7 @@ const register = async (reqBody: {
       return pickUser(getNewUser);
     }
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -171,11 +172,13 @@ const verifyAccount = async (reqBody: { email: string; token: string }) => {
 
     return pickUser(updatedUser);
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
 const logout = async ({ keyStore }: { keyStore: KeyStore }) => {
+  if (!keyStore) return true;
+
   const delKey = await KeyTokenService.removeKeyById(keyStore.id);
 
   return delKey;
@@ -186,6 +189,7 @@ const login = async (reqBody: { email: string; password: string }) => {
     // check user existence
     const checkUser = await prisma.user.findUnique({
       where: { email: reqBody.email, isDestroyed: false },
+      include: { avatar: { select: { fileUrl: true } } },
     });
     if (!checkUser) {
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
@@ -229,23 +233,24 @@ const login = async (reqBody: { email: string; password: string }) => {
 
     // return data
     return {
-      ...pickUser(checkUser),
+      ...pickUserWithAvatar(checkUser),
       refreshToken: tokens.refreshToken,
       accessToken: tokens.accessToken,
       kid,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
-const getGoogleAuthUrl = async () => {
+const getGoogleAuthUrl = async (state: string) => {
   const googleClient = authUtils.getGoogleClient();
 
   return googleClient.generateAuthUrl({
     access_type: "offline",
     prompt: "consent",
     scope: ["openid", "email", "profile"],
+    state,
   });
 };
 
@@ -328,7 +333,103 @@ const handleGoogleCallback = async (code: string) => {
       kid,
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
+  }
+};
+
+const getMe = async (userId: number) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId, isDestroyed: false },
+      include: { avatar: { select: { fileUrl: true } } },
+    });
+
+    if (!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+
+    return pickUserWithAvatar(user);
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const facebookAuthHandler = async (accessToken: string) => {
+  try {
+    // handle get response from facebook
+    let response = await axios.get(
+      `https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email`,
+    );
+    const { id, email, name } = response.data;
+
+    if (!id) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Authentication failed! Please try again later!",
+      );
+    }
+
+    // check account existence
+    const checkUser = await prisma.user.findUnique({
+      where: { email, isDestroyed: false },
+    });
+    if (checkUser) {
+      throw new ApiError(StatusCodes.CONFLICT, "User already exists!");
+    }
+
+    // create password
+    const randomPassword = crypto.randomBytes(16).toString("hex");
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
+
+    // format first name and last name
+    const formattedName = name.split(" ");
+    const firstName = formattedName[0];
+    const lastName = formattedName.slice(1).join(" ") || firstName;
+
+    // create new user
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        role: "student",
+        isVerified: true,
+      },
+    });
+
+    // generate public and private key for tokens
+    const publicKey = crypto.randomBytes(64).toString("hex");
+    const privateKey = crypto.randomBytes(64).toString("hex");
+
+    const kid = uuidV4();
+
+    const tokensPair = (await authUtils.createTokenPair(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        kid,
+      },
+      publicKey,
+      privateKey,
+    )) as { refreshToken: string; accessToken: string };
+
+    // create key token
+    await KeyTokenService.createKeyToken({
+      userId: user.id,
+      refreshToken: tokensPair.refreshToken,
+      publicKey,
+      privateKey,
+      kid,
+    });
+
+    return {
+      ...pickUser(user),
+      refreshToken: tokensPair.refreshToken,
+      accessToken: tokensPair.accessToken,
+      kid,
+    };
+  } catch (error: any) {
+    throw error;
   }
 };
 
@@ -414,7 +515,7 @@ const updateProfile = async (
 
     return pickUser(updateUser);
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -460,7 +561,7 @@ const registerLecturerProfile = async (
       return newLecturerProfile;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -494,7 +595,7 @@ const forgotPassword = async (email: string) => {
     });
 
     // send reset password email
-    const resetPasswordLink = `${WEBSITE_DOMAINS}/reset-password?token=${tokenHash}`;
+    const resetPasswordLink = `${WEBSITE_DOMAINS}/auth/forgot-password?token=${rawToken}`;
     const customSubject = "ADMIN EduLearn: Reset Password!";
     const htmlContent = `
   <h3>This is reset password link:</h3>
@@ -514,7 +615,7 @@ const forgotPassword = async (email: string) => {
       ...pickUser(updatedUser),
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -565,7 +666,7 @@ const resetPassword = async ({
       ...pickUser(updatedUser),
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -595,6 +696,7 @@ export const userService = {
   logout,
   getGoogleAuthUrl,
   handleGoogleCallback,
+  getMe,
   handleRefreshToken,
   findByEmail,
   updateProfile,
@@ -603,4 +705,5 @@ export const userService = {
   resetPassword,
   createUserDocument,
   updateUserDocument,
+  facebookAuthHandler,
 };

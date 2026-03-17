@@ -1,3 +1,4 @@
+import { authMiddleware } from "./../../middlewares/authMiddleware.js";
 import { userController } from "@/controllers/userController.js";
 import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { userValidation } from "@/validations/userValidation.js";
@@ -27,6 +28,7 @@ Router.route("/logout").delete(userController.logout);
 Router.route("/refresh_token").get(userController.handleRefreshToken);
 
 Router.route("/update").put(
+  authMiddleware.isAuthorized,
   userValidation.update,
   userController.updateProfile,
 );
@@ -54,5 +56,9 @@ Router.route("/lecturer-file").post(
 Router.route("/google").get(userController.googleAuthStartHandler);
 
 Router.route("/google/callback").get(userController.googleAuthCallbackHandler);
+
+Router.route("/facebook").post(userController.facebookAuthHandler);
+
+Router.route("/me").get(authMiddleware.isAuthorized, userController.getMe);
 
 export const userRoute = Router;

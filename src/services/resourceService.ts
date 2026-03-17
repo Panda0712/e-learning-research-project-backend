@@ -25,7 +25,7 @@ const createResource = async (data: CreateResource) => {
 
     return createdResource;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -57,7 +57,7 @@ const createResourceWithTransaction = async (
 
     return newResource;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -72,7 +72,7 @@ const getResourceById = async (id: number) => {
 
     return resource;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -87,7 +87,7 @@ const getResourceByPublicId = async (publicId: string) => {
 
     return resource;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -102,7 +102,7 @@ const getAllResourcesByFileType = async (fileType: string) => {
 
     return resources;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -121,7 +121,7 @@ const deleteResource = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -143,7 +143,7 @@ const deleteResourceWithTransaction = async (
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -162,7 +162,7 @@ const deleteResourceByPublicId = async (publicId: string) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

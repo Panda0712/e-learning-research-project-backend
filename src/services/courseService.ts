@@ -33,7 +33,7 @@ const createCourseCategory = async (data: { name: string; slug: string }) => {
 
     return createdCategory;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -67,7 +67,7 @@ const createCourseFaq = async (data: {
 
     return createdCourseFaq;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -91,7 +91,7 @@ const getFaqsByCourseId = async (courseId: number) => {
 
     return faqsList;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -109,7 +109,7 @@ const getCourseFaqById = async (id: number) => {
 
     return faq;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -157,7 +157,7 @@ const createCourse = async (data: CreateCourse) => {
       return newCourse;
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -227,7 +227,7 @@ const updateCourse = async (id: number, updateData: UpdateCourse) => {
 
     return updatedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -246,7 +246,7 @@ const deleteCourse = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -285,7 +285,7 @@ const approveCourse = async (id: number) => {
 
     return approvedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -324,7 +324,7 @@ const rejectCourse = async (id: number) => {
 
     return rejectedCourse;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -340,7 +340,159 @@ const getCourseById = async (id: number) => {
 
     return course;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
+  }
+};
+
+const getListLecturersByStudentId = async (
+  studentId: number,
+  page: number,
+  itemsPerPage: number,
+  q: string,
+) => {
+  try {
+    const student = await prisma.user.findUnique({
+      where: { id: studentId, isDestroyed: false },
+    });
+    if (!student)
+      throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
+
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+
+    const lecturerWhere = {
+      isDestroyed: false,
+      role: "lecturer",
+      courses: {
+        some: {
+          isDestroyed: false,
+          orderItems: {
+            some: {
+              order: {
+                studentId,
+                isDestroyed: false,
+              },
+            },
+          },
+        },
+      },
+      ...(q
+        ? {
+            OR: [
+              { firstName: { contains: q, mode: "insensitive" } },
+              { lastName: { contains: q, mode: "insensitive" } },
+              { email: { contains: q, mode: "insensitive" } },
+              {
+                courses: {
+                  some: {
+                    OR: [
+                      { name: { contains: q, mode: "insensitive" } },
+                      { overview: { contains: q, mode: "insensitive" } },
+                    ],
+                  },
+                },
+              },
+            ],
+          }
+        : {}),
+    };
+
+    const [lecturers, totalLecturers] = await Promise.all([
+      prisma.user.findMany({
+        where: lecturerWhere,
+        include: {
+          avatar: {
+            select: {
+              fileUrl: true,
+            },
+          },
+        },
+        orderBy: { firstName: "asc" },
+        skip,
+        take: perPage,
+      }),
+      prisma.user.count({ where: lecturerWhere }),
+    ]);
+
+    return { lecturers, totalLecturers };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getAllCoursesByStudentId = async (
+  studentId: number,
+  page: number,
+  itemsPerPage: number,
+  q: string,
+) => {
+  try {
+    const student = await prisma.user.findUnique({
+      where: { id: studentId, isDestroyed: false },
+    });
+    if (!student) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
+    }
+
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+
+    const where = {
+      isDestroyed: false,
+      orderItems: {
+        some: {
+          order: {
+            studentId,
+            isDestroyed: false,
+          },
+        },
+      },
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { lecturerName: { contains: q, mode: "insensitive" } },
+              { overview: { contains: q, mode: "insensitive" } },
+              { level: { contains: q, mode: "insensitive" } },
+              { status: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [courses, totalCourses] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        include: {
+          thumbnail: {
+            select: {
+              fileUrl: true,
+            },
+          },
+          enrollments: {
+            where: { studentId },
+            select: {
+              progress: true,
+              lastAccessedAt: true,
+            },
+          },
+        },
+        orderBy: { name: "asc" },
+        skip,
+        take: perPage,
+      }),
+      prisma.course.count({ where }),
+    ]);
+
+    return { courses, totalCourses };
+  } catch (error: any) {
+    throw error;
   }
 };
 
@@ -361,7 +513,7 @@ const getAllCoursesByLecturerId = async (lecturerId: number) => {
 
     return courses;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -382,7 +534,7 @@ const getAllCoursesByCategoryId = async (categoryId: number) => {
 
     return courses;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -426,7 +578,7 @@ const getListCourses = async (
 
     return { courses, totalCourses };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -445,6 +597,8 @@ export const courseService = {
   rejectCourse,
   getListCourses,
   getCourseById,
+  getListLecturersByStudentId,
+  getAllCoursesByStudentId,
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
 };

@@ -1,8 +1,11 @@
 import { env } from "@/configs/environment.js";
-import { server } from "@/socket/index.js";
+import { server, setupSocket } from "@/socket/index.js";
 import "dotenv/config";
 
 const PORT = process.env.PORT;
+
+// Setup Socket.io
+setupSocket(server);
 
 if (env.BUILD_MODE === "production") {
   server.listen(PORT, () => {
@@ -25,5 +28,15 @@ if (env.BUILD_MODE === "production") {
 }
 
 process.on("SIGINT", () => {
-  server.close(() => console.log("Exit express server!"));
+  server.close(() => {
+    console.log("Exit express server!");
+    process.exit(0);
+  });
+});
+
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Exit express server!");
+    process.exit(0);
+  });
 });

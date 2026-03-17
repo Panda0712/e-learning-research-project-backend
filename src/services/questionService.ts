@@ -32,7 +32,7 @@ const createQuestion = async (data: CreateQuestion) => {
 
     return createdQuestion;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -53,7 +53,7 @@ const updateQuestion = async (id: number, updateData: UpdateQuestion) => {
 
     return updatedQuestion;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -72,7 +72,7 @@ const deleteQuestion = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -87,7 +87,7 @@ const getQuestionById = async (id: number) => {
 
     return existingQuestion;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -106,7 +106,7 @@ const getAllQuestionsByQuizId = async (quizId: number) => {
 
     return questions;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

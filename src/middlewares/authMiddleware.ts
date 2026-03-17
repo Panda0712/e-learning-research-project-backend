@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma.js";
+import { authUtilsPayload } from "@/types/authUtilsPayload.type.js";
 import { IUser } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
@@ -23,12 +24,13 @@ const isAuthorized = async (
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
+    console.log("accessToken");
     return;
   }
 
   try {
     // decode token
-    const decoded = authUtils.decodeToken(accessToken);
+    const decoded = authUtils.decodeToken(accessToken) as authUtilsPayload;
 
     if (!decoded) {
       next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));

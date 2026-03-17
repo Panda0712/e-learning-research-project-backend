@@ -32,7 +32,7 @@ const createAssessment = async (data: any) => {
 
     return newAssessment;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -58,7 +58,7 @@ const getAssessmentsForLecturer = async (lecturerId: number) => {
       dueDate: a.dueDate,
     }));
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -80,7 +80,7 @@ const getSubmissionsDetail = async (assessmentId: number) => {
 
     return submissionDetails;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -109,7 +109,7 @@ const updateAssessment = async (
 
     return updatedAssessment;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -131,7 +131,7 @@ const updateFeedback = async (submissionId: number, feedback: string) => {
 
     return updatedFeedback;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

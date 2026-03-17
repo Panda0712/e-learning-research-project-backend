@@ -1,9 +1,6 @@
 import { prisma } from "@/lib/prisma.js";
 import ApiError from "@/utils/ApiError.js";
-import {
-    DEFAULT_ITEMS_PER_PAGE,
-    DEFAULT_PAGE,
-} from "@/utils/constants.js";
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
 
 // ============ COUPON CATEGORY SERVICES ============
@@ -21,7 +18,7 @@ const createCouponCategory = async (data: { name: string; slug: string }) => {
     if (category) {
       throw new ApiError(
         StatusCodes.CONFLICT,
-        "Coupon category already exists!"
+        "Coupon category already exists!",
       );
     }
 
@@ -35,7 +32,7 @@ const createCouponCategory = async (data: { name: string; slug: string }) => {
 
     return createdCategory;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -50,7 +47,7 @@ const getAllCouponCategories = async () => {
       },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -74,13 +71,13 @@ const getCouponCategoryById = async (id: number) => {
 
     return category;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
 const updateCouponCategory = async (
   id: number,
-  data: { name?: string; slug?: string }
+  data: { name?: string; slug?: string },
 ) => {
   try {
     // check category existence
@@ -114,7 +111,7 @@ const updateCouponCategory = async (
 
     return updated;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -137,7 +134,7 @@ const deleteCouponCategory = async (id: number) => {
 
     return { message: "Coupon category deleted successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -195,7 +192,7 @@ const createCoupon = async (data: any) => {
 
     return newCoupon;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -239,7 +236,7 @@ const getAllCoupons = async (filters: {
       },
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -261,7 +258,7 @@ const getCouponById = async (id: number) => {
 
     return coupon;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -283,7 +280,7 @@ const getCouponByCode = async (code: string) => {
 
     return coupon;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -305,10 +302,7 @@ const updateCoupon = async (id: number, data: any) => {
       });
 
       if (existingCoupon) {
-        throw new ApiError(
-          StatusCodes.CONFLICT,
-          "Coupon code already exists!"
-        );
+        throw new ApiError(StatusCodes.CONFLICT, "Coupon code already exists!");
       }
     }
 
@@ -327,22 +321,38 @@ const updateCoupon = async (id: number, data: any) => {
       where: { id },
       data: {
         name: data.name || coupon.name,
-        description: data.description !== undefined ? data.description : coupon.description,
+        description:
+          data.description !== undefined
+            ? data.description
+            : coupon.description,
         status: data.status || coupon.status,
-        customerGroup: data.customerGroup !== undefined ? data.customerGroup : coupon.customerGroup,
+        customerGroup:
+          data.customerGroup !== undefined
+            ? data.customerGroup
+            : coupon.customerGroup,
         code: data.code || coupon.code,
         categoryId: data.categoryId || coupon.categoryId,
         quantity: data.quantity !== undefined ? data.quantity : coupon.quantity,
-        usesPerCustomer: data.usesPerCustomer !== undefined ? data.usesPerCustomer : coupon.usesPerCustomer,
+        usesPerCustomer:
+          data.usesPerCustomer !== undefined
+            ? data.usesPerCustomer
+            : coupon.usesPerCustomer,
         priority: data.priority || coupon.priority,
         actions: data.actions !== undefined ? data.actions : coupon.actions,
         type: data.type || coupon.type,
         amount: data.amount !== undefined ? data.amount : coupon.amount,
-        startingDate: data.startingDate !== undefined ? data.startingDate : coupon.startingDate,
+        startingDate:
+          data.startingDate !== undefined
+            ? data.startingDate
+            : coupon.startingDate,
         startingTime: data.startingTime || coupon.startingTime,
-        endingDate: data.endingDate !== undefined ? data.endingDate : coupon.endingDate,
+        endingDate:
+          data.endingDate !== undefined ? data.endingDate : coupon.endingDate,
         endingTime: data.endingTime || coupon.endingTime,
-        isUnlimited: data.isUnlimited !== undefined ? data.isUnlimited : coupon.isUnlimited,
+        isUnlimited:
+          data.isUnlimited !== undefined
+            ? data.isUnlimited
+            : coupon.isUnlimited,
         updatedAt: new Date(),
       },
       include: {
@@ -352,7 +362,7 @@ const updateCoupon = async (id: number, data: any) => {
 
     return updated;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -375,7 +385,7 @@ const deleteCoupon = async (id: number) => {
 
     return { message: "Coupon deleted successfully!" };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -399,7 +409,7 @@ const verifyCouponCode = async (code: string) => {
     if (coupon.status !== "active") {
       throw new ApiError(
         StatusCodes.BAD_REQUEST,
-        `Coupon is ${coupon.status}!`
+        `Coupon is ${coupon.status}!`,
       );
     }
 
@@ -408,7 +418,7 @@ const verifyCouponCode = async (code: string) => {
     if (coupon.startingDate && new Date(coupon.startingDate) > now) {
       throw new ApiError(
         StatusCodes.BAD_REQUEST,
-        "Coupon is not yet available!"
+        "Coupon is not yet available!",
       );
     }
 
@@ -417,7 +427,11 @@ const verifyCouponCode = async (code: string) => {
     }
 
     // check quantity if not unlimited
-    if (!coupon.isUnlimited && coupon.quantity !== null && coupon.quantity <= 0) {
+    if (
+      !coupon.isUnlimited &&
+      coupon.quantity !== null &&
+      coupon.quantity <= 0
+    ) {
       throw new ApiError(StatusCodes.BAD_REQUEST, "Coupon is out of stock!");
     }
 
@@ -427,7 +441,7 @@ const verifyCouponCode = async (code: string) => {
       message: "Coupon is valid!",
     };
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 

@@ -31,7 +31,7 @@ const createQuiz = async (data: CreateQuiz) => {
 
     return createdQuiz;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -58,7 +58,7 @@ const updateQuiz = async (id: number, updateData: UpdateQuiz) => {
 
     return updatedQuiz;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -76,7 +76,7 @@ const deleteQuiz = async (id: number) => {
       data: { isDestroyed: true },
     });
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -90,7 +90,7 @@ const getQuizById = async (id: number) => {
 
     return quiz;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
@@ -109,7 +109,7 @@ const getAllQuizzesByLessonId = async (lessonId: number) => {
 
     return quizzes;
   } catch (error: any) {
-    throw new Error(error);
+    throw error;
   }
 };
 
