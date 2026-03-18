@@ -93,12 +93,16 @@ const handleRefreshToken = async (
   next: NextFunction,
 ) => {
   try {
-    const { refreshToken, user, keyStore } = req.body;
-    const result = await userService.handleRefreshToken({
-      refreshToken,
-      user,
-      keyStore,
-    });
+    const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+
+    if (!refreshToken) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Refresh token is required!");
+    }
+
+    const result = await userService.handleRefreshToken({ refreshToken });
+
+    res.cookie("accessToken", result.tokens.accessToken, authCookieOptions);
+    res.cookie("refreshToken", result.tokens.refreshToken, authCookieOptions);
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {

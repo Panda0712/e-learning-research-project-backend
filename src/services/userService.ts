@@ -23,20 +23,54 @@ const handleRefreshToken = async ({
   keyStore,
 }: {
   refreshToken: string;
-  user: User;
-  keyStore: KeyStore;
+  user?: User;
+  keyStore?: KeyStore;
 }) => {
   try {
-    const { id, email, role } = user;
+    const resolvedKeyStore =
+      keyStore || (await KeyTokenService.findByRefreshToken(refreshToken));
+
+    if (!resolvedKeyStore) {
+      const usedTokenStore = await KeyTokenService.findByRefreshTokenUsed(
+        refreshToken,
+      );
+
+      if (usedTokenStore) {
+        await KeyTokenService.deleteKeyById(usedTokenStore.userId);
+        throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
+      }
+
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    }
+
+    const refreshTokenUsedList = Array.isArray(
+      resolvedKeyStore.refreshTokenUsed,
+    )
+      ? resolvedKeyStore.refreshTokenUsed.filter(
+          (token): token is string => typeof token === "string",
+        )
+      : [];
+
+    const resolvedUser =
+      user ||
+      (await prisma.user.findFirst({
+        where: { id: resolvedKeyStore.userId, isDestroyed: false },
+      }));
+
+    if (!resolvedUser) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
+    }
+
+    const { id, email, role } = resolvedUser;
 
     // check refreshTokenUsed array
-    if (keyStore.refreshTokenUsed.includes(refreshToken)) {
+    if (refreshTokenUsedList.includes(refreshToken)) {
       await KeyTokenService.deleteKeyById(id);
       throw new ApiError(StatusCodes.FORBIDDEN, "Something wrong happened!");
     }
 
     // check refreshToken
-    if (keyStore.refreshToken !== refreshToken) {
+    if (resolvedKeyStore.refreshToken !== refreshToken) {
       throw new ApiError(StatusCodes.UNAUTHORIZED, "User not registered!");
     }
 
@@ -51,19 +85,19 @@ const handleRefreshToken = async ({
         id,
         email,
         role,
-        kid: keyStore.kid,
+        kid: resolvedKeyStore.kid,
       },
-      keyStore.publicKey,
-      keyStore.privateKey,
+      resolvedKeyStore.publicKey,
+      resolvedKeyStore.privateKey,
     )) as { accessToken: string; refreshToken: string };
 
     // update key token table
     await prisma.keyToken.update({
-      where: { id: keyStore.id },
+      where: { id: resolvedKeyStore.id },
       data: {
         refreshToken: tokens.refreshToken,
         refreshTokenUsed: {
-          set: [...keyStore.refreshTokenUsed, refreshToken].filter(
+          set: [...refreshTokenUsedList, refreshToken].filter(
             (v, i, arr) => arr.indexOf(v) === i,
           ),
         },
@@ -71,7 +105,7 @@ const handleRefreshToken = async ({
     });
 
     return {
-      user: { id, email, role, kid: keyStore.kid },
+      user: { id, email, role, kid: resolvedKeyStore.kid },
       tokens,
     };
   } catch (error: any) {
@@ -120,20 +154,20 @@ const register = async (reqBody: {
         );
       }
 
-      // send verification email to user
-      const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
-      const customSubject = "ADMIN EduLearn: Please verify your email!";
-      const htmlContent = `
-  <h3>This is verification email link:</h3>
-  <h3>${verificationLink}</h3>
-  <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
-`;
+//       // send verification email to user
+//       const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+//       const customSubject = "ADMIN EduLearn: Please verify your email!";
+//       const htmlContent = `
+//   <h3>This is verification email link:</h3>
+//   <h3>${verificationLink}</h3>
+//   <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+// `;
 
-      await BrevoProvider.sendEmail({
-        recipientEmail: getNewUser.email,
-        subject: customSubject,
-        htmlContent,
-      });
+//       await BrevoProvider.sendEmail({
+//         recipientEmail: getNewUser.email,
+//         subject: customSubject,
+//         htmlContent,
+//       });
 
       // return data
       return pickUser(getNewUser);
