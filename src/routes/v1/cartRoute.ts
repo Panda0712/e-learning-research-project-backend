@@ -14,7 +14,7 @@ Router.route("/add-to-cart").post(
   cartController.addToCart,
 );
 
-Router.route("/remove-cart-item").delete(
+Router.route("/remove-cart-item/:id").delete(
   cartValidation.removeItem,
   cartController.removeItem,
 );
