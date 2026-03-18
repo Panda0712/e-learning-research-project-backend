@@ -10,6 +10,8 @@ import { courseReviewRoute } from "./courseReviewRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
+import { lecturerPayoutRoute } from "./lecturerPayoutRoute.js";
+import { lecturerPayoutAccountRoute } from "./lecturerPayoutAccountRoute.js";
 import { homepageRoute } from "./homepageRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { messageRoute } from "./messageRoute.js";
@@ -102,6 +104,12 @@ Router.use("/messages", messageRoute);
 // Resource route
 Router.use("/resources", resourceRoute);
 
+// Lecturer Payout route
+Router.use("/lecturer-payouts", lecturerPayoutRoute);
+
+// Lecturer Payout Account route
+Router.use("/lecturer-payout-accounts", lecturerPayoutAccountRoute);
+
 // Submission route
 Router.use("/submissions", submissionRoute);
 
@@ -110,6 +118,7 @@ Router.use("/wishlists", wishlistRoute);
 
 // Course Review route
 Router.use("/course-reviews", courseReviewRoute);
+
 // Review route
 Router.use("/reviews", reviewRoute);
 
