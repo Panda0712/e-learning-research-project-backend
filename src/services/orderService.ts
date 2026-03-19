@@ -7,6 +7,7 @@ const createOrder = async (data: {
   studentId: number;
   paymentMethod?: string;
   couponCode?: string;
+  items?: Array<{ courseId: number; quantity: number; price: number }>;
 }) => {
   try {
     // Check student exists
@@ -18,40 +19,83 @@ const createOrder = async (data: {
       throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
     }
 
-    // Get items from student's cart
-    const cart = await prisma.cart.findUnique({
-      where: { userId: data.studentId },
-      include: {
-        items: {
-          include: {
-            course: {
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                lecturerId: true,
+    let itemsToOrder: Array<{
+      courseId: number;
+      price: number;
+      lecturerId?: number;
+    }> = [];
+    let totalPrice = 0;
+
+    // Debug log
+    console.log("📋 Create Order - Request Data:", {
+      studentId: data.studentId,
+      paymentMethod: data.paymentMethod,
+      itemsCount: data.items?.length,
+      items: data.items,
+    });
+
+    // If items provided directly (for PayOS testing), use them
+    if (data.items && data.items.length > 0) {
+      console.log("✅ Using items from request body");
+      for (const item of data.items) {
+        // Verify course exists
+        const course = await prisma.course.findUnique({
+          where: { id: item.courseId, isDestroyed: false },
+        });
+
+        if (!course) {
+          throw new ApiError(
+            StatusCodes.NOT_FOUND,
+            `Course ${item.courseId} not found!`,
+          );
+        }
+
+        itemsToOrder.push({
+          courseId: item.courseId,
+          price: item.price || 0,
+          lecturerId: course.lecturerId,
+        });
+
+        totalPrice += item.price || 0;
+      }
+    } else {
+      // Otherwise, get items from student's cart (legacy behavior)
+      console.log("📦 Getting items from cart (no items in request)");
+      const cart = await prisma.cart.findUnique({
+        where: { userId: data.studentId },
+        include: {
+          items: {
+            include: {
+              course: {
+                select: {
+                  id: true,
+                  name: true,
+                  price: true,
+                  lecturerId: true,
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    if (!cart) {
-      throw new ApiError(StatusCodes.BAD_REQUEST, "Cart not found!");
+      if (!cart) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Cart not found!");
+      }
+
+      if (cart.items.length === 0) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Cart is empty!");
+      }
+
+      cart.items.forEach((item: any) => {
+        itemsToOrder.push({
+          courseId: item.courseId,
+          price: item.price || 0,
+          lecturerId: item.course.lecturerId,
+        });
+        totalPrice += item.price || 0;
+      });
     }
-
-    if (cart.items.length === 0) {
-      throw new ApiError(StatusCodes.BAD_REQUEST, "Cart is empty!");
-    }
-
-    // Calculate total price
-    let totalPrice = 0;
-    const cartItems = cart.items;
-
-    cartItems.forEach((item: any) => {
-      totalPrice += item.price || 0;
-    });
 
     // Apply coupon discount if provided
     if (data.couponCode) {
@@ -73,13 +117,14 @@ const createOrder = async (data: {
       data: {
         studentId: data.studentId,
         totalPrice,
-        paymentMethod: data.paymentMethod || "unknown",
+        paymentMethod: data.paymentMethod?.toUpperCase() || "PAYOS", // Default to PayOS
         status: "pending",
+        paymentStatus: "pending", // Trạng thái thanh toán: chưa thanh toán
+        isSuccess: false, // Đơn hàng chưa thành công
         items: {
-          create: cartItems.map((item: any) => ({
+          create: itemsToOrder.map((item) => ({
             courseId: item.courseId,
             price: item.price || 0,
-            lecturerId: item.course.lecturerId,
           })),
         },
       },
