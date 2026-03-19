@@ -499,28 +499,7 @@ model TransactionStudent {
   transaction Transaction @relation(fields: [transactionId], references: [id])
 }
 
-model LecturerProfile {
-  id                Int       @id @default(autoincrement())
-  lecturerId        Int       @unique
-  lecturerFileId    Int?      @unique
-  gender            String?
-  nationality       String?
-  professionalTitle String?
-  beginStudies      DateTime?
-  highestDegree     String?
-  totalStudents     Int?
-  totalCourses      Int?
-  avgRating         Float?
-  bio               String?
-  isActive          Boolean   @default(false)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime? @updatedAt
-  isDestroyed       Boolean   @default(false)
-
-  // relations
-  lecturer     User      @relation(fields: [lecturerId], references: [id])
-  lecturerFile Resource? @relation("LecturerProfileFile", fields: [lecturerFileId], references: [id], onDelete: SetNull)
-}
+x
 
 model LecturerPayout {
   id              Int       @id @default(autoincrement())

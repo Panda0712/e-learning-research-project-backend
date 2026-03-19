@@ -27,6 +27,7 @@ import { reviewRoute } from "./reviewRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 import { wishlistRoute } from "./wishlistRoute.js";
+import { adminInstructorRoute } from "./adminInstructorRoute.js";
 
 const Router = express.Router();
 
@@ -109,6 +110,9 @@ Router.use("/lecturer-payouts", lecturerPayoutRoute);
 
 // Lecturer Payout Account route
 Router.use("/lecturer-payout-accounts", lecturerPayoutAccountRoute);
+
+// adminIntructorRoute
+Router.use("/admin-instructor-requests", adminInstructorRoute);
 
 // Submission route
 Router.use("/submissions", submissionRoute);
