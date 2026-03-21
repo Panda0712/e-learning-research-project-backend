@@ -8,7 +8,17 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     studentId: Joi.number().required().positive(),
     paymentMethod: Joi.string().optional(),
     couponCode: Joi.string().optional(),
-  });
+    // Allow items array for PayOS payment
+    items: Joi.array()
+      .optional()
+      .items(
+        Joi.object({
+          courseId: Joi.number().required().positive(),
+          quantity: Joi.number().required().positive(),
+          price: Joi.number().required().positive(),
+        }),
+      ),
+  }).unknown(true); // Allow unknown fields
 
   try {
     await correctCondition.validateAsync(req.body, { abortEarly: false });

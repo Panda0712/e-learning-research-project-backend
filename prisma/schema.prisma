@@ -267,14 +267,20 @@ model Question {
 }
 
 model Order {
-  id            Int      @id @default(autoincrement())
-  studentId     Int
-  lecturer      String?
-  totalPrice    Float?   @default(0)
-  paymentMethod String?
-  status        String?  @default("pending")
-  createdAt     DateTime @default(now())
-  isDestroyed   Boolean  @default(false)
+  id                 Int      @id @default(autoincrement())
+  studentId          Int
+  lecturer           String?
+  totalPrice         Float?   @default(0)
+  paymentMethod      String?  @default("payos")
+  status             String?  @default("pending") // pending, processing, completed, failed, cancelled
+  paymentLinkId      String?  @unique // PayOS payment link ID
+  paymentStatus      String?  @default("pending") // pending, paid, cancelled, failed
+  checkoutUrl        String?  @db.Text // PayOS checkout URL
+  qrCode             String?  @db.Text // PayOS QR code
+  isSuccess          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime? @updatedAt
+  isDestroyed        Boolean  @default(false)
 
   // relations
   student User        @relation(fields: [studentId], references: [id])
