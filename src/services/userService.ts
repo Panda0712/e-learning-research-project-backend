@@ -556,7 +556,7 @@ const updateProfile = async (
 const registerLecturerProfile = async (
   userId: number,
   reqBody: RegisterLecturer,
-) => {
+) => {  
   try {
     const existingUser = await prisma.user.findUnique({
       where: { id: userId, isDestroyed: false },
