@@ -45,7 +45,13 @@ export type OrderMinAggregateOutputType = {
   totalPrice: number | null
   paymentMethod: string | null
   status: string | null
+  paymentLinkId: string | null
+  paymentStatus: string | null
+  checkoutUrl: string | null
+  qrCode: string | null
+  isSuccess: boolean | null
   createdAt: Date | null
+  updatedAt: Date | null
   isDestroyed: boolean | null
 }
 
@@ -56,7 +62,13 @@ export type OrderMaxAggregateOutputType = {
   totalPrice: number | null
   paymentMethod: string | null
   status: string | null
+  paymentLinkId: string | null
+  paymentStatus: string | null
+  checkoutUrl: string | null
+  qrCode: string | null
+  isSuccess: boolean | null
   createdAt: Date | null
+  updatedAt: Date | null
   isDestroyed: boolean | null
 }
 
@@ -67,7 +79,13 @@ export type OrderCountAggregateOutputType = {
   totalPrice: number
   paymentMethod: number
   status: number
+  paymentLinkId: number
+  paymentStatus: number
+  checkoutUrl: number
+  qrCode: number
+  isSuccess: number
   createdAt: number
+  updatedAt: number
   isDestroyed: number
   _all: number
 }
@@ -92,7 +110,13 @@ export type OrderMinAggregateInputType = {
   totalPrice?: true
   paymentMethod?: true
   status?: true
+  paymentLinkId?: true
+  paymentStatus?: true
+  checkoutUrl?: true
+  qrCode?: true
+  isSuccess?: true
   createdAt?: true
+  updatedAt?: true
   isDestroyed?: true
 }
 
@@ -103,7 +127,13 @@ export type OrderMaxAggregateInputType = {
   totalPrice?: true
   paymentMethod?: true
   status?: true
+  paymentLinkId?: true
+  paymentStatus?: true
+  checkoutUrl?: true
+  qrCode?: true
+  isSuccess?: true
   createdAt?: true
+  updatedAt?: true
   isDestroyed?: true
 }
 
@@ -114,7 +144,13 @@ export type OrderCountAggregateInputType = {
   totalPrice?: true
   paymentMethod?: true
   status?: true
+  paymentLinkId?: true
+  paymentStatus?: true
+  checkoutUrl?: true
+  qrCode?: true
+  isSuccess?: true
   createdAt?: true
+  updatedAt?: true
   isDestroyed?: true
   _all?: true
 }
@@ -212,7 +248,13 @@ export type OrderGroupByOutputType = {
   totalPrice: number | null
   paymentMethod: string | null
   status: string | null
+  paymentLinkId: string | null
+  paymentStatus: string | null
+  checkoutUrl: string | null
+  qrCode: string | null
+  isSuccess: boolean
   createdAt: Date
+  updatedAt: Date | null
   isDestroyed: boolean
   _count: OrderCountAggregateOutputType | null
   _avg: OrderAvgAggregateOutputType | null
@@ -246,7 +288,13 @@ export type OrderWhereInput = {
   totalPrice?: Prisma.FloatNullableFilter<"Order"> | number | null
   paymentMethod?: Prisma.StringNullableFilter<"Order"> | string | null
   status?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentLinkId?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentStatus?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  qrCode?: Prisma.StringNullableFilter<"Order"> | string | null
+  isSuccess?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Order"> | boolean
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
@@ -260,7 +308,13 @@ export type OrderOrderByWithRelationInput = {
   totalPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentLinkId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSuccess?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   student?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.OrderItemOrderByRelationAggregateInput
@@ -270,6 +324,7 @@ export type OrderOrderByWithRelationInput = {
 
 export type OrderWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  paymentLinkId?: string
   AND?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
   OR?: Prisma.OrderWhereInput[]
   NOT?: Prisma.OrderWhereInput | Prisma.OrderWhereInput[]
@@ -278,12 +333,17 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   totalPrice?: Prisma.FloatNullableFilter<"Order"> | number | null
   paymentMethod?: Prisma.StringNullableFilter<"Order"> | string | null
   status?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentStatus?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  qrCode?: Prisma.StringNullableFilter<"Order"> | string | null
+  isSuccess?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Order"> | boolean
   student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.OrderItemListRelationFilter
   revenue?: Prisma.XOR<Prisma.RevenueNullableScalarRelationFilter, Prisma.RevenueWhereInput> | null
-}, "id">
+}, "id" | "paymentLinkId">
 
 export type OrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -292,7 +352,13 @@ export type OrderOrderByWithAggregationInput = {
   totalPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentLinkId?: Prisma.SortOrderInput | Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  checkoutUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  qrCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isSuccess?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
   _avg?: Prisma.OrderAvgOrderByAggregateInput
@@ -311,7 +377,13 @@ export type OrderScalarWhereWithAggregatesInput = {
   totalPrice?: Prisma.FloatNullableWithAggregatesFilter<"Order"> | number | null
   paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   status?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  paymentLinkId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  paymentStatus?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  checkoutUrl?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  qrCode?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  isSuccess?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"Order"> | boolean
 }
 
@@ -320,7 +392,13 @@ export type OrderCreateInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   student: Prisma.UserCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
@@ -334,7 +412,13 @@ export type OrderUncheckedCreateInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
@@ -345,7 +429,13 @@ export type OrderUpdateInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
@@ -359,7 +449,13 @@ export type OrderUncheckedUpdateInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
@@ -372,7 +468,13 @@ export type OrderCreateManyInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
 }
 
@@ -381,7 +483,13 @@ export type OrderUpdateManyMutationInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -392,7 +500,13 @@ export type OrderUncheckedUpdateManyInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -419,7 +533,13 @@ export type OrderCountOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentLinkId?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  checkoutUrl?: Prisma.SortOrder
+  qrCode?: Prisma.SortOrder
+  isSuccess?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -436,7 +556,13 @@ export type OrderMaxOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentLinkId?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  checkoutUrl?: Prisma.SortOrder
+  qrCode?: Prisma.SortOrder
+  isSuccess?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -447,7 +573,13 @@ export type OrderMinOrderByAggregateInput = {
   totalPrice?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentLinkId?: Prisma.SortOrder
+  paymentStatus?: Prisma.SortOrder
+  checkoutUrl?: Prisma.SortOrder
+  qrCode?: Prisma.SortOrder
+  isSuccess?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
 }
 
@@ -545,7 +677,13 @@ export type OrderCreateWithoutStudentInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
   revenue?: Prisma.RevenueCreateNestedOneWithoutOrderInput
@@ -557,7 +695,13 @@ export type OrderUncheckedCreateWithoutStudentInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
   revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
@@ -599,7 +743,13 @@ export type OrderScalarWhereInput = {
   totalPrice?: Prisma.FloatNullableFilter<"Order"> | number | null
   paymentMethod?: Prisma.StringNullableFilter<"Order"> | string | null
   status?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentLinkId?: Prisma.StringNullableFilter<"Order"> | string | null
+  paymentStatus?: Prisma.StringNullableFilter<"Order"> | string | null
+  checkoutUrl?: Prisma.StringNullableFilter<"Order"> | string | null
+  qrCode?: Prisma.StringNullableFilter<"Order"> | string | null
+  isSuccess?: Prisma.BoolFilter<"Order"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Order"> | boolean
 }
 
@@ -608,7 +758,13 @@ export type OrderCreateWithoutItemsInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   student: Prisma.UserCreateNestedOneWithoutOrdersInput
   revenue?: Prisma.RevenueCreateNestedOneWithoutOrderInput
@@ -621,7 +777,13 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   revenue?: Prisma.RevenueUncheckedCreateNestedOneWithoutOrderInput
 }
@@ -647,7 +809,13 @@ export type OrderUpdateWithoutItemsInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   revenue?: Prisma.RevenueUpdateOneWithoutOrderNestedInput
@@ -660,7 +828,13 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
 }
@@ -670,7 +844,13 @@ export type OrderCreateWithoutRevenueInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   student: Prisma.UserCreateNestedOneWithoutOrdersInput
   items?: Prisma.OrderItemCreateNestedManyWithoutOrderInput
@@ -683,7 +863,13 @@ export type OrderUncheckedCreateWithoutRevenueInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
   items?: Prisma.OrderItemUncheckedCreateNestedManyWithoutOrderInput
 }
@@ -709,7 +895,13 @@ export type OrderUpdateWithoutRevenueInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   student?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
@@ -722,7 +914,13 @@ export type OrderUncheckedUpdateWithoutRevenueInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
 }
@@ -733,7 +931,13 @@ export type OrderCreateManyStudentInput = {
   totalPrice?: number | null
   paymentMethod?: string | null
   status?: string | null
+  paymentLinkId?: string | null
+  paymentStatus?: string | null
+  checkoutUrl?: string | null
+  qrCode?: string | null
+  isSuccess?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string | null
   isDestroyed?: boolean
 }
 
@@ -742,7 +946,13 @@ export type OrderUpdateWithoutStudentInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUpdateManyWithoutOrderNestedInput
   revenue?: Prisma.RevenueUpdateOneWithoutOrderNestedInput
@@ -754,7 +964,13 @@ export type OrderUncheckedUpdateWithoutStudentInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   items?: Prisma.OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   revenue?: Prisma.RevenueUncheckedUpdateOneWithoutOrderNestedInput
@@ -766,7 +982,13 @@ export type OrderUncheckedUpdateManyWithoutStudentInput = {
   totalPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentLinkId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  checkoutUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qrCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isSuccess?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -808,7 +1030,13 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   totalPrice?: boolean
   paymentMethod?: boolean
   status?: boolean
+  paymentLinkId?: boolean
+  paymentStatus?: boolean
+  checkoutUrl?: boolean
+  qrCode?: boolean
+  isSuccess?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isDestroyed?: boolean
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
@@ -825,11 +1053,17 @@ export type OrderSelectScalar = {
   totalPrice?: boolean
   paymentMethod?: boolean
   status?: boolean
+  paymentLinkId?: boolean
+  paymentStatus?: boolean
+  checkoutUrl?: boolean
+  qrCode?: boolean
+  isSuccess?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "lecturer" | "totalPrice" | "paymentMethod" | "status" | "createdAt" | "isDestroyed", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "lecturer" | "totalPrice" | "paymentMethod" | "status" | "paymentLinkId" | "paymentStatus" | "checkoutUrl" | "qrCode" | "isSuccess" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
@@ -851,7 +1085,13 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     totalPrice: number | null
     paymentMethod: string | null
     status: string | null
+    paymentLinkId: string | null
+    paymentStatus: string | null
+    checkoutUrl: string | null
+    qrCode: string | null
+    isSuccess: boolean
     createdAt: Date
+    updatedAt: Date | null
     isDestroyed: boolean
   }, ExtArgs["result"]["order"]>
   composites: {}
@@ -1231,7 +1471,13 @@ export interface OrderFieldRefs {
   readonly totalPrice: Prisma.FieldRef<"Order", 'Float'>
   readonly paymentMethod: Prisma.FieldRef<"Order", 'String'>
   readonly status: Prisma.FieldRef<"Order", 'String'>
+  readonly paymentLinkId: Prisma.FieldRef<"Order", 'String'>
+  readonly paymentStatus: Prisma.FieldRef<"Order", 'String'>
+  readonly checkoutUrl: Prisma.FieldRef<"Order", 'String'>
+  readonly qrCode: Prisma.FieldRef<"Order", 'String'>
+  readonly isSuccess: Prisma.FieldRef<"Order", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Order", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Order", 'Boolean'>
 }
     

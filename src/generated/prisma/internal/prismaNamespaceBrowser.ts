@@ -317,7 +317,13 @@ export const OrderScalarFieldEnum = {
   totalPrice: 'totalPrice',
   paymentMethod: 'paymentMethod',
   status: 'status',
+  paymentLinkId: 'paymentLinkId',
+  paymentStatus: 'paymentStatus',
+  checkoutUrl: 'checkoutUrl',
+  qrCode: 'qrCode',
+  isSuccess: 'isSuccess',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
 } as const
 
@@ -820,7 +826,11 @@ export type QuestionOrderByRelevanceFieldEnum = (typeof QuestionOrderByRelevance
 export const OrderOrderByRelevanceFieldEnum = {
   lecturer: 'lecturer',
   paymentMethod: 'paymentMethod',
-  status: 'status'
+  status: 'status',
+  paymentLinkId: 'paymentLinkId',
+  paymentStatus: 'paymentStatus',
+  checkoutUrl: 'checkoutUrl',
+  qrCode: 'qrCode'
 } as const
 
 export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
