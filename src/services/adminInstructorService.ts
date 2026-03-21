@@ -28,13 +28,11 @@ const approveRequest = async (id: number) => {
     }
 
     return await prisma.$transaction(async (tx) => {
-      // 1. Kích hoạt hồ sơ
       await tx.lecturerProfile.update({
         where: { id },
         data: { isActive: true },
       });
 
-      // 2. Thăng cấp User thành giảng viên (Role ở BE bạn đang dùng chữ thường)
       await tx.user.update({
         where: { id: profile.lecturerId },
         data: { role: "lecturer" }, 
@@ -57,7 +55,6 @@ const rejectRequest = async (id: number) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer profile not found!");
     }
 
-    // Từ chối thì cho isDestroyed = true
     await prisma.lecturerProfile.update({
       where: { id },
       data: { isDestroyed: true },
