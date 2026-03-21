@@ -154,8 +154,63 @@ const getStudentTransactionsByCourseId = async (courseId: number) => {
   }
 };
 
+const getAllTransactions = async () => {
+  try {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        isDestroyed: false,
+      },
+      include: {
+        user: true, 
+        studentTransactions: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const courseIds = transactions.flatMap(t =>
+      t.studentTransactions.map(st => st.courseId).filter(id => id !== null)
+    ) as number[];
+
+    const courses = await prisma.course.findMany({
+      where: { id: { in: courseIds } },
+      include: { lecturer: true }
+    });
+
+    const courseMap = new Map(courses.map(c => [c.id, c]));
+
+    const result = transactions.map(t => ({
+      id: t.id,
+      userId: t.userId,
+      userEmail: t.user?.email,
+      userFullName: `${t.user?.lastName || ''} ${t.user?.firstName || ''}`.trim(),
+      amount: t.amount,
+      paymentMethod: t.paymentMethod,
+      status: t.status,
+      gatewayReference: t.gatewayReference,
+      createdAt: t.createdAt,      
+      items: t.studentTransactions.map(st => {
+        const course = st.courseId ? courseMap.get(st.courseId) : null;
+        return {
+          courseId: st.courseId,
+          courseTitle: course?.name || "Khóa học đã xóa",
+          instructorName: course ? `${course.lecturer?.lastName || ''} ${course.lecturer?.firstName || ''}`.trim() : "N/A",
+          discountAmount: st.discountAmount,
+          discountCode: st.discountCode
+        };
+      })
+    }));
+
+    return result || [];
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const transactionService = {
   createTransaction,
   getHistoryByUserId,
   getStudentTransactionsByCourseId,
+  getAllTransactions,
 };
