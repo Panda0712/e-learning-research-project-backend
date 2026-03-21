@@ -34,7 +34,20 @@ const getEnrollmentsByStudentId = async (
   }
 };
 
+const getStudentsByLecturerId = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { lecturerId } = req.params;
+    
+    const students = await enrollmentService.getStudentsByLecturerId(Number(lecturerId));
+    
+    res.status(StatusCodes.OK).json(students);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const enrollmentController = {
   createEnrollment,
   getEnrollmentsByStudentId,
+  getStudentsByLecturerId,
 };
