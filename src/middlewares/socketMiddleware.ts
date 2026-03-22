@@ -12,11 +12,23 @@ type JwtDecoded = {
   kid: string;
 };
 
+const parseCookieToken = (cookieHeader?: string): string | null => {
+  if (!cookieHeader) return null;
+
+  const cookies = cookieHeader.split(";").map((item) => item.trim());
+  const found = cookies.find((item) => item.startsWith("accessToken="));
+  if (!found) return null;
+
+  return decodeURIComponent(found.replace("accessToken=", ""));
+};
+
 export const socketAuthMiddleware = async (
   socket: AuthenticatedSocket,
   next: (err?: Error) => void,
 ) => {
-  const accessToken = socket.handshake.auth?.token;
+  const fromAuth = socket.handshake.auth?.token;
+  const fromCookie = parseCookieToken(socket.handshake.headers.cookie);
+  const accessToken = fromAuth || fromCookie;
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
@@ -24,31 +36,25 @@ export const socketAuthMiddleware = async (
   }
 
   try {
-    // decode token
     const decoded = authUtils.decodeToken(accessToken);
 
-    if (!decoded) {
-      next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
-      return;
-    }
-    if (!decoded.kid) {
+    if (!decoded || typeof decoded === "string" || !decoded.kid) {
       next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
       return;
     }
 
-    // check kid and look up key token model
     const keyToken = await prisma.keyToken.findFirst({
       where: { kid: decoded.kid, isDestroyed: false },
     });
+
     if (!keyToken) {
       next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
       return;
     }
 
-    // verify accessToken
     const jwtDecoded = await authUtils.verifyToken(
       accessToken,
-      keyToken?.publicKey,
+      keyToken.publicKey,
     );
 
     const userId = (jwtDecoded as JwtDecoded)?.id;
@@ -63,9 +69,8 @@ export const socketAuthMiddleware = async (
     }
 
     socket.user = pickUser(user)!;
-
     next();
-  } catch (error) {
+  } catch {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
   }
 };

@@ -293,18 +293,21 @@ const createConversation = async (
     return createdConversation;
   });
 
-  const payload = buildConversationPayload(
+  const senderPayload = buildConversationPayload(
     conversation as ConversationWithRelations,
     currentUserId,
   );
 
-  const targetUserId = currentUserId === studentId ? lecturerId : studentId;
+  const recipientPayload = buildConversationPayload(
+    conversation as ConversationWithRelations,
+    recipientId,
+  );
 
-  getSocketIO().to(`user:${targetUserId}`).emit("new-conversation", {
-    conversation: payload,
+  getSocketIO().to(`user:${recipientId}`).emit("new-conversation", {
+    conversation: recipientPayload,
   });
 
-  return { conversation: payload };
+  return { conversation: senderPayload };
 };
 
 const getConversations = async (currentUserId: number) => {
@@ -343,7 +346,7 @@ const getMessages = async (
     where: {
       conversationId,
       isDestroyed: false,
-      ...(hasValidCursor ? { createdAt: { lt: cursorDate! } } : {}),
+      ...(hasValidCursor ? { createdAt: { lt: cursorDate } } : {}),
     },
     include: {
       sender: {
