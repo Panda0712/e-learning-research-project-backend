@@ -58,7 +58,8 @@ const createCourseReview = async (data: {
       data: {
         courseId: data.courseId,
         studentId: data.studentId,
-        studentName: data.studentName || `${student.firstName} ${student.lastName}`,
+        studentName:
+          data.studentName || `${student.firstName} ${student.lastName}`,
         studentAvatar: data.studentAvatar ?? null,
         rating: data.rating,
         content: data.content ?? null,
@@ -208,7 +209,7 @@ const getReviewsByCourseId = async (params: {
       where.rating = params.rating;
     }
 
-    const [reviews, total] = await Promise.all([
+    const [reviews, total, allForStats] = await Promise.all([
       prisma.courseReview.findMany({
         where,
         skip,
@@ -233,17 +234,24 @@ const getReviewsByCourseId = async (params: {
         },
       }),
       prisma.courseReview.count({ where }),
+      prisma.courseReview.findMany({
+        where: { courseId: params.courseId, isDestroyed: false },
+        select: { rating: true },
+      }),
     ]);
 
-    // Calculate average rating
-    const allReviews = await prisma.courseReview.findMany({
-      where: { courseId: params.courseId, isDestroyed: false },
-      select: { rating: true },
-    });
+    const statisticsData = {
+      totalReviews: allForStats.length,
+      oneStar: allForStats.filter((r) => r.rating === 1).length,
+      twoStar: allForStats.filter((r) => r.rating === 2).length,
+      threeStar: allForStats.filter((r) => r.rating === 3).length,
+      fourStar: allForStats.filter((r) => r.rating === 4).length,
+      fiveStar: allForStats.filter((r) => r.rating === 5).length,
+    };
 
     const averageRating =
-      allReviews.length > 0
-        ? allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length
+      allForStats.length > 0
+        ? allForStats.reduce((sum, r) => sum + r.rating, 0) / allForStats.length
         : 0;
 
     return {
@@ -256,7 +264,7 @@ const getReviewsByCourseId = async (params: {
       },
       statistics: {
         averageRating: Number(averageRating.toFixed(2)),
-        totalReviews: allReviews.length,
+        ...statisticsData,
       },
     };
   } catch (error) {

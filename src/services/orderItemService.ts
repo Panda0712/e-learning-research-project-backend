@@ -309,6 +309,70 @@ const updateOrderTotalPrice = async (orderId: number) => {
   }
 };
 
+const getCommissionsByLecturerAndCourseId = async (
+  lecturerId: number,
+  courseId: number,
+  query: { page: number; limit: number; q: string; period: string },
+) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false },
+  });
+
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  if (course.lecturerId !== lecturerId) {
+    throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed.");
+  }
+
+  const skip = (query.page - 1) * query.limit;
+  const rows = await prisma.orderItem.findMany({
+    where: {
+      courseId,
+      lecturerId,
+      isDestroyed: false,
+      order: { isDestroyed: false },
+    },
+    include: {
+      order: { include: { student: true } },
+    },
+    orderBy: { createdAt: "desc" },
+    skip,
+    take: query.limit,
+  });
+
+  const mapped = rows
+    .filter((r) => {
+      const q = query.q.trim().toLowerCase();
+      if (!q) return true;
+      const name =
+        `${r.order.student.firstName} ${r.order.student.lastName}`.toLowerCase();
+      return name.includes(q);
+    })
+    .map((r) => {
+      const price = Number(r.price || 0);
+      return {
+        id: r.id,
+        customerName:
+          `${r.order.student.firstName} ${r.order.student.lastName}`.trim(),
+        date: r.createdAt,
+        status: r.order.paymentStatus === "paid" ? "received" : "pending",
+        price,
+        commission: price * 0.95,
+      };
+    });
+
+  const summary = {
+    totalCommission: mapped.reduce((s, i) => s + i.commission, 0),
+    received: mapped
+      .filter((i) => i.status === "received")
+      .reduce((s, i) => s + i.commission, 0),
+    pending: mapped
+      .filter((i) => i.status === "pending")
+      .reduce((s, i) => s + i.commission, 0),
+  };
+
+  return { summary, data: mapped };
+};
+
 export const orderItemService = {
   addItemToOrder,
   getOrderItemsByOrderId,
@@ -316,4 +380,5 @@ export const orderItemService = {
   removeItemFromOrder,
   updateOrderItem,
   deleteOrderItem,
+  getCommissionsByLecturerAndCourseId,
 };

@@ -3028,6 +3028,7 @@ export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof t
 
 export const CouponScalarFieldEnum = {
   id: 'id',
+  courseId: 'courseId',
   name: 'name',
   description: 'description',
   status: 'status',
