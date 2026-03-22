@@ -154,6 +154,14 @@ const createCoupon = async (data: any) => {
       throw new ApiError(StatusCodes.CONFLICT, "Coupon code already exists!");
     }
 
+    if (data.courseId) {
+      const course = await prisma.course.findUnique({
+        where: { id: data.courseId, isDestroyed: false },
+      });
+      if (!course)
+        throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
     // check if category exists
     if (data.categoryId) {
       const category = await prisma.couponCategory.findUnique({
@@ -167,18 +175,19 @@ const createCoupon = async (data: any) => {
 
     const newCoupon = await prisma.coupon.create({
       data: {
+        courseId: data.courseId ?? null,
         name: data.name,
         description: data.description || null,
-        status: data.status || "active",
+        status: data.status,
         customerGroup: data.customerGroup || null,
         code: data.code,
         categoryId: data.categoryId || null,
         quantity: data.quantity || null,
         usesPerCustomer: data.usesPerCustomer || null,
-        priority: data.priority || "normal",
+        priority: data.priority || null,
         actions: data.actions || null,
-        type: data.type || "percentage", // percentage | fixed
-        amount: data.amount || 0,
+        type: data.type,
+        amount: data.amount,
         startingDate: data.startingDate || null,
         startingTime: data.startingTime || null,
         endingDate: data.endingDate || null,
@@ -200,6 +209,7 @@ const getAllCoupons = async (filters: {
   page?: number;
   limit?: number;
   status?: string;
+  courseId?: number;
 }) => {
   try {
     const page = filters.page || DEFAULT_PAGE;
@@ -208,9 +218,9 @@ const getAllCoupons = async (filters: {
 
     const whereCondition: any = { isDestroyed: false };
 
-    if (filters.status) {
+    if (filters.status && filters.status !== "all")
       whereCondition.status = filters.status;
-    }
+    if (filters.courseId) whereCondition.courseId = filters.courseId;
 
     const total = await prisma.coupon.count({
       where: whereCondition,
@@ -227,7 +237,7 @@ const getAllCoupons = async (filters: {
     });
 
     return {
-      data: coupons,
+      data: coupons.map((coupon) => ({ ...coupon, redemptions: 0 })),
       pagination: {
         page,
         limit,
@@ -298,12 +308,20 @@ const updateCoupon = async (id: number, data: any) => {
     // check code uniqueness if code is being updated
     if (data.code && data.code !== coupon.code) {
       const existingCoupon = await prisma.coupon.findUnique({
-        where: { code: data.code },
+        where: { code: data.code, isDestroyed: false },
       });
 
       if (existingCoupon) {
         throw new ApiError(StatusCodes.CONFLICT, "Coupon code already exists!");
       }
+    }
+
+    if (data.courseId) {
+      const course = await prisma.course.findUnique({
+        where: { id: data.courseId, isDestroyed: false },
+      });
+      if (!course)
+        throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
     }
 
     // check category existence if categoryId is provided
@@ -320,6 +338,7 @@ const updateCoupon = async (id: number, data: any) => {
     const updated = await prisma.coupon.update({
       where: { id },
       data: {
+        courseId: data.courseId ?? coupon.courseId,
         name: data.name || coupon.name,
         description:
           data.description !== undefined
