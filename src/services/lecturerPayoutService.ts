@@ -43,12 +43,12 @@ const createLecturerPayout = async (data: {
 
     const newPayout = await prisma.lecturerPayout.create({
       data: {
-        transactionId: data.transactionId,
+        transactionId: data.transactionId ?? null,
         lecturerId: data.lecturerId,
-        payoutAccountId: data.payoutAccountId,
-        currency: data.currency,
-        amount: data.amount,
-        payoutMethod: data.payoutMethod,
+        payoutAccountId: data.payoutAccountId ?? null,
+        currency: data.currency ?? null,
+        amount: data.amount ?? null,
+        payoutMethod: data.payoutMethod ?? null,
         status: data.status || "success",
       },
       include: {
@@ -246,12 +246,11 @@ const updateLecturerPayout = async (
     const updatedPayout = await prisma.lecturerPayout.update({
       where: { id },
       data: {
-        transactionId: data.transactionId,
-        payoutAccountId: data.payoutAccountId,
-        currency: data.currency,
-        amount: data.amount,
-        payoutMethod: data.payoutMethod,
-        status: data.status,
+        transactionId: data.transactionId ?? null,
+        payoutAccountId: data.payoutAccountId ?? null,
+        currency: data.currency ?? null,
+        amount: data.amount ?? null,
+        payoutMethod: data.payoutMethod ?? null,
       },
       include: {
         lecturer: {

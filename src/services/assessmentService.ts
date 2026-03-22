@@ -142,6 +142,34 @@ const deleteAssessment = async (id: number) => {
   });
 };
 
+const updateAssessmentStats = async (assessmentId: number) => {
+  try {
+    const submissions = await prisma.submission.findMany({
+      where: {
+        assessmentId: assessmentId,
+        isDestroyed: false,
+      },
+    });
+
+    const totalSubmissions = submissions.length;
+    const averageScore =
+      totalSubmissions > 0
+        ? submissions.reduce((acc, sub) => acc + (sub.score || 0), 0) /
+          totalSubmissions
+        : 0;
+
+    await prisma.assessment.update({
+      where: { id: assessmentId },
+      data: {
+        totalSubmissions,
+        averageScore,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const assessmentService = {
   createAssessment,
   getAssessmentsForLecturer,
@@ -150,4 +178,5 @@ export const assessmentService = {
   updateAssessment,
   updateFeedback,
   deleteAssessment,
+  updateAssessmentStats,
 };

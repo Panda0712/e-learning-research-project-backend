@@ -25,7 +25,7 @@ export const socketAuthMiddleware = async (
 
   try {
     // decode token
-    const decoded = authUtils.decodeToken(accessToken);
+    const decoded = authUtils.decodeToken(accessToken) as any;
 
     if (!decoded) {
       next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
