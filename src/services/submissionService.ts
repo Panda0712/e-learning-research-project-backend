@@ -315,6 +315,8 @@ const updateSubmission = async (
       },
     });
 
+    await assessmentService.updateAssessmentStats(updatedSubmission.assessmentId);
+
     return updatedSubmission;
   } catch (error) {
     throw error;
