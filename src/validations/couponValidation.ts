@@ -96,22 +96,23 @@ const createCoupon = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    name: Joi.string().required().min(3).max(255),
-    description: Joi.string().optional(),
-    status: Joi.string().optional().valid("active", "inactive", "draft"),
-    customerGroup: Joi.string().optional(),
-    code: Joi.string().required().min(3).max(255),
-    categoryId: Joi.number().optional().positive(),
-    quantity: Joi.number().optional().positive(),
-    usesPerCustomer: Joi.number().optional().positive(),
-    priority: Joi.string().optional().valid("low", "normal", "high"),
-    actions: Joi.string().optional(),
-    type: Joi.string().required().valid("percentage", "fixed"),
-    amount: Joi.number().required().positive(),
+    courseId: Joi.number().integer().positive().optional(),
+    name: Joi.string().required().min(2).max(100).trim().strict(),
+    description: Joi.string().allow("").optional(),
+    status: Joi.string().valid("active", "expired", "scheduled").required(),
+    customerGroup: Joi.string().allow("").optional(),
+    code: Joi.string().required().min(2).max(100).trim().strict(),
+    categoryId: Joi.number().integer().positive().optional(),
+    quantity: Joi.number().integer().optional().min(0),
+    usesPerCustomer: Joi.number().integer().optional().min(0),
+    priority: Joi.string().allow("").optional(),
+    actions: Joi.string().allow("").optional(),
+    type: Joi.string().valid("fixed", "percentage").required(),
+    amount: Joi.number().required().min(0),
     startingDate: Joi.date().optional(),
-    startingTime: Joi.string().optional(),
+    startingTime: Joi.string().allow("").optional(),
     endingDate: Joi.date().optional(),
-    endingTime: Joi.string().optional(),
+    endingTime: Joi.string().allow("").optional(),
     isUnlimited: Joi.boolean().optional(),
   });
 
@@ -173,28 +174,32 @@ const updateCoupon = async (
   });
 
   const bodyCondition = Joi.object({
-    name: Joi.string().optional().min(3).max(255),
-    description: Joi.string().optional(),
-    status: Joi.string().optional().valid("active", "inactive", "draft"),
-    customerGroup: Joi.string().optional(),
-    code: Joi.string().optional().min(3).max(255),
-    categoryId: Joi.number().optional().positive(),
-    quantity: Joi.number().optional().positive(),
-    usesPerCustomer: Joi.number().optional().positive(),
-    priority: Joi.string().optional().valid("low", "normal", "high"),
-    actions: Joi.string().optional(),
-    type: Joi.string().optional().valid("percentage", "fixed"),
-    amount: Joi.number().optional().positive(),
-    startingDate: Joi.date().optional(),
-    startingTime: Joi.string().optional(),
-    endingDate: Joi.date().optional(),
-    endingTime: Joi.string().optional(),
-    isUnlimited: Joi.boolean().optional(),
+    courseId: Joi.number().integer().positive().optional(),
+    name: Joi.string().min(2).max(100).trim().strict(),
+    description: Joi.string().allow(""),
+    status: Joi.string().valid("active", "expired", "scheduled"),
+    customerGroup: Joi.string().allow(""),
+    code: Joi.string().min(2).max(100).trim().strict(),
+    categoryId: Joi.number().integer().positive(),
+    quantity: Joi.number().integer().min(0),
+    usesPerCustomer: Joi.number().integer().min(0),
+    priority: Joi.string().allow(""),
+    actions: Joi.string().allow(""),
+    type: Joi.string().valid("fixed", "percentage"),
+    amount: Joi.number().min(0),
+    startingDate: Joi.date(),
+    startingTime: Joi.string().allow(""),
+    endingDate: Joi.date(),
+    endingTime: Joi.string().allow(""),
+    isUnlimited: Joi.boolean(),
   });
 
   try {
     await paramCondition.validateAsync(req.params, { abortEarly: false });
-    await bodyCondition.validateAsync(req.body, { abortEarly: false });
+    await bodyCondition.validateAsync(req.body, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
     next();
   } catch (error: any) {
     next(
