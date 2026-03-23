@@ -23,6 +23,7 @@ class KeyTokenService {
       update: {
         publicKey,
         privateKey,
+        kid,
         refreshToken,
         refreshTokenUsed: existingKeyToken?.refreshTokenUsed ?? [],
       },

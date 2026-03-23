@@ -20,11 +20,15 @@ const isAuthorized = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const accessToken = req.cookies?.accessToken;
+  const cookieToken = req.cookies?.accessToken;
+  const authHeader = req.headers?.authorization;
+  const bearerToken = authHeader?.startsWith("Bearer ")
+    ? authHeader.slice(7)
+    : undefined;
+  const accessToken = cookieToken || bearerToken;
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
-    console.log("accessToken");
     return;
   }
 

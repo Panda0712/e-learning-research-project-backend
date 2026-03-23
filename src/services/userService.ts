@@ -723,6 +723,198 @@ const updateUserDocument = async (id: number, data: any) => {
   });
 };
 
+const getAdminUsers = async ({
+  page,
+  itemsPerPage,
+  role,
+}: {
+  page: number;
+  itemsPerPage: number;
+  role?: string;
+}) => {
+  const safePage = Number.isFinite(page) && page > 0 ? page : 1;
+  const safeItemsPerPage =
+    Number.isFinite(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 10;
+
+  const roleFilter =
+    role && ["lecturer", "student"].includes(role.toLowerCase())
+      ? role.toLowerCase()
+      : undefined;
+
+  const where = {
+    isDestroyed: false,
+    ...(roleFilter ? { role: roleFilter } : { role: { in: ["lecturer", "student"] } }),
+  };
+
+  const [users, totalUsers] = await Promise.all([
+    prisma.user.findMany({
+      where,
+      include: {
+        avatar: { select: { fileUrl: true } },
+        _count: {
+          select: {
+            courses: true,
+            enrollments: true,
+            transactions: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      skip: (safePage - 1) * safeItemsPerPage,
+      take: safeItemsPerPage,
+    }),
+    prisma.user.count({ where }),
+  ]);
+
+  return {
+    users: users.map((user) => ({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      dateOfBirth: user.dateOfBirth,
+      role: user.role,
+      isVerified: user.isVerified,
+      isBlocked: !user.isVerified,
+      createdAt: user.createdAt,
+      avatar: user.avatar,
+      totalCourses: user._count.courses,
+      totalEnrollments: user._count.enrollments,
+      totalTransactions: user._count.transactions,
+    })),
+    totalUsers,
+    page: safePage,
+    itemsPerPage: safeItemsPerPage,
+    totalPages: Math.max(1, Math.ceil(totalUsers / safeItemsPerPage)),
+  };
+};
+
+const getAdminUserDetail = async (userId: number) => {
+  const user = await prisma.user.findFirst({
+    where: { id: userId, isDestroyed: false },
+    include: {
+      avatar: { select: { fileUrl: true } },
+      lecturerProfile: true,
+    },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  const [courses, enrolledCourses, transactions] = await Promise.all([
+    prisma.course.findMany({
+      where: { lecturerId: user.id, isDestroyed: false },
+      select: {
+        id: true,
+        name: true,
+        status: true,
+        price: true,
+        createdAt: true,
+        totalStudents: true,
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.enrollment.findMany({
+      where: { studentId: user.id, isDestroyed: false },
+      select: {
+        id: true,
+        status: true,
+        progress: true,
+        createdAt: true,
+        lastAccessedAt: true,
+        course: {
+          select: {
+            id: true,
+            name: true,
+            status: true,
+            price: true,
+            lecturerName: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.transaction.findMany({
+      where: { userId: user.id, isDestroyed: false },
+      select: {
+        id: true,
+        amount: true,
+        paymentMethod: true,
+        status: true,
+        gatewayReference: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  return {
+    profile: {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      dateOfBirth: user.dateOfBirth,
+      role: user.role,
+      createdAt: user.createdAt,
+      isVerified: user.isVerified,
+      isBlocked: !user.isVerified,
+      avatar: user.avatar,
+      lecturerProfile: user.lecturerProfile,
+    },
+    courses,
+    enrolledCourses,
+    transactions,
+  };
+};
+
+const blockUser = async (userId: number, blocked: boolean) => {
+  const user = await prisma.user.findFirst({
+    where: { id: userId, isDestroyed: false },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { isVerified: !blocked },
+  });
+
+  return {
+    message: blocked ? "User blocked successfully!" : "User unblocked successfully!",
+    user: {
+      id: updatedUser.id,
+      role: updatedUser.role,
+      isBlocked: !updatedUser.isVerified,
+    },
+  };
+};
+
+const deleteUser = async (userId: number) => {
+  const user = await prisma.user.findFirst({
+    where: { id: userId, isDestroyed: false },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { isDestroyed: true },
+  });
+
+  return {
+    message: "Deleted user successfully!",
+    userId,
+  };
+};
+
 export const userService = {
   register,
   verifyAccount,
@@ -740,4 +932,8 @@ export const userService = {
   createUserDocument,
   updateUserDocument,
   facebookAuthHandler,
+  getAdminUsers,
+  getAdminUserDetail,
+  blockUser,
+  deleteUser,
 };
