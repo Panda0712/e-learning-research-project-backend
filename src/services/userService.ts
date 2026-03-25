@@ -17,6 +17,43 @@ import { v4 as uuidV4 } from "uuid";
 import KeyTokenService from "./keyTokenService.js";
 import { resourceService } from "./resourceService.js";
 
+const issueAuthSession = async (user: {
+  id: number;
+  email: string;
+  role: string;
+}) => {
+  // generate public and private key for tokens
+  const publicKey = crypto.randomBytes(64).toString("hex");
+  const privateKey = crypto.randomBytes(64).toString("hex");
+  const kid = uuidV4();
+
+  const tokensPair = (await authUtils.createTokenPair(
+    {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      kid,
+    },
+    publicKey,
+    privateKey,
+  )) as { refreshToken: string; accessToken: string };
+
+  // create key token
+  await KeyTokenService.createKeyToken({
+    userId: user.id,
+    refreshToken: tokensPair.refreshToken,
+    publicKey,
+    privateKey,
+    kid,
+  });
+
+  return {
+    refreshToken: tokensPair.refreshToken,
+    accessToken: tokensPair.accessToken,
+    kid,
+  };
+};
+
 const handleRefreshToken = async ({
   refreshToken,
   user,
@@ -31,9 +68,8 @@ const handleRefreshToken = async ({
       keyStore || (await KeyTokenService.findByRefreshToken(refreshToken));
 
     if (!resolvedKeyStore) {
-      const usedTokenStore = await KeyTokenService.findByRefreshTokenUsed(
-        refreshToken,
-      );
+      const usedTokenStore =
+        await KeyTokenService.findByRefreshTokenUsed(refreshToken);
 
       if (usedTokenStore) {
         await KeyTokenService.deleteKeyById(usedTokenStore.userId);
@@ -154,20 +190,20 @@ const register = async (reqBody: {
         );
       }
 
-//       // send verification email to user
-//       const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
-//       const customSubject = "ADMIN EduLearn: Please verify your email!";
-//       const htmlContent = `
-//   <h3>This is verification email link:</h3>
-//   <h3>${verificationLink}</h3>
-//   <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
-// `;
+      // send verification email to user
+      const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const customSubject = "ADMIN EduLearn: Please verify your email!";
+      const htmlContent = `
+        <h3>This is verification email link:</h3>
+        <h3>${verificationLink}</h3>
+        <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+      `;
 
-//       await BrevoProvider.sendEmail({
-//         recipientEmail: getNewUser.email,
-//         subject: customSubject,
-//         htmlContent,
-//       });
+      await BrevoProvider.sendEmail({
+        recipientEmail: getNewUser.email,
+        subject: customSubject,
+        htmlContent,
+      });
 
       // return data
       return pickUser(getNewUser);
@@ -218,6 +254,10 @@ const logout = async ({ keyStore }: { keyStore: KeyStore }) => {
   return delKey;
 };
 
+const logoutByUserId = async (userId: number) => {
+  return await KeyTokenService.deleteKeyById(userId);
+};
+
 const login = async (reqBody: { email: string; password: string }) => {
   try {
     // check user existence
@@ -225,8 +265,16 @@ const login = async (reqBody: { email: string; password: string }) => {
       where: { email: reqBody.email, isDestroyed: false },
       include: { avatar: { select: { fileUrl: true } } },
     });
+
     if (!checkUser) {
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+    }
+
+    if (!checkUser.isVerified) {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Your account is not verified yet! Please verify your email first.",
+      );
     }
 
     // check password match
@@ -401,66 +449,54 @@ const facebookAuthHandler = async (accessToken: string) => {
       );
     }
 
-    // check account existence
-    const checkUser = await prisma.user.findUnique({
-      where: { email, isDestroyed: false },
-    });
-    if (checkUser) {
-      throw new ApiError(StatusCodes.CONFLICT, "User already exists!");
+    if (!email) {
+      throw new ApiError(
+        StatusCodes.BAD_REQUEST,
+        "Facebook account does not provide email. Please use another login method.",
+      );
     }
 
-    // create password
-    const randomPassword = crypto.randomBytes(16).toString("hex");
-    const hashedPassword = await bcrypt.hash(randomPassword, 10);
-
-    // format first name and last name
-    const formattedName = name.split(" ");
-    const firstName = formattedName[0];
-    const lastName = formattedName.slice(1).join(" ") || firstName;
-
-    // create new user
-    const user = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-        role: "student",
-        isVerified: true,
-      },
+    // check account existence
+    let checkUser = await prisma.user.findUnique({
+      where: { email, isDestroyed: false },
     });
 
-    // generate public and private key for tokens
-    const publicKey = crypto.randomBytes(64).toString("hex");
-    const privateKey = crypto.randomBytes(64).toString("hex");
+    if (!checkUser) {
+      // create password
+      const randomPassword = crypto.randomBytes(16).toString("hex");
+      const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
-    const kid = uuidV4();
+      // format first name and last name
+      const parts = String(name || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+      const firstName = parts[0] || "Facebook";
+      const lastName = parts.slice(1).join(" ") || firstName;
 
-    const tokensPair = (await authUtils.createTokenPair(
-      {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        kid,
-      },
-      publicKey,
-      privateKey,
-    )) as { refreshToken: string; accessToken: string };
+      // create new user
+      checkUser = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role: "student",
+          isVerified: true,
+        },
+      });
+    } else if (!checkUser.isVerified) {
+      checkUser = await prisma.user.update({
+        where: { id: checkUser.id },
+        data: { isVerified: true },
+      });
+    }
 
-    // create key token
-    await KeyTokenService.createKeyToken({
-      userId: user.id,
-      refreshToken: tokensPair.refreshToken,
-      publicKey,
-      privateKey,
-      kid,
-    });
+    const session = await issueAuthSession(checkUser);
 
     return {
-      ...pickUser(user),
-      refreshToken: tokensPair.refreshToken,
-      accessToken: tokensPair.accessToken,
-      kid,
+      ...pickUser(checkUser),
+      ...session,
     };
   } catch (error: any) {
     throw error;
@@ -556,7 +592,7 @@ const updateProfile = async (
 const registerLecturerProfile = async (
   userId: number,
   reqBody: RegisterLecturer,
-) => {  
+) => {
   try {
     const existingUser = await prisma.user.findUnique({
       where: { id: userId, isDestroyed: false },
@@ -728,6 +764,7 @@ export const userService = {
   verifyAccount,
   login,
   logout,
+  logoutByUserId,
   getGoogleAuthUrl,
   handleGoogleCallback,
   getMe,

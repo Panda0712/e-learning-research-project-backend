@@ -15,24 +15,32 @@ class KeyTokenService {
     kid: string;
   }) => {
     const existingKeyToken = await prisma.keyToken.findUnique({
-      where: { userId, isDestroyed: false },
+      where: { userId },
     });
 
-    const tokens = await prisma.keyToken.upsert({
-      where: { userId },
-      update: {
-        publicKey,
-        privateKey,
-        refreshToken,
-        refreshTokenUsed: existingKeyToken?.refreshTokenUsed ?? [],
-      },
-      create: {
+    if (existingKeyToken) {
+      return await prisma.keyToken.update({
+        where: { userId },
+        data: {
+          publicKey,
+          privateKey,
+          refreshToken,
+          kid,
+          isDestroyed: false,
+          refreshTokenUsed: [],
+        },
+      });
+    }
+
+    const tokens = await prisma.keyToken.create({
+      data: {
         userId,
         publicKey,
         privateKey,
         refreshToken,
-        refreshTokenUsed: [],
         kid,
+        refreshTokenUsed: [],
+        isDestroyed: false,
       },
     });
 
