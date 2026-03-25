@@ -52,7 +52,9 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     res.cookie("accessToken", result.accessToken, authCookieOptions);
     res.cookie("refreshToken", result.refreshToken, authCookieOptions);
 
-    res.status(StatusCodes.OK).json(result);
+    const { accessToken, refreshToken, kid, ...safeUser } = result;
+
+    res.status(StatusCodes.OK).json(safeUser);
   } catch (error: any) {
     next(error);
   }
@@ -74,10 +76,12 @@ const verifyAccount = async (
 
 const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const userId = req.jwtDecoded?.id;
+
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    await userService.logout({ keyStore: req.body });
+    await userService.logoutByUserId(userId);
 
     res.status(StatusCodes.OK).json({
       loggedOut: true,
@@ -96,7 +100,10 @@ const handleRefreshToken = async (
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!refreshToken) {
-      throw new ApiError(StatusCodes.UNAUTHORIZED, "Refresh token is required!");
+      throw new ApiError(
+        StatusCodes.UNAUTHORIZED,
+        "Refresh token is required!",
+      );
     }
 
     const result = await userService.handleRefreshToken({ refreshToken });
@@ -104,7 +111,10 @@ const handleRefreshToken = async (
     res.cookie("accessToken", result.tokens.accessToken, authCookieOptions);
     res.cookie("refreshToken", result.tokens.refreshToken, authCookieOptions);
 
-    res.status(StatusCodes.OK).json(result);
+    res.status(StatusCodes.OK).json({
+      message: "Token refreshed successfully!",
+      user: result.user,
+    });
   } catch (error) {
     next(error);
   }
@@ -320,7 +330,14 @@ const facebookAuthHandler = async (
     res.cookie("accessToken", result.accessToken, authCookieOptions);
     res.cookie("refreshToken", result.refreshToken, authCookieOptions);
 
-    res.status(StatusCodes.OK).json(result);
+    const {
+      accessToken: accessTokenPayload,
+      refreshToken,
+      kid,
+      ...safeUser
+    } = result;
+
+    res.status(StatusCodes.OK).json(safeUser);
   } catch (error) {
     next(error);
   }
