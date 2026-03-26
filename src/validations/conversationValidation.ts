@@ -27,7 +27,7 @@ const getMessages = async (req: Request, res: Response, next: NextFunction) => {
 
   const queryCondition = Joi.object({
     limit: Joi.number().integer().min(1).max(100).optional(),
-    cursor: Joi.date().iso().optional(),
+    cursor: Joi.number().integer().positive().optional(),
   });
 
   try {

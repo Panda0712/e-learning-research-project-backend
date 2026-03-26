@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
 import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
+import { normalizeConversationRole } from "@/utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
+import { chatRepo } from "./repo/chatRepo.js";
 
 const getSocketIO = () => getIO();
 
@@ -71,7 +73,7 @@ const buildConversationPayload = (
     firstName: member.user.firstName,
     lastName: member.user.lastName,
     avatarUrl: member.user.avatar?.fileUrl ?? null,
-    role: member.role,
+    role: normalizeConversationRole(member.role),
     joinedAt: member.joinedAt,
     lastReadAt: member.lastReadAt,
     unreadCount: member.unreadCount,
@@ -192,10 +194,27 @@ const createConversation = async (
   currentUserId: number,
   recipientId: number,
 ) => {
+  const sender = await prisma.user.findUnique({
+    where: { id: currentUserId, isDestroyed: false },
+    select: { role: true },
+  });
+
+  if (sender?.role?.toLowerCase() !== "student") {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      "Only students can start a new conversation.",
+    );
+  }
+
   const { studentId, lecturerId } = await resolveStudentLecturerPair(
     currentUserId,
     recipientId,
   );
+
+  await chatRepo.ensureStudentCanChatWithLecturer({
+    studentId,
+    lecturerId,
+  });
 
   const existedConversation = await prisma.conversation.findFirst({
     where: {
@@ -333,20 +352,18 @@ const getConversations = async (currentUserId: number) => {
 const getMessages = async (
   conversationId: number,
   currentUserId: number,
-  options: { limit?: number; cursor?: string },
+  options: { limit?: number; cursor?: number },
 ) => {
   await ensureConversationMember(conversationId, currentUserId);
 
   const limit = options.limit ?? 50;
-  const cursorDate = options.cursor ? new Date(options.cursor) : null;
-  const hasValidCursor =
-    cursorDate instanceof Date && !Number.isNaN(cursorDate.getTime());
+  const cursorId = options.cursor ?? null;
 
   const messages = await prisma.message.findMany({
     where: {
       conversationId,
       isDestroyed: false,
-      ...(hasValidCursor ? { createdAt: { lt: cursorDate } } : {}),
+      ...(cursorId ? { id: { lt: cursorId } } : {}),
     },
     include: {
       sender: {
@@ -362,16 +379,16 @@ const getMessages = async (
         },
       },
     },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    orderBy: { id: "desc" },
     take: limit + 1,
   });
 
-  let nextCursor: string | null = null;
+  let nextCursor: number | null = null;
 
   if (messages.length > limit) {
     const nextMessage = messages[messages.length - 1];
     if (nextMessage) {
-      nextCursor = nextMessage.createdAt.toISOString();
+      nextCursor = nextMessage.id;
     }
     messages.pop();
   }

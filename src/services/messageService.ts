@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
 import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
+import { normalizeConversationRole } from "@/utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
+import { chatRepo } from "./repo/chatRepo.js";
 
 const getSocketIO = () => getIO();
 
@@ -47,7 +49,7 @@ const buildConversationPayload = (
     firstName: member.user.firstName,
     lastName: member.user.lastName,
     avatarUrl: member.user.avatar?.fileUrl ?? null,
-    role: member.role,
+    role: normalizeConversationRole(member.role),
     joinedAt: member.joinedAt,
     lastReadAt: member.lastReadAt,
     unreadCount: member.unreadCount,
@@ -201,11 +203,29 @@ const sendDirectMessage = async (
         );
       }
 
+      const sender = await tx.user.findUnique({
+        where: { id: senderId, isDestroyed: false },
+        select: { role: true },
+      });
+
+      if (sender?.role?.toLowerCase() !== "student") {
+        throw new ApiError(
+          StatusCodes.FORBIDDEN,
+          "Only students can start a new conversation.",
+        );
+      }
+
       const { studentId, lecturerId } = await resolveStudentLecturerPair(
         senderId,
         recipientId,
         tx,
       );
+
+      await chatRepo.ensureStudentCanChatWithLecturer({
+        studentId,
+        lecturerId,
+        tx,
+      });
 
       const existedConversation = await tx.conversation.findFirst({
         where: {
