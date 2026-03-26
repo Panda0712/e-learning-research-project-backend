@@ -48,11 +48,16 @@ const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = getCurrentUserId(req);
     const conversationId = Number(req.params.conversationId);
-    const options: { limit?: number; cursor?: string } = {};
-    if (req.query.limit) options.limit = Number(req.query.limit);
-    if (req.query.cursor) options.cursor = String(req.query.cursor);
 
-    const result = await conversationService.getMessages(conversationId, userId, options);
+    const options: { limit?: number; cursor?: number } = {};
+    if (req.query.limit) options.limit = Number(req.query.limit);
+    if (req.query.cursor) options.cursor = Number(req.query.cursor);
+
+    const result = await conversationService.getMessages(
+      conversationId,
+      userId,
+      options,
+    );
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {

@@ -17,6 +17,9 @@ export const slugify = (val: string) => {
     .replace(/-+/g, "-"); // remove consecutive hyphens
 };
 
+export const normalizeConversationRole = (role: "STUDENT" | "LECTURER") =>
+  role.toLowerCase() as "student" | "lecturer";
+
 export const pickUser = (user: User) => {
   if (!user) return;
 
