@@ -297,6 +297,54 @@ const uploadCourseThumbnail = async (
   }
 };
 
+const getMyLecturers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const studentId = Number(req.jwtDecoded.id);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const q = (req.query.q as string) || "";
+
+    const result = await courseService.getListLecturersByStudentId(
+      studentId,
+      page,
+      limit,
+      q,
+    );
+
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const studentId = Number(req.jwtDecoded.id);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const q = (req.query.q as string) || "";
+
+    const result = await courseService.getAllCoursesByStudentId(
+      studentId,
+      page,
+      limit,
+      q,
+    );
+
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourseCategory,
   getAllCourseCategories,
@@ -317,4 +365,7 @@ export const courseController = {
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
   uploadCourseThumbnail,
+
+  getMyLecturers,
+  getMyCourses,
 };

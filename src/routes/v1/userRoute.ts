@@ -47,6 +47,7 @@ Router.route("/reset-password").post(
 );
 
 Router.route("/avatar").post(
+  authMiddleware.isAuthorized,
   multerUploadMiddleware.uploadImage.single("images"),
   userController.uploadAvatar,
 );
