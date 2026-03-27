@@ -10,6 +10,7 @@ const Router = express.Router();
 Router.route("/categories")
   .get(courseController.getAllCourseCategories)
   .post(
+    authMiddleware.isAuthorized,
     courseValidation.createCourseCategory,
     courseController.createCourseCategory,
   );
@@ -24,22 +25,37 @@ Router.route("/faq/:id").get(
   courseController.getCourseFaqById,
 );
 Router.route("/faq").post(
+  authMiddleware.isAuthorized,
   courseValidation.createCourseFaq,
   courseController.createCourseFaq,
 );
 
 // course
 Router.route("/")
-  .post(courseValidation.createCourse, courseController.createCourse)
+  .post(
+    authMiddleware.isAuthorized,
+    courseValidation.createCourse,
+    courseController.createCourse,
+  )
   .get(courseValidation.getListCourses, courseController.getListCourses);
 Router.route("/:id")
-  .put(courseValidation.updateCourse, courseController.updateCourse)
-  .delete(courseValidation.deleteCourse, courseController.deleteCourse);
+  .put(
+    authMiddleware.isAuthorized,
+    courseValidation.updateCourse,
+    courseController.updateCourse,
+  )
+  .delete(
+    authMiddleware.isAuthorized,
+    courseValidation.deleteCourse,
+    courseController.deleteCourse,
+  );
 Router.route("/approve-course/:id").put(
+  authMiddleware.isAuthorized,
   courseValidation.approveCourse,
   courseController.approveCourse,
 );
 Router.route("/reject-course/:id").put(
+  authMiddleware.isAuthorized,
   courseValidation.rejectCourse,
   courseController.rejectCourse,
 );
@@ -64,6 +80,7 @@ Router.route("/get-courses-by-category-id/:categoryId").get(
   courseController.getAllCoursesByCategoryId,
 );
 Router.route("/thumbnail").post(
+  authMiddleware.isAuthorized,
   multerUploadMiddleware.uploadImage.single("images"),
 );
 

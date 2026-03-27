@@ -22,9 +22,13 @@ const getResourceById = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
+    const resourceId = Number(req.params.id);
+    const studentId = Number(req.jwtDecoded?.id);
 
-    const resource = await resourceService.getResourceById(Number(id));
+    const resource = await resourceService.getLearningResourceById(
+      resourceId,
+      studentId,
+    );
 
     res.status(StatusCodes.OK).json(resource);
   } catch (error) {

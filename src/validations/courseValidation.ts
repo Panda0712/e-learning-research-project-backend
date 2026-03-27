@@ -195,9 +195,10 @@ const approveCourse = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -217,9 +218,10 @@ const rejectCourse = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -239,9 +241,10 @@ const getCourseById = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -261,9 +264,10 @@ const getAllCoursesByLecturerId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { lecturerId: Number(req.params.lecturerId) },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -363,9 +367,10 @@ const getAllCoursesByCategoryId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { categoryId: Number(req.params.categoryId) },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -384,13 +389,23 @@ const getListCourses = async (
     page: Joi.number().integer().required().positive(),
     itemsPerPage: Joi.number().integer().required().positive(),
     q: Joi.string().allow("").optional(),
+    categoryId: Joi.number().integer().positive().optional(),
+    level: Joi.string().allow("").optional(),
+    price: Joi.string().valid("all", "free", "paid").optional(),
   });
 
   try {
-    const { page, itemsPerPage, q } = req.query;
+    const { page, itemsPerPage, q, categoryId, level, price } = req.query;
 
     await correctCondition.validateAsync(
-      { page: Number(page), itemsPerPage: Number(itemsPerPage), q },
+      {
+        page: Number(page),
+        itemsPerPage: Number(itemsPerPage),
+        q,
+        categoryId: categoryId ? Number(categoryId) : undefined,
+        level,
+        price,
+      },
       {
         abortEarly: false,
       },
