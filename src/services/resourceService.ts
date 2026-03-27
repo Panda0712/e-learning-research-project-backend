@@ -3,6 +3,53 @@ import { prisma } from "@/lib/prisma.js";
 import { CreateResource } from "@/types/resource.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { courseRepo } from "./repo/courseRepo.js";
+
+const getLearningResourceById = async (
+  resourceId: number,
+  studentId: number,
+) => {
+  const lesson = await prisma.lesson.findFirst({
+    where: {
+      isDestroyed: false,
+      OR: [{ lessonVideoId: resourceId }, { lessonFileId: resourceId }],
+    },
+    include: {
+      module: {
+        select: {
+          courseId: true,
+          isDestroyed: true,
+          course: {
+            select: {
+              id: true,
+              isDestroyed: true,
+              status: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!lesson || !lesson.module || !lesson.module.course) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+  }
+
+  await courseRepo.ensureStudentCanLearnCourse(
+    studentId,
+    lesson.module.course.id,
+  );
+
+  const resource = await prisma.resource.findUnique({
+    where: { id: resourceId, isDestroyed: false },
+  });
+
+  if (!resource) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+  }
+
+  return resource;
+};
 
 const createResource = async (data: CreateResource) => {
   try {
@@ -171,6 +218,7 @@ export const resourceService = {
   createResourceWithTransaction,
   getResourceById,
   getResourceByPublicId,
+  getLearningResourceById,
   getAllResourcesByFileType,
   deleteResource,
   deleteResourceWithTransaction,
