@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma.js";
 import ApiError from "@/utils/ApiError.js";
+import { ACCOUNT_ROLES } from "@/utils/constants.js";
 import {
   calculateDateRange,
   getDateIndex,
@@ -10,9 +11,42 @@ import { StatusCodes } from "http-status-codes";
 // ==========================================
 // ADMIN FUNCTIONS
 // ==========================================
+const ensureAccess = async (
+  input: {
+    userId: number;
+    userRole: string;
+  },
+  permissionRole: string[],
+) => {
+  const user = await prisma.user.findUnique({
+    where: { id: input.userId, isDestroyed: false },
+    select: {
+      id: true,
+      role: true,
+      isDestroyed: true,
+    },
+  });
 
-const getAdminStats = async () => {
+  if (!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+
+  const normalizedRole = String(
+    user.role || input.userRole || "",
+  ).toLowerCase();
+
+  if (!permissionRole.includes(normalizedRole)) {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      `This account is not allowed to access ${permissionRole} dashboard data!`,
+    );
+  }
+
+  return user;
+};
+
+const getAdminStats = async (actor: { userId: number; userRole: string }) => {
   try {
+    await ensureAccess(actor, [ACCOUNT_ROLES.ADMIN]);
+
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -25,10 +59,29 @@ const getAdminStats = async () => {
       totalTransactions,
     ] = await Promise.all([
       prisma.user.count({ where: { role: "student", isDestroyed: false } }),
-      prisma.user.count({ where: { role: "lecturer", isVerified: true } }),
-      prisma.revenue.aggregate({ _sum: { platformFee: true } }),
+      prisma.user.count({
+        where: { role: "lecturer", isVerified: true, isDestroyed: false },
+      }),
+      prisma.revenue.aggregate({
+        where: {
+          order: {
+            isDestroyed: false,
+          },
+          course: {
+            isDestroyed: false,
+          },
+        },
+        _sum: { platformFee: true },
+      }),
       prisma.course.count({ where: { status: "pending", isDestroyed: false } }),
-      prisma.enrollment.count({ where: { createdAt: { gte: sevenDaysAgo } } }),
+      prisma.enrollment.count({
+        where: {
+          isDestroyed: false,
+          createdAt: { gte: sevenDaysAgo },
+          course: { isDestroyed: false },
+          student: { isDestroyed: false },
+        },
+      }),
       prisma.transaction.count({ where: { isDestroyed: false } }),
     ]);
 
@@ -57,6 +110,10 @@ const getAdminStats = async () => {
           },
         }),
         prisma.lecturerPayout.findMany({
+          where: {
+            isDestroyed: false,
+            lecturer: { isDestroyed: false },
+          },
           take: 5,
           orderBy: { createdAt: "desc" },
           include: {
@@ -117,11 +174,14 @@ const getAdminStats = async () => {
 };
 
 const getAdminCharts = async (
+  actor: { userId: number; userRole: string },
   period: string = "this_year",
   from?: string,
   to?: string,
 ) => {
   try {
+    await ensureAccess(actor, [ACCOUNT_ROLES.ADMIN]);
+
     const { startDate, endDate, groupBy } = calculateDateRange(
       period,
       from,
@@ -138,7 +198,11 @@ const getAdminCharts = async (
         select: { createdAt: true },
       }),
       prisma.revenue.findMany({
-        where: { createdAt: { gte: startDate, lte: endDate } },
+        where: {
+          createdAt: { gte: startDate, lte: endDate },
+          order: { isDestroyed: false },
+          course: { isDestroyed: false },
+        },
         select: { createdAt: true, platformFee: true },
       }),
     ]);
@@ -173,10 +237,21 @@ const getAdminCharts = async (
 // LECTURER FUNCTIONS
 // ==========================================
 
-const getLecturerStats = async (lecturerId: number) => {
+const getLecturerStats = async ({
+  lecturerId,
+  userRole,
+}: {
+  lecturerId: number;
+  userRole: string;
+}) => {
   try {
+    await ensureAccess({ userId: lecturerId, userRole }, [
+      ACCOUNT_ROLES.ADMIN,
+      ACCOUNT_ROLES.LECTURER,
+    ]);
+
     const lecturer = await prisma.user.findUnique({
-      where: { id: lecturerId },
+      where: { id: lecturerId, isDestroyed: false },
     });
     if (!lecturer) {
       throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer does not exist!");
@@ -204,7 +279,14 @@ const getLecturerStats = async (lecturerId: number) => {
     ] = await Promise.all([
       prisma.enrollment
         .findMany({
-          where: { course: { lecturerId } },
+          where: {
+            isDestroyed: false,
+            student: { isDestroyed: false },
+            course: {
+              lecturerId,
+              isDestroyed: false,
+            },
+          },
           distinct: ["studentId"],
           select: { studentId: true },
         })
@@ -213,14 +295,34 @@ const getLecturerStats = async (lecturerId: number) => {
         where: { lecturerId, status: "published", isDestroyed: false },
       }),
       prisma.revenue.aggregate({
-        where: { lecturerId },
+        where: {
+          lecturerId,
+          order: { isDestroyed: false },
+          course: { isDestroyed: false },
+        },
         _sum: { lecturerEarn: true },
       }),
       prisma.enrollment.count({
-        where: { course: { lecturerId }, progress: 100 },
+        where: {
+          isDestroyed: false,
+          progress: 100,
+          student: { isDestroyed: false },
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
+        },
       }),
       prisma.enrollment.count({
-        where: { course: { lecturerId }, createdAt: { gte: sevenDaysAgo } },
+        where: {
+          isDestroyed: false,
+          createdAt: { gte: sevenDaysAgo },
+          student: { isDestroyed: false },
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
+        },
       }),
       prisma.course.findMany({
         where: { lecturerId, isDestroyed: false },
@@ -229,7 +331,14 @@ const getLecturerStats = async (lecturerId: number) => {
         select: { id: true, name: true, totalStudents: true },
       }),
       prisma.enrollment.findMany({
-        where: { course: { lecturerId } },
+        where: {
+          isDestroyed: false,
+          student: { isDestroyed: false },
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
+        },
         take: 5,
         orderBy: { createdAt: "desc" },
         include: {
@@ -240,7 +349,14 @@ const getLecturerStats = async (lecturerId: number) => {
         },
       }),
       prisma.courseReview.findMany({
-        where: { course: { lecturerId }, isDestroyed: false },
+        where: {
+          isDestroyed: false,
+          student: { isDestroyed: false },
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
+        },
         take: 5,
         orderBy: { createdAt: "desc" },
         include: {
@@ -287,14 +403,19 @@ const getLecturerStats = async (lecturerId: number) => {
 };
 
 const getLecturerCharts = async (
-  lecturerId: number,
+  { lecturerId, userRole }: { lecturerId: number; userRole: string },
   period: string = "this_year",
   from?: string,
   to?: string,
 ) => {
   try {
+    await ensureAccess({ userId: lecturerId, userRole }, [
+      ACCOUNT_ROLES.ADMIN,
+      ACCOUNT_ROLES.LECTURER,
+    ]);
+
     const lecturer = await prisma.user.findUnique({
-      where: { id: lecturerId },
+      where: { id: lecturerId, isDestroyed: false },
     });
     if (!lecturer)
       throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer does not exist!");
@@ -308,13 +429,23 @@ const getLecturerCharts = async (
     const [enrollments, revenues] = await Promise.all([
       prisma.enrollment.findMany({
         where: {
-          course: { lecturerId },
+          isDestroyed: false,
+          student: { isDestroyed: false },
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
           createdAt: { gte: startDate, lte: endDate },
         },
         select: { createdAt: true },
       }),
       prisma.revenue.findMany({
-        where: { lecturerId, createdAt: { gte: startDate, lte: endDate } },
+        where: {
+          lecturerId,
+          createdAt: { gte: startDate, lte: endDate },
+          order: { isDestroyed: false },
+          course: { isDestroyed: false },
+        },
         select: { createdAt: true, lecturerEarn: true },
       }),
     ]);

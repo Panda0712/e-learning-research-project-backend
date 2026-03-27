@@ -1,5 +1,11 @@
 import { env } from "@/configs/environment.js";
 
+export const ACCOUNT_ROLES = {
+  ADMIN: "admin",
+  LECTURER: "lecturer",
+  STUDENT: "student",
+};
+
 export const GENDER_SELECT = {
   MALE: "male",
   FEMALE: "female",
