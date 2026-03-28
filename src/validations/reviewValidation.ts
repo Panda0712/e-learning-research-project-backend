@@ -41,7 +41,37 @@ const getReviewsByCourseId = async (
   }
 };
 
+const getReviewsByCourseIdV2 = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    courseId: Joi.number().integer().required().positive(),
+  });
+  const querySchema = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().max(100).optional(),
+  });
+
+  try {
+    await Promise.all([
+      correctCondition.validateAsync(
+        { courseId: Number(req.params.courseId) },
+        { abortEarly: false },
+      ),
+      querySchema.validateAsync(req.query, { abortEarly: false }),
+    ]);
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const reviewValidation = {
   getHighlightReviews,
   getReviewsByCourseId,
+  getReviewsByCourseIdV2,
 };

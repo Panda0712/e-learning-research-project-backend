@@ -29,4 +29,10 @@ Router.route("/get-by-course-id/:courseId").get(
   moduleController.getAllModulesByCourseId,
 );
 
+Router.route("/learning/get-by-course-id/:courseId").get(
+  authMiddleware.isAuthorized,
+  moduleValidation.getAllModulesByCourseId,
+  moduleController.getAllModulesByCourseId,
+);
+
 export const moduleRoute = Router;

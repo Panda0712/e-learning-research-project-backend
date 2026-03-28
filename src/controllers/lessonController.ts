@@ -79,9 +79,11 @@ const getAllLessonsByModuleId = async (
 ) => {
   try {
     const { moduleId } = req.params;
+    const actorId = req.jwtDecoded?.id ? Number(req.jwtDecoded.id) : null;
 
     const lessons = await lessonService.getAllLessonsByModuleId(
       Number(moduleId),
+      Number(actorId),
     );
 
     res.status(StatusCodes.OK).json(lessons);

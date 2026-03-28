@@ -30,6 +30,12 @@ Router.route("/get-by-module-id/:moduleId").get(
   lessonController.getAllLessonsByModuleId,
 );
 
+Router.route("/learning/get-by-module-id/:moduleId").get(
+  authMiddleware.isAuthorized,
+  lessonValidation.getAllLessonsByModuleId,
+  lessonController.getAllLessonsByModuleId,
+);
+
 Router.route("/get-by-resource-id/:resourceId").get(
   lessonValidation.getLessonByResourceId,
   lessonController.getLessonByResourceId,

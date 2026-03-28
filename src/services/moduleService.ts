@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import { CreateModule, UpdateModule } from "@/types/module.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { courseRepo } from "./repo/courseRepo.js";
 
 const createModule = async (data: CreateModule) => {
   try {
@@ -90,17 +91,22 @@ const getModuleById = async (id: number) => {
   }
 };
 
-const getAllModulesByCourseId = async (courseId: number) => {
+const getAllModulesByCourseId = async (courseId: number, actorId?: number) => {
   try {
     // check course existence
     const course = await prisma.course.findUnique({
       where: { id: courseId, isDestroyed: false },
+      select: { id: true },
     });
     if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+
+    if (actorId)
+      await courseRepo.ensureStudentCanLearnCourse(actorId, courseId);
 
     // get modules
     const modules = await prisma.module.findMany({
       where: { courseId, isDestroyed: false },
+      orderBy: { id: "asc" },
     });
 
     return modules;
