@@ -94,4 +94,14 @@ Router.route("/my-courses").get(
   courseController.getMyCourses,
 );
 
+Router.route("/admin/list").get(
+  authMiddleware.isAuthorized,
+  courseController.getAdminCourses,
+);
+
+Router.route("/admin/:id").get(
+  authMiddleware.isAuthorized,
+  courseController.getAdminCourseById,
+);
+
 export const courseRoute = Router;
