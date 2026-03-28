@@ -35,6 +35,16 @@ const normalizeRedirect = (raw?: string) => {
   }
 };
 
+const ensureAdminRequest = (req: Request) => {
+  const role = req.jwtDecoded?.role;
+  if (role !== "admin") {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      "Forbidden: Admin access is required!",
+    );
+  }
+};
+
 const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const createdUser = await userService.register(req.body);
@@ -343,6 +353,79 @@ const facebookAuthHandler = async (
   }
 };
 
+const getAdminUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    ensureAdminRequest(req);
+    const { page, itemsPerPage, role } = req.query;
+
+    const queryPayload: {
+      page?: number;
+      itemsPerPage?: number;
+      role?: string;
+    } = {
+      page: Number(page) || 1,
+      itemsPerPage: Number(itemsPerPage) || 8,
+    };
+
+    if (typeof role === "string") {
+      queryPayload.role = role;
+    }
+
+    const result = await userService.getAdminUsers(queryPayload);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminUserDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    ensureAdminRequest(req);
+    const { id } = req.params;
+    const result = await userService.getAdminUserDetail(Number(id));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const blockUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    ensureAdminRequest(req);
+    const { id } = req.params;
+    const { blocked } = req.body;
+
+    const result = await userService.blockUser(Number(id), Boolean(blocked));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    ensureAdminRequest(req);
+    const { id } = req.params;
+    const result = await userService.deleteUser(Number(id));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const userController = {
   register,
   verifyAccount,
@@ -359,4 +442,8 @@ export const userController = {
   googleAuthCallbackHandler,
   getMe,
   facebookAuthHandler,
+  getAdminUsers,
+  getAdminUserDetail,
+  blockUser,
+  deleteUser,
 };
