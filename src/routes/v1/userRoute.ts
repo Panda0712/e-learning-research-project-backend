@@ -16,7 +16,18 @@ Router.route("/verify").put(
   userController.verifyAccount,
 );
 
+Router.route("/lecturers").get(
+  userValidation.getPublicLecturers,
+  userController.getPublicLecturers,
+);
+
+Router.route("/lecturers/:id").get(
+  userValidation.getPublicLecturerById,
+  userController.getPublicLecturerDetail,
+);
+
 Router.route("/register-lecturer").post(
+  authMiddleware.isAuthorized,
   userValidation.registerLecturer,
   userController.registerLecturerProfile,
 );

@@ -151,7 +151,9 @@ const registerLecturerProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = 1;
+    const userId = Number(req.jwtDecoded?.id);
+    if (!userId)
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
     const result = await userService.registerLecturerProfile(userId, req.body);
 
@@ -159,6 +161,43 @@ const registerLecturerProfile = async (
       message: "Submitted lecturer profile successfully!",
       ...result,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getPublicLecturers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const itemsPerPage = Number(req.query.itemsPerPage) || 8;
+    const q = String(req.query.q || "");
+
+    const result = await userService.getPublicLecturers({
+      page,
+      itemsPerPage,
+      q,
+    });
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getPublicLecturerDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const lecturerId = Number(req.params.id);
+    const result = await userService.getPublicLecturerDetail(lecturerId);
+
+    res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
   }
@@ -351,6 +390,8 @@ export const userController = {
   handleRefreshToken,
   updateProfile,
   registerLecturerProfile,
+  getPublicLecturers,
+  getPublicLecturerDetail,
   forgotPassword,
   resetPassword,
   uploadAvatar,

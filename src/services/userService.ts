@@ -7,7 +7,11 @@ import { UpdateProfile } from "@/types/updateProfile.type.js";
 import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
-import { WEBSITE_DOMAINS } from "@/utils/constants.js";
+import {
+  DEFAULT_ITEMS_PER_PAGE,
+  DEFAULT_PAGE,
+  WEBSITE_DOMAINS,
+} from "@/utils/constants.js";
 import { pickUser, pickUserWithAvatar } from "@/utils/helpers.js";
 import axios from "axios";
 import bcrypt from "bcrypt";
@@ -635,6 +639,139 @@ const registerLecturerProfile = async (
   }
 };
 
+const getPublicLecturers = async ({
+  page,
+  itemsPerPage,
+  q,
+}: {
+  page?: number;
+  itemsPerPage?: number;
+  q?: string;
+}) => {
+  try {
+    const currentPage = page || DEFAULT_PAGE;
+    const perPage = itemsPerPage || DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+    const query = (q || "").trim();
+
+    const whereCondition: any = {
+      isDestroyed: false,
+      role: "lecturer",
+      lecturerProfile: {
+        is: {
+          isDestroyed: false,
+          isActive: true,
+        },
+      },
+    };
+
+    if (query) {
+      whereCondition.OR = [
+        { firstName: { contains: query } },
+        { lastName: { contains: query } },
+        { email: { contains: query } },
+        {
+          lecturerProfile: {
+            is: {
+              professionalTitle: { contains: query },
+            },
+          },
+        },
+      ];
+    }
+
+    const [lecturers, total] = await Promise.all([
+      prisma.user.findMany({
+        where: whereCondition,
+        include: {
+          avatar: { select: { fileUrl: true } },
+          lecturerProfile: {
+            select: {
+              professionalTitle: true,
+              nationality: true,
+              bio: true,
+              totalStudents: true,
+              totalCourses: true,
+              avgRating: true,
+            },
+          },
+        },
+        skip,
+        take: perPage,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.user.count({ where: whereCondition }),
+    ]);
+
+    return {
+      lecturers,
+      totalLecturers: total,
+      pagination: {
+        page: currentPage,
+        itemsPerPage: perPage,
+        total,
+        totalPages: Math.ceil(total / perPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getPublicLecturerDetail = async (lecturerId: number) => {
+  try {
+    const lecturer = await prisma.user.findUnique({
+      where: {
+        id: lecturerId,
+        isDestroyed: false,
+        role: "lecturer",
+      },
+      include: {
+        avatar: { select: { fileUrl: true } },
+        lecturerProfile: {
+          where: {
+            isDestroyed: false,
+            isActive: true,
+          },
+          include: {
+            lecturerFile: {
+              select: {
+                fileUrl: true,
+                fileType: true,
+              },
+            },
+          },
+        },
+        courses: {
+          where: {
+            isDestroyed: false,
+            status: "published",
+          },
+          include: {
+            thumbnail: {
+              select: {
+                fileUrl: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 8,
+        },
+      },
+    });
+
+    if (!lecturer || !lecturer.lecturerProfile) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer not found!");
+    }
+
+    return lecturer;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 const forgotPassword = async (email: string) => {
   try {
     // check user existence
@@ -772,6 +909,8 @@ export const userService = {
   findByEmail,
   updateProfile,
   registerLecturerProfile,
+  getPublicLecturers,
+  getPublicLecturerDetail,
   forgotPassword,
   resetPassword,
   createUserDocument,
