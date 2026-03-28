@@ -76,9 +76,11 @@ const getAllModulesByCourseId = async (
 ) => {
   try {
     const { courseId } = req.params;
+    const actorId = req.jwtDecoded?.id ? Number(req.jwtDecoded.id) : null;
 
     const modules = await moduleService.getAllModulesByCourseId(
       Number(courseId),
+      Number(actorId),
     );
 
     res.status(StatusCodes.OK).json(modules);

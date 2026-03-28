@@ -2,6 +2,7 @@ import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { courseService } from "../services/courseService.js";
+import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 
 const createCourseCategory = async (
   req: Request,
@@ -276,14 +277,26 @@ const getListCourses = async (
 
     const results = await courseService.getListCourses({
       page: Number(page),
-      itemsPerPage: Number(itemsPerPage),
+      itemsPerPage: Number(itemsPerPage) || DEFAULT_ITEMS_PER_PAGE,
       q: (q as string) || "",
       categoryId: Number(categoryId),
       level: level as string,
       price: price as string,
     });
 
-    res.status(StatusCodes.OK).json(results);
+    res.status(StatusCodes.OK).json({
+      courses: results.courses,
+      totalCourses: results.totalCourses,
+      pagination: {
+        page,
+        itemsPerPage,
+        total: results.totalCourses,
+        totalPages: Math.ceil(
+          results.totalCourses /
+            (Number(itemsPerPage) ?? DEFAULT_ITEMS_PER_PAGE),
+        ),
+      },
+    });
   } catch (error) {
     next(error);
   }

@@ -16,4 +16,10 @@ Router.get(
   reviewController.getReviewsByCourseId,
 );
 
+Router.get(
+  "/by-course-v2/:courseId",
+  reviewValidation.getReviewsByCourseIdV2,
+  reviewController.getReviewsByCourseIdV2,
+);
+
 export const reviewRoute = Router;

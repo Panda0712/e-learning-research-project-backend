@@ -51,9 +51,12 @@ const deleteQuiz = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -69,9 +72,12 @@ const getQuizById = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -91,9 +97,12 @@ const getAllQuizzesByLessonId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { lessonId: Number(req.params.lessonId) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
