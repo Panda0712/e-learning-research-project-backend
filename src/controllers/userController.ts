@@ -116,12 +116,18 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.jwtDecoded.id;
+    const rawUserId =
+      req.jwtDecoded?.id ?? req.jwtDecoded?.userId ?? req.jwtDecoded?.sub;
+    const userId = Number(rawUserId);
+
+    if (!Number.isInteger(userId) || userId <= 0) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
 
     const userAvatar = req.body?.avatar;
 
     const result = await userService.updateProfile(
-      Number(userId),
+      userId,
       req.body,
       userAvatar,
     );

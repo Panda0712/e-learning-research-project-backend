@@ -478,6 +478,10 @@ const updateProfile = async (
   } | null = null,
 ) => {
   try {
+    if (!Number.isInteger(userId) || userId <= 0) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
+
     const existingUser = await prisma.user.findUnique({
       where: { id: userId, isDestroyed: false },
     });
@@ -521,7 +525,6 @@ const updateProfile = async (
 
         return pickUser(updatedUser);
       });
-    } else if (reqBody.email) {
     } else {
       let hashedPassword = null;
       if (reqBody.currentPassword && reqBody.newPassword) {
@@ -535,11 +538,26 @@ const updateProfile = async (
         hashedPassword = await bcrypt.hash(reqBody.newPassword, 10);
       }
 
+      if (reqBody.email && reqBody.email !== existingUser.email) {
+        const existingEmailUser = await prisma.user.findFirst({
+          where: {
+            email: reqBody.email,
+            isDestroyed: false,
+            id: { not: userId },
+          },
+        });
+
+        if (existingEmailUser) {
+          throw new ApiError(StatusCodes.CONFLICT, "Email already exists!");
+        }
+      }
+
       updateUser = await prisma.user.update({
         where: { id: userId },
         data: {
           firstName: reqBody.firstName ?? existingUser.firstName,
           lastName: reqBody.lastName ?? existingUser.lastName,
+          email: reqBody.email ?? existingUser.email,
           dateOfBirth: reqBody.dateOfBirth ?? existingUser.dateOfBirth,
           phoneNumber: reqBody.phoneNumber ?? existingUser.phoneNumber,
           password: hashedPassword ?? existingUser.password,
