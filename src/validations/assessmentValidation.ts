@@ -41,7 +41,7 @@ const getAssessmentsForLecturer = async (
   try {
     await correctCondition.validateAsync(req.params, { abortEarly: false });
     next();
-  } catch (error: any) => {
+  } catch (error: any) {
     next(
       new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
     );
