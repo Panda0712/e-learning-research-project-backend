@@ -104,10 +104,18 @@ const createOrder = async (data: {
       });
 
       if (coupon && coupon.status === "active") {
-        if (coupon.type === "percentage") {
-          totalPrice = totalPrice * (1 - (coupon.amount || 0) / 100);
-        } else if (coupon.type === "fixed") {
-          totalPrice = Math.max(0, totalPrice - (coupon.amount || 0));
+        if (coupon.discountUnit === "percent") {
+          const discountValue =
+            coupon.discount !== null && coupon.discount !== undefined
+              ? coupon.discount
+              : coupon.amount || 0;
+          totalPrice = totalPrice * (1 - discountValue / 100);
+        } else {
+          const fixedAmount =
+            coupon.amount !== null && coupon.amount !== undefined
+              ? coupon.amount
+              : coupon.discount || 0;
+          totalPrice = Math.max(0, totalPrice - fixedAmount);
         }
       }
     }

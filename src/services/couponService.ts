@@ -3,23 +3,136 @@ import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
 
+const calcAmountFromDiscount = ({
+  discount,
+  discountUnit,
+  minOrderValue,
+  maxValue,
+}: {
+  discount: number;
+  discountUnit: "amount" | "percent";
+  minOrderValue?: number | null;
+  maxValue?: number | null;
+}) => {
+  const normalizedDiscount = Number(discount) || 0;
+  const normalizedMinOrder = Number(minOrderValue) || 0;
+
+  const baseAmount =
+    discountUnit === "percent"
+      ? (normalizedMinOrder > 0
+          ? (normalizedMinOrder * normalizedDiscount) / 100
+          : normalizedDiscount)
+      : normalizedDiscount;
+
+  if (typeof maxValue === "number" && maxValue >= 0) {
+    return Number(Math.min(baseAmount, maxValue).toFixed(2));
+  }
+
+  return Number(baseAmount.toFixed(2));
+};
+
+const resolveCouponPricing = ({
+  discount,
+  amount,
+  discountUnit,
+  minOrderValue,
+  maxValue,
+}: {
+  discount?: number | null;
+  amount?: number | null;
+  discountUnit?: string | null;
+  minOrderValue?: number | null;
+  maxValue?: number | null;
+}) => {
+  const normalizedUnit =
+    discountUnit === "amount" || discountUnit === "fixed"
+      ? "amount"
+      : discountUnit === "percent" || discountUnit === "percentage"
+        ? "percent"
+        : "percent";
+
+  const normalizedDiscount =
+    discount !== undefined && discount !== null
+      ? Number(discount)
+      : amount !== undefined && amount !== null
+        ? Number(amount)
+        : null;
+
+  const normalizedAmount =
+    amount !== undefined && amount !== null
+      ? Number(amount)
+      : normalizedDiscount !== null
+        ? calcAmountFromDiscount({
+            discount: normalizedDiscount,
+            discountUnit: normalizedUnit,
+            minOrderValue,
+            maxValue,
+          })
+        : null;
+
+  return {
+    discount: normalizedDiscount,
+    amount: normalizedAmount,
+    discountUnit: normalizedUnit,
+  };
+};
+
+const normalizeCouponResponse = (coupon: any) => {
+  return {
+    ...coupon,
+    discount: coupon?.discount ?? null,
+    discountUnit: coupon?.discountUnit ?? "percent",
+    usageLimit: coupon?.usageLimit ?? null,
+    minOrderValue: coupon?.minOrderValue ?? null,
+    maxValue: coupon?.maxValue ?? null,
+  };
+};
+
+const normalizeDateInput = (value: unknown): Date | null => {
+  if (value === undefined || value === null || value === "") return null;
+  if (value instanceof Date) return value;
+
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+
+    // Accept date-only string from UI and convert to full ISO datetime.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+      return new Date(`${trimmed}T00:00:00.000Z`);
+    }
+
+    return new Date(trimmed);
+  }
+
+  return new Date(value as string);
+};
+
 // ============ COUPON CATEGORY SERVICES ============
 
 const createCouponCategory = async (data: { name: string; slug: string }) => {
   try {
-    // check category exits
-    const category = await prisma.couponCategory.findUnique({
-      where: {
-        slug: data.slug,
-        isDestroyed: false,
-      },
+    // Slug is globally unique in DB. If the slug exists and was soft-deleted,
+    // restore that row instead of creating a new one and hitting unique errors.
+    const existingBySlug = await prisma.couponCategory.findUnique({
+      where: { slug: data.slug },
     });
 
-    if (category) {
+    if (existingBySlug && !existingBySlug.isDestroyed) {
       throw new ApiError(
         StatusCodes.CONFLICT,
         "Coupon category already exists!",
       );
+    }
+
+    if (existingBySlug && existingBySlug.isDestroyed) {
+      return await prisma.couponCategory.update({
+        where: { id: existingBySlug.id },
+        data: {
+          name: data.name,
+          isDestroyed: false,
+          updatedAt: new Date(),
+        },
+      });
     }
 
     // create category
@@ -95,8 +208,15 @@ const updateCouponCategory = async (
         where: { slug: data.slug },
       });
 
-      if (existingSlug) {
+      if (existingSlug && existingSlug.id !== id && !existingSlug.isDestroyed) {
         throw new ApiError(StatusCodes.CONFLICT, "Slug already exists!");
+      }
+
+      if (existingSlug && existingSlug.id !== id && existingSlug.isDestroyed) {
+        throw new ApiError(
+          StatusCodes.CONFLICT,
+          "Slug already exists in archived category. Please choose another slug.",
+        );
       }
     }
 
@@ -154,14 +274,6 @@ const createCoupon = async (data: any) => {
       throw new ApiError(StatusCodes.CONFLICT, "Coupon code already exists!");
     }
 
-    if (data.courseId) {
-      const course = await prisma.course.findUnique({
-        where: { id: data.courseId, isDestroyed: false },
-      });
-      if (!course)
-        throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
-    }
-
     // check if category exists
     if (data.categoryId) {
       const category = await prisma.couponCategory.findUnique({
@@ -173,33 +285,42 @@ const createCoupon = async (data: any) => {
       }
     }
 
+    const pricing = resolveCouponPricing({
+      discount: data.discount,
+      amount: data.amount,
+      discountUnit: data.discountUnit || data.type,
+      minOrderValue: data.minOrderValue ?? null,
+      maxValue: data.maxValue ?? null,
+    });
+    const normalizedStartingDate = normalizeDateInput(data.startingDate);
+    const normalizedEndingDate = normalizeDateInput(data.endingDate);
+
     const newCoupon = await prisma.coupon.create({
+      // Support old payload names while storing new schema fields.
+      // `quantity` -> usageLimit, `type` -> discountUnit.
       data: {
-        courseId: data.courseId ?? null,
         name: data.name,
         description: data.description || null,
         status: data.status,
-        customerGroup: data.customerGroup || null,
         code: data.code,
         categoryId: data.categoryId || null,
-        quantity: data.quantity || null,
-        usesPerCustomer: data.usesPerCustomer || null,
-        priority: data.priority || null,
-        actions: data.actions || null,
-        type: data.type,
-        amount: data.amount,
-        startingDate: data.startingDate || null,
+        discount: pricing.discount,
+        discountUnit: pricing.discountUnit,
+        usageLimit: data.usageLimit ?? data.quantity ?? null,
+        minOrderValue: data.minOrderValue ?? null,
+        maxValue: data.maxValue ?? null,
+        amount: pricing.amount,
+        startingDate: normalizedStartingDate,
         startingTime: data.startingTime || null,
-        endingDate: data.endingDate || null,
+        endingDate: normalizedEndingDate,
         endingTime: data.endingTime || null,
-        isUnlimited: data.isUnlimited || false,
       },
       include: {
         category: true,
       },
     });
 
-    return newCoupon;
+    return normalizeCouponResponse(newCoupon);
   } catch (error: any) {
     throw error;
   }
@@ -208,19 +329,19 @@ const createCoupon = async (data: any) => {
 const getAllCoupons = async (filters: {
   page?: number;
   limit?: number;
+  itemsPerPage?: number;
   status?: string;
-  courseId?: number;
 }) => {
   try {
     const page = filters.page || DEFAULT_PAGE;
-    const limit = filters.limit || DEFAULT_ITEMS_PER_PAGE;
+    const limit =
+      filters.itemsPerPage || filters.limit || DEFAULT_ITEMS_PER_PAGE;
     const skip = (page - 1) * limit;
 
     const whereCondition: any = { isDestroyed: false };
 
     if (filters.status && filters.status !== "all")
       whereCondition.status = filters.status;
-    if (filters.courseId) whereCondition.courseId = filters.courseId;
 
     const total = await prisma.coupon.count({
       where: whereCondition,
@@ -237,7 +358,10 @@ const getAllCoupons = async (filters: {
     });
 
     return {
-      data: coupons.map((coupon) => ({ ...coupon, redemptions: 0 })),
+      data: coupons.map((coupon) => ({
+        ...normalizeCouponResponse(coupon),
+        redemptions: 0,
+      })),
       pagination: {
         page,
         limit,
@@ -266,7 +390,7 @@ const getCouponById = async (id: number) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Coupon not found!");
     }
 
-    return coupon;
+    return normalizeCouponResponse(coupon);
   } catch (error: any) {
     throw error;
   }
@@ -288,7 +412,7 @@ const getCouponByCode = async (code: string) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Coupon not found!");
     }
 
-    return coupon;
+    return normalizeCouponResponse(coupon);
   } catch (error: any) {
     throw error;
   }
@@ -316,14 +440,6 @@ const updateCoupon = async (id: number, data: any) => {
       }
     }
 
-    if (data.courseId) {
-      const course = await prisma.course.findUnique({
-        where: { id: data.courseId, isDestroyed: false },
-      });
-      if (!course)
-        throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
-    }
-
     // check category existence if categoryId is provided
     if (data.categoryId && data.categoryId !== coupon.categoryId) {
       const category = await prisma.couponCategory.findUnique({
@@ -335,43 +451,60 @@ const updateCoupon = async (id: number, data: any) => {
       }
     }
 
+    const pricing = resolveCouponPricing({
+      discount:
+        data.discount !== undefined ? Number(data.discount) : coupon.discount,
+      amount: data.amount !== undefined ? Number(data.amount) : coupon.amount,
+      discountUnit:
+        data.discountUnit !== undefined
+          ? data.discountUnit
+          : (coupon.discountUnit as string | null),
+      minOrderValue: data.minOrderValue,
+      maxValue: data.maxValue,
+    });
+    const normalizedStartingDate =
+      data.startingDate !== undefined
+        ? normalizeDateInput(data.startingDate)
+        : coupon.startingDate;
+    const normalizedEndingDate =
+      data.endingDate !== undefined
+        ? normalizeDateInput(data.endingDate)
+        : coupon.endingDate;
+
     const updated = await prisma.coupon.update({
       where: { id },
       data: {
-        courseId: data.courseId ?? coupon.courseId,
         name: data.name || coupon.name,
         description:
           data.description !== undefined
             ? data.description
             : coupon.description,
         status: data.status || coupon.status,
-        customerGroup:
-          data.customerGroup !== undefined
-            ? data.customerGroup
-            : coupon.customerGroup,
         code: data.code || coupon.code,
         categoryId: data.categoryId || coupon.categoryId,
-        quantity: data.quantity !== undefined ? data.quantity : coupon.quantity,
-        usesPerCustomer:
-          data.usesPerCustomer !== undefined
-            ? data.usesPerCustomer
-            : coupon.usesPerCustomer,
-        priority: data.priority || coupon.priority,
-        actions: data.actions !== undefined ? data.actions : coupon.actions,
-        type: data.type || coupon.type,
-        amount: data.amount !== undefined ? data.amount : coupon.amount,
-        startingDate:
-          data.startingDate !== undefined
-            ? data.startingDate
-            : coupon.startingDate,
-        startingTime: data.startingTime || coupon.startingTime,
-        endingDate:
-          data.endingDate !== undefined ? data.endingDate : coupon.endingDate,
-        endingTime: data.endingTime || coupon.endingTime,
-        isUnlimited:
-          data.isUnlimited !== undefined
-            ? data.isUnlimited
-            : coupon.isUnlimited,
+        usageLimit:
+          data.usageLimit !== undefined
+            ? data.usageLimit
+            : data.quantity !== undefined
+              ? data.quantity
+              : coupon.usageLimit,
+        discount: pricing.discount,
+        discountUnit: pricing.discountUnit,
+        minOrderValue:
+          data.minOrderValue !== undefined
+            ? data.minOrderValue
+            : coupon.minOrderValue,
+        maxValue:
+          data.maxValue !== undefined ? data.maxValue : coupon.maxValue,
+        amount: pricing.amount,
+        startingDate: normalizedStartingDate,
+        startingTime:
+          data.startingTime !== undefined
+            ? data.startingTime
+            : coupon.startingTime,
+        endingDate: normalizedEndingDate,
+        endingTime:
+          data.endingTime !== undefined ? data.endingTime : coupon.endingTime,
         updatedAt: new Date(),
       },
       include: {
@@ -379,7 +512,7 @@ const updateCoupon = async (id: number, data: any) => {
       },
     });
 
-    return updated;
+    return normalizeCouponResponse(updated);
   } catch (error: any) {
     throw error;
   }
@@ -447,16 +580,16 @@ const verifyCouponCode = async (code: string) => {
 
     // check quantity if not unlimited
     if (
-      !coupon.isUnlimited &&
-      coupon.quantity !== null &&
-      coupon.quantity <= 0
+      coupon.usageLimit !== null &&
+      coupon.usageLimit !== undefined &&
+      coupon.usageLimit <= 0
     ) {
       throw new ApiError(StatusCodes.BAD_REQUEST, "Coupon is out of stock!");
     }
 
     return {
       isValid: true,
-      coupon,
+      coupon: normalizeCouponResponse(coupon),
       message: "Coupon is valid!",
     };
   } catch (error: any) {

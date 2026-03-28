@@ -118,7 +118,6 @@ model Course {
   courseFAQs  CourseFAQ[]
   assessments Assessment[]
   cartItems   CartItem[]
-  coupons     Coupon[]
 }
 
 model CourseCategory {
@@ -306,32 +305,28 @@ model OrderItem {
 }
 
 model Coupon {
-  id              Int       @id @default(autoincrement())
-  courseId        Int?
-  name            String
-  description     String?
-  status          String?
-  customerGroup   String?
-  code            String    @unique
-  categoryId      Int?
-  quantity        Int?
-  usesPerCustomer Int?
-  priority        String?
-  actions         String?
-  type            String?
-  amount          Float?
-  startingDate    DateTime?
-  startingTime    String?
-  endingDate      DateTime?
-  endingTime      String?
-  isUnlimited     Boolean?  @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime? @updatedAt
-  isDestroyed     Boolean   @default(false)
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String?
+  status        String?
+  code          String    @unique
+  categoryId    Int?
+  discount      Float?
+  discountUnit  String?   // amount | percent
+  usageLimit    Int?
+  minOrderValue Float?
+  maxValue      Float?
+  amount        Float?
+  startingDate  DateTime?
+  startingTime  String?
+  endingDate    DateTime?
+  endingTime    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
 
   // relations
   category CouponCategory? @relation(fields: [categoryId], references: [id])
-  course   Course?         @relation(fields: [courseId], references: [id])
 }
 
 model CouponCategory {
