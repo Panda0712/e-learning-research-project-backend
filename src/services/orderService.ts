@@ -125,6 +125,7 @@ const createOrder = async (data: {
           create: itemsToOrder.map((item) => ({
             courseId: item.courseId,
             price: item.price || 0,
+            lecturerId: item.lecturerId ?? null,
           })),
         },
       },
@@ -381,11 +382,13 @@ const updateOrderStatus = async (orderId: number, newStatus: string) => {
             totalAmount,
             platformFee,
             lecturerEarn,
+            lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            courseId: item.courseId,
           },
           create: {
             orderId,
             courseId: item.courseId,
-            lecturerId: item.lecturerId ? item.lecturerId : null,
+            lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
             totalAmount,
             platformFee,
             lecturerEarn,

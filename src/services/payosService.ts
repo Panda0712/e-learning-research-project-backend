@@ -150,7 +150,14 @@ const handleWebhook = async (webhookBody: any) => {
       where: { id: orderCode, isDestroyed: false },
       include: {
         items: {
-          select: { courseId: true },
+          select: {
+            courseId: true,
+            price: true,
+            lecturerId: true,
+            course: {
+              select: { lecturerId: true },
+            },
+          },
         },
       },
     });
@@ -184,6 +191,30 @@ const handleWebhook = async (webhookBody: any) => {
           } catch (error: any) {
             console.error(`Failed to create enrollment:`, error);
           }
+
+          // Ensure revenue exists right after a successful payment.
+          const totalAmount = Number(item.price || 0);
+          const platformFee = totalAmount * 0.2;
+          const lecturerEarn = totalAmount - platformFee;
+
+          await tx.revenue.upsert({
+            where: { orderId: orderCode },
+            update: {
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            },
+            create: {
+              orderId: orderCode,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+            },
+          });
         }
 
         return updated;
@@ -267,7 +298,16 @@ const checkPaymentStatus = async (orderId: number) => {
       const orderWithItems = await prisma.order.findUnique({
         where: { id: orderId },
         include: {
-          items: { select: { courseId: true } },
+          items: {
+            select: {
+              courseId: true,
+              price: true,
+              lecturerId: true,
+              course: {
+                select: { lecturerId: true },
+              },
+            },
+          },
         },
       });
 
@@ -281,6 +321,29 @@ const checkPaymentStatus = async (orderId: number) => {
           } catch (error) {
             console.error("Enrollment creation error:", error);
           }
+
+          const totalAmount = Number(item.price || 0);
+          const platformFee = totalAmount * 0.2;
+          const lecturerEarn = totalAmount - platformFee;
+
+          await prisma.revenue.upsert({
+            where: { orderId },
+            update: {
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            },
+            create: {
+              orderId,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+            },
+          });
         }
       }
     }
