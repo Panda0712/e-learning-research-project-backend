@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
+import { notificationService } from "./notificationService.js";
 
 const calcAmountFromDiscount = ({
   discount,
@@ -320,7 +321,23 @@ const createCoupon = async (data: any) => {
       },
     });
 
-    return normalizeCouponResponse(newCoupon);
+    const users = await prisma.user.findMany({
+      where: { isDestroyed: false },
+      select: { id: true },
+    });
+
+    await notificationService.createAndDispatchNotificationsForUsers(
+      {
+        userIds: users.map((user) => user.id),
+        title: "New discount coupon",
+        message: `Coupon ${newCoupon.code} is now available for use.`,
+        type: "coupon",
+        relatedId: newCoupon.id,
+      },
+      { dedupe: true },
+    );
+
+    return newCoupon;
   } catch (error: any) {
     throw error;
   }

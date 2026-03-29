@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma.js";
 import { PayosProvider } from "@/providers/PayosProvider.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { notificationService } from "./notificationService.js";
 
 const ensureTransactionRecords = async ({
   db,
@@ -432,6 +433,34 @@ const handleWebhook = async (webhookBody: any) => {
         return updated;
       });
 
+      const student = await prisma.user.findUnique({
+        where: { id: order.studentId, isDestroyed: false },
+        select: { firstName: true, lastName: true },
+      });
+
+      const buyerName =
+        `${student?.firstName || ""} ${student?.lastName || ""}`.trim();
+      const lecturerIds = [
+        ...new Set(
+          order.items
+            .map((item) => item.lecturerId ?? item.course?.lecturerId ?? null)
+            .filter((id): id is number => Number.isInteger(id)),
+        ),
+      ];
+
+      for (const lecturerId of lecturerIds) {
+        await notificationService.createAndDispatchNotification(
+          {
+            userId: lecturerId,
+            title: "New course purchase",
+            message: `${buyerName || "A student"} has completed payment for your course.`,
+            type: "purchase",
+            relatedId: orderCode,
+          },
+          { dedupe: true },
+        );
+      }
+
       console.log(`✅ Order ${orderCode} payment successful!`);
 
       return {
@@ -569,6 +598,34 @@ const checkPaymentStatus = async (orderId: number) => {
               lecturerEarn,
             },
           });
+        }
+
+        const student = await prisma.user.findUnique({
+          where: { id: order.studentId, isDestroyed: false },
+          select: { firstName: true, lastName: true },
+        });
+
+        const buyerName =
+          `${student?.firstName || ""} ${student?.lastName || ""}`.trim();
+        const lecturerIds = [
+          ...new Set(
+            orderWithItems.items
+              .map((item) => item.lecturerId ?? item.course?.lecturerId ?? null)
+              .filter((id): id is number => Number.isInteger(id)),
+          ),
+        ];
+
+        for (const lecturerId of lecturerIds) {
+          await notificationService.createAndDispatchNotification(
+            {
+              userId: lecturerId,
+              title: "New course purchase",
+              message: `${buyerName || "A student"} has completed payment for your course.`,
+              type: "purchase",
+              relatedId: orderId,
+            },
+            { dedupe: true },
+          );
         }
       }
     }

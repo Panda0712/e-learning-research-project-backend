@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import { CreateBlogPost, UpdateBlogPost } from "@/types/blog.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { notificationService } from "./notificationService.js";
 import { resourceService } from "./resourceService.js";
 
 // BLOG CATEGORY SERVICE
@@ -114,7 +115,7 @@ const createPost = async (reqBody: CreateBlogPost) => {
     }
 
     // create new post
-    return await prisma.$transaction(async (tx) => {
+    const newPost = await prisma.$transaction(async (tx) => {
       const createdResource =
         await resourceService.createResourceWithTransaction(
           {
@@ -126,7 +127,7 @@ const createPost = async (reqBody: CreateBlogPost) => {
           tx,
         );
 
-      const newPost = await tx.blogPost.create({
+      const post = await tx.blogPost.create({
         data: {
           authorId: reqBody.authorId,
           title: reqBody.title,
@@ -137,8 +138,43 @@ const createPost = async (reqBody: CreateBlogPost) => {
         },
       });
 
-      return newPost;
+      return post;
     });
+
+    const studentsWhoPurchasedLecturerCourses = await prisma.user.findMany({
+      where: {
+        isDestroyed: false,
+        orders: {
+          some: {
+            isDestroyed: false,
+            paymentStatus: "paid",
+            items: {
+              some: {
+                isDestroyed: false,
+                OR: [
+                  { lecturerId: reqBody.authorId },
+                  { course: { lecturerId: reqBody.authorId } },
+                ],
+              },
+            },
+          },
+        },
+      },
+      select: { id: true },
+    });
+
+    await notificationService.createAndDispatchNotificationsForUsers(
+      {
+        userIds: studentsWhoPurchasedLecturerCourses.map((user) => user.id),
+        title: "New blog from your lecturer",
+        message: `A lecturer you purchased from has posted: ${newPost.title}`,
+        type: "blog",
+        relatedId: newPost.id,
+      },
+      { dedupe: true },
+    );
+
+    return newPost;
   } catch (error: any) {
     throw error;
   }
@@ -507,15 +543,49 @@ const createComment = async (reqBody: {
       throw new ApiError(StatusCodes.NOT_FOUND, "Blog post not found!");
     }
 
+    let parentCommentUserId: number | null = null;
+    if (reqBody.parentId) {
+      const parentComment = await prisma.blogComment.findUnique({
+        where: { id: reqBody.parentId, isDestroyed: false },
+        select: { id: true, blogId: true, userId: true },
+      });
+
+      if (!parentComment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Parent comment not found!");
+      }
+
+      if (parentComment.blogId !== reqBody.blogId) {
+        throw new ApiError(
+          StatusCodes.BAD_REQUEST,
+          "Parent comment does not belong to this blog post!",
+        );
+      }
+
+      parentCommentUserId = parentComment.userId;
+    }
+
     // create new comment
     const newComment = await prisma.blogComment.create({
       data: {
         content: reqBody.content,
         blogId: reqBody.blogId,
         userId: reqBody.userId,
-        // parentId: reqBody?.parentId || null,
+        parentId: reqBody.parentId || null,
       },
     });
+
+    if (parentCommentUserId && parentCommentUserId !== reqBody.userId) {
+      await notificationService.createAndDispatchNotification(
+        {
+          userId: parentCommentUserId,
+          title: "New reply to your comment",
+          message: "Someone replied to your blog comment.",
+          type: "comment_reply",
+          relatedId: newComment.id,
+        },
+        { dedupe: true },
+      );
+    }
 
     return newComment;
   } catch (error: any) {
