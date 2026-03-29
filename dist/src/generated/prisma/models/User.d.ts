@@ -1,0 +1,6053 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model User
+ *
+ */
+export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayload>;
+export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null;
+    _avg: UserAvgAggregateOutputType | null;
+    _sum: UserSumAggregateOutputType | null;
+    _min: UserMinAggregateOutputType | null;
+    _max: UserMaxAggregateOutputType | null;
+};
+export type UserAvgAggregateOutputType = {
+    id: number | null;
+    avatarId: number | null;
+};
+export type UserSumAggregateOutputType = {
+    id: number | null;
+    avatarId: number | null;
+};
+export type UserMinAggregateOutputType = {
+    id: number | null;
+    email: string | null;
+    password: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    avatarId: number | null;
+    phoneNumber: string | null;
+    dateOfBirth: Date | null;
+    role: string | null;
+    verifyToken: string | null;
+    resetPasswordToken: string | null;
+    resetPasswordExpires: Date | null;
+    isVerified: boolean | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    isDestroyed: boolean | null;
+};
+export type UserMaxAggregateOutputType = {
+    id: number | null;
+    email: string | null;
+    password: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    avatarId: number | null;
+    phoneNumber: string | null;
+    dateOfBirth: Date | null;
+    role: string | null;
+    verifyToken: string | null;
+    resetPasswordToken: string | null;
+    resetPasswordExpires: Date | null;
+    isVerified: boolean | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+    isDestroyed: boolean | null;
+};
+export type UserCountAggregateOutputType = {
+    id: number;
+    email: number;
+    password: number;
+    firstName: number;
+    lastName: number;
+    avatarId: number;
+    phoneNumber: number;
+    dateOfBirth: number;
+    role: number;
+    verifyToken: number;
+    resetPasswordToken: number;
+    resetPasswordExpires: number;
+    isVerified: number;
+    createdAt: number;
+    updatedAt: number;
+    isDestroyed: number;
+    _all: number;
+};
+export type UserAvgAggregateInputType = {
+    id?: true;
+    avatarId?: true;
+};
+export type UserSumAggregateInputType = {
+    id?: true;
+    avatarId?: true;
+};
+export type UserMinAggregateInputType = {
+    id?: true;
+    email?: true;
+    password?: true;
+    firstName?: true;
+    lastName?: true;
+    avatarId?: true;
+    phoneNumber?: true;
+    dateOfBirth?: true;
+    role?: true;
+    verifyToken?: true;
+    resetPasswordToken?: true;
+    resetPasswordExpires?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    isDestroyed?: true;
+};
+export type UserMaxAggregateInputType = {
+    id?: true;
+    email?: true;
+    password?: true;
+    firstName?: true;
+    lastName?: true;
+    avatarId?: true;
+    phoneNumber?: true;
+    dateOfBirth?: true;
+    role?: true;
+    verifyToken?: true;
+    resetPasswordToken?: true;
+    resetPasswordExpires?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    isDestroyed?: true;
+};
+export type UserCountAggregateInputType = {
+    id?: true;
+    email?: true;
+    password?: true;
+    firstName?: true;
+    lastName?: true;
+    avatarId?: true;
+    phoneNumber?: true;
+    dateOfBirth?: true;
+    role?: true;
+    verifyToken?: true;
+    resetPasswordToken?: true;
+    resetPasswordExpires?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    isDestroyed?: true;
+    _all?: true;
+};
+export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType;
+};
+export type GetUserAggregateType<T extends UserAggregateArgs> = {
+    [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateUser[P]> : Prisma.GetScalarType<T[P], AggregateUser[P]>;
+};
+export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.UserWhereInput;
+    orderBy?: Prisma.UserOrderByWithAggregationInput | Prisma.UserOrderByWithAggregationInput[];
+    by: Prisma.UserScalarFieldEnum[] | Prisma.UserScalarFieldEnum;
+    having?: Prisma.UserScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: UserCountAggregateInputType | true;
+    _avg?: UserAvgAggregateInputType;
+    _sum?: UserSumAggregateInputType;
+    _min?: UserMinAggregateInputType;
+    _max?: UserMaxAggregateInputType;
+};
+export type UserGroupByOutputType = {
+    id: number;
+    email: string;
+    password: string;
+    firstName: string | null;
+    lastName: string | null;
+    avatarId: number | null;
+    phoneNumber: string | null;
+    dateOfBirth: Date | null;
+    role: string;
+    verifyToken: string | null;
+    resetPasswordToken: string | null;
+    resetPasswordExpires: Date | null;
+    isVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date | null;
+    isDestroyed: boolean;
+    _count: UserCountAggregateOutputType | null;
+    _avg: UserAvgAggregateOutputType | null;
+    _sum: UserSumAggregateOutputType | null;
+    _min: UserMinAggregateOutputType | null;
+    _max: UserMaxAggregateOutputType | null;
+};
+type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<UserGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], UserGroupByOutputType[P]> : Prisma.GetScalarType<T[P], UserGroupByOutputType[P]>;
+}>>;
+export type UserWhereInput = {
+    AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    OR?: Prisma.UserWhereInput[];
+    NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    id?: Prisma.IntFilter<"User"> | number;
+    email?: Prisma.StringFilter<"User"> | string;
+    password?: Prisma.StringFilter<"User"> | string;
+    firstName?: Prisma.StringNullableFilter<"User"> | string | null;
+    lastName?: Prisma.StringNullableFilter<"User"> | string | null;
+    avatarId?: Prisma.IntNullableFilter<"User"> | number | null;
+    phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null;
+    dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    role?: Prisma.StringFilter<"User"> | string;
+    verifyToken?: Prisma.StringNullableFilter<"User"> | string | null;
+    resetPasswordToken?: Prisma.StringNullableFilter<"User"> | string | null;
+    resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    isVerified?: Prisma.BoolFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    isDestroyed?: Prisma.BoolFilter<"User"> | boolean;
+    avatar?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null;
+    courses?: Prisma.CourseListRelationFilter;
+    studentConversations?: Prisma.ConversationListRelationFilter;
+    lecturerConversations?: Prisma.ConversationListRelationFilter;
+    memberConversations?: Prisma.ConversationMemberListRelationFilter;
+    sentMessages?: Prisma.MessageListRelationFilter;
+    lastSentConversations?: Prisma.ConversationListRelationFilter;
+    enrollments?: Prisma.EnrollmentListRelationFilter;
+    reviews?: Prisma.CourseReviewListRelationFilter;
+    blogPosts?: Prisma.BlogPostListRelationFilter;
+    lecturerProfile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null;
+    lecturerPayout?: Prisma.LecturerPayoutListRelationFilter;
+    submissions?: Prisma.SubmissionListRelationFilter;
+    blogComments?: Prisma.BlogCommentListRelationFilter;
+    wishlist?: Prisma.WishlistListRelationFilter;
+    cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null;
+    orders?: Prisma.OrderListRelationFilter;
+    transactions?: Prisma.TransactionListRelationFilter;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountListRelationFilter;
+    keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null;
+    revenues?: Prisma.RevenueListRelationFilter;
+    notifications?: Prisma.NotificationListRelationFilter;
+};
+export type UserOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    firstName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    lastName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatarId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
+    dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isDestroyed?: Prisma.SortOrder;
+    avatar?: Prisma.ResourceOrderByWithRelationInput;
+    courses?: Prisma.CourseOrderByRelationAggregateInput;
+    studentConversations?: Prisma.ConversationOrderByRelationAggregateInput;
+    lecturerConversations?: Prisma.ConversationOrderByRelationAggregateInput;
+    memberConversations?: Prisma.ConversationMemberOrderByRelationAggregateInput;
+    sentMessages?: Prisma.MessageOrderByRelationAggregateInput;
+    lastSentConversations?: Prisma.ConversationOrderByRelationAggregateInput;
+    enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput;
+    reviews?: Prisma.CourseReviewOrderByRelationAggregateInput;
+    blogPosts?: Prisma.BlogPostOrderByRelationAggregateInput;
+    lecturerProfile?: Prisma.LecturerProfileOrderByWithRelationInput;
+    lecturerPayout?: Prisma.LecturerPayoutOrderByRelationAggregateInput;
+    submissions?: Prisma.SubmissionOrderByRelationAggregateInput;
+    blogComments?: Prisma.BlogCommentOrderByRelationAggregateInput;
+    wishlist?: Prisma.WishlistOrderByRelationAggregateInput;
+    cart?: Prisma.CartOrderByWithRelationInput;
+    orders?: Prisma.OrderOrderByRelationAggregateInput;
+    transactions?: Prisma.TransactionOrderByRelationAggregateInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountOrderByRelationAggregateInput;
+    keyToken?: Prisma.KeyTokenOrderByWithRelationInput;
+    revenues?: Prisma.RevenueOrderByRelationAggregateInput;
+    notifications?: Prisma.NotificationOrderByRelationAggregateInput;
+    _relevance?: Prisma.UserOrderByRelevanceInput;
+};
+export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: number;
+    email?: string;
+    avatarId?: number;
+    AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    OR?: Prisma.UserWhereInput[];
+    NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
+    password?: Prisma.StringFilter<"User"> | string;
+    firstName?: Prisma.StringNullableFilter<"User"> | string | null;
+    lastName?: Prisma.StringNullableFilter<"User"> | string | null;
+    phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null;
+    dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    role?: Prisma.StringFilter<"User"> | string;
+    verifyToken?: Prisma.StringNullableFilter<"User"> | string | null;
+    resetPasswordToken?: Prisma.StringNullableFilter<"User"> | string | null;
+    resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    isVerified?: Prisma.BoolFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null;
+    isDestroyed?: Prisma.BoolFilter<"User"> | boolean;
+    avatar?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null;
+    courses?: Prisma.CourseListRelationFilter;
+    studentConversations?: Prisma.ConversationListRelationFilter;
+    lecturerConversations?: Prisma.ConversationListRelationFilter;
+    memberConversations?: Prisma.ConversationMemberListRelationFilter;
+    sentMessages?: Prisma.MessageListRelationFilter;
+    lastSentConversations?: Prisma.ConversationListRelationFilter;
+    enrollments?: Prisma.EnrollmentListRelationFilter;
+    reviews?: Prisma.CourseReviewListRelationFilter;
+    blogPosts?: Prisma.BlogPostListRelationFilter;
+    lecturerProfile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null;
+    lecturerPayout?: Prisma.LecturerPayoutListRelationFilter;
+    submissions?: Prisma.SubmissionListRelationFilter;
+    blogComments?: Prisma.BlogCommentListRelationFilter;
+    wishlist?: Prisma.WishlistListRelationFilter;
+    cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null;
+    orders?: Prisma.OrderListRelationFilter;
+    transactions?: Prisma.TransactionListRelationFilter;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountListRelationFilter;
+    keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null;
+    revenues?: Prisma.RevenueListRelationFilter;
+    notifications?: Prisma.NotificationListRelationFilter;
+}, "id" | "email" | "avatarId">;
+export type UserOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    firstName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    lastName?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatarId?: Prisma.SortOrderInput | Prisma.SortOrder;
+    phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder;
+    dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    verifyToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder;
+    resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
+    isDestroyed?: Prisma.SortOrder;
+    _count?: Prisma.UserCountOrderByAggregateInput;
+    _avg?: Prisma.UserAvgOrderByAggregateInput;
+    _max?: Prisma.UserMaxOrderByAggregateInput;
+    _min?: Prisma.UserMinOrderByAggregateInput;
+    _sum?: Prisma.UserSumOrderByAggregateInput;
+};
+export type UserScalarWhereWithAggregatesInput = {
+    AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
+    OR?: Prisma.UserScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
+    id?: Prisma.IntWithAggregatesFilter<"User"> | number;
+    email?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    password?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    firstName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    lastName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    avatarId?: Prisma.IntNullableWithAggregatesFilter<"User"> | number | null;
+    phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null;
+    role?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    verifyToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    resetPasswordToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    resetPasswordExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null;
+    isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null;
+    isDestroyed?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+};
+export type UserCreateInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserUpdateInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateManyInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+};
+export type UserUpdateManyMutationInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+};
+export type UserUncheckedUpdateManyInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+};
+export type UserOrderByRelevanceInput = {
+    fields: Prisma.UserOrderByRelevanceFieldEnum | Prisma.UserOrderByRelevanceFieldEnum[];
+    sort: Prisma.SortOrder;
+    search: string;
+};
+export type UserCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    firstName?: Prisma.SortOrder;
+    lastName?: Prisma.SortOrder;
+    avatarId?: Prisma.SortOrder;
+    phoneNumber?: Prisma.SortOrder;
+    dateOfBirth?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    verifyToken?: Prisma.SortOrder;
+    resetPasswordToken?: Prisma.SortOrder;
+    resetPasswordExpires?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    isDestroyed?: Prisma.SortOrder;
+};
+export type UserAvgOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    avatarId?: Prisma.SortOrder;
+};
+export type UserMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    firstName?: Prisma.SortOrder;
+    lastName?: Prisma.SortOrder;
+    avatarId?: Prisma.SortOrder;
+    phoneNumber?: Prisma.SortOrder;
+    dateOfBirth?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    verifyToken?: Prisma.SortOrder;
+    resetPasswordToken?: Prisma.SortOrder;
+    resetPasswordExpires?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    isDestroyed?: Prisma.SortOrder;
+};
+export type UserMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    firstName?: Prisma.SortOrder;
+    lastName?: Prisma.SortOrder;
+    avatarId?: Prisma.SortOrder;
+    phoneNumber?: Prisma.SortOrder;
+    dateOfBirth?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    verifyToken?: Prisma.SortOrder;
+    resetPasswordToken?: Prisma.SortOrder;
+    resetPasswordExpires?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    isDestroyed?: Prisma.SortOrder;
+};
+export type UserSumOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    avatarId?: Prisma.SortOrder;
+};
+export type UserScalarRelationFilter = {
+    is?: Prisma.UserWhereInput;
+    isNot?: Prisma.UserWhereInput;
+};
+export type UserNullableScalarRelationFilter = {
+    is?: Prisma.UserWhereInput | null;
+    isNot?: Prisma.UserWhereInput | null;
+};
+export type StringFieldUpdateOperationsInput = {
+    set?: string;
+};
+export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null;
+};
+export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null;
+};
+export type BoolFieldUpdateOperationsInput = {
+    set?: boolean;
+};
+export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string;
+};
+export type IntFieldUpdateOperationsInput = {
+    set?: number;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type UserCreateNestedOneWithoutKeyTokenInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutKeyTokenInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutKeyTokenNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutKeyTokenInput;
+    upsert?: Prisma.UserUpsertWithoutKeyTokenInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutKeyTokenInput, Prisma.UserUpdateWithoutKeyTokenInput>, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>;
+};
+export type UserCreateNestedOneWithoutCoursesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCoursesInput, Prisma.UserUncheckedCreateWithoutCoursesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoursesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutCoursesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCoursesInput, Prisma.UserUncheckedCreateWithoutCoursesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCoursesInput;
+    upsert?: Prisma.UserUpsertWithoutCoursesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCoursesInput, Prisma.UserUpdateWithoutCoursesInput>, Prisma.UserUncheckedUpdateWithoutCoursesInput>;
+};
+export type UserCreateNestedOneWithoutReviewsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewsInput;
+    upsert?: Prisma.UserUpsertWithoutReviewsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+};
+export type UserCreateNestedOneWithoutAvatarInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUncheckedCreateNestedOneWithoutAvatarInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneWithoutAvatarNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput;
+    upsert?: Prisma.UserUpsertWithoutAvatarInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAvatarInput, Prisma.UserUpdateWithoutAvatarInput>, Prisma.UserUncheckedUpdateWithoutAvatarInput>;
+};
+export type UserUncheckedUpdateOneWithoutAvatarNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput;
+    upsert?: Prisma.UserUpsertWithoutAvatarInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAvatarInput, Prisma.UserUpdateWithoutAvatarInput>, Prisma.UserUncheckedUpdateWithoutAvatarInput>;
+};
+export type UserCreateNestedOneWithoutEnrollmentsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutEnrollmentsInput, Prisma.UserUncheckedCreateWithoutEnrollmentsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutEnrollmentsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutEnrollmentsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutEnrollmentsInput, Prisma.UserUncheckedCreateWithoutEnrollmentsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutEnrollmentsInput;
+    upsert?: Prisma.UserUpsertWithoutEnrollmentsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEnrollmentsInput, Prisma.UserUpdateWithoutEnrollmentsInput>, Prisma.UserUncheckedUpdateWithoutEnrollmentsInput>;
+};
+export type UserCreateNestedOneWithoutOrdersInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutOrdersInput, Prisma.UserUncheckedCreateWithoutOrdersInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrdersInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutOrdersInput, Prisma.UserUncheckedCreateWithoutOrdersInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrdersInput;
+    upsert?: Prisma.UserUpsertWithoutOrdersInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrdersInput, Prisma.UserUpdateWithoutOrdersInput>, Prisma.UserUncheckedUpdateWithoutOrdersInput>;
+};
+export type UserCreateNestedOneWithoutSubmissionsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSubmissionsInput, Prisma.UserUncheckedCreateWithoutSubmissionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubmissionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutSubmissionsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSubmissionsInput, Prisma.UserUncheckedCreateWithoutSubmissionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubmissionsInput;
+    upsert?: Prisma.UserUpsertWithoutSubmissionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.UserUpdateWithoutSubmissionsInput>, Prisma.UserUncheckedUpdateWithoutSubmissionsInput>;
+};
+export type UserCreateNestedOneWithoutBlogPostsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlogPostsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutBlogPostsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlogPostsInput;
+    upsert?: Prisma.UserUpsertWithoutBlogPostsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBlogPostsInput, Prisma.UserUpdateWithoutBlogPostsInput>, Prisma.UserUncheckedUpdateWithoutBlogPostsInput>;
+};
+export type UserCreateNestedOneWithoutBlogCommentsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBlogCommentsInput, Prisma.UserUncheckedCreateWithoutBlogCommentsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlogCommentsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutBlogCommentsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutBlogCommentsInput, Prisma.UserUncheckedCreateWithoutBlogCommentsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlogCommentsInput;
+    upsert?: Prisma.UserUpsertWithoutBlogCommentsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBlogCommentsInput, Prisma.UserUpdateWithoutBlogCommentsInput>, Prisma.UserUncheckedUpdateWithoutBlogCommentsInput>;
+};
+export type UserCreateNestedOneWithoutWishlistInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutWishlistInput, Prisma.UserUncheckedCreateWithoutWishlistInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutWishlistInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutWishlistNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutWishlistInput, Prisma.UserUncheckedCreateWithoutWishlistInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutWishlistInput;
+    upsert?: Prisma.UserUpsertWithoutWishlistInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWishlistInput, Prisma.UserUpdateWithoutWishlistInput>, Prisma.UserUncheckedUpdateWithoutWishlistInput>;
+};
+export type UserCreateNestedOneWithoutCartInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutCartNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutCartInput;
+    upsert?: Prisma.UserUpsertWithoutCartInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCartInput, Prisma.UserUpdateWithoutCartInput>, Prisma.UserUncheckedUpdateWithoutCartInput>;
+};
+export type UserCreateNestedOneWithoutTransactionsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput;
+    upsert?: Prisma.UserUpsertWithoutTransactionsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
+};
+export type UserCreateNestedOneWithoutLecturerProfileInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerProfileInput, Prisma.UserUncheckedCreateWithoutLecturerProfileInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerProfileInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutLecturerProfileNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerProfileInput, Prisma.UserUncheckedCreateWithoutLecturerProfileInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerProfileInput;
+    upsert?: Prisma.UserUpsertWithoutLecturerProfileInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLecturerProfileInput, Prisma.UserUpdateWithoutLecturerProfileInput>, Prisma.UserUncheckedUpdateWithoutLecturerProfileInput>;
+};
+export type UserCreateNestedOneWithoutLecturerPayoutInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerPayoutInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutLecturerPayoutNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerPayoutInput;
+    upsert?: Prisma.UserUpsertWithoutLecturerPayoutInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLecturerPayoutInput, Prisma.UserUpdateWithoutLecturerPayoutInput>, Prisma.UserUncheckedUpdateWithoutLecturerPayoutInput>;
+};
+export type UserCreateNestedOneWithoutLecturerPayoutAccountsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutAccountsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerPayoutAccountsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutLecturerPayoutAccountsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutAccountsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerPayoutAccountsInput;
+    upsert?: Prisma.UserUpsertWithoutLecturerPayoutAccountsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLecturerPayoutAccountsInput, Prisma.UserUpdateWithoutLecturerPayoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutLecturerPayoutAccountsInput>;
+};
+export type UserCreateNestedOneWithoutRevenuesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutRevenuesInput, Prisma.UserUncheckedCreateWithoutRevenuesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutRevenuesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneWithoutRevenuesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutRevenuesInput, Prisma.UserUncheckedCreateWithoutRevenuesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutRevenuesInput;
+    upsert?: Prisma.UserUpsertWithoutRevenuesInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRevenuesInput, Prisma.UserUpdateWithoutRevenuesInput>, Prisma.UserUncheckedUpdateWithoutRevenuesInput>;
+};
+export type UserCreateNestedOneWithoutNotificationsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput;
+    upsert?: Prisma.UserUpsertWithoutNotificationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
+};
+export type UserCreateNestedOneWithoutStudentConversationsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudentConversationsInput, Prisma.UserUncheckedCreateWithoutStudentConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutLecturerConversationsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerConversationsInput, Prisma.UserUncheckedCreateWithoutLecturerConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserCreateNestedOneWithoutLastSentConversationsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLastSentConversationsInput, Prisma.UserUncheckedCreateWithoutLastSentConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLastSentConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutStudentConversationsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutStudentConversationsInput, Prisma.UserUncheckedCreateWithoutStudentConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutStudentConversationsInput;
+    upsert?: Prisma.UserUpsertWithoutStudentConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStudentConversationsInput, Prisma.UserUpdateWithoutStudentConversationsInput>, Prisma.UserUncheckedUpdateWithoutStudentConversationsInput>;
+};
+export type UserUpdateOneRequiredWithoutLecturerConversationsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLecturerConversationsInput, Prisma.UserUncheckedCreateWithoutLecturerConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLecturerConversationsInput;
+    upsert?: Prisma.UserUpsertWithoutLecturerConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLecturerConversationsInput, Prisma.UserUpdateWithoutLecturerConversationsInput>, Prisma.UserUncheckedUpdateWithoutLecturerConversationsInput>;
+};
+export type UserUpdateOneWithoutLastSentConversationsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutLastSentConversationsInput, Prisma.UserUncheckedCreateWithoutLastSentConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutLastSentConversationsInput;
+    upsert?: Prisma.UserUpsertWithoutLastSentConversationsInput;
+    disconnect?: Prisma.UserWhereInput | boolean;
+    delete?: Prisma.UserWhereInput | boolean;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLastSentConversationsInput, Prisma.UserUpdateWithoutLastSentConversationsInput>, Prisma.UserUncheckedUpdateWithoutLastSentConversationsInput>;
+};
+export type UserCreateNestedOneWithoutMemberConversationsInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutMemberConversationsInput, Prisma.UserUncheckedCreateWithoutMemberConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutMemberConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutMemberConversationsNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutMemberConversationsInput, Prisma.UserUncheckedCreateWithoutMemberConversationsInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutMemberConversationsInput;
+    upsert?: Prisma.UserUpsertWithoutMemberConversationsInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMemberConversationsInput, Prisma.UserUpdateWithoutMemberConversationsInput>, Prisma.UserUncheckedUpdateWithoutMemberConversationsInput>;
+};
+export type UserCreateNestedOneWithoutSentMessagesInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput;
+    upsert?: Prisma.UserUpsertWithoutSentMessagesInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+};
+export type UserCreateWithoutKeyTokenInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutKeyTokenInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutKeyTokenInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>;
+};
+export type UserUpsertWithoutKeyTokenInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutKeyTokenInput, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutKeyTokenInput, Prisma.UserUncheckedCreateWithoutKeyTokenInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutKeyTokenInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutKeyTokenInput, Prisma.UserUncheckedUpdateWithoutKeyTokenInput>;
+};
+export type UserUpdateWithoutKeyTokenInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutKeyTokenInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutCoursesInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutCoursesInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutCoursesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCoursesInput, Prisma.UserUncheckedCreateWithoutCoursesInput>;
+};
+export type UserUpsertWithoutCoursesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutCoursesInput, Prisma.UserUncheckedUpdateWithoutCoursesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCoursesInput, Prisma.UserUncheckedCreateWithoutCoursesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutCoursesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutCoursesInput, Prisma.UserUncheckedUpdateWithoutCoursesInput>;
+};
+export type UserUpdateWithoutCoursesInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutCoursesInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutReviewsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutReviewsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutReviewsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+};
+export type UserUpsertWithoutReviewsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutReviewsInput, Prisma.UserUncheckedCreateWithoutReviewsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutReviewsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutReviewsInput, Prisma.UserUncheckedUpdateWithoutReviewsInput>;
+};
+export type UserUpdateWithoutReviewsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutReviewsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutAvatarInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutAvatarInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutAvatarInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+};
+export type UserUpsertWithoutAvatarInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutAvatarInput, Prisma.UserUncheckedUpdateWithoutAvatarInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutAvatarInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutAvatarInput, Prisma.UserUncheckedUpdateWithoutAvatarInput>;
+};
+export type UserUpdateWithoutAvatarInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutAvatarInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutEnrollmentsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutEnrollmentsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutEnrollmentsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutEnrollmentsInput, Prisma.UserUncheckedCreateWithoutEnrollmentsInput>;
+};
+export type UserUpsertWithoutEnrollmentsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutEnrollmentsInput, Prisma.UserUncheckedUpdateWithoutEnrollmentsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutEnrollmentsInput, Prisma.UserUncheckedCreateWithoutEnrollmentsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutEnrollmentsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutEnrollmentsInput, Prisma.UserUncheckedUpdateWithoutEnrollmentsInput>;
+};
+export type UserUpdateWithoutEnrollmentsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutEnrollmentsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutOrdersInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutOrdersInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutOrdersInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutOrdersInput, Prisma.UserUncheckedCreateWithoutOrdersInput>;
+};
+export type UserUpsertWithoutOrdersInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutOrdersInput, Prisma.UserUncheckedUpdateWithoutOrdersInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutOrdersInput, Prisma.UserUncheckedCreateWithoutOrdersInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutOrdersInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutOrdersInput, Prisma.UserUncheckedUpdateWithoutOrdersInput>;
+};
+export type UserUpdateWithoutOrdersInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutOrdersInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutSubmissionsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutSubmissionsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutSubmissionsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSubmissionsInput, Prisma.UserUncheckedCreateWithoutSubmissionsInput>;
+};
+export type UserUpsertWithoutSubmissionsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutSubmissionsInput, Prisma.UserUncheckedUpdateWithoutSubmissionsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSubmissionsInput, Prisma.UserUncheckedCreateWithoutSubmissionsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutSubmissionsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutSubmissionsInput, Prisma.UserUncheckedUpdateWithoutSubmissionsInput>;
+};
+export type UserUpdateWithoutSubmissionsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutSubmissionsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutBlogPostsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutBlogPostsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutBlogPostsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>;
+};
+export type UserUpsertWithoutBlogPostsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutBlogPostsInput, Prisma.UserUncheckedUpdateWithoutBlogPostsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutBlogPostsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutBlogPostsInput, Prisma.UserUncheckedUpdateWithoutBlogPostsInput>;
+};
+export type UserUpdateWithoutBlogPostsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutBlogPostsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutBlogCommentsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutBlogCommentsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutBlogCommentsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBlogCommentsInput, Prisma.UserUncheckedCreateWithoutBlogCommentsInput>;
+};
+export type UserUpsertWithoutBlogCommentsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutBlogCommentsInput, Prisma.UserUncheckedUpdateWithoutBlogCommentsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutBlogCommentsInput, Prisma.UserUncheckedCreateWithoutBlogCommentsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutBlogCommentsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutBlogCommentsInput, Prisma.UserUncheckedUpdateWithoutBlogCommentsInput>;
+};
+export type UserUpdateWithoutBlogCommentsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutBlogCommentsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutWishlistInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutWishlistInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutWishlistInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutWishlistInput, Prisma.UserUncheckedCreateWithoutWishlistInput>;
+};
+export type UserUpsertWithoutWishlistInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutWishlistInput, Prisma.UserUncheckedUpdateWithoutWishlistInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutWishlistInput, Prisma.UserUncheckedCreateWithoutWishlistInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutWishlistInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutWishlistInput, Prisma.UserUncheckedUpdateWithoutWishlistInput>;
+};
+export type UserUpdateWithoutWishlistInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutWishlistInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutCartInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutCartInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutCartInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>;
+};
+export type UserUpsertWithoutCartInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutCartInput, Prisma.UserUncheckedUpdateWithoutCartInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutCartInput, Prisma.UserUncheckedCreateWithoutCartInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutCartInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutCartInput, Prisma.UserUncheckedUpdateWithoutCartInput>;
+};
+export type UserUpdateWithoutCartInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutCartInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutTransactionsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutTransactionsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutTransactionsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+};
+export type UserUpsertWithoutTransactionsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>;
+};
+export type UserUpdateWithoutTransactionsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutTransactionsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutLecturerProfileInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutLecturerProfileInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLecturerProfileInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerProfileInput, Prisma.UserUncheckedCreateWithoutLecturerProfileInput>;
+};
+export type UserUpsertWithoutLecturerProfileInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLecturerProfileInput, Prisma.UserUncheckedUpdateWithoutLecturerProfileInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerProfileInput, Prisma.UserUncheckedCreateWithoutLecturerProfileInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLecturerProfileInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLecturerProfileInput, Prisma.UserUncheckedUpdateWithoutLecturerProfileInput>;
+};
+export type UserUpdateWithoutLecturerProfileInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutLecturerProfileInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutLecturerPayoutInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutLecturerPayoutInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLecturerPayoutInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutInput>;
+};
+export type UserUpsertWithoutLecturerPayoutInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLecturerPayoutInput, Prisma.UserUncheckedUpdateWithoutLecturerPayoutInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLecturerPayoutInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLecturerPayoutInput, Prisma.UserUncheckedUpdateWithoutLecturerPayoutInput>;
+};
+export type UserUpdateWithoutLecturerPayoutInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutLecturerPayoutAccountsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLecturerPayoutAccountsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutAccountsInput>;
+};
+export type UserUpsertWithoutLecturerPayoutAccountsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedUpdateWithoutLecturerPayoutAccountsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedCreateWithoutLecturerPayoutAccountsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLecturerPayoutAccountsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLecturerPayoutAccountsInput, Prisma.UserUncheckedUpdateWithoutLecturerPayoutAccountsInput>;
+};
+export type UserUpdateWithoutLecturerPayoutAccountsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutRevenuesInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutRevenuesInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutRevenuesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutRevenuesInput, Prisma.UserUncheckedCreateWithoutRevenuesInput>;
+};
+export type UserUpsertWithoutRevenuesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutRevenuesInput, Prisma.UserUncheckedUpdateWithoutRevenuesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutRevenuesInput, Prisma.UserUncheckedCreateWithoutRevenuesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutRevenuesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutRevenuesInput, Prisma.UserUncheckedUpdateWithoutRevenuesInput>;
+};
+export type UserUpdateWithoutRevenuesInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutRevenuesInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutNotificationsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+};
+export type UserUncheckedCreateWithoutNotificationsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+};
+export type UserCreateOrConnectWithoutNotificationsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
+};
+export type UserUpsertWithoutNotificationsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>;
+};
+export type UserUpdateWithoutNotificationsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+};
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+};
+export type UserCreateWithoutStudentConversationsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutStudentConversationsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutStudentConversationsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudentConversationsInput, Prisma.UserUncheckedCreateWithoutStudentConversationsInput>;
+};
+export type UserCreateWithoutLecturerConversationsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutLecturerConversationsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLecturerConversationsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerConversationsInput, Prisma.UserUncheckedCreateWithoutLecturerConversationsInput>;
+};
+export type UserCreateWithoutLastSentConversationsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutLastSentConversationsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutLastSentConversationsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLastSentConversationsInput, Prisma.UserUncheckedCreateWithoutLastSentConversationsInput>;
+};
+export type UserUpsertWithoutStudentConversationsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutStudentConversationsInput, Prisma.UserUncheckedUpdateWithoutStudentConversationsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutStudentConversationsInput, Prisma.UserUncheckedCreateWithoutStudentConversationsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutStudentConversationsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutStudentConversationsInput, Prisma.UserUncheckedUpdateWithoutStudentConversationsInput>;
+};
+export type UserUpdateWithoutStudentConversationsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutStudentConversationsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserUpsertWithoutLecturerConversationsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLecturerConversationsInput, Prisma.UserUncheckedUpdateWithoutLecturerConversationsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLecturerConversationsInput, Prisma.UserUncheckedCreateWithoutLecturerConversationsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLecturerConversationsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLecturerConversationsInput, Prisma.UserUncheckedUpdateWithoutLecturerConversationsInput>;
+};
+export type UserUpdateWithoutLecturerConversationsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserUpsertWithoutLastSentConversationsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutLastSentConversationsInput, Prisma.UserUncheckedUpdateWithoutLastSentConversationsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutLastSentConversationsInput, Prisma.UserUncheckedCreateWithoutLastSentConversationsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutLastSentConversationsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutLastSentConversationsInput, Prisma.UserUncheckedUpdateWithoutLastSentConversationsInput>;
+};
+export type UserUpdateWithoutLastSentConversationsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutMemberConversationsInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutMemberConversationsInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutMemberConversationsInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutMemberConversationsInput, Prisma.UserUncheckedCreateWithoutMemberConversationsInput>;
+};
+export type UserUpsertWithoutMemberConversationsInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutMemberConversationsInput, Prisma.UserUncheckedUpdateWithoutMemberConversationsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutMemberConversationsInput, Prisma.UserUncheckedCreateWithoutMemberConversationsInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutMemberConversationsInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutMemberConversationsInput, Prisma.UserUncheckedUpdateWithoutMemberConversationsInput>;
+};
+export type UserUpdateWithoutMemberConversationsInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutMemberConversationsInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+export type UserCreateWithoutSentMessagesInput = {
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput;
+    courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput;
+    lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput;
+};
+export type UserUncheckedCreateWithoutSentMessagesInput = {
+    id?: number;
+    email: string;
+    password: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    avatarId?: number | null;
+    phoneNumber?: string | null;
+    dateOfBirth?: Date | string | null;
+    role?: string;
+    verifyToken?: string | null;
+    resetPasswordToken?: string | null;
+    resetPasswordExpires?: Date | string | null;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string | null;
+    isDestroyed?: boolean;
+    courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput;
+    studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput;
+    lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput;
+    lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput;
+    reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput;
+    blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput;
+    submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput;
+    blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput;
+    wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput;
+    cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput;
+    orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput;
+    transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput;
+    keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput;
+    revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput;
+    notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput;
+};
+export type UserCreateOrConnectWithoutSentMessagesInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+};
+export type UserUpsertWithoutSentMessagesInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutSentMessagesInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutSentMessagesInput, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>;
+};
+export type UserUpdateWithoutSentMessagesInput = {
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput;
+    courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput;
+    lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutSentMessagesInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    role?: Prisma.StringFieldUpdateOperationsInput | string;
+    verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput;
+    studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput;
+    lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput;
+    memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput;
+    lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput;
+    reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput;
+    blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput;
+    lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput;
+    lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput;
+    submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput;
+    blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput;
+    wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput;
+    cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput;
+    orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput;
+    transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput;
+    lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput;
+    keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput;
+    revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput;
+    notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput;
+};
+/**
+ * Count Type UserCountOutputType
+ */
+export type UserCountOutputType = {
+    courses: number;
+    studentConversations: number;
+    lecturerConversations: number;
+    memberConversations: number;
+    sentMessages: number;
+    lastSentConversations: number;
+    enrollments: number;
+    reviews: number;
+    blogPosts: number;
+    lecturerPayout: number;
+    submissions: number;
+    blogComments: number;
+    wishlist: number;
+    orders: number;
+    transactions: number;
+    lecturerPayoutAccounts: number;
+    revenues: number;
+    notifications: number;
+};
+export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    courses?: boolean | UserCountOutputTypeCountCoursesArgs;
+    studentConversations?: boolean | UserCountOutputTypeCountStudentConversationsArgs;
+    lecturerConversations?: boolean | UserCountOutputTypeCountLecturerConversationsArgs;
+    memberConversations?: boolean | UserCountOutputTypeCountMemberConversationsArgs;
+    sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs;
+    lastSentConversations?: boolean | UserCountOutputTypeCountLastSentConversationsArgs;
+    enrollments?: boolean | UserCountOutputTypeCountEnrollmentsArgs;
+    reviews?: boolean | UserCountOutputTypeCountReviewsArgs;
+    blogPosts?: boolean | UserCountOutputTypeCountBlogPostsArgs;
+    lecturerPayout?: boolean | UserCountOutputTypeCountLecturerPayoutArgs;
+    submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs;
+    blogComments?: boolean | UserCountOutputTypeCountBlogCommentsArgs;
+    wishlist?: boolean | UserCountOutputTypeCountWishlistArgs;
+    orders?: boolean | UserCountOutputTypeCountOrdersArgs;
+    transactions?: boolean | UserCountOutputTypeCountTransactionsArgs;
+    lecturerPayoutAccounts?: boolean | UserCountOutputTypeCountLecturerPayoutAccountsArgs;
+    revenues?: boolean | UserCountOutputTypeCountRevenuesArgs;
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCoursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.CourseWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountStudentConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLecturerConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountMemberConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationMemberWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.MessageWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLastSentConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ConversationWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.EnrollmentWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.CourseReviewWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBlogPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BlogPostWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLecturerPayoutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.LecturerPayoutWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.SubmissionWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBlogCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BlogCommentWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWishlistArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.WishlistWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.OrderWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.TransactionWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLecturerPayoutAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.LecturerPayoutAccountWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRevenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.RevenueWhereInput;
+};
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.NotificationWhereInput;
+};
+export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    email?: boolean;
+    password?: boolean;
+    firstName?: boolean;
+    lastName?: boolean;
+    avatarId?: boolean;
+    phoneNumber?: boolean;
+    dateOfBirth?: boolean;
+    role?: boolean;
+    verifyToken?: boolean;
+    resetPasswordToken?: boolean;
+    resetPasswordExpires?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    isDestroyed?: boolean;
+    avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>;
+    courses?: boolean | Prisma.User$coursesArgs<ExtArgs>;
+    studentConversations?: boolean | Prisma.User$studentConversationsArgs<ExtArgs>;
+    lecturerConversations?: boolean | Prisma.User$lecturerConversationsArgs<ExtArgs>;
+    memberConversations?: boolean | Prisma.User$memberConversationsArgs<ExtArgs>;
+    sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>;
+    lastSentConversations?: boolean | Prisma.User$lastSentConversationsArgs<ExtArgs>;
+    enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>;
+    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+    blogPosts?: boolean | Prisma.User$blogPostsArgs<ExtArgs>;
+    lecturerProfile?: boolean | Prisma.User$lecturerProfileArgs<ExtArgs>;
+    lecturerPayout?: boolean | Prisma.User$lecturerPayoutArgs<ExtArgs>;
+    submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>;
+    blogComments?: boolean | Prisma.User$blogCommentsArgs<ExtArgs>;
+    wishlist?: boolean | Prisma.User$wishlistArgs<ExtArgs>;
+    cart?: boolean | Prisma.User$cartArgs<ExtArgs>;
+    orders?: boolean | Prisma.User$ordersArgs<ExtArgs>;
+    transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
+    lecturerPayoutAccounts?: boolean | Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>;
+    keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>;
+    revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>;
+    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["user"]>;
+export type UserSelectScalar = {
+    id?: boolean;
+    email?: boolean;
+    password?: boolean;
+    firstName?: boolean;
+    lastName?: boolean;
+    avatarId?: boolean;
+    phoneNumber?: boolean;
+    dateOfBirth?: boolean;
+    role?: boolean;
+    verifyToken?: boolean;
+    resetPasswordToken?: boolean;
+    resetPasswordExpires?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    isDestroyed?: boolean;
+};
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "firstName" | "lastName" | "avatarId" | "phoneNumber" | "dateOfBirth" | "role" | "verifyToken" | "resetPasswordToken" | "resetPasswordExpires" | "isVerified" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["user"]>;
+export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>;
+    courses?: boolean | Prisma.User$coursesArgs<ExtArgs>;
+    studentConversations?: boolean | Prisma.User$studentConversationsArgs<ExtArgs>;
+    lecturerConversations?: boolean | Prisma.User$lecturerConversationsArgs<ExtArgs>;
+    memberConversations?: boolean | Prisma.User$memberConversationsArgs<ExtArgs>;
+    sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>;
+    lastSentConversations?: boolean | Prisma.User$lastSentConversationsArgs<ExtArgs>;
+    enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>;
+    reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>;
+    blogPosts?: boolean | Prisma.User$blogPostsArgs<ExtArgs>;
+    lecturerProfile?: boolean | Prisma.User$lecturerProfileArgs<ExtArgs>;
+    lecturerPayout?: boolean | Prisma.User$lecturerPayoutArgs<ExtArgs>;
+    submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>;
+    blogComments?: boolean | Prisma.User$blogCommentsArgs<ExtArgs>;
+    wishlist?: boolean | Prisma.User$wishlistArgs<ExtArgs>;
+    cart?: boolean | Prisma.User$cartArgs<ExtArgs>;
+    orders?: boolean | Prisma.User$ordersArgs<ExtArgs>;
+    transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>;
+    lecturerPayoutAccounts?: boolean | Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>;
+    keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>;
+    revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>;
+    notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>;
+    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "User";
+    objects: {
+        avatar: Prisma.$ResourcePayload<ExtArgs> | null;
+        courses: Prisma.$CoursePayload<ExtArgs>[];
+        studentConversations: Prisma.$ConversationPayload<ExtArgs>[];
+        lecturerConversations: Prisma.$ConversationPayload<ExtArgs>[];
+        memberConversations: Prisma.$ConversationMemberPayload<ExtArgs>[];
+        sentMessages: Prisma.$MessagePayload<ExtArgs>[];
+        lastSentConversations: Prisma.$ConversationPayload<ExtArgs>[];
+        enrollments: Prisma.$EnrollmentPayload<ExtArgs>[];
+        reviews: Prisma.$CourseReviewPayload<ExtArgs>[];
+        blogPosts: Prisma.$BlogPostPayload<ExtArgs>[];
+        lecturerProfile: Prisma.$LecturerProfilePayload<ExtArgs> | null;
+        lecturerPayout: Prisma.$LecturerPayoutPayload<ExtArgs>[];
+        submissions: Prisma.$SubmissionPayload<ExtArgs>[];
+        blogComments: Prisma.$BlogCommentPayload<ExtArgs>[];
+        wishlist: Prisma.$WishlistPayload<ExtArgs>[];
+        cart: Prisma.$CartPayload<ExtArgs> | null;
+        orders: Prisma.$OrderPayload<ExtArgs>[];
+        transactions: Prisma.$TransactionPayload<ExtArgs>[];
+        lecturerPayoutAccounts: Prisma.$LecturerPayoutAccountPayload<ExtArgs>[];
+        keyToken: Prisma.$KeyTokenPayload<ExtArgs> | null;
+        revenues: Prisma.$RevenuePayload<ExtArgs>[];
+        notifications: Prisma.$NotificationPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: number;
+        email: string;
+        password: string;
+        firstName: string | null;
+        lastName: string | null;
+        avatarId: number | null;
+        phoneNumber: string | null;
+        dateOfBirth: Date | null;
+        role: string;
+        verifyToken: string | null;
+        resetPasswordToken: string | null;
+        resetPasswordExpires: Date | null;
+        isVerified: boolean;
+        createdAt: Date;
+        updatedAt: Date | null;
+        isDestroyed: boolean;
+    }, ExtArgs["result"]["user"]>;
+    composites: {};
+};
+export type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$UserPayload, S>;
+export type UserCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: UserCountAggregateInputType | true;
+};
+export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['User'];
+        meta: {
+            name: 'User';
+        };
+    };
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: Prisma.SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: Prisma.SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     *
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends UserFindManyArgs>(args?: Prisma.SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     *
+     */
+    create<T extends UserCreateArgs>(args: Prisma.SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends UserCreateManyArgs>(args?: Prisma.SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     *
+     */
+    delete<T extends UserDeleteArgs>(args: Prisma.SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends UserUpdateArgs>(args: Prisma.SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: Prisma.SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: Prisma.SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: Prisma.SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(args?: Prisma.Subset<T, UserCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], UserCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Prisma.Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>;
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends UserGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: UserGroupByArgs['orderBy'];
+    } : {
+        orderBy?: UserGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the User model
+     */
+    readonly fields: UserFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for User.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    avatar<T extends Prisma.User$avatarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$avatarArgs<ExtArgs>>): Prisma.Prisma__ResourceClient<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    courses<T extends Prisma.User$coursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    studentConversations<T extends Prisma.User$studentConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$studentConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lecturerConversations<T extends Prisma.User$lecturerConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    memberConversations<T extends Prisma.User$memberConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$memberConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lastSentConversations<T extends Prisma.User$lastSentConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lastSentConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    enrollments<T extends Prisma.User$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    blogPosts<T extends Prisma.User$blogPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blogPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lecturerProfile<T extends Prisma.User$lecturerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerProfileArgs<ExtArgs>>): Prisma.Prisma__LecturerProfileClient<runtime.Types.Result.GetResult<Prisma.$LecturerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    lecturerPayout<T extends Prisma.User$lecturerPayoutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerPayoutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LecturerPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    submissions<T extends Prisma.User$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    blogComments<T extends Prisma.User$blogCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blogCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    wishlist<T extends Prisma.User$wishlistArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$wishlistArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WishlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    cart<T extends Prisma.User$cartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    lecturerPayoutAccounts<T extends Prisma.User$lecturerPayoutAccountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerPayoutAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LecturerPayoutAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    keyToken<T extends Prisma.User$keyTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$keyTokenArgs<ExtArgs>>): Prisma.Prisma__KeyTokenClient<runtime.Types.Result.GetResult<Prisma.$KeyTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    revenues<T extends Prisma.User$revenuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$revenuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the User model
+ */
+export interface UserFieldRefs {
+    readonly id: Prisma.FieldRef<"User", 'Int'>;
+    readonly email: Prisma.FieldRef<"User", 'String'>;
+    readonly password: Prisma.FieldRef<"User", 'String'>;
+    readonly firstName: Prisma.FieldRef<"User", 'String'>;
+    readonly lastName: Prisma.FieldRef<"User", 'String'>;
+    readonly avatarId: Prisma.FieldRef<"User", 'Int'>;
+    readonly phoneNumber: Prisma.FieldRef<"User", 'String'>;
+    readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly role: Prisma.FieldRef<"User", 'String'>;
+    readonly verifyToken: Prisma.FieldRef<"User", 'String'>;
+    readonly resetPasswordToken: Prisma.FieldRef<"User", 'String'>;
+    readonly resetPasswordExpires: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>;
+    readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly isDestroyed: Prisma.FieldRef<"User", 'Boolean'>;
+}
+/**
+ * User findUnique
+ */
+export type UserFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User findUniqueOrThrow
+ */
+export type UserFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User findFirst
+ */
+export type UserFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User findFirstOrThrow
+ */
+export type UserFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Users.
+     */
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User findMany
+ */
+export type UserFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Users.
+     */
+    cursor?: Prisma.UserWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Users.
+     */
+    skip?: number;
+    distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[];
+};
+/**
+ * User create
+ */
+export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a User.
+     */
+    data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>;
+};
+/**
+ * User createMany
+ */
+export type UserCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * User update
+ */
+export type UserUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a User.
+     */
+    data: Prisma.XOR<Prisma.UserUpdateInput, Prisma.UserUncheckedUpdateInput>;
+    /**
+     * Choose, which User to update.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User updateMany
+ */
+export type UserUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyInput>;
+    /**
+     * Filter which Users to update
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number;
+};
+/**
+ * User upsert
+ */
+export type UserUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: Prisma.UserWhereUniqueInput;
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>;
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.UserUpdateInput, Prisma.UserUncheckedUpdateInput>;
+};
+/**
+ * User delete
+ */
+export type UserDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+    /**
+     * Filter which User to delete.
+     */
+    where: Prisma.UserWhereUniqueInput;
+};
+/**
+ * User deleteMany
+ */
+export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: Prisma.UserWhereInput;
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number;
+};
+/**
+ * User.avatar
+ */
+export type User$avatarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: Prisma.ResourceSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: Prisma.ResourceOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ResourceInclude<ExtArgs> | null;
+    where?: Prisma.ResourceWhereInput;
+};
+/**
+ * User.courses
+ */
+export type User$coursesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: Prisma.CourseSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: Prisma.CourseOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CourseInclude<ExtArgs> | null;
+    where?: Prisma.CourseWhereInput;
+    orderBy?: Prisma.CourseOrderByWithRelationInput | Prisma.CourseOrderByWithRelationInput[];
+    cursor?: Prisma.CourseWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CourseScalarFieldEnum | Prisma.CourseScalarFieldEnum[];
+};
+/**
+ * User.studentConversations
+ */
+export type User$studentConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
+};
+/**
+ * User.lecturerConversations
+ */
+export type User$lecturerConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
+};
+/**
+ * User.memberConversations
+ */
+export type User$memberConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMember
+     */
+    select?: Prisma.ConversationMemberSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ConversationMember
+     */
+    omit?: Prisma.ConversationMemberOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationMemberInclude<ExtArgs> | null;
+    where?: Prisma.ConversationMemberWhereInput;
+    orderBy?: Prisma.ConversationMemberOrderByWithRelationInput | Prisma.ConversationMemberOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationMemberWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationMemberScalarFieldEnum | Prisma.ConversationMemberScalarFieldEnum[];
+};
+/**
+ * User.sentMessages
+ */
+export type User$sentMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Message
+     */
+    select?: Prisma.MessageSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Message
+     */
+    omit?: Prisma.MessageOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.MessageInclude<ExtArgs> | null;
+    where?: Prisma.MessageWhereInput;
+    orderBy?: Prisma.MessageOrderByWithRelationInput | Prisma.MessageOrderByWithRelationInput[];
+    cursor?: Prisma.MessageWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[];
+};
+/**
+ * User.lastSentConversations
+ */
+export type User$lastSentConversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: Prisma.ConversationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: Prisma.ConversationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ConversationInclude<ExtArgs> | null;
+    where?: Prisma.ConversationWhereInput;
+    orderBy?: Prisma.ConversationOrderByWithRelationInput | Prisma.ConversationOrderByWithRelationInput[];
+    cursor?: Prisma.ConversationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ConversationScalarFieldEnum | Prisma.ConversationScalarFieldEnum[];
+};
+/**
+ * User.enrollments
+ */
+export type User$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Enrollment
+     */
+    select?: Prisma.EnrollmentSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Enrollment
+     */
+    omit?: Prisma.EnrollmentOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.EnrollmentInclude<ExtArgs> | null;
+    where?: Prisma.EnrollmentWhereInput;
+    orderBy?: Prisma.EnrollmentOrderByWithRelationInput | Prisma.EnrollmentOrderByWithRelationInput[];
+    cursor?: Prisma.EnrollmentWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.EnrollmentScalarFieldEnum | Prisma.EnrollmentScalarFieldEnum[];
+};
+/**
+ * User.reviews
+ */
+export type User$reviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourseReview
+     */
+    select?: Prisma.CourseReviewSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CourseReview
+     */
+    omit?: Prisma.CourseReviewOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CourseReviewInclude<ExtArgs> | null;
+    where?: Prisma.CourseReviewWhereInput;
+    orderBy?: Prisma.CourseReviewOrderByWithRelationInput | Prisma.CourseReviewOrderByWithRelationInput[];
+    cursor?: Prisma.CourseReviewWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CourseReviewScalarFieldEnum | Prisma.CourseReviewScalarFieldEnum[];
+};
+/**
+ * User.blogPosts
+ */
+export type User$blogPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BlogPost
+     */
+    select?: Prisma.BlogPostSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the BlogPost
+     */
+    omit?: Prisma.BlogPostOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BlogPostInclude<ExtArgs> | null;
+    where?: Prisma.BlogPostWhereInput;
+    orderBy?: Prisma.BlogPostOrderByWithRelationInput | Prisma.BlogPostOrderByWithRelationInput[];
+    cursor?: Prisma.BlogPostWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BlogPostScalarFieldEnum | Prisma.BlogPostScalarFieldEnum[];
+};
+/**
+ * User.lecturerProfile
+ */
+export type User$lecturerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LecturerProfile
+     */
+    select?: Prisma.LecturerProfileSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LecturerProfile
+     */
+    omit?: Prisma.LecturerProfileOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LecturerProfileInclude<ExtArgs> | null;
+    where?: Prisma.LecturerProfileWhereInput;
+};
+/**
+ * User.lecturerPayout
+ */
+export type User$lecturerPayoutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LecturerPayout
+     */
+    select?: Prisma.LecturerPayoutSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LecturerPayout
+     */
+    omit?: Prisma.LecturerPayoutOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LecturerPayoutInclude<ExtArgs> | null;
+    where?: Prisma.LecturerPayoutWhereInput;
+    orderBy?: Prisma.LecturerPayoutOrderByWithRelationInput | Prisma.LecturerPayoutOrderByWithRelationInput[];
+    cursor?: Prisma.LecturerPayoutWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.LecturerPayoutScalarFieldEnum | Prisma.LecturerPayoutScalarFieldEnum[];
+};
+/**
+ * User.submissions
+ */
+export type User$submissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Submission
+     */
+    select?: Prisma.SubmissionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Submission
+     */
+    omit?: Prisma.SubmissionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.SubmissionInclude<ExtArgs> | null;
+    where?: Prisma.SubmissionWhereInput;
+    orderBy?: Prisma.SubmissionOrderByWithRelationInput | Prisma.SubmissionOrderByWithRelationInput[];
+    cursor?: Prisma.SubmissionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.SubmissionScalarFieldEnum | Prisma.SubmissionScalarFieldEnum[];
+};
+/**
+ * User.blogComments
+ */
+export type User$blogCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BlogComment
+     */
+    select?: Prisma.BlogCommentSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the BlogComment
+     */
+    omit?: Prisma.BlogCommentOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BlogCommentInclude<ExtArgs> | null;
+    where?: Prisma.BlogCommentWhereInput;
+    orderBy?: Prisma.BlogCommentOrderByWithRelationInput | Prisma.BlogCommentOrderByWithRelationInput[];
+    cursor?: Prisma.BlogCommentWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BlogCommentScalarFieldEnum | Prisma.BlogCommentScalarFieldEnum[];
+};
+/**
+ * User.wishlist
+ */
+export type User$wishlistArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Wishlist
+     */
+    select?: Prisma.WishlistSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Wishlist
+     */
+    omit?: Prisma.WishlistOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.WishlistInclude<ExtArgs> | null;
+    where?: Prisma.WishlistWhereInput;
+    orderBy?: Prisma.WishlistOrderByWithRelationInput | Prisma.WishlistOrderByWithRelationInput[];
+    cursor?: Prisma.WishlistWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.WishlistScalarFieldEnum | Prisma.WishlistScalarFieldEnum[];
+};
+/**
+ * User.cart
+ */
+export type User$cartArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cart
+     */
+    select?: Prisma.CartSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Cart
+     */
+    omit?: Prisma.CartOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CartInclude<ExtArgs> | null;
+    where?: Prisma.CartWhereInput;
+};
+/**
+ * User.orders
+ */
+export type User$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: Prisma.OrderSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: Prisma.OrderOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.OrderInclude<ExtArgs> | null;
+    where?: Prisma.OrderWhereInput;
+    orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[];
+    cursor?: Prisma.OrderWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[];
+};
+/**
+ * User.transactions
+ */
+export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: Prisma.TransactionSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: Prisma.TransactionOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TransactionInclude<ExtArgs> | null;
+    where?: Prisma.TransactionWhereInput;
+    orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[];
+    cursor?: Prisma.TransactionWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[];
+};
+/**
+ * User.lecturerPayoutAccounts
+ */
+export type User$lecturerPayoutAccountsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LecturerPayoutAccount
+     */
+    select?: Prisma.LecturerPayoutAccountSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the LecturerPayoutAccount
+     */
+    omit?: Prisma.LecturerPayoutAccountOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.LecturerPayoutAccountInclude<ExtArgs> | null;
+    where?: Prisma.LecturerPayoutAccountWhereInput;
+    orderBy?: Prisma.LecturerPayoutAccountOrderByWithRelationInput | Prisma.LecturerPayoutAccountOrderByWithRelationInput[];
+    cursor?: Prisma.LecturerPayoutAccountWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.LecturerPayoutAccountScalarFieldEnum | Prisma.LecturerPayoutAccountScalarFieldEnum[];
+};
+/**
+ * User.keyToken
+ */
+export type User$keyTokenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeyToken
+     */
+    select?: Prisma.KeyTokenSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the KeyToken
+     */
+    omit?: Prisma.KeyTokenOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.KeyTokenInclude<ExtArgs> | null;
+    where?: Prisma.KeyTokenWhereInput;
+};
+/**
+ * User.revenues
+ */
+export type User$revenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Revenue
+     */
+    select?: Prisma.RevenueSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Revenue
+     */
+    omit?: Prisma.RevenueOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.RevenueInclude<ExtArgs> | null;
+    where?: Prisma.RevenueWhereInput;
+    orderBy?: Prisma.RevenueOrderByWithRelationInput | Prisma.RevenueOrderByWithRelationInput[];
+    cursor?: Prisma.RevenueWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.RevenueScalarFieldEnum | Prisma.RevenueScalarFieldEnum[];
+};
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: Prisma.NotificationSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: Prisma.NotificationOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.NotificationInclude<ExtArgs> | null;
+    where?: Prisma.NotificationWhereInput;
+    orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[];
+    cursor?: Prisma.NotificationWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[];
+};
+/**
+ * User without action
+ */
+export type UserDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: Prisma.UserSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: Prisma.UserOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.UserInclude<ExtArgs> | null;
+};
+export {};
+//# sourceMappingURL=User.d.ts.map

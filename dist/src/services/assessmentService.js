@@ -1,0 +1,174 @@
+import ApiError from "@/utils/ApiError.js";
+import { StatusCodes } from "http-status-codes";
+import { prisma } from "../lib/prisma.js";
+const createAssessment = async (data) => {
+    try {
+        // check assessment existence
+        const checkAssessment = await prisma.assessment.findFirst({
+            where: {
+                title: data.title,
+                isDestroyed: false,
+            },
+        });
+        if (checkAssessment) {
+            throw new ApiError(StatusCodes.CONFLICT, "Assessment already exists!");
+        }
+        // create new assessment
+        const newAssessment = await prisma.assessment.create({
+            data: {
+                courseId: Number(data.courseId),
+                lessonId: data.lessonId,
+                title: data.title,
+                type: data.type || "quiz",
+                dueDate: data.dueDate,
+                status: "published",
+                totalSubmissions: 0,
+                averageScore: 0,
+            },
+        });
+        return newAssessment;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const getAssessmentsForLecturer = async (lecturerId) => {
+    try {
+        const assessments = await prisma.assessment.findMany({
+            where: { course: { lecturerId: Number(lecturerId) } },
+            include: {
+                course: {
+                    select: { name: true, _count: { select: { enrollments: true } } },
+                },
+                submissions: {
+                    select: {
+                        score: true,
+                    },
+                },
+            },
+            orderBy: { createdAt: "desc" },
+        });
+        return assessments.map((a) => {
+            const totalSubmissions = a.submissions.length;
+            const totalScore = a.submissions.reduce((acc, sub) => acc + (sub.score || 0), 0);
+            const averageScore = totalSubmissions > 0 ? totalScore / totalSubmissions : 0;
+            return {
+                id: a.id,
+                title: a.title,
+                courseName: a.course?.name,
+                submissionsText: `${totalSubmissions}/${a.course?._count.enrollments}`,
+                status: a.dueDate && new Date(a.dueDate) < new Date() ? "Closed" : "Open",
+                dueDate: a.dueDate,
+                averageScore,
+                totalSubmissions,
+                type: a.type,
+                lessonId: a.lessonId,
+                isDestroyed: a.isDestroyed,
+                courseId: a.courseId,
+                createdAt: a.createdAt,
+                updatedAt: a.updatedAt,
+            };
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const getAssessmentById = async (id) => {
+    return await prisma.assessment.findUnique({ where: { id: Number(id) } });
+};
+const getSubmissionsDetail = async (assessmentId) => {
+    try {
+        const submissionDetails = await prisma.submission.findMany({
+            where: { assessmentId: Number(assessmentId) },
+            include: {
+                student: {
+                    select: { id: true, firstName: true, lastName: true, avatar: true },
+                },
+            },
+            orderBy: { score: "desc" },
+        });
+        return submissionDetails;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const updateAssessment = async (id, data) => {
+    try {
+        const updateData = {
+            title: data?.title,
+            status: data?.status,
+        };
+        if (data?.dueDate) {
+            updateData.dueDate = new Date(data.dueDate);
+        }
+        const updatedAssessment = await prisma.assessment.update({
+            where: { id: Number(id) },
+            data: updateData,
+        });
+        return updatedAssessment;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const updateFeedback = async (submissionId, feedback) => {
+    try {
+        // check submission existence
+        const checkSubmission = await prisma.submission.findUnique({
+            where: { id: Number(submissionId), isDestroyed: false },
+        });
+        if (!checkSubmission) {
+            throw new ApiError(StatusCodes.NOT_FOUND, "Submission not found!");
+        }
+        const updatedFeedback = await prisma.submission.update({
+            where: { id: Number(submissionId) },
+            data: { feedback },
+        });
+        return updatedFeedback;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const deleteAssessment = async (id) => {
+    return await prisma.assessment.update({
+        where: { id: Number(id) },
+        data: { isDestroyed: true },
+    });
+};
+const updateAssessmentStats = async (assessmentId) => {
+    try {
+        const submissions = await prisma.submission.findMany({
+            where: {
+                assessmentId: assessmentId,
+                isDestroyed: false,
+            },
+        });
+        const totalSubmissions = submissions.length;
+        const totalScore = submissions.reduce((acc, sub) => acc + (sub.score || 0), 0);
+        const averageScore = totalSubmissions > 0 ? totalScore / totalSubmissions : 0;
+        await prisma.assessment.update({
+            where: { id: assessmentId },
+            data: {
+                totalSubmissions,
+                averageScore,
+            },
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+};
+export const assessmentService = {
+    createAssessment,
+    getAssessmentsForLecturer,
+    getAssessmentById,
+    getSubmissionsDetail,
+    updateAssessment,
+    updateFeedback,
+    deleteAssessment,
+    updateAssessmentStats,
+};
+//# sourceMappingURL=assessmentService.js.map

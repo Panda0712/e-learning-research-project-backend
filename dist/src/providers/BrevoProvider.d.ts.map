@@ -1,0 +1,1 @@
+{"version":3,"file":"BrevoProvider.d.ts","sourceRoot":"","sources":["../../../src/providers/BrevoProvider.ts"],"names":[],"mappings":"AACA,OAAO,WAAW,MAAM,iBAAiB,CAAC;AAO1C,UAAU,eAAe;IACvB,cAAc,EAAE,MAAM,CAAC;IACvB,OAAO,EAAE,MAAM,CAAC;IAChB,WAAW,EAAE,MAAM,CAAC;CACrB;AA6BD,eAAO,MAAM,aAAa;2DAvBvB,eAAe;;;;CAyBjB,CAAC"}

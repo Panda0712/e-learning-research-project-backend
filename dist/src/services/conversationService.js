@@ -1,0 +1,379 @@
+import { prisma } from "@/lib/prisma.js";
+import { getIO } from "@/socket/index.js";
+import ApiError from "@/utils/ApiError.js";
+import { normalizeConversationRole } from "@/utils/helpers.js";
+import { StatusCodes } from "http-status-codes";
+import { chatRepo } from "./repo/chatRepo.js";
+const getSocketIO = () => getIO();
+const conversationInclude = {
+    members: {
+        include: {
+            user: {
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    avatar: {
+                        select: {
+                            fileUrl: true,
+                        },
+                    },
+                },
+            },
+        },
+    },
+    lastMessageSender: {
+        select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            avatar: {
+                select: {
+                    fileUrl: true,
+                },
+            },
+        },
+    },
+};
+const buildConversationPayload = (conversation, currentUserId) => {
+    const participants = conversation.members.map((member) => ({
+        id: member.user.id,
+        firstName: member.user.firstName,
+        lastName: member.user.lastName,
+        avatarUrl: member.user.avatar?.fileUrl ?? null,
+        role: normalizeConversationRole(member.role),
+        joinedAt: member.joinedAt,
+        lastReadAt: member.lastReadAt,
+        unreadCount: member.unreadCount,
+    }));
+    const unreadCounts = Object.fromEntries(conversation.members.map((member) => [
+        member.userId.toString(),
+        member.unreadCount,
+    ]));
+    const seenBy = conversation.members
+        .filter((member) => conversation.lastMessageId &&
+        member.lastSeenMessageId === conversation.lastMessageId)
+        .map((member) => ({
+        id: member.user.id,
+        firstName: member.user.firstName,
+        lastName: member.user.lastName,
+        avatarUrl: member.user.avatar?.fileUrl ?? null,
+    }));
+    const myMember = conversation.members.find((member) => member.userId === currentUserId);
+    return {
+        id: conversation.id,
+        studentId: conversation.studentId,
+        lecturerId: conversation.lecturerId,
+        lastMessageId: conversation.lastMessageId,
+        lastMessageContent: conversation.lastMessageContent,
+        lastMessageSenderId: conversation.lastMessageSenderId,
+        lastMessageAt: conversation.lastMessageAt,
+        createdAt: conversation.createdAt,
+        updatedAt: conversation.updatedAt,
+        participants,
+        seenBy,
+        unreadCounts,
+        myUnreadCount: myMember?.unreadCount ?? 0,
+    };
+};
+const resolveStudentLecturerPair = async (userAId, userBId) => {
+    if (userAId === userBId) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Student and lecturer must be 2 different users.");
+    }
+    const users = await prisma.user.findMany({
+        where: {
+            id: { in: [userAId, userBId] },
+            isDestroyed: false,
+        },
+        select: {
+            id: true,
+            role: true,
+        },
+    });
+    if (users.length !== 2) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "User not found.");
+    }
+    const userA = users.find((user) => user.id === userAId);
+    const userB = users.find((user) => user.id === userBId);
+    if (!userA || !userB) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "User not found.");
+    }
+    const roleA = userA.role.toLowerCase();
+    const roleB = userB.role.toLowerCase();
+    if (roleA === "student" && roleB === "lecturer") {
+        return { studentId: userA.id, lecturerId: userB.id };
+    }
+    if (roleA === "lecturer" && roleB === "student") {
+        return { studentId: userB.id, lecturerId: userA.id };
+    }
+    throw new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, "Direct conversation only supports student and lecturer.");
+};
+const ensureConversationMember = async (conversationId, userId) => {
+    const member = await prisma.conversationMember.findUnique({
+        where: {
+            conversationId_userId: {
+                conversationId,
+                userId,
+            },
+        },
+    });
+    if (!member) {
+        throw new ApiError(StatusCodes.FORBIDDEN, "You do not have permission to access this conversation.");
+    }
+    return member;
+};
+const createConversation = async (currentUserId, recipientId) => {
+    const sender = await prisma.user.findUnique({
+        where: { id: currentUserId, isDestroyed: false },
+        select: { role: true },
+    });
+    if (sender?.role?.toLowerCase() !== "student") {
+        throw new ApiError(StatusCodes.FORBIDDEN, "Only students can start a new conversation.");
+    }
+    const { studentId, lecturerId } = await resolveStudentLecturerPair(currentUserId, recipientId);
+    await chatRepo.ensureStudentCanChatWithLecturer({
+        studentId,
+        lecturerId,
+    });
+    const existedConversation = await prisma.conversation.findFirst({
+        where: {
+            studentId,
+            lecturerId,
+            isDestroyed: false,
+        },
+        include: conversationInclude,
+    });
+    if (existedConversation) {
+        return {
+            conversation: buildConversationPayload(existedConversation, currentUserId),
+        };
+    }
+    const conversation = await prisma.$transaction(async (tx) => {
+        const upsertConversation = await tx.conversation.upsert({
+            where: {
+                studentId_lecturerId: {
+                    studentId,
+                    lecturerId,
+                },
+            },
+            update: {
+                isDestroyed: false,
+            },
+            create: {
+                studentId,
+                lecturerId,
+                members: {
+                    create: [
+                        {
+                            userId: studentId,
+                            role: "STUDENT",
+                        },
+                        {
+                            userId: lecturerId,
+                            role: "LECTURER",
+                        },
+                    ],
+                },
+            },
+        });
+        await tx.conversationMember.upsert({
+            where: {
+                conversationId_userId: {
+                    conversationId: upsertConversation.id,
+                    userId: studentId,
+                },
+            },
+            update: {
+                role: "STUDENT",
+            },
+            create: {
+                conversationId: upsertConversation.id,
+                userId: studentId,
+                role: "STUDENT",
+            },
+        });
+        await tx.conversationMember.upsert({
+            where: {
+                conversationId_userId: {
+                    conversationId: upsertConversation.id,
+                    userId: lecturerId,
+                },
+            },
+            update: {
+                role: "LECTURER",
+            },
+            create: {
+                conversationId: upsertConversation.id,
+                userId: lecturerId,
+                role: "LECTURER",
+            },
+        });
+        const createdConversation = await tx.conversation.findUnique({
+            where: { id: upsertConversation.id },
+            include: conversationInclude,
+        });
+        if (!createdConversation) {
+            throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Cannot create conversation.");
+        }
+        return createdConversation;
+    });
+    const senderPayload = buildConversationPayload(conversation, currentUserId);
+    const recipientPayload = buildConversationPayload(conversation, recipientId);
+    getSocketIO().to(`user:${recipientId}`).emit("new-conversation", {
+        conversation: recipientPayload,
+    });
+    return { conversation: senderPayload };
+};
+const getConversations = async (currentUserId) => {
+    const conversations = await prisma.conversation.findMany({
+        where: {
+            isDestroyed: false,
+            OR: [{ studentId: currentUserId }, { lecturerId: currentUserId }],
+        },
+        include: conversationInclude,
+        orderBy: [{ lastMessageAt: "desc" }, { updatedAt: "desc" }],
+    });
+    return {
+        conversations: conversations.map((conversation) => buildConversationPayload(conversation, currentUserId)),
+    };
+};
+const getMessages = async (conversationId, currentUserId, options) => {
+    await ensureConversationMember(conversationId, currentUserId);
+    const limit = options.limit ?? 50;
+    const cursorId = options.cursor ?? null;
+    const messages = await prisma.message.findMany({
+        where: {
+            conversationId,
+            isDestroyed: false,
+            ...(cursorId ? { id: { lt: cursorId } } : {}),
+        },
+        include: {
+            sender: {
+                select: {
+                    id: true,
+                    firstName: true,
+                    lastName: true,
+                    avatar: {
+                        select: {
+                            fileUrl: true,
+                        },
+                    },
+                },
+            },
+        },
+        orderBy: { id: "desc" },
+        take: limit + 1,
+    });
+    let nextCursor = null;
+    if (messages.length > limit) {
+        const nextMessage = messages[messages.length - 1];
+        if (nextMessage) {
+            nextCursor = nextMessage.id;
+        }
+        messages.pop();
+    }
+    return {
+        messages: messages.reverse().map((message) => ({
+            id: message.id,
+            conversationId: message.conversationId,
+            senderId: message.senderId,
+            content: message.content,
+            imgUrl: message.imgUrl,
+            createdAt: message.createdAt,
+            sender: {
+                id: message.sender.id,
+                firstName: message.sender.firstName,
+                lastName: message.sender.lastName,
+                avatarUrl: message.sender.avatar?.fileUrl ?? null,
+            },
+        })),
+        nextCursor,
+    };
+};
+const markAsSeen = async (conversationId, currentUserId) => {
+    await ensureConversationMember(conversationId, currentUserId);
+    const conversation = await prisma.conversation.findUnique({
+        where: {
+            id: conversationId,
+            isDestroyed: false,
+        },
+        include: conversationInclude,
+    });
+    if (!conversation) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Conversation does not exist.");
+    }
+    if (!conversation.lastMessageId || !conversation.lastMessageAt) {
+        return { message: "No message to mark as seen." };
+    }
+    if (conversation.lastMessageSenderId === currentUserId) {
+        return { message: "Sender does not need to mark as seen." };
+    }
+    const updatedMember = await prisma.conversationMember.update({
+        where: {
+            conversationId_userId: {
+                conversationId,
+                userId: currentUserId,
+            },
+        },
+        data: {
+            unreadCount: 0,
+            lastReadAt: new Date(),
+            lastSeenMessageId: conversation.lastMessageId,
+        },
+    });
+    const refreshedConversation = await prisma.conversation.findUnique({
+        where: { id: conversationId },
+        include: conversationInclude,
+    });
+    if (!refreshedConversation) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Conversation does not exist.");
+    }
+    const seenBy = refreshedConversation.members
+        .filter((member) => member.lastSeenMessageId === refreshedConversation.lastMessageId)
+        .map((member) => ({
+        id: member.user.id,
+        firstName: member.user.firstName,
+        lastName: member.user.lastName,
+        avatarUrl: member.user.avatar?.fileUrl ?? null,
+    }));
+    getSocketIO()
+        .to(`conversation:${conversationId}`)
+        .emit("read-message", {
+        conversation: {
+            id: refreshedConversation.id,
+            lastMessageId: refreshedConversation.lastMessageId,
+            lastMessageAt: refreshedConversation.lastMessageAt,
+        },
+        seenBy,
+        member: {
+            userId: currentUserId,
+            unreadCount: updatedMember.unreadCount,
+            lastReadAt: updatedMember.lastReadAt,
+        },
+    });
+    return {
+        message: "Marked as seen",
+        seenBy,
+        myUnreadCount: updatedMember.unreadCount,
+    };
+};
+const getUserConversationsForSocketIO = async (userId) => {
+    const conversations = await prisma.conversation.findMany({
+        where: {
+            isDestroyed: false,
+            OR: [{ studentId: userId }, { lecturerId: userId }],
+        },
+        select: {
+            id: true,
+        },
+    });
+    return conversations.map((conversation) => conversation.id);
+};
+export const conversationService = {
+    createConversation,
+    getConversations,
+    getMessages,
+    markAsSeen,
+    getUserConversationsForSocketIO,
+};
+//# sourceMappingURL=conversationService.js.map

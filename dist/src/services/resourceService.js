@@ -1,0 +1,195 @@
+import { prisma } from "@/lib/prisma.js";
+import ApiError from "@/utils/ApiError.js";
+import { StatusCodes } from "http-status-codes";
+import { courseRepo } from "./repo/courseRepo.js";
+const getLearningResourceById = async (resourceId, studentId) => {
+    const lesson = await prisma.lesson.findFirst({
+        where: {
+            isDestroyed: false,
+            OR: [{ lessonVideoId: resourceId }, { lessonFileId: resourceId }],
+        },
+        include: {
+            module: {
+                select: {
+                    courseId: true,
+                    isDestroyed: true,
+                    course: {
+                        select: {
+                            id: true,
+                            isDestroyed: true,
+                            status: true,
+                        },
+                    },
+                },
+            },
+        },
+    });
+    if (!lesson || !lesson.module || !lesson.module.course) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+    }
+    await courseRepo.ensureStudentCanLearnCourse(studentId, lesson.module.course.id);
+    const resource = await prisma.resource.findUnique({
+        where: { id: resourceId, isDestroyed: false },
+    });
+    if (!resource) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+    }
+    return resource;
+};
+const createResource = async (data) => {
+    try {
+        // check resource existence
+        const resource = await prisma.resource.findFirst({
+            where: { publicId: data.publicId, isDestroyed: false },
+        });
+        if (resource)
+            throw new ApiError(StatusCodes.CONFLICT, "Resource already exists!");
+        // create resource
+        const createdResource = await prisma.resource.create({
+            data: {
+                publicId: data.publicId,
+                fileSize: data.fileSize ?? null,
+                fileType: data.fileType ?? null,
+                fileUrl: data.fileUrl,
+            },
+        });
+        return createdResource;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const createResourceWithTransaction = async (data, tx) => {
+    try {
+        // check resource existence in transaction
+        const existing = await tx.resource.findFirst({
+            where: {
+                publicId: data.publicId,
+                isDestroyed: false,
+            },
+        });
+        if (existing) {
+            throw new ApiError(StatusCodes.CONFLICT, "Resource already exists!");
+        }
+        const newResource = await tx.resource.create({
+            data: {
+                publicId: data.publicId,
+                fileSize: data.fileSize ?? null,
+                fileType: data.fileType ?? null,
+                fileUrl: data.fileUrl,
+            },
+        });
+        return newResource;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const getResourceById = async (id) => {
+    try {
+        // check resource existence
+        const resource = await prisma.resource.findUnique({
+            where: { id, isDestroyed: false },
+        });
+        if (!resource)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        return resource;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const getResourceByPublicId = async (publicId) => {
+    try {
+        // check resource existence
+        const resource = await prisma.resource.findUnique({
+            where: { publicId, isDestroyed: false },
+        });
+        if (!resource)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        return resource;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const getAllResourcesByFileType = async (fileType) => {
+    try {
+        // check resource existence
+        const resources = await prisma.resource.findMany({
+            where: { fileType, isDestroyed: false },
+        });
+        if (!resources || resources.length === 0)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        return resources;
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const deleteResource = async (id) => {
+    try {
+        // check resource existence
+        const resource = await prisma.resource.findUnique({
+            where: { id, isDestroyed: false },
+        });
+        if (!resource)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        // delete resource
+        return await prisma.resource.update({
+            where: { id },
+            data: { isDestroyed: true },
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const deleteResourceWithTransaction = async (id, tx) => {
+    try {
+        // check resource existence
+        const resource = await tx.resource.findUnique({
+            where: { id, isDestroyed: false },
+        });
+        if (!resource)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        // delete resource
+        return await tx.resource.update({
+            where: { id },
+            data: { isDestroyed: true },
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+};
+const deleteResourceByPublicId = async (publicId) => {
+    try {
+        // check resource existence
+        const resource = await prisma.resource.findUnique({
+            where: { publicId, isDestroyed: false },
+        });
+        if (!resource)
+            throw new ApiError(StatusCodes.NOT_FOUND, "Resource not found!");
+        // delete resource
+        return await prisma.resource.update({
+            where: { publicId },
+            data: { isDestroyed: true },
+        });
+    }
+    catch (error) {
+        throw error;
+    }
+};
+export const resourceService = {
+    createResource,
+    createResourceWithTransaction,
+    getResourceById,
+    getResourceByPublicId,
+    getLearningResourceById,
+    getAllResourcesByFileType,
+    deleteResource,
+    deleteResourceWithTransaction,
+    deleteResourceByPublicId,
+};
+//# sourceMappingURL=resourceService.js.map

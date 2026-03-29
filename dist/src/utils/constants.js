@@ -1,0 +1,38 @@
+import { env } from "@/configs/environment.js";
+export const ACCOUNT_ROLES = {
+    ADMIN: "admin",
+    LECTURER: "lecturer",
+    STUDENT: "student",
+};
+export const GENDER_SELECT = {
+    MALE: "male",
+    FEMALE: "female",
+    OTHER: "other",
+};
+export const COURSE_STATUS = {
+    DRAFT: "draft",
+    PENDING: "pending",
+    PUBLISHED: "published",
+    REJECTED: "rejected",
+};
+export const DEGREE_OPTIONS = {
+    BACHELOR: "bachelor",
+    MASTER: "master",
+    DOCTORAL: "doctoral",
+    PROFESSOR: "professor",
+    PHD: "phd",
+    ASSOCIATE_PROFESSOR: "associate_professor",
+    EMERITUS_PROFESSOR: "emeritus_professor",
+};
+export const WEBSITE_DOMAINS = env.BUILD_MODE === "production"
+    ? env.WEBSITE_DOMAIN_PRODUCTION
+    : env.WEBSITE_DOMAIN_DEVELOPMENT;
+export const WHITELIST_DOMAINS = [
+    "http://localhost:5173",
+    "http://localhost:8017",
+];
+export const DEFAULT_PAGE = 1;
+export const DEFAULT_ITEMS_PER_PAGE = 8;
+export const FE_OAUTH_CALLBACK = `${WEBSITE_DOMAINS}/auth/google/callback`;
+export const FE_ORIGIN = new URL(WEBSITE_DOMAINS).origin;
+//# sourceMappingURL=constants.js.map

@@ -604,6 +604,31 @@ const registerLecturerProfile = async (
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
+    const existingLecturerProfile = await prisma.lecturerProfile.findFirst({
+      where: { lecturerId: userId, isDestroyed: false },
+      select: { id: true },
+    });
+    if (existingLecturerProfile)
+      throw new ApiError(
+        StatusCodes.CONFLICT,
+        "Lecturer profile already registered!",
+      );
+
+    const beginStudiesDate = new Date(reqBody.beginStudies as unknown as string);
+    const dateOfBirthDate = new Date(reqBody.dateOfBirth as unknown as string);
+    if (Number.isNaN(beginStudiesDate.getTime())) {
+      throw new ApiError(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        "beginStudies must be a valid javascript timestamp.",
+      );
+    }
+    if (Number.isNaN(dateOfBirthDate.getTime())) {
+      throw new ApiError(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        "dateOfBirth must be a valid javascript timestamp.",
+      );
+    }
+
     return await prisma.$transaction(async (tx) => {
       const createdResource =
         await resourceService.createResourceWithTransaction(
@@ -616,6 +641,16 @@ const registerLecturerProfile = async (
           tx,
         );
 
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          firstName: reqBody.firstName,
+          lastName: reqBody.lastName,
+          dateOfBirth: dateOfBirthDate,
+          phoneNumber: reqBody.phoneNumber,
+        },
+      });
+
       const newLecturerProfile = await tx.lecturerProfile.create({
         data: {
           lecturerId: userId,
@@ -623,7 +658,7 @@ const registerLecturerProfile = async (
           gender: reqBody.gender,
           nationality: reqBody.nationality,
           professionalTitle: reqBody.professionalTitle,
-          beginStudies: reqBody.beginStudies,
+          beginStudies: beginStudiesDate,
           highestDegree: reqBody.highestDegree,
           bio: reqBody.bio,
         },
