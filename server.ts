@@ -1,4 +1,5 @@
 import { env } from "@/configs/environment.js";
+import { ragIngestionService } from "@/services/ragIngestionService.js";
 import { server, setupSocket } from "@/socket/index.js";
 import "dotenv/config";
 
@@ -10,6 +11,7 @@ setupSocket(server);
 if (env.BUILD_MODE === "production") {
   server.listen(PORT, () => {
     console.log(`Production: Hello, I am running at PORT: ${PORT}/`);
+    void ragIngestionService.runStartupIngestion();
   });
   // const PORT = process.env.PORT || 3000;
   // const HOST = "0.0.0.0"; // Bắt buộc trên cloud
@@ -24,6 +26,7 @@ if (env.BUILD_MODE === "production") {
     console.log(
       `Local DEV: Hello, I am running at http://${env.APP_HOST}:${env.APP_PORT}/`,
     );
+    void ragIngestionService.runStartupIngestion();
   });
 }
 
