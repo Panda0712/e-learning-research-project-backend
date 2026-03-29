@@ -3,6 +3,7 @@ import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
 import { normalizeConversationRole } from "@/utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
+import { notificationService } from "./notificationService.js";
 import { chatRepo } from "./repo/chatRepo.js";
 
 const getSocketIO = () => getIO();
@@ -454,6 +455,23 @@ const sendDirectMessage = async (
     getSocketIO().to(`user:${result.recipientId}`).emit("new-conversation", {
       conversation: result.recipientConversation,
     });
+  }
+
+  if (result.recipientId && result.recipientId !== senderId) {
+    const senderName =
+      `${result.message.sender.firstName || ""} ${result.message.sender.lastName || ""}`.trim();
+    const preview = result.message.content || "sent an image";
+
+    await notificationService.createAndDispatchNotification(
+      {
+        userId: result.recipientId,
+        title: "New message",
+        message: `${senderName || "A user"}: ${preview}`,
+        type: "message",
+        relatedId: result.conversation.id,
+      },
+      { dedupe: false },
+    );
   }
 
   return {
