@@ -778,75 +778,59 @@ const updateUserDocument = async (id: number, data: any) => {
 };
 
 const getAdminUsers = async ({
-  page,
-  itemsPerPage,
+  page = 1,
+  itemsPerPage = 8,
   role,
 }: {
-  page: number;
-  itemsPerPage: number;
+  page?: number;
+  itemsPerPage?: number;
   role?: string;
 }) => {
-  const safePage = Number.isFinite(page) && page > 0 ? page : 1;
-  const safeItemsPerPage =
-    Number.isFinite(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 10;
+  const normalizedPage = Number.isInteger(page) && page > 0 ? page : 1;
+  const normalizedItemsPerPage =
+    Number.isInteger(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 8;
 
-  const roleFilter =
-    role && ["lecturer", "student"].includes(role.toLowerCase())
-      ? role.toLowerCase()
-      : undefined;
-
-  const where = {
+  const where: any = {
     isDestroyed: false,
-    ...(roleFilter ? { role: roleFilter } : { role: { in: ["lecturer", "student"] } }),
+    role: {
+      in: ["student", "lecturer"],
+    },
   };
 
-  const [users, totalUsers] = await Promise.all([
+  if (role && ["student", "lecturer"].includes(role.toLowerCase())) {
+    where.role = role.toLowerCase();
+  }
+
+  const skip = (normalizedPage - 1) * normalizedItemsPerPage;
+
+  const [users, total] = await Promise.all([
     prisma.user.findMany({
       where,
-      include: {
-        avatar: { select: { fileUrl: true } },
-        _count: {
-          select: {
-            courses: true,
-            enrollments: true,
-            transactions: true,
-          },
-        },
-      },
+      skip,
+      take: normalizedItemsPerPage,
       orderBy: { createdAt: "desc" },
-      skip: (safePage - 1) * safeItemsPerPage,
-      take: safeItemsPerPage,
+      include: { avatar: { select: { fileUrl: true } } },
     }),
     prisma.user.count({ where }),
   ]);
 
   return {
-    users: users.map((user) => ({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      dateOfBirth: user.dateOfBirth,
-      role: user.role,
-      isVerified: user.isVerified,
-      isBlocked: !user.isVerified,
-      createdAt: user.createdAt,
-      avatar: user.avatar,
-      totalCourses: user._count.courses,
-      totalEnrollments: user._count.enrollments,
-      totalTransactions: user._count.transactions,
+    data: users.map((user, index) => ({
+      ...pickUserWithAvatar(user as any),
+      stt: skip + index + 1,
     })),
-    totalUsers,
-    page: safePage,
-    itemsPerPage: safeItemsPerPage,
-    totalPages: Math.max(1, Math.ceil(totalUsers / safeItemsPerPage)),
+    pagination: {
+      page: normalizedPage,
+      itemsPerPage: normalizedItemsPerPage,
+      total,
+      totalPages: Math.ceil(total / normalizedItemsPerPage),
+    },
   };
 };
 
-const getAdminUserDetail = async (userId: number) => {
-  const user = await prisma.user.findFirst({
-    where: { id: userId, isDestroyed: false },
+const getAdminUserDetail = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
     include: {
       avatar: { select: { fileUrl: true } },
       lecturerProfile: true,
@@ -857,116 +841,52 @@ const getAdminUserDetail = async (userId: number) => {
     throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
   }
 
-  const [courses, enrolledCourses, transactions] = await Promise.all([
-    prisma.course.findMany({
-      where: { lecturerId: user.id, isDestroyed: false },
-      select: {
-        id: true,
-        name: true,
-        status: true,
-        price: true,
-        createdAt: true,
-        totalStudents: true,
-      },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.enrollment.findMany({
-      where: { studentId: user.id, isDestroyed: false },
-      select: {
-        id: true,
-        status: true,
-        progress: true,
-        createdAt: true,
-        lastAccessedAt: true,
-        course: {
-          select: {
-            id: true,
-            name: true,
-            status: true,
-            price: true,
-            lecturerName: true,
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.transaction.findMany({
-      where: { userId: user.id, isDestroyed: false },
-      select: {
-        id: true,
-        amount: true,
-        paymentMethod: true,
-        status: true,
-        gatewayReference: true,
-        createdAt: true,
-      },
-      orderBy: { createdAt: "desc" },
-    }),
-  ]);
-
-  return {
-    profile: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      dateOfBirth: user.dateOfBirth,
-      role: user.role,
-      createdAt: user.createdAt,
-      isVerified: user.isVerified,
-      isBlocked: !user.isVerified,
-      avatar: user.avatar,
-      lecturerProfile: user.lecturerProfile,
-    },
-    courses,
-    enrolledCourses,
-    transactions,
-  };
+  return pickUserWithAvatar(user as any);
 };
 
-const blockUser = async (userId: number, blocked: boolean) => {
-  const user = await prisma.user.findFirst({
-    where: { id: userId, isDestroyed: false },
+const blockUser = async (id: number, blocked: boolean) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
   });
 
   if (!user) {
     throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
   }
 
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: { isVerified: !blocked },
+  if (user.role.toLowerCase() === "admin") {
+    throw new ApiError(StatusCodes.FORBIDDEN, "Cannot block admin account!");
+  }
+
+  const updated = await prisma.user.update({
+    where: { id },
+    data: {
+      isVerified: !blocked,
+    },
+    include: { avatar: { select: { fileUrl: true } } },
   });
 
-  return {
-    message: blocked ? "User blocked successfully!" : "User unblocked successfully!",
-    user: {
-      id: updatedUser.id,
-      role: updatedUser.role,
-      isBlocked: !updatedUser.isVerified,
-    },
-  };
+  return pickUserWithAvatar(updated as any);
 };
 
-const deleteUser = async (userId: number) => {
-  const user = await prisma.user.findFirst({
-    where: { id: userId, isDestroyed: false },
+const deleteUser = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
   });
 
   if (!user) {
     throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  if (user.role.toLowerCase() === "admin") {
+    throw new ApiError(StatusCodes.FORBIDDEN, "Cannot delete admin account!");
   }
 
   await prisma.user.update({
-    where: { id: userId },
+    where: { id },
     data: { isDestroyed: true },
   });
 
-  return {
-    message: "Deleted user successfully!",
-    userId,
-  };
+  return { deleted: true };
 };
 
 export const userService = {

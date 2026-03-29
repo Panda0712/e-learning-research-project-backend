@@ -67,43 +67,27 @@ Router.route("/facebook").post(userController.facebookAuthHandler);
 
 Router.route("/me").get(authMiddleware.isAuthorized, userController.getMe);
 
-const adminOnly = (
-  req: express.Request,
-  _res: express.Response,
-  next: express.NextFunction,
-) => {
-  if (req.jwtDecoded?.role !== "admin") {
-    return next(
-      new ApiError(
-        StatusCodes.FORBIDDEN,
-        "Forbidden: You don't have permission!",
-      ),
-    );
-  }
-  next();
-};
-
-Router.route("/admin/list").get(
+Router.route("/admin/users").get(
   authMiddleware.isAuthorized,
-  adminOnly,
+  userValidation.getAdminUsers,
   userController.getAdminUsers,
 );
 
-Router.route("/admin/:id/detail").get(
+Router.route("/admin/users/:id").get(
   authMiddleware.isAuthorized,
-  adminOnly,
+  userValidation.getAdminUserDetail,
   userController.getAdminUserDetail,
 );
 
-Router.route("/admin/:id/block").patch(
+Router.route("/admin/users/:id/block").patch(
   authMiddleware.isAuthorized,
-  adminOnly,
+  userValidation.blockUser,
   userController.blockUser,
 );
 
-Router.route("/admin/:id").delete(
+Router.route("/admin/users/:id").delete(
   authMiddleware.isAuthorized,
-  adminOnly,
+  userValidation.deleteUser,
   userController.deleteUser,
 );
 

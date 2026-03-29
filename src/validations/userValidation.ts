@@ -227,6 +227,77 @@ const resetPassword = async (
   }
 };
 
+const getAdminUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().optional(),
+    role: Joi.string().valid("student", "lecturer").optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.query, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+  }
+};
+
+const getAdminUserDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().integer().positive().required(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+  }
+};
+
+const blockUser = async (req: Request, res: Response, next: NextFunction) => {
+  const paramsCondition = Joi.object({
+    id: Joi.number().integer().positive().required(),
+  });
+
+  const bodyCondition = Joi.object({
+    blocked: Joi.boolean().required(),
+  });
+
+  try {
+    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await bodyCondition.validateAsync(req.body, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+  }
+};
+
+const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().integer().positive().required(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
+  }
+};
+
 export const userValidation = {
   register,
   verifyAccount,
@@ -235,4 +306,8 @@ export const userValidation = {
   registerLecturer,
   forgotPassword,
   resetPassword,
+  getAdminUsers,
+  getAdminUserDetail,
+  blockUser,
+  deleteUser,
 };
