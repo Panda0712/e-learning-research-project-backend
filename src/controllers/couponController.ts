@@ -96,13 +96,13 @@ const getAllCoupons = async (
   next: NextFunction,
 ) => {
   try {
-    const { page, limit, status, courseId } = req.query;
+    const { page, limit, itemsPerPage, status } = req.query;
     const filterParams: any = {};
 
     if (page) filterParams.page = Number(page);
     if (limit) filterParams.limit = Number(limit);
+    if (itemsPerPage) filterParams.itemsPerPage = Number(itemsPerPage);
     if (status) filterParams.status = String(status);
-    if (courseId) filterParams.courseId = Number(courseId);
 
     const coupons = await couponService.getAllCoupons(filterParams);
     res.status(StatusCodes.OK).json(coupons);

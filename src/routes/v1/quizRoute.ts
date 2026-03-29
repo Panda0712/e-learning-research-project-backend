@@ -6,12 +6,12 @@ const Router = express.Router();
 
 Router.route("/").post(quizValidation.createQuiz, quizController.createQuiz);
 
-Router.route("/:id")
+Router.route("/by-id/:id")
   .get(quizValidation.getQuizById, quizController.getQuizById)
   .patch(quizValidation.updateQuiz, quizController.updateQuiz)
   .delete(quizValidation.deleteQuiz, quizController.deleteQuiz);
 
-Router.route("/:lessonId").get(
+Router.route("/by-lesson/:lessonId").get(
   quizValidation.getAllQuizzesByLessonId,
   quizController.getAllQuizzesByLessonId,
 );

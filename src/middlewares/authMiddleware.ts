@@ -24,7 +24,6 @@ const isAuthorized = async (
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
-    console.log("accessToken");
     return;
   }
 

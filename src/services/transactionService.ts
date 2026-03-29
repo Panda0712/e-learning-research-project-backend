@@ -25,7 +25,7 @@ const createTransaction = async (data: {
           );
         }
 
-        if (coupon.quantity !== null && coupon.quantity <= 0) {
+        if (coupon.usageLimit !== null && coupon.usageLimit <= 0) {
           throw new ApiError(
             StatusCodes.CONFLICT,
             `Code '${item.discountCode}' has been used up!`,
@@ -86,7 +86,7 @@ const createTransaction = async (data: {
           await prisma.coupon.update({
             where: { code: item.discountCode },
             data: {
-              quantity: { decrement: 1 },
+              usageLimit: { decrement: 1 },
             },
           });
         }

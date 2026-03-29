@@ -87,9 +87,12 @@ const deleteLesson = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -109,9 +112,12 @@ const getLessonById = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -131,9 +137,12 @@ const getAllLessonsByModuleId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { moduleId: Number(req.params.moduleId) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -153,9 +162,12 @@ const getLessonByResourceId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { resourceId: Number(req.params.resourceId) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {

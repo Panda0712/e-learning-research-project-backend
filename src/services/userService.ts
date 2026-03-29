@@ -514,6 +514,10 @@ const updateProfile = async (
   } | null = null,
 ) => {
   try {
+    if (!userId) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
+
     const existingUser = await prisma.user.findUnique({
       where: { id: userId, isDestroyed: false },
     });
@@ -557,7 +561,6 @@ const updateProfile = async (
 
         return pickUser(updatedUser);
       });
-    } else if (reqBody.email) {
     } else {
       let hashedPassword = null;
       if (reqBody.currentPassword && reqBody.newPassword) {
@@ -571,11 +574,26 @@ const updateProfile = async (
         hashedPassword = await bcrypt.hash(reqBody.newPassword, 10);
       }
 
+      if (reqBody.email && reqBody.email !== existingUser.email) {
+        const existingEmailUser = await prisma.user.findFirst({
+          where: {
+            email: reqBody.email,
+            isDestroyed: false,
+            id: { not: userId },
+          },
+        });
+
+        if (existingEmailUser) {
+          throw new ApiError(StatusCodes.CONFLICT, "Email already exists!");
+        }
+      }
+
       updateUser = await prisma.user.update({
         where: { id: userId },
         data: {
           firstName: reqBody.firstName ?? existingUser.firstName,
           lastName: reqBody.lastName ?? existingUser.lastName,
+          email: reqBody.email ?? existingUser.email,
           dateOfBirth: reqBody.dateOfBirth ?? existingUser.dateOfBirth,
           phoneNumber: reqBody.phoneNumber ?? existingUser.phoneNumber,
           password: hashedPassword ?? existingUser.password,
@@ -759,6 +777,118 @@ const updateUserDocument = async (id: number, data: any) => {
   });
 };
 
+const getAdminUsers = async ({
+  page = 1,
+  itemsPerPage = 8,
+  role,
+}: {
+  page?: number;
+  itemsPerPage?: number;
+  role?: string;
+}) => {
+  const normalizedPage = Number.isInteger(page) && page > 0 ? page : 1;
+  const normalizedItemsPerPage =
+    Number.isInteger(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 8;
+
+  const where: any = {
+    isDestroyed: false,
+    role: {
+      in: ["student", "lecturer"],
+    },
+  };
+
+  if (role && ["student", "lecturer"].includes(role.toLowerCase())) {
+    where.role = role.toLowerCase();
+  }
+
+  const skip = (normalizedPage - 1) * normalizedItemsPerPage;
+
+  const [users, total] = await Promise.all([
+    prisma.user.findMany({
+      where,
+      skip,
+      take: normalizedItemsPerPage,
+      orderBy: { createdAt: "desc" },
+      include: { avatar: { select: { fileUrl: true } } },
+    }),
+    prisma.user.count({ where }),
+  ]);
+
+  return {
+    data: users.map((user, index) => ({
+      ...pickUserWithAvatar(user as any),
+      stt: skip + index + 1,
+    })),
+    pagination: {
+      page: normalizedPage,
+      itemsPerPage: normalizedItemsPerPage,
+      total,
+      totalPages: Math.ceil(total / normalizedItemsPerPage),
+    },
+  };
+};
+
+const getAdminUserDetail = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
+    include: {
+      avatar: { select: { fileUrl: true } },
+      lecturerProfile: true,
+    },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  return pickUserWithAvatar(user as any);
+};
+
+const blockUser = async (id: number, blocked: boolean) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  if (user.role.toLowerCase() === "admin") {
+    throw new ApiError(StatusCodes.FORBIDDEN, "Cannot block admin account!");
+  }
+
+  const updated = await prisma.user.update({
+    where: { id },
+    data: {
+      isVerified: !blocked,
+    },
+    include: { avatar: { select: { fileUrl: true } } },
+  });
+
+  return pickUserWithAvatar(updated as any);
+};
+
+const deleteUser = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id, isDestroyed: false },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  if (user.role.toLowerCase() === "admin") {
+    throw new ApiError(StatusCodes.FORBIDDEN, "Cannot delete admin account!");
+  }
+
+  await prisma.user.update({
+    where: { id },
+    data: { isDestroyed: true },
+  });
+
+  return { deleted: true };
+};
+
 export const userService = {
   register,
   verifyAccount,
@@ -777,4 +907,8 @@ export const userService = {
   createUserDocument,
   updateUserDocument,
   facebookAuthHandler,
+  getAdminUsers,
+  getAdminUserDetail,
+  blockUser,
+  deleteUser,
 };
