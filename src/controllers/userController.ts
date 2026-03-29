@@ -116,11 +116,9 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const rawUserId =
-      req.jwtDecoded?.id ?? req.jwtDecoded?.userId ?? req.jwtDecoded?.sub;
-    const userId = Number(rawUserId);
+    const userId = req.jwtDecoded?.id;
 
-    if (!Number.isInteger(userId) || userId <= 0) {
+    if (!userId) {
       throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
     }
 
