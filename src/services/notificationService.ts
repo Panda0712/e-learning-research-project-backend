@@ -170,10 +170,7 @@ const createAndDispatchNotificationsForUsers = async (
       payload.relatedId = data.relatedId;
     }
 
-    const notification = await createAndDispatchNotification(
-      payload,
-      options,
-    );
+    const notification = await createAndDispatchNotification(payload, options);
 
     results.push(notification);
   }
