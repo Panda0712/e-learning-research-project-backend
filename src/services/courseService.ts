@@ -9,6 +9,28 @@ import { StatusCodes } from "http-status-codes";
 import { prisma } from "../lib/prisma.js";
 import { resourceService } from "./resourceService.js";
 
+const canPublishCourse = async (courseId: number) => {
+  const [course, modules] = await Promise.all([
+    prisma.course.findUnique({
+      where: {
+        id: courseId,
+        isDestroyed: false,
+      },
+    }),
+    prisma.module.count({ where: { courseId, isDestroyed: false } }),
+  ]);
+
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+
+  if (!course.name || !course.thumbnailId || modules === 0)
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      "Course is incomplete to publish!",
+    );
+
+  return true;
+};
+
 const ensureLecturerOrAdmin = async (userId: number) => {
   const user = await prisma.user.findUnique({
     where: { id: userId, isDestroyed: false },
@@ -178,6 +200,20 @@ const createCourse = async (data: CreateCourse) => {
           tx,
         );
 
+      let introVideoResource;
+      if (data.introVideo) {
+        introVideoResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: data.introVideo.publicId,
+              fileSize: data.introVideo.fileSize ?? null,
+              fileType: data.introVideo.fileType ?? null,
+              fileUrl: data.introVideo.fileUrl,
+            },
+            tx,
+          );
+      }
+
       const newCourse = await prisma.course.create({
         data: {
           lecturerId: data.lecturerId,
@@ -190,6 +226,7 @@ const createCourse = async (data: CreateCourse) => {
           price: data.price,
           status: data.status,
           thumbnailId: createdResource.id,
+          introVideoId: introVideoResource?.id ?? null,
           totalStudents: 0,
           totalLessons: 0,
           totalQuizzes: 0,
@@ -249,6 +286,47 @@ const updateCourse = async (
             price: updateData.price ?? course.price,
             status: updateData.status ?? course.status,
             thumbnailId: courseThumbnailId,
+          },
+        });
+
+        return updatedCourse;
+      });
+    }
+
+    if (updateData?.introVideo) {
+      return await prisma.$transaction(async (tx) => {
+        let introVideoId = course.introVideoId;
+
+        const createdIntroVideoResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: updateData.introVideo!.publicId,
+              fileSize: updateData.introVideo!.fileSize ?? null,
+              fileType: updateData.introVideo!.fileType ?? null,
+              fileUrl: updateData.introVideo!.fileUrl,
+            },
+            tx,
+          );
+
+        introVideoId = createdIntroVideoResource.id;
+
+        if (course.introVideoId)
+          await resourceService.deleteResourceWithTransaction(
+            course.introVideoId,
+            tx,
+          );
+
+        const updatedCourse = await tx.course.update({
+          where: { id },
+          data: {
+            name: updateData.name ?? course.name,
+            lecturerName: updateData.lecturerName ?? course.lecturerName,
+            duration: updateData.duration ?? course.duration,
+            level: updateData.level ?? course.level,
+            overview: updateData.overview ?? course.overview,
+            price: updateData.price ?? course.price,
+            status: updateData.status ?? course.status,
+            introVideoId,
           },
         });
 
@@ -880,6 +958,61 @@ const getAdminCourseById = async (id: number, actorId: number) => {
   }
 };
 
+const getLecturerMyCourses = async (
+  lecturerId: number,
+  params: {
+    page: number;
+    itemsPerPage: number;
+    status?: string;
+    q?: string;
+    sortBy?: string;
+  },
+) => {
+  try {
+    const skip = (params.page - 1) * params.itemsPerPage;
+    const where = {
+      lecturerId,
+      isDestroyed: false,
+      ...(params.status && params.status !== "all"
+        ? { status: params.status }
+        : {}),
+      ...(params.q
+        ? {
+            OR: [
+              { name: { contains: params.q, mode: "insensitive" } },
+              { overview: { contains: params.q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [rows, total] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        orderBy:
+          params.sortBy === "updatedAt"
+            ? { updatedAt: "desc" }
+            : { createdAt: "desc" },
+        skip,
+        take: params.itemsPerPage,
+      }),
+      prisma.course.count({ where }),
+    ]);
+
+    return {
+      data: rows,
+      pagination: {
+        page: params.page,
+        itemsPerPage: params.itemsPerPage,
+        total,
+        totalPages: Math.ceil(total / params.itemsPerPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const courseService = {
   createCourseCategory,
   getAllCourseCategories,
@@ -896,6 +1029,7 @@ export const courseService = {
   getListCourses,
   getAdminCourses,
   getAdminCourseById,
+  getLecturerMyCourses,
   getCourseById,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,

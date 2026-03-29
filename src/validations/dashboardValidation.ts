@@ -87,8 +87,73 @@ const getTopRanking = async (
   }
 };
 
+const getCourseCustomers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    courseId: Joi.number().integer().required().positive(),
+  });
+  const querySchema = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().max(100).optional(),
+    q: Joi.string().optional(),
+  });
+
+  try {
+    await Promise.all([
+      correctCondition.validateAsync(
+        { courseId: Number(req.params.courseId) },
+        { abortEarly: false },
+      ),
+      querySchema.validateAsync(req.query, { abortEarly: false }),
+    ]);
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getCourseCommissions = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    courseId: Joi.number().integer().required().positive(),
+  });
+  const querySchema = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().max(100).optional(),
+    q: Joi.string().allow("").optional(),
+    period: Joi.string()
+      .valid("all", "last-month", "this-month", "this-year")
+      .optional(),
+  });
+
+  try {
+    await Promise.all([
+      correctCondition.validateAsync(
+        { courseId: Number(req.params.courseId) },
+        { abortEarly: false },
+      ),
+      querySchema.validateAsync(req.query, { abortEarly: false }),
+    ]);
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const dashboardValidation = {
   getGeneralStats,
   getRevenueChart,
   getTopRanking,
+  getCourseCustomers,
+  getCourseCommissions,
 };

@@ -31,4 +31,17 @@ Router.get(
   dashboardController.getLecturerCharts,
 );
 
+Router.get(
+  "/lecturer/courses/:courseId/customers",
+  authMiddleware.isAuthorized,
+  dashboardValidation.getCourseCustomers,
+  dashboardController.getCourseCustomers,
+);
+Router.get(
+  "/lecturer/courses/:courseId/commissions",
+  authMiddleware.isAuthorized,
+  dashboardValidation.getCourseCommissions,
+  dashboardController.getCourseCommissions,
+);
+
 export const dashboardRoute = Router;

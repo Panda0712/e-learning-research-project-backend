@@ -4,8 +4,22 @@ import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
 import { courseRepo } from "./repo/courseRepo.js";
 
-const createModule = async (data: CreateModule) => {
+const ensureLecturerOwnsCourse = async (actorId: number, courseId: number) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false },
+  });
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  if (course.lecturerId !== actorId)
+    throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed!");
+
+  return true;
+};
+
+const createModule = async (data: CreateModule, actorId: number) => {
   try {
+    // check security
+    await ensureLecturerOwnsCourse(actorId, data.courseId);
+
     // check course existence
     const course = await prisma.course.findUnique({
       where: { id: data.courseId, isDestroyed: false },
@@ -36,7 +50,11 @@ const createModule = async (data: CreateModule) => {
   }
 };
 
-const updateModule = async (id: number, updateData: UpdateModule) => {
+const updateModule = async (
+  id: number,
+  updateData: UpdateModule,
+  actorId: number,
+) => {
   try {
     // check module existence
     const existingModule = await prisma.module.findUnique({
@@ -44,6 +62,9 @@ const updateModule = async (id: number, updateData: UpdateModule) => {
     });
     if (!existingModule)
       throw new ApiError(StatusCodes.NOT_FOUND, "Module not found!");
+
+    // check security
+    await ensureLecturerOwnsCourse(actorId, existingModule.courseId);
 
     // update module
     const updatedModule = await prisma.module.update({
@@ -57,7 +78,7 @@ const updateModule = async (id: number, updateData: UpdateModule) => {
   }
 };
 
-const deleteModule = async (id: number) => {
+const deleteModule = async (id: number, actorId: number) => {
   try {
     // check module existence
     const existingModule = await prisma.module.findUnique({
@@ -65,6 +86,9 @@ const deleteModule = async (id: number) => {
     });
     if (!existingModule)
       throw new ApiError(StatusCodes.NOT_FOUND, "Module not found!");
+
+    // check security
+    await ensureLecturerOwnsCourse(actorId, existingModule.courseId);
 
     // delete module
     return await prisma.module.update({
