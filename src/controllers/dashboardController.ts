@@ -1,5 +1,8 @@
 import { dashboardService } from "@/services/dashboardService.js";
+import { enrollmentService } from "@/services/enrollmentService.js";
+import { orderItemService } from "@/services/orderItemService.js";
 import ApiError from "@/utils/ApiError.js";
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -106,9 +109,62 @@ const getLecturerCharts = async (
   }
 };
 
+const getCourseCustomers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const lecturerId = Number(req.jwtDecoded?.id);
+    const courseId = Number(req.params.courseId);
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const itemsPerPage =
+      Number(req.query.itemsPerPage) || DEFAULT_ITEMS_PER_PAGE;
+    const q = (req.query.q as string) || "";
+
+    const result = await enrollmentService.getStudentsByLecturerIdAndCourseIdV2(
+      lecturerId,
+      courseId,
+      { page, itemsPerPage, q },
+    );
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCourseCommissions = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const lecturerId = Number(req.jwtDecoded?.id);
+    const courseId = Number(req.params.courseId);
+    const page = Number(req.query.page) || DEFAULT_PAGE;
+    const itemsPerPage =
+      Number(req.query.itemsPerPage) || DEFAULT_ITEMS_PER_PAGE;
+    const q = (req.query.q as string) || "";
+    const period = (req.query.period as string) || "all";
+
+    const result = await orderItemService.getCommissionsByLecturerAndCourseId(
+      lecturerId,
+      courseId,
+      { page, limit: itemsPerPage, q, period },
+    );
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const dashboardController = {
   getAdminOverview,
   getAdminCharts,
   getLecturerOverview,
   getLecturerCharts,
+  getCourseCustomers,
+  getCourseCommissions,
 };

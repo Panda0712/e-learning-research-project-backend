@@ -1,16 +1,16 @@
 import { quizController } from "@/controllers/quizController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { quizValidation } from "@/validations/quizValidation.js";
 import express from "express";
 
 const Router = express.Router();
 
+Router.use(authMiddleware.isAuthorized);
 Router.route("/").post(quizValidation.createQuiz, quizController.createQuiz);
-
 Router.route("/by-id/:id")
   .get(quizValidation.getQuizById, quizController.getQuizById)
   .patch(quizValidation.updateQuiz, quizController.updateQuiz)
   .delete(quizValidation.deleteQuiz, quizController.deleteQuiz);
-
 Router.route("/by-lesson/:lessonId").get(
   quizValidation.getAllQuizzesByLessonId,
   quizController.getAllQuizzesByLessonId,

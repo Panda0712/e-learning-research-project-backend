@@ -1,8 +1,11 @@
 import { courseReviewController } from "@/controllers/courseReviewController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { courseReviewValidation } from "@/validations/courseReviewValidation.js";
 import express from "express";
 
 const Router = express.Router();
+
+Router.use(authMiddleware.isAuthorized);
 
 // Create course review
 Router.route("/").post(

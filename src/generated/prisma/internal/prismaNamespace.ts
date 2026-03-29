@@ -2843,6 +2843,7 @@ export const CourseScalarFieldEnum = {
   lecturerId: 'lecturerId',
   categoryId: 'categoryId',
   thumbnailId: 'thumbnailId',
+  introVideoId: 'introVideoId',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',

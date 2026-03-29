@@ -1,8 +1,11 @@
 import { questionController } from "@/controllers/questionController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { questionValidation } from "@/validations/questionValidation.js";
 import express from "express";
 
 const Router = express.Router();
+
+Router.use(authMiddleware.isAuthorized);
 
 Router.route("/").post(
   questionValidation.createQuestion,

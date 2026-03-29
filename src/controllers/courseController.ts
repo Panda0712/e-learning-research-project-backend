@@ -408,6 +408,44 @@ const getMyCourses = async (
   }
 };
 
+const getLecturerMyCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const lecturerId = Number(req.jwtDecoded.id);
+    const { page, itemsPerPage, status, q, sortBy } = req.query;
+
+    const result = await courseService.getLecturerMyCourses(lecturerId, {
+      page: Number(page),
+      itemsPerPage: Number(itemsPerPage),
+      status: (status as string) || "all",
+      q: (q as string) || "",
+      sortBy: (sortBy as string) || "createdAt",
+    });
+
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const uploadCourseIntroVideo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const file = req.file as Express.Multer.File;
+    const uploaded = await CloudinaryProvider.uploadVideo(file.buffer);
+
+    res.status(StatusCodes.OK).json(uploaded);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const courseController = {
   createCourseCategory,
   getAllCourseCategories,
@@ -433,4 +471,6 @@ export const courseController = {
 
   getMyLecturers,
   getMyCourses,
+  getLecturerMyCourses,
+  uploadCourseIntroVideo,
 };

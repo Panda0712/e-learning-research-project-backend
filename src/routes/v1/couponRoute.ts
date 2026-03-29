@@ -1,10 +1,12 @@
 import { couponController } from "@/controllers/couponController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { couponValidation } from "@/validations/couponValidation.js";
 import express from "express";
 
 const Router = express.Router();
 
 // ============ COUPON CATEGORY ROUTES ============
+Router.use(authMiddleware.isAuthorized);
 
 // Create coupon category
 Router.route("/categories").post(
