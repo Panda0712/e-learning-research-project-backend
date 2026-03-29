@@ -3,7 +3,178 @@ import { prisma } from "@/lib/prisma.js";
 import { PayosProvider } from "@/providers/PayosProvider.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
-import { enrollmentService } from "./enrollmentService.js";
+
+const ensureTransactionRecords = async ({
+  db,
+  orderId,
+  studentId,
+  totalPrice,
+  courseItems,
+  paymentTimestamp,
+}: {
+  db: any;
+  orderId: number;
+  studentId: number;
+  totalPrice: number;
+  courseItems: Array<{ courseId: number }>;
+  paymentTimestamp?: Date;
+}) => {
+  const gatewayReference = `PAYOS_ORDER_${orderId}`;
+
+  let transactionRecord = await db.transaction.findFirst({
+    where: {
+      gatewayReference,
+      userId: studentId,
+      isDestroyed: false,
+    },
+    select: { id: true, createdAt: true },
+  });
+
+  if (!transactionRecord) {
+    const transactionCreateData: any = {
+      userId: studentId,
+      userRole: "student",
+      amount: Number(totalPrice || 0),
+      paymentMethod: "payos",
+      status: "success",
+      gatewayReference,
+    };
+
+    if (paymentTimestamp) {
+      transactionCreateData.createdAt = paymentTimestamp;
+    }
+
+    transactionRecord = await db.transaction.create({
+      data: transactionCreateData,
+      select: { id: true, createdAt: true },
+    });
+  } else if (paymentTimestamp) {
+    const currentCreatedAt = new Date(transactionRecord.createdAt);
+
+    if (
+      Math.abs(currentCreatedAt.getTime() - paymentTimestamp.getTime()) > 1000
+    ) {
+      await db.transaction.update({
+        where: { id: transactionRecord.id },
+        data: { createdAt: paymentTimestamp },
+      });
+    }
+  }
+
+  if (courseItems.length > 0) {
+    const targetCourseIds = [
+      ...new Set(courseItems.map((item) => item.courseId)),
+    ];
+
+    const existingOrderCourseRows = await db.transactionStudent.findMany({
+      where: {
+        orderId,
+        courseId: { in: targetCourseIds },
+        isDestroyed: false,
+      },
+      select: { courseId: true },
+    });
+
+    const existingCourseIdSet = new Set(
+      existingOrderCourseRows
+        .map((row: { courseId: number | null }) => row.courseId)
+        .filter(
+          (courseId: number | null): courseId is number => courseId !== null,
+        ),
+    );
+
+    const missingCourseIds = targetCourseIds.filter(
+      (courseId) => !existingCourseIdSet.has(courseId),
+    );
+
+    if (missingCourseIds.length === 0) return;
+
+    await db.transactionStudent.createMany({
+      data: missingCourseIds.map((courseId) => ({
+        transactionId: transactionRecord.id,
+        orderId,
+        courseId,
+        isDiscount: false,
+        discountAmount: 0,
+        ...(paymentTimestamp ? { createdAt: paymentTimestamp } : {}),
+      })),
+    });
+  }
+};
+
+const parsePayosDateTime = (value?: string): Date | undefined => {
+  if (!value || typeof value !== "string") return undefined;
+
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+
+  const hasTimezone = /(?:Z|[+-]\d{2}:\d{2})$/i.test(trimmed);
+  const normalized = trimmed.includes(" ")
+    ? trimmed.replace(" ", "T")
+    : trimmed;
+
+  const candidate = hasTimezone ? normalized : `${normalized}+07:00`;
+  const parsed = new Date(candidate);
+
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+};
+
+const extractPaymentTimestamp = (source: any): Date | undefined => {
+  const root = parsePayosDateTime(source?.transactionDateTime);
+  if (root) return root;
+
+  if (Array.isArray(source?.transactions) && source.transactions.length > 0) {
+    for (const item of source.transactions) {
+      const parsed = parsePayosDateTime(item?.transactionDateTime);
+      if (parsed) return parsed;
+    }
+  }
+
+  return undefined;
+};
+
+const ensureEnrollments = async ({
+  db,
+  studentId,
+  courseItems,
+}: {
+  db: any;
+  studentId: number;
+  courseItems: Array<{ courseId: number }>;
+}) => {
+  if (courseItems.length === 0) return;
+
+  const targetCourseIds = [
+    ...new Set(courseItems.map((item) => item.courseId)),
+  ];
+
+  const existingEnrollments = await db.enrollment.findMany({
+    where: {
+      studentId,
+      courseId: { in: targetCourseIds },
+      isDestroyed: false,
+    },
+    select: { courseId: true },
+  });
+
+  const existingCourseIdSet = new Set(
+    existingEnrollments.map((item: { courseId: number }) => item.courseId),
+  );
+  const missingCourseIds = targetCourseIds.filter(
+    (courseId) => !existingCourseIdSet.has(courseId),
+  );
+
+  if (missingCourseIds.length === 0) return;
+
+  await db.enrollment.createMany({
+    data: missingCourseIds.map((courseId) => ({
+      studentId,
+      courseId,
+      status: "enrolled",
+      progress: 0,
+    })),
+  });
+};
 
 /**
  * GIAI ĐOẠN 2: Tạo link thanh toán (Payment Link Creation)
@@ -63,11 +234,18 @@ const createPaymentLink = async (data: {
       );
     }
 
-    // Chuẩn bị dữ liệu thanh toán
-    const orderDescription = `Payment for courses: ${order.items.map((item) => item.course.name).join(", ")}`;
+    // PayOS giới hạn description tối đa 25 ký tự.
+    const orderDescription = `Order ${order.id} course payment`;
 
     const returnUrl = data.returnUrl || env.PAYOS_RETURN_URL;
     const cancelUrl = data.cancelUrl || env.PAYOS_CANCEL_URL;
+
+    if (!returnUrl || !cancelUrl) {
+      throw new ApiError(
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        "PayOS return/cancel URLs are not configured!",
+      );
+    }
 
     // Gọi PayOS để tạo link thanh toán
     const paymentLinkData: any = {
@@ -86,16 +264,43 @@ const createPaymentLink = async (data: {
       paymentLinkData.buyerPhone = order.student.phoneNumber;
     }
 
-    const paymentLinkResponse =
-      await PayosProvider.createPaymentLink(paymentLinkData);
+    let paymentLinkResponse: any;
+
+    try {
+      paymentLinkResponse =
+        await PayosProvider.createPaymentLink(paymentLinkData);
+    } catch (error: any) {
+      // Code 231: orderCode đã tồn tại trên PayOS. Lấy lại link hiện có để tránh fail flow.
+      if (String(error?.message || "").includes("code: 231")) {
+        const existingPaymentInfo: any = await PayosProvider.getPaymentLinkInfo(
+          order.id,
+        );
+        paymentLinkResponse = {
+          paymentLinkId:
+            existingPaymentInfo.paymentLinkId || existingPaymentInfo.id || null,
+          checkoutUrl: existingPaymentInfo.checkoutUrl || null,
+          qrCode: existingPaymentInfo.qrCode || null,
+        };
+      } else {
+        throw error;
+      }
+    }
+
+    if (!paymentLinkResponse?.checkoutUrl) {
+      throw new ApiError(
+        StatusCodes.BAD_GATEWAY,
+        "PayOS did not return a valid checkout URL",
+      );
+    }
 
     // **Quan trọng**: Lưu paymentLinkId vào database cho việc tra cứu sau này
     const updatedOrder = await prisma.order.update({
       where: { id: orderId },
       data: {
-        paymentLinkId: paymentLinkResponse.paymentLinkId,
+        paymentLinkId:
+          paymentLinkResponse.paymentLinkId || order.paymentLinkId || null,
         checkoutUrl: paymentLinkResponse.checkoutUrl,
-        qrCode: paymentLinkResponse.qrCode,
+        qrCode: paymentLinkResponse.qrCode || null,
         paymentStatus: "pending",
         updatedAt: new Date(),
       },
@@ -142,6 +347,7 @@ const handleWebhook = async (webhookBody: any) => {
 
     const orderCode = webhookData.data.orderCode;
     const transactionStatus = webhookData.data.status;
+    const paymentTimestamp = extractPaymentTimestamp(webhookData.data);
     const isSuccessful =
       webhookData.code === "00" && transactionStatus === "PAID";
 
@@ -150,7 +356,14 @@ const handleWebhook = async (webhookBody: any) => {
       where: { id: orderCode, isDestroyed: false },
       include: {
         items: {
-          select: { courseId: true },
+          select: {
+            courseId: true,
+            price: true,
+            lecturerId: true,
+            course: {
+              select: { lecturerId: true },
+            },
+          },
         },
       },
     });
@@ -174,16 +387,46 @@ const handleWebhook = async (webhookBody: any) => {
           },
         });
 
-        // Tự động tạo enrollment cho học sinh với tất cả các khóa học trong đơn hàng
+        // Ghi nhận giao dịch thanh toán vào Transaction/TransactionStudent (idempotent).
+        await ensureTransactionRecords({
+          db: tx,
+          orderId: orderCode,
+          studentId: order.studentId,
+          totalPrice: Number(order.totalPrice || 0),
+          courseItems: order.items.map((item) => ({ courseId: item.courseId })),
+          ...(paymentTimestamp ? { paymentTimestamp } : {}),
+        });
+
+        await ensureEnrollments({
+          db: tx,
+          studentId: order.studentId,
+          courseItems: order.items.map((item) => ({ courseId: item.courseId })),
+        });
+
         for (const item of order.items) {
-          try {
-            await enrollmentService.createEnrollment({
-              studentId: order.studentId,
+          // Ensure revenue exists right after a successful payment.
+          const totalAmount = Number(item.price || 0);
+          const platformFee = totalAmount * 0.2;
+          const lecturerEarn = totalAmount - platformFee;
+
+          await tx.revenue.upsert({
+            where: { orderId: orderCode },
+            update: {
+              totalAmount,
+              platformFee,
+              lecturerEarn,
               courseId: item.courseId,
-            });
-          } catch (error: any) {
-            console.error(`Failed to create enrollment:`, error);
-          }
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            },
+            create: {
+              orderId: orderCode,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+            },
+          });
         }
 
         return updated;
@@ -250,37 +493,82 @@ const checkPaymentStatus = async (orderId: number) => {
 
     // Gọi trực tiếp đến PayOS để lấy trạng thái mới nhất
     const latestPaymentInfo = await PayosProvider.getPaymentLinkInfo(order.id);
+    const paymentTimestamp = extractPaymentTimestamp(latestPaymentInfo);
 
-    // Nếu PayOS trả về status PAID nhưng database còn pending, cập nhật
-    if (latestPaymentInfo.status === "PAID" && order.paymentStatus !== "paid") {
-      await prisma.order.update({
-        where: { id: orderId },
-        data: {
-          paymentStatus: "paid",
-          status: "processing",
-          isSuccess: true,
-          updatedAt: new Date(),
-        },
-      });
+    // Nếu PayOS trả về status PAID (hoặc DB đã paid trước đó), đảm bảo side-effects đầy đủ.
+    if (latestPaymentInfo.status === "PAID" || order.paymentStatus === "paid") {
+      if (order.paymentStatus !== "paid") {
+        await prisma.order.update({
+          where: { id: orderId },
+          data: {
+            paymentStatus: "paid",
+            status: "processing",
+            isSuccess: true,
+            updatedAt: new Date(),
+          },
+        });
+      }
 
-      // Tạo enrollment nếu chưa tạo
+      // Tạo enrollment nếu chưa tạo và đảm bảo có Transaction/TransactionStudent
       const orderWithItems = await prisma.order.findUnique({
         where: { id: orderId },
         include: {
-          items: { select: { courseId: true } },
+          items: {
+            select: {
+              courseId: true,
+              price: true,
+              lecturerId: true,
+              course: {
+                select: { lecturerId: true },
+              },
+            },
+          },
         },
       });
 
       if (orderWithItems) {
+        await ensureTransactionRecords({
+          db: prisma,
+          orderId,
+          studentId: order.studentId,
+          totalPrice: Number(order.totalPrice || 0),
+          courseItems: orderWithItems.items.map((item) => ({
+            courseId: item.courseId,
+          })),
+          ...(paymentTimestamp ? { paymentTimestamp } : {}),
+        });
+
+        await ensureEnrollments({
+          db: prisma,
+          studentId: order.studentId,
+          courseItems: orderWithItems.items.map((item) => ({
+            courseId: item.courseId,
+          })),
+        });
+
         for (const item of orderWithItems.items) {
-          try {
-            await enrollmentService.createEnrollment({
-              studentId: order.studentId,
+          const totalAmount = Number(item.price || 0);
+          const platformFee = totalAmount * 0.2;
+          const lecturerEarn = totalAmount - platformFee;
+
+          await prisma.revenue.upsert({
+            where: { orderId },
+            update: {
+              totalAmount,
+              platformFee,
+              lecturerEarn,
               courseId: item.courseId,
-            });
-          } catch (error) {
-            console.error("Enrollment creation error:", error);
-          }
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            },
+            create: {
+              orderId,
+              courseId: item.courseId,
+              lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+              totalAmount,
+              platformFee,
+              lecturerEarn,
+            },
+          });
         }
       }
     }

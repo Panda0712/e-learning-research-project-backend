@@ -302,6 +302,48 @@ const getListCourses = async (
   }
 };
 
+const getAdminCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const actorId = Number(req.jwtDecoded?.id);
+    const { page, itemsPerPage, q, status } = req.query;
+
+    const results = await courseService.getAdminCourses(
+      {
+        page: Number(page),
+        itemsPerPage: Number(itemsPerPage),
+        q: (q as string) || "",
+        status: (status as "all" | "active" | "pending" | "rejected") || "all",
+      },
+      actorId,
+    );
+
+    res.status(StatusCodes.OK).json(results);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminCourseById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const actorId = Number(req.jwtDecoded?.id);
+    const { id } = req.params;
+
+    const course = await courseService.getAdminCourseById(Number(id), actorId);
+
+    res.status(StatusCodes.OK).json(course);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const uploadCourseThumbnail = async (
   req: Request,
   res: Response,
@@ -381,6 +423,8 @@ export const courseController = {
   rejectCourse,
   getCourseById,
   getListCourses,
+  getAdminCourses,
+  getAdminCourseById,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,
   getAllCoursesByLecturerId,
