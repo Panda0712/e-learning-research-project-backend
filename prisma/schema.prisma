@@ -311,10 +311,10 @@ model Coupon {
   description   String?
   status        String?
   code          String    @unique
-  courseId        Int?
+  courseId      Int?
   categoryId    Int?
   discount      Float?
-  discountUnit  String?   // amount | percent
+  discountUnit  String? // amount | percent
   usageLimit    Int?
   minOrderValue Float?
   maxValue      Float?

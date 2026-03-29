@@ -349,6 +349,7 @@ export const CouponScalarFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
+  courseId: 'courseId',
   categoryId: 'categoryId',
   discount: 'discount',
   discountUnit: 'discountUnit',
