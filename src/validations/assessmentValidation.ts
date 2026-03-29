@@ -35,7 +35,7 @@ const getAssessmentsForLecturer = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    lecturerId: Joi.number().integer().required().positive(),
+    lecturerId: Joi.number().required(),
   });
 
   try {
@@ -54,7 +54,7 @@ const getAssessmentById = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().integer().required().positive(),
+    id: Joi.number().required(),
   });
 
   try {
@@ -73,7 +73,7 @@ const getSubmissionDetails = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    assessmentId: Joi.number().integer().required().positive(),
+    assessmentId: Joi.number().required(),
   });
 
   try {
@@ -136,7 +136,7 @@ const deleteAssessment = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().integer().required().positive(),
+    id: Joi.number().required(),
   });
 
   try {

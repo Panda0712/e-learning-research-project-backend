@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma.js";
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 // import { MapReview } from "@/types/review.type.js";
 
 const mapReview = (review: any) => {
@@ -68,7 +69,56 @@ const getReviewsByCourseId = async (courseId: number, limit = 10) => {
   }
 };
 
+const getReviewsByCourseIdV2 = async (
+  courseId: number,
+  page: number = DEFAULT_PAGE,
+  itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE,
+  limit = 10,
+) => {
+  const currentPage = Number(page) > 0 ? Number(page) : DEFAULT_PAGE;
+  const perPage =
+    Number(itemsPerPage) > 0 ? Number(itemsPerPage) : DEFAULT_ITEMS_PER_PAGE;
+  const skip = (currentPage - 1) * perPage;
+
+  const where = { courseId, isDestroyed: false };
+
+  try {
+    const [rows, total] = await Promise.all([
+      prisma.courseReview.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: perPage,
+        include: {
+          course: { select: { name: true } },
+          student: {
+            select: {
+              firstName: true,
+              lastName: true,
+              avatar: { select: { fileUrl: true } },
+            },
+          },
+        },
+      }),
+      prisma.courseReview.count({ where }),
+    ]);
+
+    return {
+      data: rows.map(mapReview),
+      pagination: {
+        page: currentPage,
+        itemsPerPage: perPage,
+        total,
+        totalPages: Math.ceil(total / perPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const reviewService = {
   getHighlightReviews,
   getReviewsByCourseId,
+  getReviewsByCourseIdV2,
 };

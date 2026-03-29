@@ -9,6 +9,48 @@ import {
 } from "@/utils/constants.js";
 import { resourceService } from "./resourceService.js";
 
+const ensureLecturerOrAdmin = async (userId: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId, isDestroyed: false },
+    select: { id: true, role: true },
+  });
+
+  if (!user) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
+  }
+
+  const role = String(user.role || "").toLowerCase();
+  if (role !== "lecturer" && role !== "admin") {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      "You are not allowed to manage courses!",
+    );
+  }
+
+  return user;
+};
+
+const ensureCourseOwnerOrAdmin = async (courseId: number, userId: number) => {
+  const user = await ensureLecturerOrAdmin(userId);
+
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false },
+  });
+
+  if (!course) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  }
+
+  if (user.role !== "admin" && course.lecturerId !== userId) {
+    throw new ApiError(
+      StatusCodes.FORBIDDEN,
+      "You are not allowed to modify this course!",
+    );
+  }
+
+  return { user, course };
+};
+
 const createCourseCategory = async (data: { name: string; slug: string }) => {
   try {
     // check category existence
@@ -161,12 +203,14 @@ const createCourse = async (data: CreateCourse) => {
   }
 };
 
-const updateCourse = async (id: number, updateData: UpdateCourse) => {
+const updateCourse = async (
+  id: number,
+  updateData: UpdateCourse,
+  actorId: number,
+) => {
   try {
     // check course existence
-    const course = await prisma.course.findUnique({
-      where: { id, isDestroyed: false },
-    });
+    const { course } = await ensureCourseOwnerOrAdmin(id, actorId);
     if (!course) {
       throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
     }
@@ -231,15 +275,9 @@ const updateCourse = async (id: number, updateData: UpdateCourse) => {
   }
 };
 
-const deleteCourse = async (id: number) => {
+const deleteCourse = async (id: number, actorId: number) => {
   try {
-    // check course existence
-    const course = await prisma.course.findUnique({
-      where: { id, isDestroyed: false },
-    });
-    if (!course) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
-    }
+    await ensureCourseOwnerOrAdmin(id, actorId);
 
     return await prisma.course.update({
       where: { id },
@@ -250,14 +288,17 @@ const deleteCourse = async (id: number) => {
   }
 };
 
-const approveCourse = async (id: number) => {
+const approveCourse = async (id: number, actorId: number) => {
   try {
-    // check course existence
-    const course = await prisma.course.findUnique({
-      where: { id, isDestroyed: false },
-    });
-    if (!course) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    const { user, course } = await ensureCourseOwnerOrAdmin(id, actorId);
+
+    const role = String(user.role || "").toLowerCase();
+
+    if (role !== "admin") {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only admin can approve courses!",
+      );
     }
 
     // check course status
@@ -289,14 +330,17 @@ const approveCourse = async (id: number) => {
   }
 };
 
-const rejectCourse = async (id: number) => {
+const rejectCourse = async (id: number, actorId: number) => {
   try {
-    // check course existence
-    const course = await prisma.course.findUnique({
-      where: { id, isDestroyed: false },
-    });
-    if (!course) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    const { user, course } = await ensureCourseOwnerOrAdmin(id, actorId);
+
+    const role = String(user.role || "").toLowerCase();
+
+    if (role !== "admin") {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only admin can reject courses!",
+      );
     }
 
     // check course status
@@ -332,8 +376,20 @@ const getCourseById = async (id: number) => {
   try {
     // check course existence
     const course = await prisma.course.findUnique({
-      where: { id, isDestroyed: false },
+      where: { id, isDestroyed: false, status: COURSE_STATUS.PUBLISHED },
+      include: {
+        thumbnail: { select: { fileUrl: true } },
+        category: { select: { id: true, name: true } },
+        lecturer: {
+          select: {
+            firstName: true,
+            lastName: true,
+            avatar: { select: { fileUrl: true } },
+          },
+        },
+      },
     });
+
     if (!course) {
       throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
     }
@@ -508,7 +564,23 @@ const getAllCoursesByLecturerId = async (lecturerId: number) => {
 
     // get courses
     const courses = await prisma.course.findMany({
-      where: { lecturerId, isDestroyed: false },
+      where: {
+        lecturerId,
+        isDestroyed: false,
+        status: COURSE_STATUS.PUBLISHED,
+      },
+      include: {
+        thumbnail: { select: { fileUrl: true } },
+        category: { select: { id: true, name: true } },
+        lecturer: {
+          select: {
+            firstName: true,
+            lastName: true,
+            avatar: { select: { fileUrl: true } },
+          },
+        },
+      },
+      orderBy: { name: "asc" },
     });
 
     return courses;
@@ -529,7 +601,23 @@ const getAllCoursesByCategoryId = async (categoryId: number) => {
 
     // get courses
     const courses = await prisma.course.findMany({
-      where: { categoryId, isDestroyed: false },
+      where: {
+        categoryId,
+        isDestroyed: false,
+        status: COURSE_STATUS.PUBLISHED,
+      },
+      include: {
+        thumbnail: { select: { fileUrl: true } },
+        category: { select: { id: true, name: true } },
+        lecturer: {
+          select: {
+            firstName: true,
+            lastName: true,
+            avatar: { select: { fileUrl: true } },
+          },
+        },
+      },
+      orderBy: { name: "asc" },
     });
 
     return courses;
@@ -538,11 +626,21 @@ const getAllCoursesByCategoryId = async (categoryId: number) => {
   }
 };
 
-const getListCourses = async (
-  page: number,
-  itemsPerPage: number,
-  q: string,
-) => {
+const getListCourses = async ({
+  page,
+  itemsPerPage,
+  q,
+  categoryId,
+  level,
+  price,
+}: {
+  page: number;
+  itemsPerPage: number;
+  q: string;
+  categoryId?: number;
+  level?: string;
+  price?: string;
+}) => {
   try {
     const currentPage = page ? Number(page) : DEFAULT_PAGE;
     const perPage = itemsPerPage
@@ -553,22 +651,39 @@ const getListCourses = async (
 
     const where = {
       isDestroyed: false,
-      ...(q
+      status: COURSE_STATUS.PUBLISHED,
+      ...(q && q !== "all"
         ? {
             OR: [
               { name: { contains: q, mode: "insensitive" } },
               { lecturerName: { contains: q, mode: "insensitive" } },
               { overview: { contains: q, mode: "insensitive" } },
-              { level: { contains: q, mode: "insensitive" } },
-              { status: { contains: q, mode: "insensitive" } },
             ],
           }
         : {}),
+      ...(categoryId ? { categoryId } : {}),
+      ...(level && level !== "All Levels" ? { level } : {}),
+      ...(price === "free"
+        ? { price: 0 }
+        : price === "paid"
+          ? { price: { gt: 0 } }
+          : {}),
     };
 
     const [courses, totalCourses] = await Promise.all([
       prisma.course.findMany({
         where,
+        include: {
+          thumbnail: { select: { fileUrl: true } },
+          category: { select: { id: true, name: true } },
+          lecturer: {
+            select: {
+              firstName: true,
+              lastName: true,
+              avatar: { select: { fileUrl: true } },
+            },
+          },
+        },
         orderBy: { name: "asc" },
         skip,
         take: perPage,

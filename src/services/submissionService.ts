@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
+import { assessmentService } from "./assessmentService.js";
 
 const createSubmission = async (data: {
   assessmentId: number;
@@ -73,6 +74,8 @@ const createSubmission = async (data: {
         },
       },
     });
+
+    await assessmentService.updateAssessmentStats(data.assessmentId);
 
     return newSubmission;
   } catch (error) {
@@ -312,6 +315,8 @@ const updateSubmission = async (
       },
     });
 
+    await assessmentService.updateAssessmentStats(updatedSubmission.assessmentId);
+
     return updatedSubmission;
   } catch (error) {
     throw error;
@@ -368,6 +373,8 @@ const gradeSubmission = async (
       },
     });
 
+    await assessmentService.updateAssessmentStats(updatedSubmission.assessmentId);
+
     return updatedSubmission;
   } catch (error) {
     throw error;
@@ -388,6 +395,8 @@ const deleteSubmission = async (id: number) => {
       where: { id },
       data: { isDestroyed: true },
     });
+
+    await assessmentService.updateAssessmentStats(submission.assessmentId);
 
     return { message: "Submission deleted successfully!" };
   } catch (error) {

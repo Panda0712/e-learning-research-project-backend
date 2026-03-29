@@ -9,12 +9,12 @@ Router.route("/").post(
   questionController.createQuestion,
 );
 
-Router.route("/:id")
+Router.route("/by-id/:id")
   .get(questionValidation.getQuestionById, questionController.getQuestionById)
   .patch(questionValidation.updateQuestion, questionController.updateQuestion)
   .delete(questionValidation.deleteQuestion, questionController.deleteQuestion);
 
-Router.route("/:quizId").get(
+Router.route("/by-quiz/:quizId").get(
   questionValidation.getAllQuestionsByQuizId,
   questionController.getAllQuestionsByQuizId,
 );

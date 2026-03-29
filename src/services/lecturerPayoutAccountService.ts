@@ -36,11 +36,11 @@ const createLecturerPayoutAccount = async (data: {
     const newPayoutAccount = await prisma.lecturerPayoutAccount.create({
       data: {
         lecturerId: data.lecturerId,
-        cardType: data.cardType,
-        cardNumber: data.cardNumber,
-        cardExpireDate: data.cardExpireDate,
-        cardCVV: data.cardCVV,
-        cardHolderName: data.cardHolderName,
+        cardType: data.cardType ?? null,
+        cardNumber: data.cardNumber ?? null,
+        cardExpireDate: data.cardExpireDate ?? null,
+        cardCVV: data.cardCVV ?? null,
+        cardHolderName: data.cardHolderName ?? null,
         isDefault: data.isDefault || false,
       },
       include: {
@@ -254,12 +254,12 @@ const updateLecturerPayoutAccount = async (
     const updatedPayoutAccount = await prisma.lecturerPayoutAccount.update({
       where: { id },
       data: {
-        cardType: data.cardType,
-        cardNumber: data.cardNumber,
-        cardExpireDate: data.cardExpireDate,
-        cardCVV: data.cardCVV,
-        cardHolderName: data.cardHolderName,
-        isDefault: data.isDefault,
+        cardType: data.cardType ?? null,
+        cardNumber: data.cardNumber ?? null,
+        cardExpireDate: data.cardExpireDate ?? null,
+        cardCVV: data.cardCVV ?? null,
+        cardHolderName: data.cardHolderName ?? null,
+        isDefault: data.isDefault ?? null,
       },
       include: {
         lecturer: {

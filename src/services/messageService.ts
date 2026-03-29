@@ -1,7 +1,9 @@
 import { prisma } from "@/lib/prisma.js";
 import { getIO } from "@/socket/index.js";
 import ApiError from "@/utils/ApiError.js";
+import { normalizeConversationRole } from "@/utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
+import { chatRepo } from "./repo/chatRepo.js";
 
 const getSocketIO = () => getIO();
 
@@ -10,6 +12,88 @@ type SendDirectMessageInput = {
   recipientId?: number;
   content?: string;
   imgUrl?: string;
+};
+
+type ConversationWithRelations = {
+  id: number;
+  studentId: number;
+  lecturerId: number;
+  lastMessageId: number | null;
+  lastMessageSenderId: number | null;
+  lastMessageContent: string | null;
+  lastMessageAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  members: Array<{
+    userId: number;
+    role: "STUDENT" | "LECTURER";
+    unreadCount: number;
+    joinedAt: Date;
+    lastReadAt: Date | null;
+    lastSeenMessageId: number | null;
+    user: {
+      id: number;
+      firstName: string | null;
+      lastName: string | null;
+      avatar: { fileUrl: string } | null;
+    };
+  }>;
+};
+
+const buildConversationPayload = (
+  conversation: ConversationWithRelations,
+  currentUserId: number,
+) => {
+  const participants = conversation.members.map((member) => ({
+    id: member.user.id,
+    firstName: member.user.firstName,
+    lastName: member.user.lastName,
+    avatarUrl: member.user.avatar?.fileUrl ?? null,
+    role: normalizeConversationRole(member.role),
+    joinedAt: member.joinedAt,
+    lastReadAt: member.lastReadAt,
+    unreadCount: member.unreadCount,
+  }));
+
+  const unreadCounts = Object.fromEntries(
+    conversation.members.map((member) => [
+      member.userId.toString(),
+      member.unreadCount,
+    ]),
+  );
+
+  const seenBy = conversation.members
+    .filter(
+      (member) =>
+        conversation.lastMessageId &&
+        member.lastSeenMessageId === conversation.lastMessageId,
+    )
+    .map((member) => ({
+      id: member.user.id,
+      firstName: member.user.firstName,
+      lastName: member.user.lastName,
+      avatarUrl: member.user.avatar?.fileUrl ?? null,
+    }));
+
+  const myMember = conversation.members.find(
+    (member) => member.userId === currentUserId,
+  );
+
+  return {
+    id: conversation.id,
+    studentId: conversation.studentId,
+    lecturerId: conversation.lecturerId,
+    lastMessageId: conversation.lastMessageId,
+    lastMessageContent: conversation.lastMessageContent,
+    lastMessageSenderId: conversation.lastMessageSenderId,
+    lastMessageAt: conversation.lastMessageAt,
+    createdAt: conversation.createdAt,
+    updatedAt: conversation.updatedAt,
+    participants,
+    seenBy,
+    unreadCounts,
+    myUnreadCount: myMember?.unreadCount ?? 0,
+  };
 };
 
 const resolveStudentLecturerPair = async (
@@ -119,11 +203,29 @@ const sendDirectMessage = async (
         );
       }
 
+      const sender = await tx.user.findUnique({
+        where: { id: senderId, isDestroyed: false },
+        select: { role: true },
+      });
+
+      if (sender?.role?.toLowerCase() !== "student") {
+        throw new ApiError(
+          StatusCodes.FORBIDDEN,
+          "Only students can start a new conversation.",
+        );
+      }
+
       const { studentId, lecturerId } = await resolveStudentLecturerPair(
         senderId,
         recipientId,
         tx,
       );
+
+      await chatRepo.ensureStudentCanChatWithLecturer({
+        studentId,
+        lecturerId,
+        tx,
+      });
 
       const existedConversation = await tx.conversation.findFirst({
         where: {
@@ -301,9 +403,22 @@ const sendDirectMessage = async (
       ]),
     );
 
+    const conversationPayloadForSender = buildConversationPayload(
+      updatedConversation as ConversationWithRelations,
+      senderId,
+    );
+
+    const conversationPayloadForRecipient = recipientId
+      ? buildConversationPayload(
+          updatedConversation as ConversationWithRelations,
+          recipientId,
+        )
+      : null;
+
     return {
       createdConversation,
       recipientId,
+      recipientConversation: conversationPayloadForRecipient,
       message: {
         id: message.id,
         conversationId: message.conversationId,
@@ -318,15 +433,7 @@ const sendDirectMessage = async (
           avatarUrl: message.sender.avatar?.fileUrl ?? null,
         },
       },
-      conversation: {
-        id: updatedConversation.id,
-        studentId: updatedConversation.studentId,
-        lecturerId: updatedConversation.lecturerId,
-        lastMessageId: updatedConversation.lastMessageId,
-        lastMessageSenderId: updatedConversation.lastMessageSenderId,
-        lastMessageContent: updatedConversation.lastMessageContent,
-        lastMessageAt: updatedConversation.lastMessageAt,
-      },
+      conversation: conversationPayloadForSender,
       unreadCounts,
     };
   });
@@ -339,9 +446,13 @@ const sendDirectMessage = async (
       unreadCounts: result.unreadCounts,
     });
 
-  if (result.createdConversation && result.recipientId) {
+  if (
+    result.createdConversation &&
+    result.recipientId &&
+    result.recipientConversation
+  ) {
     getSocketIO().to(`user:${result.recipientId}`).emit("new-conversation", {
-      conversation: result.conversation,
+      conversation: result.recipientConversation,
     });
   }
 

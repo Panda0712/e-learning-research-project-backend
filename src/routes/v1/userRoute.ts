@@ -25,7 +25,10 @@ Router.route("/register-lecturer").post(
 
 Router.route("/login").post(userValidation.login, userController.login);
 
-Router.route("/logout").delete(userController.logout);
+Router.route("/logout").delete(
+  authMiddleware.isAuthorized,
+  userController.logout,
+);
 
 Router.route("/refresh_token").get(userController.handleRefreshToken);
 
@@ -46,6 +49,7 @@ Router.route("/reset-password").post(
 );
 
 Router.route("/avatar").post(
+  authMiddleware.isAuthorized,
   multerUploadMiddleware.uploadImage.single("images"),
   userController.uploadAvatar,
 );

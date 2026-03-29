@@ -2,6 +2,7 @@ import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { courseService } from "../services/courseService.js";
+import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 
 const createCourseCategory = async (
   req: Request,
@@ -80,11 +81,11 @@ const createCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.jwtDecoded.id;
+    const lecturerId = Number(req.jwtDecoded?.id);
 
     const createdCourse = await courseService.createCourse({
       ...req.body,
-      lecturerId: Number(id),
+      lecturerId,
     });
 
     res.status(StatusCodes.CREATED).json(createdCourse);
@@ -99,11 +100,13 @@ const updateCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
 
     const updatedCourse = await courseService.updateCourse(
-      Number(id),
+      courseId,
       req.body,
+      actorId,
     );
 
     res.status(StatusCodes.OK).json(updatedCourse);
@@ -118,9 +121,10 @@ const deleteCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
 
-    await courseService.deleteCourse(Number(id));
+    await courseService.deleteCourse(courseId, actorId);
 
     res.status(StatusCodes.OK).json({ message: "Course deleted successfully" });
   } catch (error) {
@@ -134,9 +138,10 @@ const approveCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
 
-    await courseService.approveCourse(Number(id));
+    await courseService.approveCourse(courseId, actorId);
 
     res
       .status(StatusCodes.OK)
@@ -152,9 +157,10 @@ const rejectCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
 
-    await courseService.rejectCourse(Number(id));
+    await courseService.rejectCourse(courseId, actorId);
 
     res
       .status(StatusCodes.OK)
@@ -267,15 +273,30 @@ const getListCourses = async (
   next: NextFunction,
 ) => {
   try {
-    const { page, itemsPerPage, q } = req.query;
+    const { page, itemsPerPage, q, categoryId, level, price } = req.query;
 
-    const results = await courseService.getListCourses(
-      Number(page),
-      Number(itemsPerPage),
-      (q as string) || "",
-    );
+    const results = await courseService.getListCourses({
+      page: Number(page),
+      itemsPerPage: Number(itemsPerPage) || DEFAULT_ITEMS_PER_PAGE,
+      q: (q as string) || "",
+      categoryId: Number(categoryId),
+      level: level as string,
+      price: price as string,
+    });
 
-    res.status(StatusCodes.OK).json(results);
+    res.status(StatusCodes.OK).json({
+      courses: results.courses,
+      totalCourses: results.totalCourses,
+      pagination: {
+        page,
+        itemsPerPage,
+        total: results.totalCourses,
+        totalPages: Math.ceil(
+          results.totalCourses /
+            (Number(itemsPerPage) ?? DEFAULT_ITEMS_PER_PAGE),
+        ),
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -292,6 +313,54 @@ const uploadCourseThumbnail = async (
     const uploadedThumbnail = await CloudinaryProvider.uploadImage(file.buffer);
 
     res.status(StatusCodes.OK).json(uploadedThumbnail);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyLecturers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const studentId = Number(req.jwtDecoded.id);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const q = (req.query.q as string) || "";
+
+    const result = await courseService.getListLecturersByStudentId(
+      studentId,
+      page,
+      limit,
+      q,
+    );
+
+    return res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyCourses = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const studentId = Number(req.jwtDecoded.id);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 6;
+    const q = (req.query.q as string) || "";
+
+    const result = await courseService.getAllCoursesByStudentId(
+      studentId,
+      page,
+      limit,
+      q,
+    );
+
+    return res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
   }
@@ -317,4 +386,7 @@ export const courseController = {
   getAllCoursesByLecturerId,
   getAllCoursesByCategoryId,
   uploadCourseThumbnail,
+
+  getMyLecturers,
+  getMyCourses,
 };

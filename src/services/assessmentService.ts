@@ -44,19 +44,42 @@ const getAssessmentsForLecturer = async (lecturerId: number) => {
         course: {
           select: { name: true, _count: { select: { enrollments: true } } },
         },
-        _count: { select: { submissions: true } },
+        submissions: {
+          select: {
+            score: true,
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
     });
 
-    return assessments.map((a) => ({
-      id: a.id,
-      title: a.title,
-      courseName: a.course?.name,
-      submissionsText: `${a._count.submissions}/${a.course?._count.enrollments}`,
-      status: a.dueDate && new Date(a.dueDate) < new Date() ? "Closed" : "Open",
-      dueDate: a.dueDate,
-    }));
+    return assessments.map((a) => {
+      const totalSubmissions = a.submissions.length;
+      const totalScore = a.submissions.reduce(
+        (acc, sub) => acc + (sub.score || 0),
+        0,
+      );
+      const averageScore =
+        totalSubmissions > 0 ? totalScore / totalSubmissions : 0;
+
+      return {
+        id: a.id,
+        title: a.title,
+        courseName: a.course?.name,
+        submissionsText: `${totalSubmissions}/${a.course?._count.enrollments}`,
+        status:
+          a.dueDate && new Date(a.dueDate) < new Date() ? "Closed" : "Open",
+        dueDate: a.dueDate,
+        averageScore,
+        totalSubmissions,
+        type: a.type,
+        lessonId: a.lessonId,
+        isDestroyed: a.isDestroyed,
+        courseId: a.courseId,
+        createdAt: a.createdAt,
+        updatedAt: a.updatedAt,
+      };
+    });
   } catch (error: any) {
     throw error;
   }
@@ -142,6 +165,36 @@ const deleteAssessment = async (id: number) => {
   });
 };
 
+const updateAssessmentStats = async (assessmentId: number) => {
+  try {
+    const submissions = await prisma.submission.findMany({
+      where: {
+        assessmentId: assessmentId,
+        isDestroyed: false,
+      },
+    });
+
+    const totalSubmissions = submissions.length;
+    const totalScore = submissions.reduce(
+      (acc, sub) => acc + (sub.score || 0),
+      0,
+    );
+
+    const averageScore =
+      totalSubmissions > 0 ? totalScore / totalSubmissions : 0;
+
+    await prisma.assessment.update({
+      where: { id: assessmentId },
+      data: {
+        totalSubmissions,
+        averageScore,
+      },
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const assessmentService = {
   createAssessment,
   getAssessmentsForLecturer,
@@ -150,4 +203,5 @@ export const assessmentService = {
   updateAssessment,
   updateFeedback,
   deleteAssessment,
+  updateAssessmentStats,
 };

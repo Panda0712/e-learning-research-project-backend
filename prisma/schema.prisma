@@ -118,6 +118,7 @@ model Course {
   courseFAQs  CourseFAQ[]
   assessments Assessment[]
   cartItems   CartItem[]
+  coupons     Coupon[]
 }
 
 model CourseCategory {
@@ -267,20 +268,20 @@ model Question {
 }
 
 model Order {
-  id                 Int      @id @default(autoincrement())
-  studentId          Int
-  lecturer           String?
-  totalPrice         Float?   @default(0)
-  paymentMethod      String?  @default("payos")
-  status             String?  @default("pending") // pending, processing, completed, failed, cancelled
-  paymentLinkId      String?  @unique // PayOS payment link ID
-  paymentStatus      String?  @default("pending") // pending, paid, cancelled, failed
-  checkoutUrl        String?  @db.Text // PayOS checkout URL
-  qrCode             String?  @db.Text // PayOS QR code
-  isSuccess          Boolean  @default(false)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime? @updatedAt
-  isDestroyed        Boolean  @default(false)
+  id            Int       @id @default(autoincrement())
+  studentId     Int
+  lecturer      String?
+  totalPrice    Float?    @default(0)
+  paymentMethod String?   @default("payos")
+  status        String?   @default("pending") // pending, processing, completed, failed, cancelled
+  paymentLinkId String?   @unique // PayOS payment link ID
+  paymentStatus String?   @default("pending") // pending, paid, cancelled, failed
+  checkoutUrl   String?   @db.Text // PayOS checkout URL
+  qrCode        String?   @db.Text // PayOS QR code
+  isSuccess     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
 
   // relations
   student User        @relation(fields: [studentId], references: [id])
@@ -306,6 +307,7 @@ model OrderItem {
 
 model Coupon {
   id              Int       @id @default(autoincrement())
+  courseId        Int?
   name            String
   description     String?
   status          String?
@@ -329,6 +331,7 @@ model Coupon {
 
   // relations
   category CouponCategory? @relation(fields: [categoryId], references: [id])
+  course   Course?         @relation(fields: [courseId], references: [id])
 }
 
 model CouponCategory {
@@ -581,15 +584,15 @@ model Revenue {
 }
 
 model Notification {
-  id        Int     @id @default(autoincrement())
-  userId    Int
-  title     String
-  message   String  @db.Text
-  type      String  @default("info") // "order", "payment", "message", "info"
-  relatedId Int?    // Link to order, payment, etc.
-  isRead    Boolean @default(false)
-  createdAt DateTime @default(now())
-  isDestroyed Boolean @default(false)
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  title       String
+  message     String   @db.Text
+  type        String   @default("info") // "order", "payment", "message", "info"
+  relatedId   Int? // Link to order, payment, etc.
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  isDestroyed Boolean  @default(false)
 
   // Relations
   user User @relation(fields: [userId], references: [id])
