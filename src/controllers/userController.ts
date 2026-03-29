@@ -12,8 +12,8 @@ const isProd = env.BUILD_MODE === "production";
 
 const authCookieOptions = {
   httpOnly: true,
-  secure: true,
-  sameSite: "none" as const,
+  secure: isProd,
+  sameSite: isProd ? ("none" as const) : ("lax" as const),
   maxAge: ms("14 days"),
 };
 
@@ -126,12 +126,16 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.jwtDecoded.id;
+    const userId = req.jwtDecoded?.id;
+
+    if (!userId) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
 
     const userAvatar = req.body?.avatar;
 
     const result = await userService.updateProfile(
-      Number(userId),
+      userId,
       req.body,
       userAvatar,
     );
@@ -343,6 +347,68 @@ const facebookAuthHandler = async (
   }
 };
 
+const getAdminUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { page, limit, itemsPerPage, role } = req.query;
+
+    const roleFilter = typeof role === "string" ? role : undefined;
+
+    const result = await userService.getAdminUsers({
+      page: Number(page) || 1,
+      itemsPerPage: Number(itemsPerPage || limit) || 10,
+      ...(roleFilter ? { role: roleFilter } : {}),
+    });
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminUserDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const result = await userService.getAdminUserDetail(Number(id));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const blockUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const { blocked } = req.body;
+
+    const result = await userService.blockUser(Number(id), Boolean(blocked));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const result = await userService.deleteUser(Number(id));
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const userController = {
   register,
   verifyAccount,
@@ -359,4 +425,8 @@ export const userController = {
   googleAuthCallbackHandler,
   getMe,
   facebookAuthHandler,
+  getAdminUsers,
+  getAdminUserDetail,
+  blockUser,
+  deleteUser,
 };

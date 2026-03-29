@@ -71,6 +71,23 @@ const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getAdminPosts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { page, limit, itemsPerPage } = req.query;
+    const result = await blogService.getAdminPosts({
+      page: Number(page) || 1,
+      itemsPerPage: Number(itemsPerPage || limit) || 10,
+    });
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getPostDetail = async (
   req: Request,
   res: Response,
@@ -80,6 +97,22 @@ const getPostDetail = async (
     const { id } = req.params;
 
     const result = await blogService.getPostDetail(Number(id));
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminPostDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    const result = await blogService.getAdminPostDetail(Number(id));
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -194,7 +227,9 @@ export const blogController = {
   updatePost,
   deletePost,
   getAllPosts,
+  getAdminPosts,
   getPostDetail,
+  getAdminPostDetail,
   uploadBlogThumbnail,
 
   createComment,
