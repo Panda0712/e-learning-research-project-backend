@@ -565,6 +565,10 @@ export type SubmissionUncheckedUpdateManyWithoutQuizNestedInput = {
   deleteMany?: Prisma.SubmissionScalarWhereInput | Prisma.SubmissionScalarWhereInput[]
 }
 
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type SubmissionCreateNestedManyWithoutAssessmentInput = {
   create?: Prisma.XOR<Prisma.SubmissionCreateWithoutAssessmentInput, Prisma.SubmissionUncheckedCreateWithoutAssessmentInput> | Prisma.SubmissionCreateWithoutAssessmentInput[] | Prisma.SubmissionUncheckedCreateWithoutAssessmentInput[]
   connectOrCreate?: Prisma.SubmissionCreateOrConnectWithoutAssessmentInput | Prisma.SubmissionCreateOrConnectWithoutAssessmentInput[]

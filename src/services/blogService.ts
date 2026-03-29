@@ -144,15 +144,111 @@ const createPost = async (reqBody: CreateBlogPost) => {
   }
 };
 
-const getAllPosts = async () => {
-  return await prisma.blogPost.findMany({
-    where: { isDestroyed: false },
-    include: {
-      _count: {
-        select: { comments: true },
+const mapBlogPost = (post: any) => {
+  const authorName = `${post?.author?.firstName || ""} ${post?.author?.lastName || ""}`.trim();
+
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    date: post.createdAt,
+    category: post?.category?.name || "Uncategorized",
+    categoryId: post?.categoryId,
+    image: post?.thumbnail?.fileUrl || "",
+    thumbnail: post?.thumbnail
+      ? {
+          publicId: post.thumbnail.publicId,
+          fileUrl: post.thumbnail.fileUrl,
+          fileSize: post.thumbnail.fileSize,
+          fileType: post.thumbnail.fileType,
+        }
+      : null,
+    author: authorName || "Unknown",
+    authorId: post.authorId,
+    totalComments: post?._count?.comments || 0,
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
+  };
+};
+
+const getAllPosts = async ({
+  page,
+  itemsPerPage,
+}: {
+  page?: number;
+  itemsPerPage?: number;
+}) => {
+  const hasPagination = Boolean(page && itemsPerPage);
+
+  const baseInclude = {
+    _count: {
+      select: { comments: true },
+    },
+    author: {
+      select: {
+        firstName: true,
+        lastName: true,
       },
     },
-  });
+    category: {
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+    },
+    thumbnail: {
+      select: {
+        publicId: true,
+        fileUrl: true,
+        fileSize: true,
+        fileType: true,
+      },
+    },
+  };
+
+  if (!hasPagination) {
+    const posts = await prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: baseInclude,
+      orderBy: { createdAt: "desc" },
+    });
+
+    return posts.map(mapBlogPost);
+  }
+
+  const normalizedPage = Number.isInteger(page) && (page as number) > 0 ? (page as number) : 1;
+  const normalizedItemsPerPage =
+    Number.isInteger(itemsPerPage) && (itemsPerPage as number) > 0
+      ? (itemsPerPage as number)
+      : 8;
+
+  const skip = (normalizedPage - 1) * normalizedItemsPerPage;
+
+  const [posts, total] = await Promise.all([
+    prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: baseInclude,
+      skip,
+      take: normalizedItemsPerPage,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.blogPost.count({ where: { isDestroyed: false } }),
+  ]);
+
+  return {
+    data: posts.map((post, index) => ({
+      ...mapBlogPost(post),
+      stt: skip + index + 1,
+    })),
+    pagination: {
+      page: normalizedPage,
+      itemsPerPage: normalizedItemsPerPage,
+      total,
+      totalPages: Math.ceil(total / normalizedItemsPerPage),
+    },
+  };
 };
 
 const getAdminPosts = async ({
@@ -218,10 +314,35 @@ const getPostDetail = async (id: number) => {
         _count: {
           select: { comments: true },
         },
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        thumbnail: {
+          select: {
+            publicId: true,
+            fileUrl: true,
+            fileSize: true,
+            fileType: true,
+          },
+        },
       },
     });
 
-    return post;
+    if (!post) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Post not found!");
+    }
+
+    return mapBlogPost(post);
   } catch (error: any) {
     throw error;
   }

@@ -35,13 +35,25 @@ Router.route("/categories/:id")
 
 // BLOG POST ROUTE
 Router.route("/blogPost")
-  .get(blogController.getAllPosts)
-  .post(blogValidation.createPost, blogController.createPost);
+  .get(blogValidation.getAllPosts, blogController.getAllPosts)
+  .post(
+    authMiddleware.isAuthorized,
+    blogValidation.createPost,
+    blogController.createPost,
+  );
 
 Router.route("/blogPost/:id")
   .get(blogController.getPostDetail)
-  .put(blogValidation.updatePost, blogController.updatePost)
-  .delete(blogValidation.deletePost, blogController.deletePost);
+  .put(
+    authMiddleware.isAuthorized,
+    blogValidation.updatePost,
+    blogController.updatePost,
+  )
+  .delete(
+    authMiddleware.isAuthorized,
+    blogValidation.deletePost,
+    blogController.deletePost,
+  );
 
 Router.route("/admin/posts").get(
   authMiddleware.isAuthorized,
@@ -70,6 +82,7 @@ Router.route("/admin/posts/:id").put(
 );
 
 Router.route("/thumbnail").post(
+  authMiddleware.isAuthorized,
   multerUploadMiddleware.uploadImage.single("images"),
   blogController.uploadBlogThumbnail,
 );

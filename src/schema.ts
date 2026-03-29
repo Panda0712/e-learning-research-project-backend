@@ -175,20 +175,18 @@ export interface Coupon {
   name: string;
   description?: string | null; // text
   status?: string | null;
-  customerGroup?: string | null;
   code: string;
   categoryId?: number | null;
-  quantity?: number | null;
-  usesPerCustomer?: number | null;
-  priority?: string | null;
-  actions?: string | null;
-  type?: string | null;
+  discount?: number | null;
+  discountUnit?: string | null;
+  usageLimit?: number | null;
+  minOrderValue?: number | null;
+  maxValue?: number | null;
   amount?: number | null;
   startingDate?: Date | null;
   startingTime?: string | null;
   endingDate?: Date | null;
   endingTime?: string | null;
-  isUnlimited?: boolean;
   createdAt: Date;
   updatedAt?: Date | null;
   _destroy?: boolean;
