@@ -118,6 +118,7 @@ model Course {
   courseFAQs  CourseFAQ[]
   assessments Assessment[]
   cartItems   CartItem[]
+  coupons     Coupon[]
 }
 
 model CourseCategory {
@@ -310,6 +311,7 @@ model Coupon {
   description   String?
   status        String?
   code          String    @unique
+  courseId        Int?
   categoryId    Int?
   discount      Float?
   discountUnit  String?   // amount | percent
@@ -327,6 +329,7 @@ model Coupon {
 
   // relations
   category CouponCategory? @relation(fields: [categoryId], references: [id])
+  course   Course?         @relation(fields: [courseId], references: [id])
 }
 
 model CouponCategory {
