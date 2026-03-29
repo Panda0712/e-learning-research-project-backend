@@ -12,8 +12,8 @@ const isProd = env.BUILD_MODE === "production";
 
 const authCookieOptions = {
   httpOnly: true,
-  secure: true,
-  sameSite: "none" as const,
+  secure: isProd,
+  sameSite: isProd ? ("none" as const) : ("lax" as const),
   maxAge: ms("14 days"),
 };
 
@@ -136,12 +136,16 @@ const updateProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.jwtDecoded.id;
+    const userId = req.jwtDecoded?.id;
+
+    if (!userId) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
 
     const userAvatar = req.body?.avatar;
 
     const result = await userService.updateProfile(
-      Number(userId),
+      userId,
       req.body,
       userAvatar,
     );

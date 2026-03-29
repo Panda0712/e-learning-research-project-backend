@@ -2,7 +2,9 @@ import { authMiddleware } from "./../../middlewares/authMiddleware.js";
 import { userController } from "@/controllers/userController.js";
 import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { userValidation } from "@/validations/userValidation.js";
+import ApiError from "@/utils/ApiError.js";
 import express from "express";
+import { StatusCodes } from "http-status-codes";
 
 const Router = express.Router();
 

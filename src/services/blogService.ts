@@ -155,6 +155,61 @@ const getAllPosts = async () => {
   });
 };
 
+const getAdminPosts = async ({
+  page,
+  itemsPerPage,
+}: {
+  page: number;
+  itemsPerPage: number;
+}) => {
+  const safePage = Number.isFinite(page) && page > 0 ? page : 1;
+  const safeItemsPerPage =
+    Number.isFinite(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 10;
+
+  const [posts, totalPosts] = await Promise.all([
+    prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: {
+        author: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        thumbnail: {
+          select: {
+            fileUrl: true,
+          },
+        },
+        _count: {
+          select: { comments: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      skip: (safePage - 1) * safeItemsPerPage,
+      take: safeItemsPerPage,
+    }),
+    prisma.blogPost.count({ where: { isDestroyed: false } }),
+  ]);
+
+  return {
+    posts,
+    totalPosts,
+    page: safePage,
+    itemsPerPage: safeItemsPerPage,
+    totalPages: Math.max(1, Math.ceil(totalPosts / safeItemsPerPage)),
+  };
+};
+
 const getPostDetail = async (id: number) => {
   try {
     const post = await prisma.blogPost.findUnique({
@@ -170,6 +225,62 @@ const getPostDetail = async (id: number) => {
   } catch (error: any) {
     throw error;
   }
+};
+
+const getAdminPostDetail = async (id: number) => {
+  const post = await prisma.blogPost.findUnique({
+    where: { id, isDestroyed: false },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          role: true,
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      thumbnail: {
+        select: {
+          id: true,
+          publicId: true,
+          fileUrl: true,
+          fileType: true,
+          fileSize: true,
+        },
+      },
+      comments: {
+        where: { isDestroyed: false },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+      },
+      _count: {
+        select: { comments: true },
+      },
+    },
+  });
+
+  if (!post) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Post not found!");
+  }
+
+  return post;
 };
 
 const updatePost = async (id: number, reqBody: UpdateBlogPost) => {
@@ -353,7 +464,9 @@ export const blogService = {
   updatePost,
   deletePost,
   getAllPosts,
+  getAdminPosts,
   getPostDetail,
+  getAdminPostDetail,
 
   createComment,
   updateComment,

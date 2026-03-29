@@ -63,9 +63,12 @@ const deleteModule = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -85,9 +88,12 @@ const getModuleById = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -107,9 +113,12 @@ const getAllModulesByCourseId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { courseId: Number(req.params.courseId) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {

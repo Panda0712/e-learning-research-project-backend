@@ -82,6 +82,7 @@ Router.route("/get-courses-by-category-id/:categoryId").get(
 Router.route("/thumbnail").post(
   authMiddleware.isAuthorized,
   multerUploadMiddleware.uploadImage.single("images"),
+  courseController.uploadCourseThumbnail,
 );
 
 Router.route("/my-lecturers").get(

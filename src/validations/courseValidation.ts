@@ -101,7 +101,7 @@ const createCourse = async (
     duration: Joi.string().required().min(2).max(50).trim().strict(),
     level: Joi.string().required().min(2).max(50).trim().strict(),
     overview: Joi.string().required().min(2).max(50).trim().strict(),
-    price: Joi.number().integer().required().positive(),
+    price: Joi.number().required().min(0),
     status: Joi.string()
       .required()
       .valid(
@@ -140,7 +140,7 @@ const updateCourse = async (
     duration: Joi.string().min(2).max(50).trim().strict(),
     level: Joi.string().min(2).max(50).trim().strict(),
     overview: Joi.string().min(2).max(50).trim().strict(),
-    price: Joi.number().integer().positive(),
+    price: Joi.number().required().min(0),
     status: Joi.string().valid(
       COURSE_STATUS.DRAFT,
       COURSE_STATUS.PENDING,

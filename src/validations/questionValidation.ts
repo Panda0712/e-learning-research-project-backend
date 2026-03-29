@@ -67,9 +67,12 @@ const deleteQuestion = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -89,9 +92,12 @@ const getQuestionById = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
@@ -111,9 +117,12 @@ const getAllQuestionsByQuizId = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      { quizId: Number(req.params.quizId) },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {
