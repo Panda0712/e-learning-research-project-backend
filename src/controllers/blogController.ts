@@ -3,6 +3,7 @@ import { blogService } from "@/services/blogService.js";
 import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 
 // BLOG CATEGORY CONTROLLER
 const createBlogCategory = async (
@@ -68,8 +69,8 @@ const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
     const { page, itemsPerPage } = req.query;
 
     const result = await blogService.getAllPosts({
-      page: Number(page) || undefined,
-      itemsPerPage: Number(itemsPerPage) || undefined,
+      page: Number(page) || DEFAULT_PAGE,
+      itemsPerPage: Number(itemsPerPage) || DEFAULT_ITEMS_PER_PAGE,
     });
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
