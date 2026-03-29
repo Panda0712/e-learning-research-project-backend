@@ -154,20 +154,20 @@ const register = async (reqBody: {
         );
       }
 
-//       // send verification email to user
-//       const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
-//       const customSubject = "ADMIN EduLearn: Please verify your email!";
-//       const htmlContent = `
-//   <h3>This is verification email link:</h3>
-//   <h3>${verificationLink}</h3>
-//   <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
-// `;
+      // send verification email to user
+      const verificationLink = `${WEBSITE_DOMAINS}/auth/verification?email=${getNewUser.email}&token=${getNewUser.verifyToken}`;
+      const customSubject = "ADMIN EduLearn: Please verify your email!";
+      const htmlContent = `
+  <h3>This is verification email link:</h3>
+  <h3>${verificationLink}</h3>
+  <h3>Sincerely,<br/>- ADMIN EduLearn -</h3>
+`;
 
-//       await BrevoProvider.sendEmail({
-//         recipientEmail: getNewUser.email,
-//         subject: customSubject,
-//         htmlContent,
-//       });
+      await BrevoProvider.sendEmail({
+        recipientEmail: getNewUser.email,
+        subject: customSubject,
+        htmlContent,
+      });
 
       // return data
       return pickUser(getNewUser);
@@ -478,7 +478,7 @@ const updateProfile = async (
   } | null = null,
 ) => {
   try {
-    if (!Number.isInteger(userId) || userId <= 0) {
+    if (!userId) {
       throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
     }
 
