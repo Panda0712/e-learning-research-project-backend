@@ -11,7 +11,10 @@ Router.route("/").post(
 );
 
 // Get all orders (admin)
-Router.route("/").get(orderController.getAllOrders);
+Router.route("/").get(
+  orderValidation.getAllOrders,
+  orderController.getAllOrders,
+);
 
 // Get order by ID
 Router.route("/:id").get(

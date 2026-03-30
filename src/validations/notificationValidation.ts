@@ -1,7 +1,7 @@
 import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import Joi from "joi";
+import Joi, { number } from "joi";
 
 const createNotification = async (
   req: Request,
@@ -36,7 +36,12 @@ const getNotificationsByUserId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -55,7 +60,12 @@ const getNotificationById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -64,17 +74,18 @@ const getNotificationById = async (
   }
 };
 
-const markAsRead = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const markAsRead = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
     id: Joi.number().required().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -93,7 +104,12 @@ const markAllAsRead = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -112,7 +128,12 @@ const deleteNotification = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -131,7 +152,12 @@ const getUnreadCount = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

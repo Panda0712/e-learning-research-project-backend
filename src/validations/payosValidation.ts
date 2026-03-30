@@ -34,7 +34,12 @@ const checkPaymentStatus = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        orderId: Number(req.params.orderId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -53,7 +58,12 @@ const cancelPayment = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        orderId: Number(req.params.orderId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

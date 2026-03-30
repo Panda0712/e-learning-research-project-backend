@@ -35,9 +35,14 @@ const getResourceById = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      {
+        abortEarly: false,
+      },
+    );
     next();
   } catch (error: any) {
     next(
@@ -94,9 +99,14 @@ const deleteResource = async (
   });
 
   try {
-    await correctCondition.validateAsync(Number(req.params), {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      {
+        abortEarly: false,
+      },
+    );
     next();
   } catch (error: any) {
     next(

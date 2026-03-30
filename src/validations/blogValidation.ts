@@ -66,11 +66,16 @@ const deleteBlogCategory = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -158,11 +163,16 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
 
 const deletePost = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -223,11 +233,16 @@ const deleteComment = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {

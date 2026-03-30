@@ -33,11 +33,16 @@ const getCourseReviewById = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -52,11 +57,16 @@ const getReviewsByCourseId = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    courseId: Joi.number().required().positive(),
+    courseId: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -71,11 +81,16 @@ const getReviewsByStudentId = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    studentId: Joi.number().required().positive(),
+    studentId: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        studentId: Number(req.params.studentId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -90,7 +105,7 @@ const updateCourseReview = async (
   next: NextFunction,
 ) => {
   const paramsCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   const bodyCondition = Joi.object({
@@ -99,7 +114,12 @@ const updateCourseReview = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -119,7 +139,12 @@ const deleteCourseReview = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

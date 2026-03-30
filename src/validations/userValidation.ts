@@ -256,7 +256,12 @@ const getAdminUserDetail = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));
@@ -273,7 +278,12 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -281,17 +291,18 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
     id: Joi.number().integer().positive().required(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));

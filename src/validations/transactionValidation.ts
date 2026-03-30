@@ -44,7 +44,12 @@ const getHistoryByUserId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -63,7 +68,12 @@ const getStudentTransactionsByCourseId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
