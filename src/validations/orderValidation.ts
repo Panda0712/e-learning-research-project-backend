@@ -40,7 +40,12 @@ const getOrderById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -55,11 +60,46 @@ const getOrdersByStudentId = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    studentId: Joi.number().required().positive(),
+    studentId: Joi.number().integer().required().positive(),
+  });
+
+  const queryCondition = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    limit: Joi.number().integer().positive().max(100).optional(),
   });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    await Promise.all([
+      correctCondition.validateAsync(
+        { studentId: Number(req.body.studentId) },
+        { abortEarly: false },
+      ),
+      queryCondition.validateAsync(req.query, { abortEarly: false }),
+    ]);
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const getAllOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const queryCondition = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    limit: Joi.number().integer().positive().max(100).optional(),
+    status: Joi.string()
+      .valid("pending", "paid", "completed", "cancelled")
+      .optional(),
+  });
+
+  try {
+    await queryCondition.validateAsync(req.query, { abortEarly: false });
     next();
   } catch (error: any) {
     next(
@@ -84,7 +124,12 @@ const updateOrderStatus = async (
   });
 
   try {
-    await paramCondition.validateAsync(req.params, { abortEarly: false });
+    await paramCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -100,7 +145,12 @@ const cancelOrder = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -115,7 +165,12 @@ const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -128,6 +183,7 @@ export const orderValidation = {
   createOrder,
   getOrderById,
   getOrdersByStudentId,
+  getAllOrders,
   updateOrderStatus,
   cancelOrder,
   deleteOrder,

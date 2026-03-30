@@ -34,7 +34,12 @@ const getCourseFaqByCourseId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -53,7 +58,12 @@ const getCourseFaqById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -185,9 +195,14 @@ const deleteCourse = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {

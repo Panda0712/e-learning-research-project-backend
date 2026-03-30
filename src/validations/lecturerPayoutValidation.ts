@@ -38,7 +38,12 @@ const getLecturerPayoutById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -57,7 +62,12 @@ const getPayoutsByLecturerId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        lecturerId: Number(req.params.lecturerId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -85,7 +95,12 @@ const updateLecturerPayout = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -109,7 +124,12 @@ const updatePayoutStatus = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -129,7 +149,12 @@ const deleteLecturerPayout = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

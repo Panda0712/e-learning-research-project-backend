@@ -31,7 +31,12 @@ const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        conversationId: Number(req.params.conversationId),
+      },
+      { abortEarly: false },
+    );
     await queryCondition.validateAsync(req.query, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -45,7 +50,12 @@ const markAsSeen = async (req: Request, res: Response, next: NextFunction) => {
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        conversationId: Number(req.params.conversationId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, error.message));

@@ -31,8 +31,18 @@ const getReviewsByCourseId = async (
     courseId: Joi.number().integer().required().positive(),
   });
 
+  const queryCondition = Joi.object({
+    limit: Joi.number().integer().positive().min(1).max(100).optional(),
+  });
+
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await Promise.all([
+      correctCondition.validateAsync(
+        { courseId: Number(req.params.courseId) },
+        { abortEarly: false },
+      ),
+      queryCondition.validateAsync(req.query, { abortEarly: false }),
+    ]);
     next();
   } catch (error: any) {
     next(

@@ -39,20 +39,32 @@ const getRevenueChart = async (
   const correctCondition = Joi.object({
     period: Joi.string()
       .valid("all_time", "last_month", "this_month", "this_year", "custom")
-      .required(),
+      .optional(),
     from: Joi.date().iso().optional(),
     to: Joi.date().iso().optional(),
   }).custom((value, helpers) => {
-    if (value.period === "custom" && (!value.from || !value.to)) {
+    const period = value.period || "this_year";
+
+    if (period === "custom" && (!value.from || !value.to)) {
       return helpers.error("any.custom", {
         message: "From and to dates are required for custom period",
       });
     }
+
     return value;
   });
 
   try {
-    await correctCondition.validateAsync(req.query, { abortEarly: false });
+    const validated = await correctCondition.validateAsync(req.query, {
+      abortEarly: false,
+    });
+
+    req.query = {
+      ...req.query,
+      ...validated,
+      period: (validated.period as string | undefined) ?? "this_year",
+    };
+
     next();
   } catch (error: any) {
     next(
