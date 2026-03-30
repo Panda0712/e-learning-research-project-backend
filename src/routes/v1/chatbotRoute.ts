@@ -5,7 +5,13 @@ import express from "express";
 
 const Router = express.Router();
 
-Router.route("/chat").post(chatbotValidation.chat, chatbotController.chat);
+Router
+	.route("/chat")
+	.post(
+		authMiddleware.optionalAuthorized,
+		chatbotValidation.chat,
+		chatbotController.chat,
+	);
 
 Router.route("/ingestion/status").get(
 	authMiddleware.isAuthorized,

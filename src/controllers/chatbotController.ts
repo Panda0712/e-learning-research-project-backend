@@ -11,6 +11,7 @@ const chat = async (req: Request, res: Response, next: NextFunction) => {
       ? String(req.body.conversationId)
       : undefined;
     const jwtUserId = req.jwtDecoded?.id ? String(req.jwtDecoded.id) : undefined;
+    const numericUserId = req.jwtDecoded?.id ? Number(req.jwtDecoded.id) : undefined;
     const ipValue = req.ip || req.socket.remoteAddress || "anonymous";
     const fallbackConversationId = `anon-${ipValue.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
     const conversationId = requestConversationId || jwtUserId || fallbackConversationId;
@@ -18,6 +19,9 @@ const chat = async (req: Request, res: Response, next: NextFunction) => {
     const payload = {
       question,
       conversationId,
+      ...(typeof numericUserId === "number" && Number.isInteger(numericUserId)
+        ? { userId: numericUserId }
+        : {}),
       ...(typeof topK === "number" ? { topK } : {}),
     };
 
