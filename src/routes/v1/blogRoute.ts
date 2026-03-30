@@ -89,12 +89,21 @@ Router.route("/thumbnail").post(
 
 // BLOG COMMENT ROUTE
 Router.route("/blogComments").post(
+  authMiddleware.isAuthorized,
   blogValidation.createComment,
   blogController.createComment,
 );
 
 Router.route("/blogComments/:id")
-  .put(blogValidation.updateComment, blogController.updateComment)
-  .delete(blogValidation.deleteComment, blogController.deleteComment);
+  .put(
+    authMiddleware.isAuthorized,
+    blogValidation.updateComment,
+    blogController.updateComment,
+  )
+  .delete(
+    authMiddleware.isAuthorized,
+    blogValidation.deleteComment,
+    blogController.deleteComment,
+  );
 
 export const blogRoute = Router;

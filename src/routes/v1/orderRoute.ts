@@ -1,4 +1,5 @@
 import { orderController } from "@/controllers/orderController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { orderValidation } from "@/validations/orderValidation.js";
 import express from "express";
 
@@ -24,6 +25,7 @@ Router.route("/:id").get(
 
 // Get orders by student ID
 Router.route("/student/list").post(
+  authMiddleware.isAuthorized,
   orderValidation.getOrdersByStudentId,
   orderController.getOrdersByStudentId,
 );

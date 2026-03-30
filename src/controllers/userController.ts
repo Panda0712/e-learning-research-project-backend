@@ -165,7 +165,7 @@ const registerLecturerProfile = async (
   next: NextFunction,
 ) => {
   try {
-    const userId = 1;
+    const userId = Number(req.jwtDecoded?.id);
 
     const result = await userService.registerLecturerProfile(userId, req.body);
 
@@ -415,11 +415,7 @@ const blockUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     ensureAdminRequest(req);
     const { id } = req.params;

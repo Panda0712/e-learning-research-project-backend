@@ -1,4 +1,5 @@
 import { notificationController } from "@/controllers/notificationController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { notificationValidation } from "@/validations/notificationValidation.js";
 import express from "express";
 
@@ -12,6 +13,7 @@ Router.route("/").post(
 
 // Get notifications by user ID with pagination
 Router.route("/user/:userId").get(
+  authMiddleware.isAuthorized,
   notificationValidation.getNotificationsByUserId,
   notificationController.getNotificationsByUserId,
 );
