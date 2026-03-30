@@ -1,4 +1,5 @@
 import { wishlistController } from "@/controllers/wishlistController.js";
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
 import { wishlistValidation } from "@/validations/wishlistValidation.js";
 import express from "express";
 
@@ -21,6 +22,7 @@ Router.route("/:id").get(
 
 // Get wishlists by user ID
 Router.route("/user/:userId").get(
+  authMiddleware.isAuthorized,
   wishlistValidation.getWishlistsByUserId,
   wishlistController.getWishlistsByUserId,
 );

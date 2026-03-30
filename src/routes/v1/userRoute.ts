@@ -19,6 +19,7 @@ Router.route("/verify").put(
 );
 
 Router.route("/register-lecturer").post(
+  authMiddleware.isAuthorized,
   userValidation.registerLecturer,
   userController.registerLecturerProfile,
 );
