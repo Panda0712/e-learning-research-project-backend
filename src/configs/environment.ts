@@ -49,4 +49,6 @@ export const env = {
   PAYOS_RETURN_URL: process.env.PAYOS_RETURN_URL,
   PAYOS_CANCEL_URL: process.env.PAYOS_CANCEL_URL,
   PAYOS_WEBHOOK_URL: process.env.PAYOS_WEBHOOK_URL,
+
+  REDIS_CACHE_HOST: process.env.REDIS_CACHE_HOST,
 };
