@@ -33,7 +33,12 @@ const getEnrollmentsByStudentId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        studentId: Number(req.params.studentId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -42,16 +47,27 @@ const getEnrollmentsByStudentId = async (
   }
 };
 
-const getStudentsByLecturerId = async (req: Request, res: Response, next: NextFunction) => {
+const getStudentsByLecturerId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const correctCondition = Joi.object({
     lecturerId: Joi.number().integer().required().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        lecturerId: Number(req.params.lecturerId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
-    next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message));
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
   }
 };
 

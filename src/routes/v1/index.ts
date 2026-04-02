@@ -1,6 +1,7 @@
 import { publishMessage } from "@/lib/rabbitmq/rabbitmq.producer.js";
 import express, { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { adminInstructorRoute } from "./adminInstructorRoute.js";
 import { assessmentRoute } from "./assessmentRoute.js";
 import { blogRoute } from "./blogRoute.js";
 import { chatbotRoute } from "./chatbotRoute.js";
@@ -11,24 +12,24 @@ import { courseReviewRoute } from "./courseReviewRoute.js";
 import { courseRoute } from "./courseRoute.js";
 import { dashboardRoute } from "./dashboardRoute.js";
 import { enrollmentRoute } from "./enrollmentRoute.js";
-import { lecturerPayoutRoute } from "./lecturerPayoutRoute.js";
-import { lecturerPayoutAccountRoute } from "./lecturerPayoutAccountRoute.js";
 import { homepageRoute } from "./homepageRoute.js";
+import { lecturerPayoutAccountRoute } from "./lecturerPayoutAccountRoute.js";
+import { lecturerPayoutRoute } from "./lecturerPayoutRoute.js";
 import { lessonRoute } from "./lessonRoute.js";
 import { messageRoute } from "./messageRoute.js";
 import { moduleRoute } from "./moduleRoute.js";
 import { notificationRoute } from "./notificationRoute.js";
 import { orderItemRoute } from "./orderItemRoute.js";
 import { orderRoute } from "./orderRoute.js";
+import { payosRoute } from "./payosRoute.js";
 import { questionRoute } from "./questionRoute.js";
 import { quizRoute } from "./quizRoute.js";
 import { resourceRoute } from "./resourceRoute.js";
-import { submissionRoute } from "./submissionRoute.js";
 import { reviewRoute } from "./reviewRoute.js";
+import { submissionRoute } from "./submissionRoute.js";
 import { transactionRoute } from "./transactionRoute.js";
 import { userRoute } from "./userRoute.js";
 import { wishlistRoute } from "./wishlistRoute.js";
-import { adminInstructorRoute } from "./adminInstructorRoute.js";
 
 const Router = express.Router();
 
@@ -132,5 +133,8 @@ Router.use("/reviews", reviewRoute);
 
 // Homepage route
 Router.use("/homepage", homepageRoute);
+
+// PayOS route
+Router.use("/payos", payosRoute);
 
 export const APIs_V1 = Router;

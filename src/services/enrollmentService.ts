@@ -71,6 +71,66 @@ const getStudentsByLecturerIdAndCourseId = async (
   }));
 };
 
+const getStudentsByLecturerIdAndCourseIdV2 = async (
+  lecturerId: number,
+  courseId: number,
+  query: { page: number; itemsPerPage: number; q: string },
+) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false },
+  });
+
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  if (course.lecturerId !== lecturerId) {
+    throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed.");
+  }
+
+  const skip = (query.page - 1) * query.itemsPerPage;
+
+  const where: any = {
+    courseId,
+    isDestroyed: false,
+    student: { isDestroyed: false },
+  };
+
+  if (query.q.trim()) {
+    where.OR = [
+      { student: { firstName: { contains: query.q, mode: "insensitive" } } },
+      { student: { lastName: { contains: query.q, mode: "insensitive" } } },
+      { student: { email: { contains: query.q, mode: "insensitive" } } },
+    ];
+  }
+
+  const [rows, total] = await Promise.all([
+    prisma.enrollment.findMany({
+      where,
+      include: { student: { include: { avatar: true } } },
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: query.itemsPerPage,
+    }),
+    prisma.enrollment.count({ where }),
+  ]);
+
+  const data = rows.map((item) => ({
+    id: item.id,
+    name: `${item.student.firstName} ${item.student.lastName}`.trim(),
+    country: "Unknown",
+    joinedDate: item.createdAt,
+    progress: Number(item.progress || 0),
+  }));
+
+  return {
+    data,
+    pagination: {
+      page: query.page,
+      itemsPerPage: query.itemsPerPage,
+      total,
+      totalPages: Math.ceil(total / query.itemsPerPage),
+    },
+  };
+};
+
 const getEnrollmentsByStudentId = async (studentId: number) => {
   try {
     const enrollments = await prisma.enrollment.findMany({
@@ -119,4 +179,5 @@ export const enrollmentService = {
   getEnrollmentsByStudentId,
   getStudentsByLecturerId,
   getStudentsByLecturerIdAndCourseId,
+  getStudentsByLecturerIdAndCourseIdV2,
 };

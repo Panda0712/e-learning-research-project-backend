@@ -271,6 +271,7 @@ const getLecturerStats = async ({
       totalStudents,
       coursesActive,
       totalEarnings,
+      paidOrderItems,
       completedCourses,
       newEnrollments,
       topCourses,
@@ -301,6 +302,22 @@ const getLecturerStats = async ({
           course: { isDestroyed: false },
         },
         _sum: { lecturerEarn: true },
+      }),
+      prisma.orderItem.findMany({
+        where: {
+          isDestroyed: false,
+          course: {
+            lecturerId,
+            isDestroyed: false,
+          },
+          order: {
+            isDestroyed: false,
+            paymentStatus: "paid",
+          },
+        },
+        select: {
+          price: true,
+        },
       }),
       prisma.enrollment.count({
         where: {
@@ -389,7 +406,12 @@ const getLecturerStats = async ({
       cards: {
         totalStudents,
         coursesActive,
-        totalEarnings: totalEarnings._sum.lecturerEarn || 0,
+        totalEarnings:
+          totalEarnings._sum.lecturerEarn ||
+          paidOrderItems.reduce(
+            (sum, item) => sum + Number(item.price || 0) * 0.8,
+            0,
+          ),
         assignmentsGraded: 0,
         completedCourses,
         newEnrollments,

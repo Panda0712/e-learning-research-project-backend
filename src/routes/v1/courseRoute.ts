@@ -85,6 +85,12 @@ Router.route("/thumbnail").post(
   courseController.uploadCourseThumbnail,
 );
 
+Router.route("/intro-video").post(
+  authMiddleware.isAuthorized,
+  multerUploadMiddleware.uploadVideo.single("video"),
+  courseController.uploadCourseIntroVideo,
+);
+
 Router.route("/my-lecturers").get(
   authMiddleware.isAuthorized,
   courseController.getMyLecturers,
@@ -93,6 +99,22 @@ Router.route("/my-lecturers").get(
 Router.route("/my-courses").get(
   authMiddleware.isAuthorized,
   courseController.getMyCourses,
+);
+
+Router.get(
+  "/lecturer/my-courses",
+  authMiddleware.isAuthorized,
+  courseController.getLecturerMyCourses,
+);
+
+Router.route("/admin/list").get(
+  authMiddleware.isAuthorized,
+  courseController.getAdminCourses,
+);
+
+Router.route("/admin/:id").get(
+  authMiddleware.isAuthorized,
+  courseController.getAdminCourseById,
 );
 
 export const courseRoute = Router;

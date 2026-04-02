@@ -1,7 +1,7 @@
 import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import Joi from "joi";
+import Joi, { number } from "joi";
 
 const createWishlist = async (
   req: Request,
@@ -36,7 +36,12 @@ const getWishlistById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -55,7 +60,12 @@ const getWishlistsByUserId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -75,7 +85,13 @@ const checkCourseInWishlist = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -100,7 +116,12 @@ const updateWishlist = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -120,7 +141,12 @@ const deleteWishlist = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -140,7 +166,13 @@ const deleteWishlistByCourse = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

@@ -9,6 +9,7 @@ export interface CreateCourse {
   lecturerId: number;
   categoryId: number;
   thumbnail: CourseThumbnail;
+  introVideo?: CourseThumbnail;
   name: string;
   lecturerName: string;
   duration: string;
@@ -20,6 +21,7 @@ export interface CreateCourse {
 
 export interface UpdateCourse {
   thumbnail?: CourseThumbnail;
+  introVideo?: CourseThumbnail;
   name?: string;
   lecturerName?: string;
   duration?: string;

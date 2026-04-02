@@ -34,7 +34,12 @@ const getCourseFaqByCourseId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -53,7 +58,12 @@ const getCourseFaqById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -96,6 +106,12 @@ const createCourse = async (
       fileSize: Joi.number().optional(),
       fileType: Joi.string().optional(),
     }),
+    introVideo: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
     name: Joi.string().required().min(2).max(50).trim().strict(),
     lecturerName: Joi.string().required().min(2).max(50).trim().strict(),
     duration: Joi.string().required().min(2).max(50).trim().strict(),
@@ -135,12 +151,18 @@ const updateCourse = async (
       fileSize: Joi.number().optional(),
       fileType: Joi.string().optional(),
     }),
+    introVideo: Joi.object({
+      publicId: Joi.string().required(),
+      fileUrl: Joi.string().required(),
+      fileSize: Joi.number().optional(),
+      fileType: Joi.string().optional(),
+    }).optional(),
     name: Joi.string().min(2).max(50).trim().strict(),
     lecturerName: Joi.string().min(2).max(50).trim().strict(),
     duration: Joi.string().min(2).max(50).trim().strict(),
     level: Joi.string().min(2).max(50).trim().strict(),
     overview: Joi.string().min(2).max(50).trim().strict(),
-    price: Joi.number().required().min(0),
+    price: Joi.number().min(0).optional(),
     status: Joi.string().valid(
       COURSE_STATUS.DRAFT,
       COURSE_STATUS.PENDING,
@@ -173,9 +195,14 @@ const deleteCourse = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, {
-      abortEarly: false,
-    });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      {
+        abortEarly: false,
+      },
+    );
 
     next();
   } catch (error: any) {

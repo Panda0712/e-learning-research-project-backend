@@ -35,11 +35,16 @@ const getAssessmentsForLecturer = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    lecturerId: Joi.number().required(),
+    lecturerId: Joi.number().integer().required().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        lecturerId: Number(req.params.lecturerId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -54,11 +59,16 @@ const getAssessmentById = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required(),
+    id: Joi.number().integer().required().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -73,11 +83,16 @@ const getSubmissionDetails = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    assessmentId: Joi.number().required(),
+    assessmentId: Joi.number().required().integer().positive(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        assessmentId: Number(req.params.assessmentId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -136,11 +151,16 @@ const deleteAssessment = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

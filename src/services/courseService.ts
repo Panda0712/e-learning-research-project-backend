@@ -1,13 +1,35 @@
-import ApiError from "@/utils/ApiError.js";
-import { StatusCodes } from "http-status-codes";
-import { prisma } from "../lib/prisma.js";
 import { CreateCourse, UpdateCourse } from "@/types/course.type.js";
+import ApiError from "@/utils/ApiError.js";
 import {
   COURSE_STATUS,
   DEFAULT_ITEMS_PER_PAGE,
   DEFAULT_PAGE,
 } from "@/utils/constants.js";
+import { StatusCodes } from "http-status-codes";
+import { prisma } from "../lib/prisma.js";
 import { resourceService } from "./resourceService.js";
+
+const canPublishCourse = async (courseId: number) => {
+  const [course, modules] = await Promise.all([
+    prisma.course.findUnique({
+      where: {
+        id: courseId,
+        isDestroyed: false,
+      },
+    }),
+    prisma.module.count({ where: { courseId, isDestroyed: false } }),
+  ]);
+
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+
+  if (!course.name || !course.thumbnailId || modules === 0)
+    throw new ApiError(
+      StatusCodes.BAD_REQUEST,
+      "Course is incomplete to publish!",
+    );
+
+  return true;
+};
 
 const ensureLecturerOrAdmin = async (userId: number) => {
   const user = await prisma.user.findUnique({
@@ -178,6 +200,20 @@ const createCourse = async (data: CreateCourse) => {
           tx,
         );
 
+      let introVideoResource;
+      if (data.introVideo) {
+        introVideoResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: data.introVideo.publicId,
+              fileSize: data.introVideo.fileSize ?? null,
+              fileType: data.introVideo.fileType ?? null,
+              fileUrl: data.introVideo.fileUrl,
+            },
+            tx,
+          );
+      }
+
       const newCourse = await prisma.course.create({
         data: {
           lecturerId: data.lecturerId,
@@ -190,6 +226,7 @@ const createCourse = async (data: CreateCourse) => {
           price: data.price,
           status: data.status,
           thumbnailId: createdResource.id,
+          introVideoId: introVideoResource?.id ?? null,
           totalStudents: 0,
           totalLessons: 0,
           totalQuizzes: 0,
@@ -249,6 +286,47 @@ const updateCourse = async (
             price: updateData.price ?? course.price,
             status: updateData.status ?? course.status,
             thumbnailId: courseThumbnailId,
+          },
+        });
+
+        return updatedCourse;
+      });
+    }
+
+    if (updateData?.introVideo) {
+      return await prisma.$transaction(async (tx) => {
+        let introVideoId = course.introVideoId;
+
+        const createdIntroVideoResource =
+          await resourceService.createResourceWithTransaction(
+            {
+              publicId: updateData.introVideo!.publicId,
+              fileSize: updateData.introVideo!.fileSize ?? null,
+              fileType: updateData.introVideo!.fileType ?? null,
+              fileUrl: updateData.introVideo!.fileUrl,
+            },
+            tx,
+          );
+
+        introVideoId = createdIntroVideoResource.id;
+
+        if (course.introVideoId)
+          await resourceService.deleteResourceWithTransaction(
+            course.introVideoId,
+            tx,
+          );
+
+        const updatedCourse = await tx.course.update({
+          where: { id },
+          data: {
+            name: updateData.name ?? course.name,
+            lecturerName: updateData.lecturerName ?? course.lecturerName,
+            duration: updateData.duration ?? course.duration,
+            level: updateData.level ?? course.level,
+            overview: updateData.overview ?? course.overview,
+            price: updateData.price ?? course.price,
+            status: updateData.status ?? course.status,
+            introVideoId,
           },
         });
 
@@ -697,6 +775,244 @@ const getListCourses = async ({
   }
 };
 
+const getAdminCourses = async (
+  {
+    page,
+    itemsPerPage,
+    q,
+    status,
+  }: {
+    page?: number;
+    itemsPerPage?: number;
+    q?: string;
+    status?: "all" | "active" | "pending" | "rejected";
+  },
+  actorId: number,
+) => {
+  try {
+    const actor = await prisma.user.findUnique({
+      where: { id: actorId, isDestroyed: false },
+      select: { role: true },
+    });
+
+    if (!actor || String(actor.role || "").toLowerCase() !== "admin") {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only admin can access admin courses!",
+      );
+    }
+
+    const currentPage = page ? Number(page) : DEFAULT_PAGE;
+    const perPage = itemsPerPage
+      ? Number(itemsPerPage)
+      : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+
+    const normalizedStatus = String(status || "all").toLowerCase();
+
+    const statusWhere =
+      normalizedStatus === "active"
+        ? { status: COURSE_STATUS.PUBLISHED }
+        : normalizedStatus === "pending"
+          ? {
+              OR: [
+                { status: COURSE_STATUS.PENDING },
+                { status: COURSE_STATUS.DRAFT },
+              ],
+            }
+          : normalizedStatus === "rejected"
+            ? { status: COURSE_STATUS.REJECTED }
+            : {};
+
+    const where: any = {
+      isDestroyed: false,
+      ...statusWhere,
+      ...(q
+        ? {
+            OR: [
+              { name: { contains: q, mode: "insensitive" } },
+              { lecturerName: { contains: q, mode: "insensitive" } },
+              { overview: { contains: q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [courses, total, activeCount, pendingCount, rejectedCount] =
+      await Promise.all([
+        prisma.course.findMany({
+          where,
+          include: {
+            thumbnail: { select: { fileUrl: true } },
+            category: { select: { id: true, name: true } },
+            lecturer: {
+              select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+              },
+            },
+          },
+          orderBy: { createdAt: "desc" },
+          skip,
+          take: perPage,
+        }),
+        prisma.course.count({ where }),
+        prisma.course.count({
+          where: {
+            isDestroyed: false,
+            status: COURSE_STATUS.PUBLISHED,
+          },
+        }),
+        prisma.course.count({
+          where: {
+            isDestroyed: false,
+            OR: [
+              { status: COURSE_STATUS.PENDING },
+              { status: COURSE_STATUS.DRAFT },
+            ],
+          },
+        }),
+        prisma.course.count({
+          where: {
+            isDestroyed: false,
+            status: COURSE_STATUS.REJECTED,
+          },
+        }),
+      ]);
+
+    return {
+      data: courses,
+      tabs: {
+        all: activeCount + pendingCount + rejectedCount,
+        active: activeCount,
+        pending: pendingCount,
+        rejected: rejectedCount,
+      },
+      pagination: {
+        page: currentPage,
+        itemsPerPage: perPage,
+        total,
+        totalPages: Math.ceil(total / perPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getAdminCourseById = async (id: number, actorId: number) => {
+  try {
+    const actor = await prisma.user.findUnique({
+      where: { id: actorId, isDestroyed: false },
+      select: { role: true },
+    });
+
+    if (!actor || String(actor.role || "").toLowerCase() !== "admin") {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "Only admin can access admin course detail!",
+      );
+    }
+
+    const course = await prisma.course.findUnique({
+      where: { id, isDestroyed: false },
+      include: {
+        thumbnail: { select: { fileUrl: true } },
+        category: { select: { id: true, name: true } },
+        lecturer: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+        modules: {
+          where: { isDestroyed: false },
+          orderBy: { createdAt: "asc" },
+          include: {
+            lessons: {
+              where: { isDestroyed: false },
+              orderBy: { createdAt: "asc" },
+              include: {
+                quizzes: {
+                  where: { isDestroyed: false },
+                  select: { id: true },
+                },
+                lessonFile: { select: { fileUrl: true, fileType: true } },
+                lessonVideo: { select: { fileUrl: true, fileType: true } },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    return course;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getLecturerMyCourses = async (
+  lecturerId: number,
+  params: {
+    page: number;
+    itemsPerPage: number;
+    status?: string;
+    q?: string;
+    sortBy?: string;
+  },
+) => {
+  try {
+    const skip = (params.page - 1) * params.itemsPerPage;
+    const where = {
+      lecturerId,
+      isDestroyed: false,
+      ...(params.status && params.status !== "all"
+        ? { status: params.status }
+        : {}),
+      ...(params.q
+        ? {
+            OR: [
+              { name: { contains: params.q, mode: "insensitive" } },
+              { overview: { contains: params.q, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    };
+
+    const [rows, total] = await Promise.all([
+      prisma.course.findMany({
+        where,
+        orderBy:
+          params.sortBy === "updatedAt"
+            ? { updatedAt: "desc" }
+            : { createdAt: "desc" },
+        skip,
+        take: params.itemsPerPage,
+      }),
+      prisma.course.count({ where }),
+    ]);
+
+    return {
+      data: rows,
+      pagination: {
+        page: params.page,
+        itemsPerPage: params.itemsPerPage,
+        total,
+        totalPages: Math.ceil(total / params.itemsPerPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const courseService = {
   createCourseCategory,
   getAllCourseCategories,
@@ -711,6 +1027,9 @@ export const courseService = {
   approveCourse,
   rejectCourse,
   getListCourses,
+  getAdminCourses,
+  getAdminCourseById,
+  getLecturerMyCourses,
   getCourseById,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,

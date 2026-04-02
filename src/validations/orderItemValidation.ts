@@ -35,7 +35,12 @@ const getOrderItemsByOrderId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        orderId: Number(req.params.orderId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -54,7 +59,12 @@ const getOrderItemById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -73,7 +83,12 @@ const removeItemFromOrder = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -97,7 +112,12 @@ const updateOrderItem = async (
   });
 
   try {
-    await paramCondition.validateAsync(req.params, { abortEarly: false });
+    await paramCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -117,7 +137,12 @@ const deleteOrderItem = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import { CreateBlogPost, UpdateBlogPost } from "@/types/blog.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { StatusCodes } from "http-status-codes";
+import { notificationService } from "./notificationService.js";
 import { resourceService } from "./resourceService.js";
 
 // BLOG CATEGORY SERVICE
@@ -114,7 +115,7 @@ const createPost = async (reqBody: CreateBlogPost) => {
     }
 
     // create new post
-    return await prisma.$transaction(async (tx) => {
+    const newPost = await prisma.$transaction(async (tx) => {
       const createdResource =
         await resourceService.createResourceWithTransaction(
           {
@@ -126,7 +127,7 @@ const createPost = async (reqBody: CreateBlogPost) => {
           tx,
         );
 
-      const newPost = await tx.blogPost.create({
+      const post = await tx.blogPost.create({
         data: {
           authorId: reqBody.authorId,
           title: reqBody.title,
@@ -137,22 +138,208 @@ const createPost = async (reqBody: CreateBlogPost) => {
         },
       });
 
-      return newPost;
+      return post;
     });
+
+    const studentsWhoPurchasedLecturerCourses = await prisma.user.findMany({
+      where: {
+        isDestroyed: false,
+        orders: {
+          some: {
+            isDestroyed: false,
+            paymentStatus: "paid",
+            items: {
+              some: {
+                isDestroyed: false,
+                OR: [
+                  { lecturerId: reqBody.authorId },
+                  { course: { lecturerId: reqBody.authorId } },
+                ],
+              },
+            },
+          },
+        },
+      },
+      select: { id: true },
+    });
+
+    await notificationService.createAndDispatchNotificationsForUsers(
+      {
+        userIds: studentsWhoPurchasedLecturerCourses.map((user) => user.id),
+        title: "New blog from your lecturer",
+        message: `A lecturer you purchased from has posted: ${newPost.title}`,
+        type: "blog",
+        relatedId: newPost.id,
+      },
+      { dedupe: true },
+    );
+
+    return newPost;
   } catch (error: any) {
     throw error;
   }
 };
 
-const getAllPosts = async () => {
-  return await prisma.blogPost.findMany({
-    where: { isDestroyed: false },
-    include: {
-      _count: {
-        select: { comments: true },
+const mapBlogPost = (post: any) => {
+  const authorName = `${post?.author?.firstName || ""} ${post?.author?.lastName || ""}`.trim();
+
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    date: post.createdAt,
+    category: post?.category?.name || "Uncategorized",
+    categoryId: post?.categoryId,
+    image: post?.thumbnail?.fileUrl || "",
+    thumbnail: post?.thumbnail
+      ? {
+          publicId: post.thumbnail.publicId,
+          fileUrl: post.thumbnail.fileUrl,
+          fileSize: post.thumbnail.fileSize,
+          fileType: post.thumbnail.fileType,
+        }
+      : null,
+    author: authorName || "Unknown",
+    authorId: post.authorId,
+    totalComments: post?._count?.comments || 0,
+    createdAt: post.createdAt,
+    updatedAt: post.updatedAt,
+  };
+};
+
+const getAllPosts = async ({
+  page,
+  itemsPerPage,
+}: {
+  page?: number;
+  itemsPerPage?: number;
+}) => {
+  const hasPagination = Boolean(page && itemsPerPage);
+
+  const baseInclude = {
+    _count: {
+      select: { comments: true },
+    },
+    author: {
+      select: {
+        firstName: true,
+        lastName: true,
       },
     },
-  });
+    category: {
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+    },
+    thumbnail: {
+      select: {
+        publicId: true,
+        fileUrl: true,
+        fileSize: true,
+        fileType: true,
+      },
+    },
+  };
+
+  if (!hasPagination) {
+    const posts = await prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: baseInclude,
+      orderBy: { createdAt: "desc" },
+    });
+
+    return posts.map(mapBlogPost);
+  }
+
+  const normalizedPage = Number.isInteger(page) && (page as number) > 0 ? (page as number) : 1;
+  const normalizedItemsPerPage =
+    Number.isInteger(itemsPerPage) && (itemsPerPage as number) > 0
+      ? (itemsPerPage as number)
+      : 8;
+
+  const skip = (normalizedPage - 1) * normalizedItemsPerPage;
+
+  const [posts, total] = await Promise.all([
+    prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: baseInclude,
+      skip,
+      take: normalizedItemsPerPage,
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.blogPost.count({ where: { isDestroyed: false } }),
+  ]);
+
+  return {
+    data: posts.map((post, index) => ({
+      ...mapBlogPost(post),
+      stt: skip + index + 1,
+    })),
+    pagination: {
+      page: normalizedPage,
+      itemsPerPage: normalizedItemsPerPage,
+      total,
+      totalPages: Math.ceil(total / normalizedItemsPerPage),
+    },
+  };
+};
+
+const getAdminPosts = async ({
+  page,
+  itemsPerPage,
+}: {
+  page: number;
+  itemsPerPage: number;
+}) => {
+  const safePage = Number.isFinite(page) && page > 0 ? page : 1;
+  const safeItemsPerPage =
+    Number.isFinite(itemsPerPage) && itemsPerPage > 0 ? itemsPerPage : 10;
+
+  const [posts, totalPosts] = await Promise.all([
+    prisma.blogPost.findMany({
+      where: { isDestroyed: false },
+      include: {
+        author: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        thumbnail: {
+          select: {
+            fileUrl: true,
+          },
+        },
+        _count: {
+          select: { comments: true },
+        },
+      },
+      orderBy: { createdAt: "desc" },
+      skip: (safePage - 1) * safeItemsPerPage,
+      take: safeItemsPerPage,
+    }),
+    prisma.blogPost.count({ where: { isDestroyed: false } }),
+  ]);
+
+  return {
+    posts,
+    totalPosts,
+    page: safePage,
+    itemsPerPage: safeItemsPerPage,
+    totalPages: Math.max(1, Math.ceil(totalPosts / safeItemsPerPage)),
+  };
 };
 
 const getPostDetail = async (id: number) => {
@@ -163,13 +350,94 @@ const getPostDetail = async (id: number) => {
         _count: {
           select: { comments: true },
         },
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        thumbnail: {
+          select: {
+            publicId: true,
+            fileUrl: true,
+            fileSize: true,
+            fileType: true,
+          },
+        },
       },
     });
 
-    return post;
+    if (!post) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Post not found!");
+    }
+
+    return mapBlogPost(post);
   } catch (error: any) {
     throw error;
   }
+};
+
+const getAdminPostDetail = async (id: number) => {
+  const post = await prisma.blogPost.findUnique({
+    where: { id, isDestroyed: false },
+    include: {
+      author: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          role: true,
+        },
+      },
+      category: {
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+        },
+      },
+      thumbnail: {
+        select: {
+          id: true,
+          publicId: true,
+          fileUrl: true,
+          fileType: true,
+          fileSize: true,
+        },
+      },
+      comments: {
+        where: { isDestroyed: false },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              email: true,
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+      },
+      _count: {
+        select: { comments: true },
+      },
+    },
+  });
+
+  if (!post) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Post not found!");
+  }
+
+  return post;
 };
 
 const updatePost = async (id: number, reqBody: UpdateBlogPost) => {
@@ -275,15 +543,49 @@ const createComment = async (reqBody: {
       throw new ApiError(StatusCodes.NOT_FOUND, "Blog post not found!");
     }
 
+    let parentCommentUserId: number | null = null;
+    if (reqBody.parentId) {
+      const parentComment = await prisma.blogComment.findUnique({
+        where: { id: reqBody.parentId, isDestroyed: false },
+        select: { id: true, blogId: true, userId: true },
+      });
+
+      if (!parentComment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Parent comment not found!");
+      }
+
+      if (parentComment.blogId !== reqBody.blogId) {
+        throw new ApiError(
+          StatusCodes.BAD_REQUEST,
+          "Parent comment does not belong to this blog post!",
+        );
+      }
+
+      parentCommentUserId = parentComment.userId;
+    }
+
     // create new comment
     const newComment = await prisma.blogComment.create({
       data: {
         content: reqBody.content,
         blogId: reqBody.blogId,
         userId: reqBody.userId,
-        // parentId: reqBody?.parentId || null,
+        parentId: reqBody.parentId || null,
       },
     });
+
+    if (parentCommentUserId && parentCommentUserId !== reqBody.userId) {
+      await notificationService.createAndDispatchNotification(
+        {
+          userId: parentCommentUserId,
+          title: "New reply to your comment",
+          message: "Someone replied to your blog comment.",
+          type: "comment_reply",
+          relatedId: newComment.id,
+        },
+        { dedupe: true },
+      );
+    }
 
     return newComment;
   } catch (error: any) {
@@ -353,7 +655,9 @@ export const blogService = {
   updatePost,
   deletePost,
   getAllPosts,
+  getAdminPosts,
   getPostDetail,
+  getAdminPostDetail,
 
   createComment,
   updateComment,

@@ -104,10 +104,18 @@ const createOrder = async (data: {
       });
 
       if (coupon && coupon.status === "active") {
-        if (coupon.type === "percentage") {
-          totalPrice = totalPrice * (1 - (coupon.amount || 0) / 100);
-        } else if (coupon.type === "fixed") {
-          totalPrice = Math.max(0, totalPrice - (coupon.amount || 0));
+        if (coupon.discountUnit === "percent") {
+          const discountValue =
+            coupon.discount !== null && coupon.discount !== undefined
+              ? coupon.discount
+              : coupon.amount || 0;
+          totalPrice = totalPrice * (1 - discountValue / 100);
+        } else {
+          const fixedAmount =
+            coupon.amount !== null && coupon.amount !== undefined
+              ? coupon.amount
+              : coupon.discount || 0;
+          totalPrice = Math.max(0, totalPrice - fixedAmount);
         }
       }
     }
@@ -125,6 +133,7 @@ const createOrder = async (data: {
           create: itemsToOrder.map((item) => ({
             courseId: item.courseId,
             price: item.price || 0,
+            lecturerId: item.lecturerId ?? null,
           })),
         },
       },
@@ -381,11 +390,13 @@ const updateOrderStatus = async (orderId: number, newStatus: string) => {
             totalAmount,
             platformFee,
             lecturerEarn,
+            lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
+            courseId: item.courseId,
           },
           create: {
             orderId,
             courseId: item.courseId,
-            lecturerId: item.lecturerId ? item.lecturerId : null,
+            lecturerId: item.lecturerId ?? item.course?.lecturerId ?? null,
             totalAmount,
             platformFee,
             lecturerEarn,

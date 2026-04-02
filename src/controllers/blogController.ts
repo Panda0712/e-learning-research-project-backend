@@ -1,7 +1,9 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { blogService } from "@/services/blogService.js";
+import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 
 // BLOG CATEGORY CONTROLLER
 const createBlogCategory = async (
@@ -64,7 +66,29 @@ const deleteBlogCategory = async (
 // BLOG POST CONTROLLER
 const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await blogService.getAllPosts();
+    const { page, itemsPerPage } = req.query;
+
+    const result = await blogService.getAllPosts({
+      page: Number(page) || DEFAULT_PAGE,
+      itemsPerPage: Number(itemsPerPage) || DEFAULT_ITEMS_PER_PAGE,
+    });
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getAdminPosts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { page, limit, itemsPerPage } = req.query;
+    const result = await blogService.getAdminPosts({
+      page: Number(page) || 1,
+      itemsPerPage: Number(itemsPerPage || limit) || 10,
+    });
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
@@ -87,9 +111,31 @@ const getPostDetail = async (
   }
 };
 
+const getAdminPostDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+
+    const result = await blogService.getAdminPostDetail(Number(id));
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const authorId = Number(req.jwtDecoded.id);
+    const decodedUserId = req.jwtDecoded?.id;
+    const authorId = Number(decodedUserId);
+
+    if (!decodedUserId || Number.isNaN(authorId) || authorId <= 0) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
+
     const result = await blogService.createPost({ ...req.body, authorId });
     res.status(StatusCodes.CREATED).json(result);
   } catch (error) {
@@ -194,7 +240,9 @@ export const blogController = {
   updatePost,
   deletePost,
   getAllPosts,
+  getAdminPosts,
   getPostDetail,
+  getAdminPostDetail,
   uploadBlogThumbnail,
 
   createComment,

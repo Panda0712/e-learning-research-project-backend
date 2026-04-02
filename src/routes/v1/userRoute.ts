@@ -2,7 +2,9 @@ import { authMiddleware } from "./../../middlewares/authMiddleware.js";
 import { userController } from "@/controllers/userController.js";
 import { multerUploadMiddleware } from "@/middlewares/multerUploadMiddleware.js";
 import { userValidation } from "@/validations/userValidation.js";
+import ApiError from "@/utils/ApiError.js";
 import express from "express";
+import { StatusCodes } from "http-status-codes";
 
 const Router = express.Router();
 
@@ -75,5 +77,29 @@ Router.route("/google/callback").get(userController.googleAuthCallbackHandler);
 Router.route("/facebook").post(userController.facebookAuthHandler);
 
 Router.route("/me").get(authMiddleware.isAuthorized, userController.getMe);
+
+Router.route("/admin/users").get(
+  authMiddleware.isAuthorized,
+  userValidation.getAdminUsers,
+  userController.getAdminUsers,
+);
+
+Router.route("/admin/users/:id").get(
+  authMiddleware.isAuthorized,
+  userValidation.getAdminUserDetail,
+  userController.getAdminUserDetail,
+);
+
+Router.route("/admin/users/:id/block").patch(
+  authMiddleware.isAuthorized,
+  userValidation.blockUser,
+  userController.blockUser,
+);
+
+Router.route("/admin/users/:id").delete(
+  authMiddleware.isAuthorized,
+  userValidation.deleteUser,
+  userController.deleteUser,
+);
 
 export const userRoute = Router;

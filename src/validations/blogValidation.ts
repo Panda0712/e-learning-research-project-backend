@@ -66,11 +66,16 @@ const deleteBlogCategory = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -81,6 +86,22 @@ const deleteBlogCategory = async (
 };
 
 // POST VALIDATION
+const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
+  const correctCondition = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.query, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 const createPost = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
     title: Joi.string().required().min(2).max(50).trim().strict(),
@@ -142,11 +163,16 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
 
 const deletePost = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -207,11 +233,16 @@ const deleteComment = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -226,6 +257,7 @@ export const blogValidation = {
   updateBlogCategory,
   deleteBlogCategory,
 
+  getAllPosts,
   createPost,
   updatePost,
   deletePost,

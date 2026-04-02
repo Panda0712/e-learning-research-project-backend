@@ -34,11 +34,16 @@ const getLecturerPayoutAccountById = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -53,11 +58,16 @@ const getPayoutAccountsByLecturerId = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    lecturerId: Joi.number().required().positive(),
+    lecturerId: Joi.number().required().positive().integer(),
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        lecturerId: Number(req.params.lecturerId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -76,7 +86,12 @@ const getDefaultPayoutAccount = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        lecturerId: Number(req.params.lecturerId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -91,7 +106,7 @@ const updateLecturerPayoutAccount = async (
   next: NextFunction,
 ) => {
   const paramsCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   const bodyCondition = Joi.object({
@@ -104,7 +119,12 @@ const updateLecturerPayoutAccount = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -120,7 +140,7 @@ const setDefaultPayoutAccount = async (
   next: NextFunction,
 ) => {
   const paramsCondition = Joi.object({
-    id: Joi.number().required().positive(),
+    id: Joi.number().required().positive().integer(),
   });
 
   const bodyCondition = Joi.object({
@@ -128,7 +148,12 @@ const setDefaultPayoutAccount = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -148,7 +173,12 @@ const deleteLecturerPayoutAccount = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

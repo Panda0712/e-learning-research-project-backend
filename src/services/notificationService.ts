@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma.js";
+import { getIO } from "@/socket/index.js";
+import { emitNewNotification } from "@/socket/modules/notification.socket.js";
 import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
@@ -44,6 +46,136 @@ const createNotification = async (data: {
   } catch (error: any) {
     throw error;
   }
+};
+
+const createNotificationIfNotExists = async (data: {
+  userId: number;
+  title: string;
+  message: string;
+  type?: string;
+  relatedId?: number;
+}) => {
+  try {
+    const normalizedType = data.type || "info";
+    const hasRelatedId =
+      data.relatedId !== undefined && data.relatedId !== null;
+
+    if (hasRelatedId) {
+      const relatedId = data.relatedId as number;
+      const existing = await prisma.notification.findFirst({
+        where: {
+          userId: data.userId,
+          type: normalizedType,
+          relatedId,
+          isDestroyed: false,
+        },
+      });
+
+      if (existing) return existing;
+    }
+
+    return await createNotification({
+      ...data,
+      type: normalizedType,
+    });
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const emitNotificationSafely = (notification: {
+  id: number;
+  userId: number;
+  title: string;
+  message: string;
+  type: string;
+  createdAt: Date;
+}) => {
+  try {
+    const io = getIO();
+    emitNewNotification(io, notification.userId, {
+      id: notification.id,
+      title: notification.title,
+      message: notification.message,
+      type: notification.type,
+      createdAt: notification.createdAt,
+    });
+  } catch {
+    // Keep API flow unaffected when socket server is unavailable.
+  }
+};
+
+const createAndDispatchNotification = async (
+  data: {
+    userId: number;
+    title: string;
+    message: string;
+    type?: string;
+    relatedId?: number;
+  },
+  options?: { dedupe?: boolean },
+) => {
+  const notification = options?.dedupe
+    ? await createNotificationIfNotExists(data)
+    : await createNotification(data);
+
+  emitNotificationSafely({
+    id: notification.id,
+    userId: notification.userId,
+    title: notification.title,
+    message: notification.message,
+    type: notification.type,
+    createdAt: notification.createdAt,
+  });
+
+  return notification;
+};
+
+const createAndDispatchNotificationsForUsers = async (
+  data: {
+    userIds: number[];
+    title: string;
+    message: string;
+    type?: string;
+    relatedId?: number;
+  },
+  options?: { dedupe?: boolean },
+) => {
+  const uniqueUserIds = [...new Set(data.userIds)].filter(
+    (userId) => Number.isInteger(userId) && userId > 0,
+  );
+
+  if (uniqueUserIds.length === 0) return [];
+
+  const results = [];
+
+  for (const userId of uniqueUserIds) {
+    const payload: {
+      userId: number;
+      title: string;
+      message: string;
+      type?: string;
+      relatedId?: number;
+    } = {
+      userId,
+      title: data.title,
+      message: data.message,
+    };
+
+    if (data.type !== undefined) {
+      payload.type = data.type;
+    }
+
+    if (data.relatedId !== undefined) {
+      payload.relatedId = data.relatedId;
+    }
+
+    const notification = await createAndDispatchNotification(payload, options);
+
+    results.push(notification);
+  }
+
+  return results;
 };
 
 const getNotificationsByUserId = async (filters: {
@@ -217,6 +349,9 @@ const getUnreadCount = async (userId: number) => {
 
 export const notificationService = {
   createNotification,
+  createNotificationIfNotExists,
+  createAndDispatchNotification,
+  createAndDispatchNotificationsForUsers,
   getNotificationsByUserId,
   getNotificationById,
   markAsRead,

@@ -11,7 +11,8 @@ const createLesson = async (
   next: NextFunction,
 ) => {
   try {
-    const createdLesson = await lessonService.createLesson(req.body);
+    const actorId = Number(req.jwtDecoded?.id);
+    const createdLesson = await lessonService.createLesson(req.body, actorId);
 
     res.status(StatusCodes.CREATED).json(createdLesson);
   } catch (error) {
@@ -26,10 +27,12 @@ const updateLesson = async (
 ) => {
   try {
     const { id } = req.params;
+    const actorId = Number(req.jwtDecoded?.id);
 
     const updatedLesson = await lessonService.updateLesson(
       Number(id),
       req.body,
+      actorId,
     );
 
     res.status(StatusCodes.OK).json(updatedLesson);
@@ -45,8 +48,9 @@ const deleteLesson = async (
 ) => {
   try {
     const { id } = req.params;
+    const actorId = Number(req.jwtDecoded?.id);
 
-    await lessonService.deleteLesson(Number(id));
+    await lessonService.deleteLesson(Number(id), actorId);
 
     res
       .status(StatusCodes.OK)

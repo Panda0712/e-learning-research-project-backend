@@ -38,7 +38,12 @@ const getSubmissionById = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -57,7 +62,12 @@ const getSubmissionsByStudentId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        studentId: Number(req.params.studentId),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(
@@ -83,7 +93,12 @@ const updateSubmission = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -109,7 +124,12 @@ const gradeSubmission = async (
   });
 
   try {
-    await paramsCondition.validateAsync(req.params, { abortEarly: false });
+    await paramsCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     await bodyCondition.validateAsync(req.body, { abortEarly: false });
     next();
   } catch (error: any) {
@@ -129,7 +149,12 @@ const deleteSubmission = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
     next();
   } catch (error: any) {
     next(

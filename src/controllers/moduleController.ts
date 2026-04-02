@@ -8,7 +8,8 @@ const createModule = async (
   next: NextFunction,
 ) => {
   try {
-    const createdModule = await moduleService.createModule(req.body);
+    const actorId = Number(req.jwtDecoded?.id);
+    const createdModule = await moduleService.createModule(req.body, actorId);
 
     res.status(StatusCodes.CREATED).json(createdModule);
   } catch (error) {
@@ -23,10 +24,12 @@ const updateModule = async (
 ) => {
   try {
     const { id } = req.params;
+    const actorId = Number(req.jwtDecoded?.id);
 
     const updatedModule = await moduleService.updateModule(
       Number(id),
       req.body,
+      actorId,
     );
 
     res.status(StatusCodes.OK).json(updatedModule);
@@ -42,8 +45,9 @@ const deleteModule = async (
 ) => {
   try {
     const { id } = req.params;
+    const actorId = Number(req.jwtDecoded?.id);
 
-    await moduleService.deleteModule(Number(id));
+    await moduleService.deleteModule(Number(id), actorId);
 
     res
       .status(StatusCodes.OK)

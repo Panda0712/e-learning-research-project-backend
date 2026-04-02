@@ -92,6 +92,7 @@ model Course {
   lecturerId    Int
   categoryId    Int?
   thumbnailId   Int?      @unique
+  introVideoId  Int?      @unique
   name          String
   lecturerName  String?
   duration      String?
@@ -110,6 +111,7 @@ model Course {
   lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
   category    CourseCategory? @relation(fields: [categoryId], references: [id])
   thumbnail   Resource?       @relation("CourseThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
+  introVideo  Resource?       @relation("CourseIntroVideo", fields: [introVideoId], references: [id], onDelete: SetNull)
   modules     Module[]
   reviews     CourseReview[]
   enrollments Enrollment[]
@@ -217,6 +219,7 @@ model Resource {
   lessonVideo         Lesson?          @relation("LessonVideo")
   blogThumbnail       BlogPost?        @relation("BlogThumbnail")
   lecturerProfileFile LecturerProfile? @relation("LecturerProfileFile")
+  courseIntroVideo    Course?          @relation("CourseIntroVideo")
 }
 
 model Enrollment {
@@ -306,28 +309,26 @@ model OrderItem {
 }
 
 model Coupon {
-  id              Int       @id @default(autoincrement())
-  courseId        Int?
-  name            String
-  description     String?
-  status          String?
-  customerGroup   String?
-  code            String    @unique
-  categoryId      Int?
-  quantity        Int?
-  usesPerCustomer Int?
-  priority        String?
-  actions         String?
-  type            String?
-  amount          Float?
-  startingDate    DateTime?
-  startingTime    String?
-  endingDate      DateTime?
-  endingTime      String?
-  isUnlimited     Boolean?  @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime? @updatedAt
-  isDestroyed     Boolean   @default(false)
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String?
+  status        String?
+  code          String    @unique
+  courseId      Int?
+  categoryId    Int?
+  discount      Float?
+  discountUnit  String? // amount | percent
+  usageLimit    Int?
+  minOrderValue Float?
+  maxValue      Float?
+  amount        Float?
+  startingDate  DateTime?
+  startingTime  String?
+  endingDate    DateTime?
+  endingTime    String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  isDestroyed   Boolean   @default(false)
 
   // relations
   category CouponCategory? @relation(fields: [categoryId], references: [id])

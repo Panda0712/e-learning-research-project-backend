@@ -5,8 +5,29 @@ import { StatusCodes } from "http-status-codes";
 import { courseRepo } from "./repo/courseRepo.js";
 import { resourceService } from "./resourceService.js";
 
-const createLesson = async (data: CreateLesson) => {
+const ensureLecturerOwnsCourse = async (actorId: number, moduleId: number) => {
+  const module = await prisma.module.findUnique({
+    where: { id: moduleId, isDestroyed: false },
+    include: {
+      course: {
+        select: {
+          lecturerId: true,
+        },
+      },
+    },
+  });
+  if (!module) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  if (module.course.lecturerId !== actorId)
+    throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed!");
+
+  return true;
+};
+
+const createLesson = async (data: CreateLesson, actorId: number) => {
   try {
+    // check security
+    await ensureLecturerOwnsCourse(actorId, data.moduleId);
+
     // check module existence
     const module = await prisma.module.findUnique({
       where: { id: data.moduleId, isDestroyed: false },
@@ -65,7 +86,11 @@ const createLesson = async (data: CreateLesson) => {
   }
 };
 
-const updateLesson = async (id: number, updateData: UpdateLesson) => {
+const updateLesson = async (
+  id: number,
+  updateData: UpdateLesson,
+  actorId: number,
+) => {
   try {
     // check lesson existence
     const existingLesson = await prisma.lesson.findUnique({
@@ -73,6 +98,9 @@ const updateLesson = async (id: number, updateData: UpdateLesson) => {
     });
     if (!existingLesson)
       throw new ApiError(StatusCodes.NOT_FOUND, "Lesson not found!");
+
+    // check security
+    await ensureLecturerOwnsCourse(actorId, existingLesson.moduleId);
 
     // update lesson file
     if (updateData?.resource || updateData?.video) {
@@ -131,7 +159,7 @@ const updateLesson = async (id: number, updateData: UpdateLesson) => {
   }
 };
 
-const deleteLesson = async (id: number) => {
+const deleteLesson = async (id: number, actorId: number) => {
   try {
     // check lesson existence
     const existingLesson = await prisma.lesson.findUnique({
@@ -139,6 +167,9 @@ const deleteLesson = async (id: number) => {
     });
     if (!existingLesson)
       throw new ApiError(StatusCodes.NOT_FOUND, "Lesson not found!");
+
+    // check security
+    await ensureLecturerOwnsCourse(actorId, existingLesson.moduleId);
 
     // delete lesson
     return await prisma.lesson.update({

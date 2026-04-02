@@ -1,20 +1,21 @@
-import Joi from "joi";
+import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import ApiError from "@/utils/ApiError.js";
+import Joi from "joi";
 
-const getCartByUserId = async (
+const createPaymentLink = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
+    orderId: Joi.number().required().positive(),
+    returnUrl: Joi.string().optional().uri(),
+    cancelUrl: Joi.string().optional().uri(),
   });
 
   try {
     await correctCondition.validateAsync(req.body, { abortEarly: false });
-
     next();
   } catch (error: any) {
     next(
@@ -23,37 +24,22 @@ const getCartByUserId = async (
   }
 };
 
-const addToCart = async (req: Request, res: Response, next: NextFunction) => {
+const checkPaymentStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
-    courseId: Joi.number().required().positive(),
-    price: Joi.number().required().positive(),
-  });
-
-  try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false });
-
-    next();
-  } catch (error: any) {
-    next(
-      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
-    );
-  }
-};
-
-const removeItem = async (req: Request, res: Response, next: NextFunction) => {
-  const correctCondition = Joi.object({
-    id: Joi.number().required().positive().integer(),
+    orderId: Joi.number().required().positive(),
   });
 
   try {
     await correctCondition.validateAsync(
       {
-        id: Number(req.params.id),
+        orderId: Number(req.params.orderId),
       },
       { abortEarly: false },
     );
-
     next();
   } catch (error: any) {
     next(
@@ -62,8 +48,32 @@ const removeItem = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export const cartValidation = {
-  getCartByUserId,
-  addToCart,
-  removeItem,
+const cancelPayment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    orderId: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        orderId: Number(req.params.orderId),
+      },
+      { abortEarly: false },
+    );
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+export const payosValidation = {
+  createPaymentLink,
+  checkPaymentStatus,
+  cancelPayment,
 };

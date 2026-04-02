@@ -7,6 +7,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import { corsOptions } from "./configs/cors.js";
+import { RedisDB } from "./db/init.ioredis.js";
 import { connectRabbitMQ } from "./lib/rabbitmq/rabbitmq.connection.js";
 import { consumeMessage } from "./lib/rabbitmq/rabbitmq.consumer.js";
 
@@ -50,6 +51,11 @@ export const setupApp = async (app: Application) => {
 
   // init rabbitmq
   // await initRabbitMQ();
+
+  // init ioredis
+  await RedisDB.initIoRedis({
+    IOREDIS_IS_ENABLED: true,
+  });
 
   appConfigured = true;
 };
