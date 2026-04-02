@@ -41,9 +41,11 @@ export const emitNewNotification = (
   userId: number,
   notification: {
     id: number;
+    userId: number;
     title: string;
     message: string;
     type: string;
+    relatedId?: number | null;
     createdAt: Date;
   },
 ) => {
