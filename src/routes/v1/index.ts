@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { adminInstructorRoute } from "./adminInstructorRoute.js";
 import { assessmentRoute } from "./assessmentRoute.js";
 import { blogRoute } from "./blogRoute.js";
+import { chatbotRoute } from "./chatbotRoute.js";
 import { cartRoute } from "./cartRoute.js";
 import { conversationRoute } from "./conversationRoute.js";
 import { couponRoute } from "./couponRoute.js";
@@ -51,6 +52,9 @@ Router.get("/test-rabbitmq", async (req: Request, res: Response) => {
 
 // User route
 Router.use("/users", userRoute);
+
+// Chatbot route
+Router.use("/chatbot", chatbotRoute);
 
 // Dashboard Route
 Router.use("/dashboard", dashboardRoute);

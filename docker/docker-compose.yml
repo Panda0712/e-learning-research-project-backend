@@ -21,9 +21,41 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin123
+    restart: always
+    networks:
+      - e-learning_app_network
+
+  qdrant:
+    image: qdrant/qdrant:v1.13.2
+    container_name: qdrant_e-learning_container
+    ports:
+      - "6334:6334"
+      - "6335:6335"
+    environment:
+      QDRANT__SERVICE__HTTP_PORT: 6334
+      QDRANT__SERVICE__GRPC_PORT: 6335
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: always
+    networks:
+      - e-learning_app_network
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: redis_e-learning_container
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    restart: always
+    networks:
+      - e-learning_app_network
 
 volumes:
   mysql_data:
+  qdrant_data:
+  redis_data:
 
 networks:
   e-learning_app_network:

@@ -20,7 +20,7 @@ const isAuthorized = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const accessToken = req.cookies?.accessToken;
+  const accessToken = extractAccessToken(req);
 
   if (!accessToken) {
     next(new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!"));
@@ -68,6 +68,59 @@ const isAuthorized = async (
   }
 };
 
+const optionalAuthorized = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const accessToken = extractAccessToken(req);
+
+  if (!accessToken) {
+    next();
+    return;
+  }
+
+  try {
+    const decoded = authUtils.decodeToken(accessToken) as authUtilsPayload;
+    if (!decoded?.kid) {
+      next();
+      return;
+    }
+
+    const keyToken = await prisma.keyToken.findFirst({
+      where: { kid: decoded.kid, isDestroyed: false },
+    });
+
+    if (!keyToken) {
+      next();
+      return;
+    }
+
+    const jwtDecoded = await authUtils.verifyToken(accessToken, keyToken.publicKey);
+    req.jwtDecoded = jwtDecoded;
+    next();
+  } catch {
+    // For optional auth, fail-open and continue as anonymous request.
+    next();
+  }
+};
+
+const extractAccessToken = (req: Request): string | undefined => {
+  const cookieToken = req.cookies?.accessToken;
+  if (cookieToken) return cookieToken;
+
+  const authHeader = req.headers.authorization || req.headers.Authorization;
+  if (typeof authHeader === "string") {
+    const match = authHeader.match(/^Bearer\s+(.+)$/i);
+    if (match?.[1]) {
+      return match[1].trim();
+    }
+  }
+
+  return undefined;
+};
+
 export const authMiddleware = {
   isAuthorized,
+  optionalAuthorized,
 };

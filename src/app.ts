@@ -44,6 +44,7 @@ export const setupApp = async (app: Application) => {
 
   // init routes
   app.use("/v1", APIs_V1);
+  app.use("/api/v1", APIs_V1);
 
   // handle error
   app.use(errorHandlingMiddleware);

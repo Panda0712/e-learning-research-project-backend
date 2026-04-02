@@ -180,6 +180,46 @@ export const registerLecturer = async (
   }
 };
 
+export const getPublicLecturers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    page: Joi.number().integer().positive().optional(),
+    itemsPerPage: Joi.number().integer().positive().optional(),
+    q: Joi.string().allow("").optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.query, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+export const getPublicLecturerById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().integer().positive().required(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.params, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 const forgotPassword = async (
   req: Request,
   res: Response,
@@ -315,6 +355,8 @@ export const userValidation = {
   login,
   update,
   registerLecturer,
+  getPublicLecturers,
+  getPublicLecturerById,
   forgotPassword,
   resetPassword,
   getAdminUsers,

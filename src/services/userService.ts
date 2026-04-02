@@ -7,7 +7,11 @@ import { UpdateProfile } from "@/types/updateProfile.type.js";
 import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
-import { WEBSITE_DOMAINS } from "@/utils/constants.js";
+import {
+  DEFAULT_ITEMS_PER_PAGE,
+  DEFAULT_PAGE,
+  WEBSITE_DOMAINS,
+} from "@/utils/constants.js";
 import { pickUser, pickUserWithAvatar } from "@/utils/helpers.js";
 import axios from "axios";
 import bcrypt from "bcrypt";
@@ -618,6 +622,31 @@ const registerLecturerProfile = async (
     if (!existingUser)
       throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
+    const existingLecturerProfile = await prisma.lecturerProfile.findFirst({
+      where: { lecturerId: userId, isDestroyed: false },
+      select: { id: true },
+    });
+    if (existingLecturerProfile)
+      throw new ApiError(
+        StatusCodes.CONFLICT,
+        "Lecturer profile already registered!",
+      );
+
+    const beginStudiesDate = new Date(reqBody.beginStudies as unknown as string);
+    const dateOfBirthDate = new Date(reqBody.dateOfBirth as unknown as string);
+    if (Number.isNaN(beginStudiesDate.getTime())) {
+      throw new ApiError(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        "beginStudies must be a valid javascript timestamp.",
+      );
+    }
+    if (Number.isNaN(dateOfBirthDate.getTime())) {
+      throw new ApiError(
+        StatusCodes.UNPROCESSABLE_ENTITY,
+        "dateOfBirth must be a valid javascript timestamp.",
+      );
+    }
+
     return await prisma.$transaction(async (tx) => {
       const createdResource =
         await resourceService.createResourceWithTransaction(
@@ -630,6 +659,16 @@ const registerLecturerProfile = async (
           tx,
         );
 
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          firstName: reqBody.firstName,
+          lastName: reqBody.lastName,
+          dateOfBirth: dateOfBirthDate,
+          phoneNumber: reqBody.phoneNumber,
+        },
+      });
+
       const newLecturerProfile = await tx.lecturerProfile.create({
         data: {
           lecturerId: userId,
@@ -637,7 +676,7 @@ const registerLecturerProfile = async (
           gender: reqBody.gender,
           nationality: reqBody.nationality,
           professionalTitle: reqBody.professionalTitle,
-          beginStudies: reqBody.beginStudies,
+          beginStudies: beginStudiesDate,
           highestDegree: reqBody.highestDegree,
           bio: reqBody.bio,
         },
@@ -648,6 +687,139 @@ const registerLecturerProfile = async (
 
       return newLecturerProfile;
     });
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getPublicLecturers = async ({
+  page,
+  itemsPerPage,
+  q,
+}: {
+  page?: number;
+  itemsPerPage?: number;
+  q?: string;
+}) => {
+  try {
+    const currentPage = page || DEFAULT_PAGE;
+    const perPage = itemsPerPage || DEFAULT_ITEMS_PER_PAGE;
+    const skip = (currentPage - 1) * perPage;
+    const query = (q || "").trim();
+
+    const whereCondition: any = {
+      isDestroyed: false,
+      role: "lecturer",
+      lecturerProfile: {
+        is: {
+          isDestroyed: false,
+          isActive: true,
+        },
+      },
+    };
+
+    if (query) {
+      whereCondition.OR = [
+        { firstName: { contains: query } },
+        { lastName: { contains: query } },
+        { email: { contains: query } },
+        {
+          lecturerProfile: {
+            is: {
+              professionalTitle: { contains: query },
+            },
+          },
+        },
+      ];
+    }
+
+    const [lecturers, total] = await Promise.all([
+      prisma.user.findMany({
+        where: whereCondition,
+        include: {
+          avatar: { select: { fileUrl: true } },
+          lecturerProfile: {
+            select: {
+              professionalTitle: true,
+              nationality: true,
+              bio: true,
+              totalStudents: true,
+              totalCourses: true,
+              avgRating: true,
+            },
+          },
+        },
+        skip,
+        take: perPage,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.user.count({ where: whereCondition }),
+    ]);
+
+    return {
+      lecturers,
+      totalLecturers: total,
+      pagination: {
+        page: currentPage,
+        itemsPerPage: perPage,
+        total,
+        totalPages: Math.ceil(total / perPage),
+      },
+    };
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getPublicLecturerDetail = async (lecturerId: number) => {
+  try {
+    const lecturer = await prisma.user.findUnique({
+      where: {
+        id: lecturerId,
+        isDestroyed: false,
+        role: "lecturer",
+      },
+      include: {
+        avatar: { select: { fileUrl: true } },
+        lecturerProfile: {
+          where: {
+            isDestroyed: false,
+            isActive: true,
+          },
+          include: {
+            lecturerFile: {
+              select: {
+                fileUrl: true,
+                fileType: true,
+              },
+            },
+          },
+        },
+        courses: {
+          where: {
+            isDestroyed: false,
+            status: "published",
+          },
+          include: {
+            thumbnail: {
+              select: {
+                fileUrl: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 8,
+        },
+      },
+    });
+
+    if (!lecturer || !lecturer.lecturerProfile) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Lecturer not found!");
+    }
+
+    return lecturer;
   } catch (error: any) {
     throw error;
   }
@@ -902,6 +1074,8 @@ export const userService = {
   findByEmail,
   updateProfile,
   registerLecturerProfile,
+  getPublicLecturers,
+  getPublicLecturerDetail,
   forgotPassword,
   resetPassword,
   createUserDocument,

@@ -2,6 +2,7 @@ import amqp from "amqplib";
 
 let channel: amqp.Channel;
 
+// connect rabbitmq
 export const connectRabbitMQ = async () => {
   const connection = await amqp.connect(
     process.env.RABBITMQ_URL || "amqp://admin:admin123@localhost:5672",
