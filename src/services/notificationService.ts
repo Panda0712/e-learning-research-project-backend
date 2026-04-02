@@ -88,6 +88,7 @@ const emitNotificationSafely = (notification: {
   userId: number;
   title: string;
   message: string;
+  relatedId?: number | null;
   type: string;
   createdAt: Date;
 }) => {
@@ -95,9 +96,11 @@ const emitNotificationSafely = (notification: {
     const io = getIO();
     emitNewNotification(io, notification.userId, {
       id: notification.id,
+      userId: notification.userId,
       title: notification.title,
       message: notification.message,
       type: notification.type,
+      relatedId: notification.relatedId ?? null,
       createdAt: notification.createdAt,
     });
   } catch {
@@ -125,6 +128,7 @@ const createAndDispatchNotification = async (
     title: notification.title,
     message: notification.message,
     type: notification.type,
+    relatedId: notification.relatedId ?? null,
     createdAt: notification.createdAt,
   });
 
