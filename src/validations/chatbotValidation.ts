@@ -7,7 +7,7 @@ const chat = async (req: Request, res: Response, next: NextFunction) => {
   const condition = Joi.object({
     question: Joi.string().trim().min(2).max(5000).required(),
     topK: Joi.number().integer().min(1).max(10).optional(),
-    conversationId: Joi.string().trim().min(3).max(128).optional(),
+    conversationId: Joi.string().trim().min(1).max(128).optional(),
   });
 
   try {

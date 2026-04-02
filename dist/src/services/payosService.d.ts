@@ -5,9 +5,9 @@ export declare const payosService: {
         cancelUrl?: string;
     }) => Promise<{
         orderId: number;
-        paymentLinkId: any;
-        checkoutUrl: any;
-        qrCode: any;
+        paymentLinkId: string;
+        checkoutUrl: string;
+        qrCode: string;
         amount: number | null;
     }>;
     handleWebhook: (webhookBody: any) => Promise<{

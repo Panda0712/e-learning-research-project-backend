@@ -10,5 +10,6 @@ declare global {
 }
 export declare const authMiddleware: {
     isAuthorized: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    optionalAuthorized: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 };
 //# sourceMappingURL=authMiddleware.d.ts.map

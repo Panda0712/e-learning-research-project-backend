@@ -29,19 +29,19 @@ export declare const PayosProvider: {
      * Create payment link with PayOS
      */
     createPaymentLink(data: CreatePaymentLinkData): Promise<{
-        paymentLinkId: any;
-        checkoutUrl: any;
-        qrCode: any;
+        paymentLinkId: string;
+        checkoutUrl: string;
+        qrCode: string;
         createDate: string;
     }>;
     /**
      * Get payment link details by order code
      */
-    getPaymentLinkInfo(orderCode: number): Promise<any>;
+    getPaymentLinkInfo(orderCode: number): Promise<import("@payos/node").PaymentLink>;
     /**
      * Cancel payment link
      */
-    cancelPaymentLink(orderCode: number): Promise<any>;
+    cancelPaymentLink(orderCode: number): Promise<import("@payos/node").PaymentLink>;
     /**
      * Verify webhook signature
      * This is critical for security - ensures webhook is from PayOS

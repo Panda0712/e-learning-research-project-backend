@@ -1,6 +1,7 @@
 type ChatbotChatInput = {
     question: string;
     conversationId: string;
+    userId?: number;
     topK?: number;
 };
 type ParsedChatbotResponse = {
@@ -24,6 +25,7 @@ declare class ChatbotService {
     private readonly qdrantUseTls;
     private readonly qdrantApiKey;
     private readonly qdrantCollection;
+    private readonly qdrantScoreThreshold;
     private readonly qdrantInitializeSchema;
     private readonly geminiApiKey;
     private readonly redisHost;
@@ -54,6 +56,10 @@ declare class ChatbotService {
     private pickAnswerText;
     private resolveToolResponse;
     private tryDirectCourseConsulting;
+    private tryDirectActionTools;
+    private extractCourseQueryFromQuestion;
+    private cleanupCourseNameQuery;
+    private pickBestCourseByName;
     private getConversationHistory;
     private appendConversationHistory;
     private getRedisClient;
@@ -65,6 +71,11 @@ declare class ChatbotService {
     private countCollectionPointsBySource;
     private generateEmbedding;
     private generateChatCompletion;
+    private searchCoursesTool;
+    private getOwnedCoursesTool;
+    private addCourseToCartTool;
+    private getCartCoursesTool;
+    private normalizeVietnameseText;
     private buildQdrantRequestConfig;
     private wrapQdrantError;
     private wrapGeminiError;
