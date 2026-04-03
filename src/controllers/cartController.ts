@@ -8,7 +8,7 @@ const getCartByUserId = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.body;
+    const { userId } = req.params;
     const result = await cartService.getCartByUserId(Number(userId));
     res.status(StatusCodes.OK).json(result);
   } catch (error) {

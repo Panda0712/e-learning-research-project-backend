@@ -5,7 +5,7 @@ import express from "express";
 
 const Router = express.Router();
 
-Router.route("/get-cart-by-user-id").post(
+Router.route("/get-cart-by-user-id/:userId").get(
   authMiddleware.isAuthorized,
   cartValidation.getCartByUserId,
   cartController.getCartByUserId,

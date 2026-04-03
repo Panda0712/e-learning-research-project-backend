@@ -13,7 +13,12 @@ const getCartByUserId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
