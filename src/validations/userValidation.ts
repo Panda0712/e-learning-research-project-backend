@@ -40,6 +40,36 @@ export const register = async (
   }
 };
 
+const submitContact = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    name: Joi.string().required().min(2).max(100).trim().strict(),
+    email: Joi.string()
+      .required()
+      .pattern(EMAIL_RULE)
+      .message(EMAIL_RULE_MESSAGE),
+    phone: Joi.string()
+      .allow("")
+      .optional()
+      .pattern(PHONE_RULE)
+      .message(PHONE_RULE_MESSAGE),
+    subject: Joi.string().required().min(2).max(150).trim().strict(),
+    comment: Joi.string().required().min(10).max(2000).trim().strict(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const verifyAccount = async (
   req: Request,
   res: Response,
@@ -351,6 +381,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 
 export const userValidation = {
   register,
+  submitContact,
   verifyAccount,
   login,
   update,
