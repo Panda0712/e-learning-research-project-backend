@@ -257,6 +257,7 @@ export type WishlistWhereInput = {
   updatedAt?: Prisma.DateTimeNullableFilter<"Wishlist"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Wishlist"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type WishlistOrderByWithRelationInput = {
@@ -270,11 +271,13 @@ export type WishlistOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  course?: Prisma.CourseOrderByWithRelationInput
   _relevance?: Prisma.WishlistOrderByRelevanceInput
 }
 
 export type WishlistWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  userId_courseId?: Prisma.WishlistUserIdCourseIdCompoundUniqueInput
   AND?: Prisma.WishlistWhereInput | Prisma.WishlistWhereInput[]
   OR?: Prisma.WishlistWhereInput[]
   NOT?: Prisma.WishlistWhereInput | Prisma.WishlistWhereInput[]
@@ -287,7 +290,8 @@ export type WishlistWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeNullableFilter<"Wishlist"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Wishlist"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id">
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+}, "id" | "userId_courseId">
 
 export type WishlistOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -322,7 +326,6 @@ export type WishlistScalarWhereWithAggregatesInput = {
 }
 
 export type WishlistCreateInput = {
-  courseId: number
   courseThumbnail?: string | null
   courseName?: string | null
   lecturer?: string | null
@@ -330,6 +333,7 @@ export type WishlistCreateInput = {
   updatedAt?: Date | string | null
   isDestroyed?: boolean
   user: Prisma.UserCreateNestedOneWithoutWishlistInput
+  course: Prisma.CourseCreateNestedOneWithoutWishlistsInput
 }
 
 export type WishlistUncheckedCreateInput = {
@@ -345,7 +349,6 @@ export type WishlistUncheckedCreateInput = {
 }
 
 export type WishlistUpdateInput = {
-  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -353,6 +356,7 @@ export type WishlistUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutWishlistNestedInput
+  course?: Prisma.CourseUpdateOneRequiredWithoutWishlistsNestedInput
 }
 
 export type WishlistUncheckedUpdateInput = {
@@ -380,7 +384,6 @@ export type WishlistCreateManyInput = {
 }
 
 export type WishlistUpdateManyMutationInput = {
-  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -415,6 +418,11 @@ export type WishlistOrderByRelevanceInput = {
   fields: Prisma.WishlistOrderByRelevanceFieldEnum | Prisma.WishlistOrderByRelevanceFieldEnum[]
   sort: Prisma.SortOrder
   search: string
+}
+
+export type WishlistUserIdCourseIdCompoundUniqueInput = {
+  userId: number
+  courseId: number
 }
 
 export type WishlistCountOrderByAggregateInput = {
@@ -507,14 +515,56 @@ export type WishlistUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.WishlistScalarWhereInput | Prisma.WishlistScalarWhereInput[]
 }
 
+export type WishlistCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput> | Prisma.WishlistCreateWithoutCourseInput[] | Prisma.WishlistUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.WishlistCreateOrConnectWithoutCourseInput | Prisma.WishlistCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.WishlistCreateManyCourseInputEnvelope
+  connect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+}
+
+export type WishlistUncheckedCreateNestedManyWithoutCourseInput = {
+  create?: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput> | Prisma.WishlistCreateWithoutCourseInput[] | Prisma.WishlistUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.WishlistCreateOrConnectWithoutCourseInput | Prisma.WishlistCreateOrConnectWithoutCourseInput[]
+  createMany?: Prisma.WishlistCreateManyCourseInputEnvelope
+  connect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+}
+
+export type WishlistUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput> | Prisma.WishlistCreateWithoutCourseInput[] | Prisma.WishlistUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.WishlistCreateOrConnectWithoutCourseInput | Prisma.WishlistCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.WishlistUpsertWithWhereUniqueWithoutCourseInput | Prisma.WishlistUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.WishlistCreateManyCourseInputEnvelope
+  set?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  disconnect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  delete?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  connect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  update?: Prisma.WishlistUpdateWithWhereUniqueWithoutCourseInput | Prisma.WishlistUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.WishlistUpdateManyWithWhereWithoutCourseInput | Prisma.WishlistUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.WishlistScalarWhereInput | Prisma.WishlistScalarWhereInput[]
+}
+
+export type WishlistUncheckedUpdateManyWithoutCourseNestedInput = {
+  create?: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput> | Prisma.WishlistCreateWithoutCourseInput[] | Prisma.WishlistUncheckedCreateWithoutCourseInput[]
+  connectOrCreate?: Prisma.WishlistCreateOrConnectWithoutCourseInput | Prisma.WishlistCreateOrConnectWithoutCourseInput[]
+  upsert?: Prisma.WishlistUpsertWithWhereUniqueWithoutCourseInput | Prisma.WishlistUpsertWithWhereUniqueWithoutCourseInput[]
+  createMany?: Prisma.WishlistCreateManyCourseInputEnvelope
+  set?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  disconnect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  delete?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  connect?: Prisma.WishlistWhereUniqueInput | Prisma.WishlistWhereUniqueInput[]
+  update?: Prisma.WishlistUpdateWithWhereUniqueWithoutCourseInput | Prisma.WishlistUpdateWithWhereUniqueWithoutCourseInput[]
+  updateMany?: Prisma.WishlistUpdateManyWithWhereWithoutCourseInput | Prisma.WishlistUpdateManyWithWhereWithoutCourseInput[]
+  deleteMany?: Prisma.WishlistScalarWhereInput | Prisma.WishlistScalarWhereInput[]
+}
+
 export type WishlistCreateWithoutUserInput = {
-  courseId: number
   courseThumbnail?: string | null
   courseName?: string | null
   lecturer?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  course: Prisma.CourseCreateNestedOneWithoutWishlistsInput
 }
 
 export type WishlistUncheckedCreateWithoutUserInput = {
@@ -569,6 +619,53 @@ export type WishlistScalarWhereInput = {
   isDestroyed?: Prisma.BoolFilter<"Wishlist"> | boolean
 }
 
+export type WishlistCreateWithoutCourseInput = {
+  courseThumbnail?: string | null
+  courseName?: string | null
+  lecturer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  user: Prisma.UserCreateNestedOneWithoutWishlistInput
+}
+
+export type WishlistUncheckedCreateWithoutCourseInput = {
+  id?: number
+  userId: number
+  courseThumbnail?: string | null
+  courseName?: string | null
+  lecturer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type WishlistCreateOrConnectWithoutCourseInput = {
+  where: Prisma.WishlistWhereUniqueInput
+  create: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput>
+}
+
+export type WishlistCreateManyCourseInputEnvelope = {
+  data: Prisma.WishlistCreateManyCourseInput | Prisma.WishlistCreateManyCourseInput[]
+  skipDuplicates?: boolean
+}
+
+export type WishlistUpsertWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.WishlistWhereUniqueInput
+  update: Prisma.XOR<Prisma.WishlistUpdateWithoutCourseInput, Prisma.WishlistUncheckedUpdateWithoutCourseInput>
+  create: Prisma.XOR<Prisma.WishlistCreateWithoutCourseInput, Prisma.WishlistUncheckedCreateWithoutCourseInput>
+}
+
+export type WishlistUpdateWithWhereUniqueWithoutCourseInput = {
+  where: Prisma.WishlistWhereUniqueInput
+  data: Prisma.XOR<Prisma.WishlistUpdateWithoutCourseInput, Prisma.WishlistUncheckedUpdateWithoutCourseInput>
+}
+
+export type WishlistUpdateManyWithWhereWithoutCourseInput = {
+  where: Prisma.WishlistScalarWhereInput
+  data: Prisma.XOR<Prisma.WishlistUpdateManyMutationInput, Prisma.WishlistUncheckedUpdateManyWithoutCourseInput>
+}
+
 export type WishlistCreateManyUserInput = {
   id?: number
   courseId: number
@@ -581,13 +678,13 @@ export type WishlistCreateManyUserInput = {
 }
 
 export type WishlistUpdateWithoutUserInput = {
-  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  course?: Prisma.CourseUpdateOneRequiredWithoutWishlistsNestedInput
 }
 
 export type WishlistUncheckedUpdateWithoutUserInput = {
@@ -612,6 +709,49 @@ export type WishlistUncheckedUpdateManyWithoutUserInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
+export type WishlistCreateManyCourseInput = {
+  id?: number
+  userId: number
+  courseThumbnail?: string | null
+  courseName?: string | null
+  lecturer?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+}
+
+export type WishlistUpdateWithoutCourseInput = {
+  courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  user?: Prisma.UserUpdateOneRequiredWithoutWishlistNestedInput
+}
+
+export type WishlistUncheckedUpdateWithoutCourseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type WishlistUncheckedUpdateManyWithoutCourseInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  courseThumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
 
 
 export type WishlistSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -625,6 +765,7 @@ export type WishlistSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   isDestroyed?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["wishlist"]>
 
 
@@ -644,12 +785,14 @@ export type WishlistSelectScalar = {
 export type WishlistOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "courseId" | "courseThumbnail" | "courseName" | "lecturer" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["wishlist"]>
 export type WishlistInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 
 export type $WishlistPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Wishlist"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    course: Prisma.$CoursePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1002,6 +1145,7 @@ readonly fields: WishlistFieldRefs;
 export interface Prisma__WishlistClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
