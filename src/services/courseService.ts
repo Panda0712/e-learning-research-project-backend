@@ -56,10 +56,12 @@ const getCourseStudentState = async (
       isPurchased: false,
       isInCart: false,
       canAddToCart: false,
+      isInWishlist: false,
+      canAddToWishlist: false,
     };
   }
 
-  const [purchased, enrolled, cartItem] = await Promise.all([
+  const [purchased, enrolled, cartItem, wishlistItem] = await Promise.all([
     prisma.orderItem.findFirst({
       where: {
         courseId,
@@ -90,10 +92,15 @@ const getCourseStudentState = async (
       },
       select: { id: true },
     }),
+    prisma.wishlist.findFirst({
+      where: { userId: studentId, courseId, isDestroyed: false },
+      select: { id: true },
+    }),
   ]);
 
   const isPurchased = Boolean(purchased || enrolled);
   const isInCart = Boolean(cartItem);
+  const isInWishlist = Boolean(wishlistItem);
 
   return {
     courseId,
@@ -101,6 +108,8 @@ const getCourseStudentState = async (
     isPurchased,
     isInCart,
     canAddToCart: !isPurchased && !isInCart,
+    isInWishlist,
+    canAddToWishlist: !isPurchased && !isInWishlist,
   };
 };
 
