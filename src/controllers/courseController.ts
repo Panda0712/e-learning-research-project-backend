@@ -17,6 +17,25 @@ const createCourseCategory = async (
   }
 };
 
+const getCourseStudentState = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const courseId = Number(req.params.id);
+    const studentId = req.jwtDecoded?.id ? Number(req.jwtDecoded.id) : null;
+
+    const result = await courseService.getCourseStudentState(
+      courseId,
+      studentId,
+    );
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getAllCourseCategories = async (
   req: Request,
   res: Response,
@@ -453,6 +472,7 @@ export const courseController = {
   getCourseFaqById,
   createCourseFaq,
   getCourseFaqByCourseId,
+  getCourseStudentState,
 
   createCourse,
   updateCourse,

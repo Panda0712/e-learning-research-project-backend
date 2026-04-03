@@ -12,11 +12,13 @@ Router.route("/get-cart-by-user-id/:userId").get(
 );
 
 Router.route("/add-to-cart").post(
+  authMiddleware.isAuthorized,
   cartValidation.addToCart,
   cartController.addToCart,
 );
 
 Router.route("/remove-cart-item/:id").delete(
+  authMiddleware.isAuthorized,
   cartValidation.removeItem,
   cartController.removeItem,
 );
