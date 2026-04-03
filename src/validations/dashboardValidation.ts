@@ -59,11 +59,9 @@ const getRevenueChart = async (
       abortEarly: false,
     });
 
-    req.query = {
-      ...req.query,
-      ...validated,
+    Object.assign(req.query, validated, {
       period: (validated.period as string | undefined) ?? "this_year",
-    };
+    });
 
     next();
   } catch (error: any) {
