@@ -30,9 +30,7 @@ const getCartByUserId = async (
 
 const addToCart = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
     courseId: Joi.number().required().positive(),
-    price: Joi.number().required().positive(),
   });
 
   try {

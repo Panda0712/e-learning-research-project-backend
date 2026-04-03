@@ -15,6 +15,13 @@ Router.route("/categories")
     courseController.createCourseCategory,
   );
 
+// check student state
+Router.route("/get-course-student-state/:id").get(
+  authMiddleware.isAuthorized,
+  courseValidation.getCourseById,
+  courseController.getCourseStudentState,
+);
+
 // course faq
 Router.route("/faq/get-by-course-id/:courseId").get(
   courseValidation.getCourseFaqByCourseId,
