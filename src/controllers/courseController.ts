@@ -1,8 +1,9 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
+import ApiError from "@/utils/ApiError.js";
+import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { courseService } from "../services/courseService.js";
-import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 
 const createCourseCategory = async (
   req: Request,
@@ -12,6 +13,25 @@ const createCourseCategory = async (
   try {
     const newCategory = await courseService.createCourseCategory(req.body);
     res.status(StatusCodes.CREATED).json(newCategory);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCourseStudentState = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const courseId = Number(req.params.id);
+    const studentId = req.jwtDecoded?.id ? Number(req.jwtDecoded.id) : null;
+
+    const result = await courseService.getCourseStudentState(
+      courseId,
+      studentId,
+    );
+    res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
   }
@@ -82,6 +102,14 @@ const createCourse = async (
 ) => {
   try {
     const lecturerId = Number(req.jwtDecoded?.id);
+    if (!Number.isInteger(lecturerId) || lecturerId <= 0) {
+      return next(
+        new ApiError(
+          StatusCodes.UNAUTHORIZED,
+          "Unauthorized lecturer identity.",
+        ),
+      );
+    }
 
     const createdCourse = await courseService.createCourse({
       ...req.body,
@@ -186,21 +214,21 @@ const getCourseById = async (
   }
 };
 
-const getCourseStudentState = async (
+const getCourseByIdForLecturer = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
-    const studentId = Number(req.jwtDecoded?.id);
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
 
-    const state = await courseService.getCourseStudentState(
-      Number(id),
-      studentId,
+    const course = await courseService.getCourseByIdForLecturer(
+      courseId,
+      actorId,
     );
 
-    res.status(StatusCodes.OK).json(state);
+    res.status(StatusCodes.OK).json(course);
   } catch (error) {
     next(error);
   }
@@ -473,6 +501,7 @@ export const courseController = {
   getCourseFaqById,
   createCourseFaq,
   getCourseFaqByCourseId,
+  getCourseStudentState,
 
   createCourse,
   updateCourse,
@@ -484,6 +513,7 @@ export const courseController = {
   getListCourses,
   getAdminCourses,
   getAdminCourseById,
+  getCourseByIdForLecturer,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,
   getAllCoursesByLecturerId,

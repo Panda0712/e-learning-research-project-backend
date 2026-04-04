@@ -57,6 +57,30 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const submitContact = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const forwardedFor = req.headers["x-forwarded-for"];
+    const ipFromHeader =
+      typeof forwardedFor === "string"
+        ? forwardedFor.split(",")[0]?.trim()
+        : "";
+    const ip = ipFromHeader || req.ip || req.socket.remoteAddress || "unknown";
+
+    const result = await userService.submitContact(req.body, {
+      ip,
+      userAgent: req.headers["user-agent"] as string | null,
+    });
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await userService.login(req.body);
@@ -168,8 +192,7 @@ const registerLecturerProfile = async (
 ) => {
   try {
     const userId = Number(req.jwtDecoded?.id);
-    if (!userId)
-      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    if (!userId) throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
 
     const result = await userService.registerLecturerProfile(userId, req.body);
 
@@ -469,6 +492,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 
 export const userController = {
   register,
+  submitContact,
   verifyAccount,
   login,
   logout,

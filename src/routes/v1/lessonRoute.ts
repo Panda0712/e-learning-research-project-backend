@@ -49,7 +49,7 @@ Router.route("/uploads/files").post(
 
 Router.route("/uploads/videos").post(
   authMiddleware.isAuthorized,
-  multerUploadMiddleware.uploadVideoLarge.array("videos", 3),
+  multerUploadMiddleware.uploadVideo.array("videos", 3),
   lessonController.uploadLessonVideos,
 );
 

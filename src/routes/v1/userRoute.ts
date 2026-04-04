@@ -13,6 +13,11 @@ Router.route("/register").post(
   userController.register,
 );
 
+Router.route("/contact").post(
+  userValidation.submitContact,
+  userController.submitContact,
+);
+
 Router.route("/verify").put(
   userValidation.verifyAccount,
   userController.verifyAccount,

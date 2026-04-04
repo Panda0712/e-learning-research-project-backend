@@ -1,8 +1,6 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { lessonService } from "@/services/lessonService.js";
-import { MIN_VIDEO_CHECK_SIZE } from "@/utils/validators.js";
 import { NextFunction, Request, Response } from "express";
-import fs from "fs/promises";
 import { StatusCodes } from "http-status-codes";
 
 const createLesson = async (
@@ -139,16 +137,7 @@ const uploadLessonVideos = async (
     const videos = req.files as Express.Multer.File[];
 
     const uploaded = await Promise.all(
-      videos.map(async (video) => {
-        try {
-          if (video.size >= MIN_VIDEO_CHECK_SIZE) {
-            return await CloudinaryProvider.uploadVideoLarge(video.path);
-          }
-          return await CloudinaryProvider.uploadVideo(video.buffer);
-        } finally {
-          if (video.path) await fs.unlink(video.path).catch(() => undefined);
-        }
-      }),
+      videos.map((video) => CloudinaryProvider.uploadVideo(video.buffer)),
     );
 
     res.status(StatusCodes.OK).json(uploaded);

@@ -9,11 +9,7 @@ const createWishlist = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
     courseId: Joi.number().required().positive(),
-    courseThumbnail: Joi.string().optional(),
-    courseName: Joi.string().optional(),
-    lecturer: Joi.string().optional(),
   });
 
   try {
@@ -80,14 +76,12 @@ const checkCourseInWishlist = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
     courseId: Joi.number().required().positive(),
   });
 
   try {
     await correctCondition.validateAsync(
       {
-        userId: Number(req.params.userId),
         courseId: Number(req.params.courseId),
       },
       { abortEarly: false },
@@ -181,6 +175,30 @@ const deleteWishlistByCourse = async (
   }
 };
 
+const deleteMyWishlistByCourse = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    courseId: Joi.number().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        courseId: Number(req.params.courseId),
+      },
+      { abortEarly: false },
+    );
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const wishlistValidation = {
   createWishlist,
   getWishlistById,
@@ -189,4 +207,5 @@ export const wishlistValidation = {
   updateWishlist,
   deleteWishlist,
   deleteWishlistByCourse,
+  deleteMyWishlistByCourse,
 };

@@ -199,10 +199,11 @@ const createConversation = async (
     select: { role: true },
   });
 
-  if (sender?.role?.toLowerCase() !== "student") {
+  const senderRole = sender?.role?.toLowerCase();
+  if (senderRole !== "student" && senderRole !== "lecturer") {
     throw new ApiError(
       StatusCodes.FORBIDDEN,
-      "Only students can start a new conversation.",
+      "Only students or lecturers can start a new conversation.",
     );
   }
 

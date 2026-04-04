@@ -125,6 +125,7 @@ model Course {
   assessments Assessment[]
   cartItems   CartItem[]
   coupons     Coupon[]
+  wishlists   Wishlist[]
 }
 
 model CourseCategory {
@@ -482,7 +483,11 @@ model Wishlist {
   isDestroyed     Boolean   @default(false)
 
   // relations
-  user User @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+  @@index([userId, createdAt(sort: Desc)])
 }
 
 model Cart {

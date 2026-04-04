@@ -10,12 +10,22 @@ import {
 import { Request } from "express";
 import { StatusCodes } from "http-status-codes";
 import multer from "multer";
+import fs from "node:fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 const memory = multer.memoryStorage();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const projectRoot = path.resolve(__dirname, "..", "..");
+const uploadVideoDir = path.join(projectRoot, "uploads", "videos");
+
 const videoDiskStorage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/videos"),
+  destination: (req, file, cb) => {
+    fs.mkdirSync(uploadVideoDir, { recursive: true });
+    cb(null, uploadVideoDir);
+  },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
     cb(null, `${Date.now()}-${file.fieldname}${ext}`);

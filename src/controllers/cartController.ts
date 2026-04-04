@@ -1,4 +1,5 @@
 import { cartService } from "@/services/cartService.js";
+import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -8,7 +9,13 @@ const getCartByUserId = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.body;
+    const actorId = Number(req.jwtDecoded?.id);
+    const { userId } = req.params;
+
+    if (actorId !== Number(userId)) {
+      throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed.");
+    }
+
     const result = await cartService.getCartByUserId(Number(userId));
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -18,11 +25,14 @@ const getCartByUserId = async (
 
 const addToCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = Number(req.body.userId);
+    const actorId = Number(req.jwtDecoded?.id);
     const courseId = Number(req.body.courseId);
-    const price = Number(req.body.price);
 
-    const result = await cartService.addToCart({ userId, courseId, price });
+    const result = await cartService.addToCart({
+      userId: actorId,
+      courseId,
+    });
+
     res.status(StatusCodes.CREATED).json(result);
   } catch (error) {
     next(error);
@@ -31,8 +41,10 @@ const addToCart = async (req: Request, res: Response, next: NextFunction) => {
 
 const removeItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const actorId = Number(req.jwtDecoded?.id);
     const { id } = req.params;
-    const result = await cartService.removeItem(Number(id));
+
+    const result = await cartService.removeItem(Number(id), actorId);
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);

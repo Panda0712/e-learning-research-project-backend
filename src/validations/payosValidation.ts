@@ -72,8 +72,29 @@ const cancelPayment = async (
   }
 };
 
+const reconcilePendingPayments = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    limit: Joi.number().integer().min(1).max(200).optional(),
+    orderIds: Joi.array().items(Joi.number().integer().positive()).optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body || {}, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const payosValidation = {
   createPaymentLink,
   checkPaymentStatus,
   cancelPayment,
+  reconcilePendingPayments,
 };
