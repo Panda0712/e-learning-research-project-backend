@@ -63,6 +63,11 @@ Router.route("/get-course-by-id/:id").get(
   courseValidation.getCourseById,
   courseController.getCourseById,
 );
+Router.route("/get-course-student-state/:id").get(
+  authMiddleware.isAuthorized,
+  courseValidation.getCourseStudentState,
+  courseController.getCourseStudentState,
+);
 Router.route("/list-lecturers-by-student-id/:studentId").get(
   courseValidation.getListLecturersByStudentId,
   courseController.getListLecturersByStudentId,

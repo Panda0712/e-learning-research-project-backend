@@ -281,6 +281,29 @@ const getCourseById = async (
   }
 };
 
+const getCourseStudentState = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().integer().required().positive(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      { id: Number(req.params.id) },
+      { abortEarly: false },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 const getAllCoursesByLecturerId = async (
   req: Request,
   res: Response,
@@ -459,6 +482,7 @@ export const courseValidation = {
   approveCourse,
   rejectCourse,
   getCourseById,
+  getCourseStudentState,
   getListCourses,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,

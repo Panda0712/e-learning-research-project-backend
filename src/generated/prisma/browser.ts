@@ -98,6 +98,11 @@ export type OrderItem = Prisma.OrderItemModel
  */
 export type Coupon = Prisma.CouponModel
 /**
+ * Model CouponUsage
+ * 
+ */
+export type CouponUsage = Prisma.CouponUsageModel
+/**
  * Model CouponCategory
  * 
  */

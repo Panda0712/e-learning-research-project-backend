@@ -1,4 +1,5 @@
 import { couponService } from "@/services/couponService.js";
+import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
@@ -175,8 +176,36 @@ const verifyCouponCode = async (
   next: NextFunction,
 ) => {
   try {
-    const { code } = req.body;
-    const result = await couponService.verifyCouponCode(code);
+    const { code, orderTotal } = req.body;
+    const result = await couponService.verifyCouponCode(code, orderTotal);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const previewCoupon = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { code, courseIds } = req.body as {
+      code: string;
+      courseIds: number[];
+    };
+
+    const studentId = Number(req.jwtDecoded?.id || 0);
+    if (!studentId) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+    }
+
+    const result = await couponService.previewCoupon({
+      code,
+      courseIds,
+      studentId,
+    });
+
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
@@ -198,4 +227,5 @@ export const couponController = {
   updateCoupon,
   deleteCoupon,
   verifyCouponCode,
+  previewCoupon,
 };

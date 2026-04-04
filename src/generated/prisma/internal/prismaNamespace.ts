@@ -400,6 +400,7 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Coupon: 'Coupon',
+  CouponUsage: 'CouponUsage',
   CouponCategory: 'CouponCategory',
   Submission: 'Submission',
   Assessment: 'Assessment',
@@ -435,7 +436,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "notification" | "conversation" | "conversationMember" | "message" | "authorBannedUser"
+    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponUsage" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "notification" | "conversation" | "conversationMember" | "message" | "authorBannedUser"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1492,6 +1493,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CouponCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CouponCountAggregateOutputType> | number
+        }
+      }
+    }
+    CouponUsage: {
+      payload: Prisma.$CouponUsagePayload<ExtArgs>
+      fields: Prisma.CouponUsageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CouponUsageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CouponUsageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        findFirst: {
+          args: Prisma.CouponUsageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CouponUsageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        findMany: {
+          args: Prisma.CouponUsageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>[]
+        }
+        create: {
+          args: Prisma.CouponUsageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        createMany: {
+          args: Prisma.CouponUsageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.CouponUsageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        update: {
+          args: Prisma.CouponUsageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        deleteMany: {
+          args: Prisma.CouponUsageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CouponUsageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.CouponUsageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CouponUsagePayload>
+        }
+        aggregate: {
+          args: Prisma.CouponUsageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCouponUsage>
+        }
+        groupBy: {
+          args: Prisma.CouponUsageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CouponUsageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CouponUsageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CouponUsageCountAggregateOutputType> | number
         }
       }
     }
@@ -3064,6 +3131,10 @@ export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
+  couponId: 'couponId',
+  couponCode: 'couponCode',
+  discountAmount: 'discountAmount',
+  originalPrice: 'originalPrice',
   lecturer: 'lecturer',
   totalPrice: 'totalPrice',
   paymentMethod: 'paymentMethod',
@@ -3100,11 +3171,15 @@ export const CouponScalarFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
+  scope: 'scope',
   courseId: 'courseId',
+  scopeCategoryId: 'scopeCategoryId',
   categoryId: 'categoryId',
   discount: 'discount',
   discountUnit: 'discountUnit',
   usageLimit: 'usageLimit',
+  usedCount: 'usedCount',
+  usagePerUser: 'usagePerUser',
   minOrderValue: 'minOrderValue',
   maxValue: 'maxValue',
   amount: 'amount',
@@ -3118,6 +3193,17 @@ export const CouponScalarFieldEnum = {
 } as const
 
 export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+export const CouponUsageScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  userId: 'userId',
+  orderId: 'orderId',
+  usedAt: 'usedAt'
+} as const
+
+export type CouponUsageScalarFieldEnum = (typeof CouponUsageScalarFieldEnum)[keyof typeof CouponUsageScalarFieldEnum]
 
 
 export const CouponCategoryScalarFieldEnum = {
@@ -3588,6 +3674,7 @@ export type QuestionOrderByRelevanceFieldEnum = (typeof QuestionOrderByRelevance
 
 
 export const OrderOrderByRelevanceFieldEnum = {
+  couponCode: 'couponCode',
   lecturer: 'lecturer',
   paymentMethod: 'paymentMethod',
   status: 'status',
@@ -3605,6 +3692,7 @@ export const CouponOrderByRelevanceFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
+  scope: 'scope',
   discountUnit: 'discountUnit',
   startingTime: 'startingTime',
   endingTime: 'endingTime'
@@ -3923,6 +4011,7 @@ export type GlobalOmitConfig = {
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
   coupon?: Prisma.CouponOmit
+  couponUsage?: Prisma.CouponUsageOmit
   couponCategory?: Prisma.CouponCategoryOmit
   submission?: Prisma.SubmissionOmit
   assessment?: Prisma.AssessmentOmit

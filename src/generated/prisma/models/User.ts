@@ -333,6 +333,7 @@ export type UserWhereInput = {
   notifications?: Prisma.NotificationListRelationFilter
   authorBlockedUsers?: Prisma.AuthorBannedUserListRelationFilter
   bannedFromAuthors?: Prisma.AuthorBannedUserListRelationFilter
+  couponUsages?: Prisma.CouponUsageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -377,6 +378,7 @@ export type UserOrderByWithRelationInput = {
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   authorBlockedUsers?: Prisma.AuthorBannedUserOrderByRelationAggregateInput
   bannedFromAuthors?: Prisma.AuthorBannedUserOrderByRelationAggregateInput
+  couponUsages?: Prisma.CouponUsageOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -425,6 +427,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.NotificationListRelationFilter
   authorBlockedUsers?: Prisma.AuthorBannedUserListRelationFilter
   bannedFromAuthors?: Prisma.AuthorBannedUserListRelationFilter
+  couponUsages?: Prisma.CouponUsageListRelationFilter
 }, "id" | "email" | "avatarId">
 
 export type UserOrderByWithAggregationInput = {
@@ -513,6 +516,7 @@ export type UserCreateInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -556,6 +560,7 @@ export type UserUncheckedCreateInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -598,6 +603,7 @@ export type UserUpdateInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -641,6 +647,7 @@ export type UserUncheckedUpdateInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -917,6 +924,20 @@ export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
   upsert?: Prisma.UserUpsertWithoutOrdersInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrdersInput, Prisma.UserUpdateWithoutOrdersInput>, Prisma.UserUncheckedUpdateWithoutOrdersInput>
+}
+
+export type UserCreateNestedOneWithoutCouponUsagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCouponUsagesInput, Prisma.UserUncheckedCreateWithoutCouponUsagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCouponUsagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCouponUsagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCouponUsagesInput, Prisma.UserUncheckedCreateWithoutCouponUsagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCouponUsagesInput
+  upsert?: Prisma.UserUpsertWithoutCouponUsagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCouponUsagesInput, Prisma.UserUpdateWithoutCouponUsagesInput>, Prisma.UserUncheckedUpdateWithoutCouponUsagesInput>
 }
 
 export type UserCreateNestedOneWithoutSubmissionsInput = {
@@ -1230,6 +1251,7 @@ export type UserCreateWithoutKeyTokenInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutKeyTokenInput = {
@@ -1272,6 +1294,7 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutKeyTokenInput = {
@@ -1329,6 +1352,7 @@ export type UserUpdateWithoutKeyTokenInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutKeyTokenInput = {
@@ -1371,6 +1395,7 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCoursesInput = {
@@ -1412,6 +1437,7 @@ export type UserCreateWithoutCoursesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCoursesInput = {
@@ -1454,6 +1480,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCoursesInput = {
@@ -1511,6 +1538,7 @@ export type UserUpdateWithoutCoursesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -1553,6 +1581,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -1594,6 +1623,7 @@ export type UserCreateWithoutReviewsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -1636,6 +1666,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -1693,6 +1724,7 @@ export type UserUpdateWithoutReviewsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -1735,6 +1767,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAvatarInput = {
@@ -1776,6 +1809,7 @@ export type UserCreateWithoutAvatarInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAvatarInput = {
@@ -1818,6 +1852,7 @@ export type UserUncheckedCreateWithoutAvatarInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAvatarInput = {
@@ -1875,6 +1910,7 @@ export type UserUpdateWithoutAvatarInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -1917,6 +1953,7 @@ export type UserUncheckedUpdateWithoutAvatarInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEnrollmentsInput = {
@@ -1958,6 +1995,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEnrollmentsInput = {
@@ -2000,6 +2038,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEnrollmentsInput = {
@@ -2057,6 +2096,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEnrollmentsInput = {
@@ -2099,6 +2139,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -2140,6 +2181,7 @@ export type UserCreateWithoutOrdersInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -2182,6 +2224,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -2239,6 +2282,7 @@ export type UserUpdateWithoutOrdersInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -2274,6 +2318,193 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
   wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCouponUsagesInput = {
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput
+  courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCouponUsagesInput = {
+  id?: number
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatarId?: number | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCouponUsagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCouponUsagesInput, Prisma.UserUncheckedCreateWithoutCouponUsagesInput>
+}
+
+export type UserUpsertWithoutCouponUsagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCouponUsagesInput, Prisma.UserUncheckedUpdateWithoutCouponUsagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCouponUsagesInput, Prisma.UserUncheckedCreateWithoutCouponUsagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCouponUsagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCouponUsagesInput, Prisma.UserUncheckedUpdateWithoutCouponUsagesInput>
+}
+
+export type UserUpdateWithoutCouponUsagesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCouponUsagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
@@ -2322,6 +2553,7 @@ export type UserCreateWithoutSubmissionsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -2364,6 +2596,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -2421,6 +2654,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -2463,6 +2697,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogPostsInput = {
@@ -2504,6 +2739,7 @@ export type UserCreateWithoutBlogPostsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogPostsInput = {
@@ -2546,6 +2782,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogPostsInput = {
@@ -2592,6 +2829,7 @@ export type UserCreateWithoutReviewedBlogPostsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewedBlogPostsInput = {
@@ -2634,6 +2872,7 @@ export type UserUncheckedCreateWithoutReviewedBlogPostsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewedBlogPostsInput = {
@@ -2691,6 +2930,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogPostsInput = {
@@ -2733,6 +2973,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReviewedBlogPostsInput = {
@@ -2785,6 +3026,7 @@ export type UserUpdateWithoutReviewedBlogPostsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewedBlogPostsInput = {
@@ -2827,6 +3069,7 @@ export type UserUncheckedUpdateWithoutReviewedBlogPostsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogCommentsInput = {
@@ -2868,6 +3111,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogCommentsInput = {
@@ -2910,6 +3154,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogCommentsInput = {
@@ -2967,6 +3212,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogCommentsInput = {
@@ -3009,6 +3255,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWishlistInput = {
@@ -3050,6 +3297,7 @@ export type UserCreateWithoutWishlistInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWishlistInput = {
@@ -3092,6 +3340,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWishlistInput = {
@@ -3149,6 +3398,7 @@ export type UserUpdateWithoutWishlistInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -3191,6 +3441,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCartInput = {
@@ -3232,6 +3483,7 @@ export type UserCreateWithoutCartInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCartInput = {
@@ -3274,6 +3526,7 @@ export type UserUncheckedCreateWithoutCartInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCartInput = {
@@ -3331,6 +3584,7 @@ export type UserUpdateWithoutCartInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartInput = {
@@ -3373,6 +3627,7 @@ export type UserUncheckedUpdateWithoutCartInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -3414,6 +3669,7 @@ export type UserCreateWithoutTransactionsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -3456,6 +3712,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -3513,6 +3770,7 @@ export type UserUpdateWithoutTransactionsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -3555,6 +3813,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerProfileInput = {
@@ -3596,6 +3855,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerProfileInput = {
@@ -3638,6 +3898,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerProfileInput = {
@@ -3695,6 +3956,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerProfileInput = {
@@ -3737,6 +3999,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutInput = {
@@ -3778,6 +4041,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutInput = {
@@ -3820,6 +4084,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutInput = {
@@ -3877,6 +4142,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
@@ -3919,6 +4185,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutAccountsInput = {
@@ -3960,6 +4227,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
@@ -4002,6 +4270,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutAccountsInput = {
@@ -4059,6 +4328,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
@@ -4101,6 +4371,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRevenuesInput = {
@@ -4142,6 +4413,7 @@ export type UserCreateWithoutRevenuesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRevenuesInput = {
@@ -4184,6 +4456,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRevenuesInput = {
@@ -4241,6 +4514,7 @@ export type UserUpdateWithoutRevenuesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRevenuesInput = {
@@ -4283,6 +4557,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -4324,6 +4599,7 @@ export type UserCreateWithoutNotificationsInput = {
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -4366,6 +4642,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -4423,6 +4700,7 @@ export type UserUpdateWithoutNotificationsInput = {
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -4465,6 +4743,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStudentConversationsInput = {
@@ -4506,6 +4785,7 @@ export type UserCreateWithoutStudentConversationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStudentConversationsInput = {
@@ -4548,6 +4828,7 @@ export type UserUncheckedCreateWithoutStudentConversationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStudentConversationsInput = {
@@ -4594,6 +4875,7 @@ export type UserCreateWithoutLecturerConversationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerConversationsInput = {
@@ -4636,6 +4918,7 @@ export type UserUncheckedCreateWithoutLecturerConversationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerConversationsInput = {
@@ -4682,6 +4965,7 @@ export type UserCreateWithoutLastSentConversationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLastSentConversationsInput = {
@@ -4724,6 +5008,7 @@ export type UserUncheckedCreateWithoutLastSentConversationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLastSentConversationsInput = {
@@ -4781,6 +5066,7 @@ export type UserUpdateWithoutStudentConversationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentConversationsInput = {
@@ -4823,6 +5109,7 @@ export type UserUncheckedUpdateWithoutStudentConversationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLecturerConversationsInput = {
@@ -4875,6 +5162,7 @@ export type UserUpdateWithoutLecturerConversationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
@@ -4917,6 +5205,7 @@ export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLastSentConversationsInput = {
@@ -4969,6 +5258,7 @@ export type UserUpdateWithoutLastSentConversationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
@@ -5011,6 +5301,7 @@ export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMemberConversationsInput = {
@@ -5052,6 +5343,7 @@ export type UserCreateWithoutMemberConversationsInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMemberConversationsInput = {
@@ -5094,6 +5386,7 @@ export type UserUncheckedCreateWithoutMemberConversationsInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMemberConversationsInput = {
@@ -5151,6 +5444,7 @@ export type UserUpdateWithoutMemberConversationsInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMemberConversationsInput = {
@@ -5193,6 +5487,7 @@ export type UserUncheckedUpdateWithoutMemberConversationsInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -5234,6 +5529,7 @@ export type UserCreateWithoutSentMessagesInput = {
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -5276,6 +5572,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -5333,6 +5630,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -5375,6 +5673,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAuthorBlockedUsersInput = {
@@ -5416,6 +5715,7 @@ export type UserCreateWithoutAuthorBlockedUsersInput = {
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuthorBlockedUsersInput = {
@@ -5458,6 +5758,7 @@ export type UserUncheckedCreateWithoutAuthorBlockedUsersInput = {
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuthorBlockedUsersInput = {
@@ -5504,6 +5805,7 @@ export type UserCreateWithoutBannedFromAuthorsInput = {
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  couponUsages?: Prisma.CouponUsageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBannedFromAuthorsInput = {
@@ -5546,6 +5848,7 @@ export type UserUncheckedCreateWithoutBannedFromAuthorsInput = {
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  couponUsages?: Prisma.CouponUsageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBannedFromAuthorsInput = {
@@ -5603,6 +5906,7 @@ export type UserUpdateWithoutAuthorBlockedUsersInput = {
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthorBlockedUsersInput = {
@@ -5645,6 +5949,7 @@ export type UserUncheckedUpdateWithoutAuthorBlockedUsersInput = {
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutBannedFromAuthorsInput = {
@@ -5697,6 +6002,7 @@ export type UserUpdateWithoutBannedFromAuthorsInput = {
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  couponUsages?: Prisma.CouponUsageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBannedFromAuthorsInput = {
@@ -5739,6 +6045,7 @@ export type UserUncheckedUpdateWithoutBannedFromAuthorsInput = {
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  couponUsages?: Prisma.CouponUsageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -5768,6 +6075,7 @@ export type UserCountOutputType = {
   notifications: number
   authorBlockedUsers: number
   bannedFromAuthors: number
+  couponUsages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5792,6 +6100,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   authorBlockedUsers?: boolean | UserCountOutputTypeCountAuthorBlockedUsersArgs
   bannedFromAuthors?: boolean | UserCountOutputTypeCountBannedFromAuthorsArgs
+  couponUsages?: boolean | UserCountOutputTypeCountCouponUsagesArgs
 }
 
 /**
@@ -5951,6 +6260,13 @@ export type UserCountOutputTypeCountBannedFromAuthorsArgs<ExtArgs extends runtim
   where?: Prisma.AuthorBannedUserWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCouponUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponUsageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5994,6 +6310,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   authorBlockedUsers?: boolean | Prisma.User$authorBlockedUsersArgs<ExtArgs>
   bannedFromAuthors?: boolean | Prisma.User$bannedFromAuthorsArgs<ExtArgs>
+  couponUsages?: boolean | Prisma.User$couponUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -6045,6 +6362,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   authorBlockedUsers?: boolean | Prisma.User$authorBlockedUsersArgs<ExtArgs>
   bannedFromAuthors?: boolean | Prisma.User$bannedFromAuthorsArgs<ExtArgs>
+  couponUsages?: boolean | Prisma.User$couponUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -6076,6 +6394,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     authorBlockedUsers: Prisma.$AuthorBannedUserPayload<ExtArgs>[]
     bannedFromAuthors: Prisma.$AuthorBannedUserPayload<ExtArgs>[]
+    couponUsages: Prisma.$CouponUsagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -6459,6 +6778,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   authorBlockedUsers<T extends Prisma.User$authorBlockedUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authorBlockedUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthorBannedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bannedFromAuthors<T extends Prisma.User$bannedFromAuthorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bannedFromAuthorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthorBannedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  couponUsages<T extends Prisma.User$couponUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$couponUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7424,6 +7744,30 @@ export type User$bannedFromAuthorsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AuthorBannedUserScalarFieldEnum | Prisma.AuthorBannedUserScalarFieldEnum[]
+}
+
+/**
+ * User.couponUsages
+ */
+export type User$couponUsagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CouponUsage
+   */
+  select?: Prisma.CouponUsageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CouponUsage
+   */
+  omit?: Prisma.CouponUsageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponUsageInclude<ExtArgs> | null
+  where?: Prisma.CouponUsageWhereInput
+  orderBy?: Prisma.CouponUsageOrderByWithRelationInput | Prisma.CouponUsageOrderByWithRelationInput[]
+  cursor?: Prisma.CouponUsageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponUsageScalarFieldEnum | Prisma.CouponUsageScalarFieldEnum[]
 }
 
 /**

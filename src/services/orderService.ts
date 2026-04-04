@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma.js";
 import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
+import { couponService } from "./couponService.js";
 
 const createOrder = async (data: {
   studentId: number;
@@ -23,6 +24,7 @@ const createOrder = async (data: {
       courseId: number;
       price: number;
       lecturerId?: number;
+      courseCategoryId?: number | null;
     }> = [];
     let totalPrice = 0;
 
@@ -41,6 +43,10 @@ const createOrder = async (data: {
         // Verify course exists
         const course = await prisma.course.findUnique({
           where: { id: item.courseId, isDestroyed: false },
+          select: {
+            lecturerId: true,
+            categoryId: true,
+          },
         });
 
         if (!course) {
@@ -54,6 +60,7 @@ const createOrder = async (data: {
           courseId: item.courseId,
           price: item.price || 0,
           lecturerId: course.lecturerId,
+          courseCategoryId: course.categoryId,
         });
 
         totalPrice += item.price || 0;
@@ -72,6 +79,7 @@ const createOrder = async (data: {
                   name: true,
                   price: true,
                   lecturerId: true,
+                  categoryId: true,
                 },
               },
             },
@@ -92,38 +100,44 @@ const createOrder = async (data: {
           courseId: item.courseId,
           price: item.price || 0,
           lecturerId: item.course.lecturerId,
+          courseCategoryId: item.course.categoryId,
         });
         totalPrice += item.price || 0;
       });
     }
 
+    const originalTotal = Number(totalPrice.toFixed(2));
+    let discountAmount = 0;
+    let appliedCouponId: number | null = null;
+    let appliedCouponCode: string | null = null;
+
     // Apply coupon discount if provided
     if (data.couponCode) {
-      const coupon = await prisma.coupon.findUnique({
-        where: { code: data.couponCode, isDestroyed: false },
+      const couponResult = await couponService.applyCouponToOrder({
+        couponCode: data.couponCode,
+        studentId: data.studentId,
+        items: itemsToOrder.map((item) => ({
+          courseId: item.courseId,
+          price: Number(item.price || 0),
+          courseCategoryId: item.courseCategoryId,
+        })),
+        originalTotal,
       });
 
-      if (coupon && coupon.status === "active") {
-        if (coupon.discountUnit === "percent") {
-          const discountValue =
-            coupon.discount !== null && coupon.discount !== undefined
-              ? coupon.discount
-              : coupon.amount || 0;
-          totalPrice = totalPrice * (1 - discountValue / 100);
-        } else {
-          const fixedAmount =
-            coupon.amount !== null && coupon.amount !== undefined
-              ? coupon.amount
-              : coupon.discount || 0;
-          totalPrice = Math.max(0, totalPrice - fixedAmount);
-        }
-      }
+      discountAmount = couponResult.discountAmount;
+      totalPrice = Math.max(0, originalTotal - discountAmount);
+      appliedCouponId = couponResult.coupon.id;
+      appliedCouponCode = data.couponCode;
     }
 
     // Create order
     const newOrder = await prisma.order.create({
       data: {
         studentId: data.studentId,
+        originalPrice: originalTotal,
+        discountAmount,
+        couponId: appliedCouponId,
+        couponCode: appliedCouponCode,
         totalPrice,
         paymentMethod: data.paymentMethod?.toUpperCase() || "PAYOS", // Default to PayOS
         status: "pending",
@@ -416,6 +430,9 @@ const cancelOrder = async (orderId: number) => {
     // Check order exists and status is pending
     const order = await prisma.order.findUnique({
       where: { id: orderId, isDestroyed: false },
+      include: {
+        couponUsage: true,
+      },
     });
 
     if (!order) {
@@ -429,10 +446,31 @@ const cancelOrder = async (orderId: number) => {
       );
     }
 
-    // Update status to cancelled
-    await prisma.order.update({
-      where: { id: orderId },
-      data: { status: "cancelled" },
+    await prisma.$transaction(async (tx) => {
+      await tx.order.update({
+        where: { id: orderId },
+        data: {
+          status: "cancelled",
+        },
+      });
+
+      if (order.couponId && order.couponUsage) {
+        await tx.couponUsage.delete({
+          where: { orderId },
+        });
+
+        await tx.coupon.updateMany({
+          where: {
+            id: order.couponId,
+            usedCount: {
+              gt: 0,
+            },
+          },
+          data: {
+            usedCount: { decrement: 1 },
+          },
+        });
+      }
     });
 
     return { message: "Order cancelled successfully!" };

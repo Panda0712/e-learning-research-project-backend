@@ -64,6 +64,11 @@ Router.route("/verify-code").post(
   couponController.verifyCouponCode,
 );
 
+Router.route("/preview").post(
+  couponValidation.previewCoupon,
+  couponController.previewCoupon,
+);
+
 // Update coupon
 Router.route("/:id").put(
   couponValidation.updateCoupon,

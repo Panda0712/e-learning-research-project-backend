@@ -246,11 +246,7 @@ const updateCourse = async (
   actorId: number,
 ) => {
   try {
-    // check course existence
     const { course } = await ensureCourseOwnerOrAdmin(id, actorId);
-    if (!course) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
-    }
 
     if (updateData?.thumbnail) {
       return await prisma.$transaction(async (tx) => {
@@ -351,6 +347,62 @@ const updateCourse = async (
   } catch (error: any) {
     throw error;
   }
+};
+
+const getCourseStudentState = async (courseId: number, studentId: number) => {
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false },
+    select: { id: true },
+  });
+
+  if (!course) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  }
+
+  const [purchased, enrolled, inCart] = await Promise.all([
+    prisma.orderItem.findFirst({
+      where: {
+        courseId,
+        isDestroyed: false,
+        order: {
+          studentId,
+          isDestroyed: false,
+          isSuccess: true,
+          paymentStatus: "paid",
+        },
+      },
+      select: { id: true },
+    }),
+    prisma.enrollment.findFirst({
+      where: {
+        studentId,
+        courseId,
+        isDestroyed: false,
+      },
+      select: { id: true },
+    }),
+    prisma.cartItem.findFirst({
+      where: {
+        courseId,
+        cart: {
+          userId: studentId,
+          isDestroyed: false,
+        },
+      },
+      select: { id: true },
+    }),
+  ]);
+
+  const isPurchased = Boolean(purchased || enrolled);
+  const isInCart = Boolean(inCart);
+
+  return {
+    courseId,
+    isAuthenticated: true,
+    isPurchased,
+    isInCart,
+    canAddToCart: !isPurchased && !isInCart,
+  };
 };
 
 const deleteCourse = async (id: number, actorId: number) => {
@@ -1031,6 +1083,7 @@ export const courseService = {
   getAdminCourseById,
   getLecturerMyCourses,
   getCourseById,
+  getCourseStudentState,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,
   getAllCoursesByLecturerId,

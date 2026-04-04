@@ -186,6 +186,26 @@ const getCourseById = async (
   }
 };
 
+const getCourseStudentState = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const studentId = Number(req.jwtDecoded?.id);
+
+    const state = await courseService.getCourseStudentState(
+      Number(id),
+      studentId,
+    );
+
+    res.status(StatusCodes.OK).json(state);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getListLecturersByStudentId = async (
   req: Request,
   res: Response,
@@ -460,6 +480,7 @@ export const courseController = {
   approveCourse,
   rejectCourse,
   getCourseById,
+  getCourseStudentState,
   getListCourses,
   getAdminCourses,
   getAdminCourseById,

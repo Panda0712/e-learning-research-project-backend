@@ -67,6 +67,7 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Coupon: 'Coupon',
+  CouponUsage: 'CouponUsage',
   CouponCategory: 'CouponCategory',
   Submission: 'Submission',
   Assessment: 'Assessment',
@@ -315,6 +316,10 @@ export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
+  couponId: 'couponId',
+  couponCode: 'couponCode',
+  discountAmount: 'discountAmount',
+  originalPrice: 'originalPrice',
   lecturer: 'lecturer',
   totalPrice: 'totalPrice',
   paymentMethod: 'paymentMethod',
@@ -351,11 +356,15 @@ export const CouponScalarFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
+  scope: 'scope',
   courseId: 'courseId',
+  scopeCategoryId: 'scopeCategoryId',
   categoryId: 'categoryId',
   discount: 'discount',
   discountUnit: 'discountUnit',
   usageLimit: 'usageLimit',
+  usedCount: 'usedCount',
+  usagePerUser: 'usagePerUser',
   minOrderValue: 'minOrderValue',
   maxValue: 'maxValue',
   amount: 'amount',
@@ -369,6 +378,17 @@ export const CouponScalarFieldEnum = {
 } as const
 
 export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+export const CouponUsageScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  userId: 'userId',
+  orderId: 'orderId',
+  usedAt: 'usedAt'
+} as const
+
+export type CouponUsageScalarFieldEnum = (typeof CouponUsageScalarFieldEnum)[keyof typeof CouponUsageScalarFieldEnum]
 
 
 export const CouponCategoryScalarFieldEnum = {
@@ -839,6 +859,7 @@ export type QuestionOrderByRelevanceFieldEnum = (typeof QuestionOrderByRelevance
 
 
 export const OrderOrderByRelevanceFieldEnum = {
+  couponCode: 'couponCode',
   lecturer: 'lecturer',
   paymentMethod: 'paymentMethod',
   status: 'status',
@@ -856,6 +877,7 @@ export const CouponOrderByRelevanceFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
+  scope: 'scope',
   discountUnit: 'discountUnit',
   startingTime: 'startingTime',
   endingTime: 'endingTime'

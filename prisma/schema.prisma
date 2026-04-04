@@ -62,6 +62,7 @@ model User {
   notifications          Notification[]
   authorBlockedUsers     AuthorBannedUser[]      @relation("AuthorBlocker")
   bannedFromAuthors      AuthorBannedUser[]      @relation("AuthorBlocked")
+  couponUsages           CouponUsage[]
 }
 
 model KeyToken {
@@ -276,6 +277,10 @@ model Question {
 model Order {
   id            Int       @id @default(autoincrement())
   studentId     Int
+  couponId      Int?
+  couponCode    String?
+  discountAmount Float?   @default(0)
+  originalPrice Float?
   lecturer      String?
   totalPrice    Float?    @default(0)
   paymentMethod String?   @default("payos")
@@ -290,9 +295,11 @@ model Order {
   isDestroyed   Boolean   @default(false)
 
   // relations
-  student User        @relation(fields: [studentId], references: [id])
-  items   OrderItem[]
-  revenue Revenue?
+  student     User         @relation(fields: [studentId], references: [id])
+  coupon      Coupon?      @relation(fields: [couponId], references: [id])
+  items       OrderItem[]
+  revenue     Revenue?
+  couponUsage CouponUsage?
 }
 
 model OrderItem {
@@ -315,13 +322,17 @@ model Coupon {
   id            Int       @id @default(autoincrement())
   name          String
   description   String?
-  status        String?
+  status        String?   @default("active")
   code          String    @unique
+  scope         String    @default("ALL_COURSES")
   courseId      Int?
+  scopeCategoryId Int?
   categoryId    Int?
   discount      Float?
-  discountUnit  String? // amount | percent
+  discountUnit  String?   @default("percent") // amount | percent
   usageLimit    Int?
+  usedCount     Int       @default(0)
+  usagePerUser  Int?
   minOrderValue Float?
   maxValue      Float?
   amount        Float?
@@ -336,6 +347,24 @@ model Coupon {
   // relations
   category CouponCategory? @relation(fields: [categoryId], references: [id])
   course   Course?         @relation(fields: [courseId], references: [id])
+  orders   Order[]
+  usages   CouponUsage[]
+}
+
+model CouponUsage {
+  id       Int      @id @default(autoincrement())
+  couponId Int
+  userId   Int
+  orderId  Int      @unique
+  usedAt   DateTime @default(now())
+
+  // relations
+  coupon Coupon @relation(fields: [couponId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  order  Order  @relation(fields: [orderId], references: [id])
+
+  @@index([couponId])
+  @@index([userId, couponId])
 }
 
 model CouponCategory {
