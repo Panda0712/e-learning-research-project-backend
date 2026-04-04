@@ -31,6 +31,88 @@ const canPublishCourse = async (courseId: number) => {
   return true;
 };
 
+const getCourseStudentState = async (
+  courseId: number,
+  studentId?: number | null,
+) => {
+  const course = await prisma.course.findUnique({
+    where: {
+      id: courseId,
+      isDestroyed: false,
+      status: COURSE_STATUS.PUBLISHED,
+    },
+    select: {
+      id: true,
+    },
+  });
+  if (!course) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+  }
+
+  if (!studentId || !Number.isInteger(studentId) || studentId <= 0) {
+    return {
+      courseId,
+      isAuthenticated: false,
+      isPurchased: false,
+      isInCart: false,
+      canAddToCart: false,
+      isInWishlist: false,
+      canAddToWishlist: false,
+    };
+  }
+
+  const [purchased, enrolled, cartItem, wishlistItem] = await Promise.all([
+    prisma.orderItem.findFirst({
+      where: {
+        courseId,
+        isDestroyed: false,
+        order: {
+          studentId,
+          isDestroyed: false,
+          isSuccess: true,
+        },
+      },
+      select: { id: true },
+    }),
+    prisma.enrollment.findFirst({
+      where: {
+        studentId,
+        courseId,
+        isDestroyed: false,
+      },
+      select: { id: true },
+    }),
+    prisma.cartItem.findFirst({
+      where: {
+        courseId,
+        cart: {
+          userId: studentId,
+          isDestroyed: false,
+        },
+      },
+      select: { id: true },
+    }),
+    prisma.wishlist.findFirst({
+      where: { userId: studentId, courseId, isDestroyed: false },
+      select: { id: true },
+    }),
+  ]);
+
+  const isPurchased = Boolean(purchased || enrolled);
+  const isInCart = Boolean(cartItem);
+  const isInWishlist = Boolean(wishlistItem);
+
+  return {
+    courseId,
+    isAuthenticated: true,
+    isPurchased,
+    isInCart,
+    canAddToCart: !isPurchased && !isInCart,
+    isInWishlist,
+    canAddToWishlist: !isPurchased && !isInWishlist,
+  };
+};
+
 const ensureLecturerOrAdmin = async (userId: number) => {
   const user = await prisma.user.findUnique({
     where: { id: userId, isDestroyed: false },
@@ -1016,6 +1098,7 @@ const getLecturerMyCourses = async (
 export const courseService = {
   createCourseCategory,
   getAllCourseCategories,
+  getCourseStudentState,
 
   createCourseFaq,
   getFaqsByCourseId,

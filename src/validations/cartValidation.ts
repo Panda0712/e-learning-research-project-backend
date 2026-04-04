@@ -13,7 +13,12 @@ const getCartByUserId = async (
   });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    await correctCondition.validateAsync(
+      {
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
 
     next();
   } catch (error: any) {
@@ -25,9 +30,7 @@ const getCartByUserId = async (
 
 const addToCart = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
-    userId: Joi.number().required().positive(),
     courseId: Joi.number().required().positive(),
-    price: Joi.number().required().positive(),
   });
 
   try {

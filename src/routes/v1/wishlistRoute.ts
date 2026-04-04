@@ -7,12 +7,25 @@ const Router = express.Router();
 
 // Create wishlist
 Router.route("/").post(
+  authMiddleware.isAuthorized,
   wishlistValidation.createWishlist,
   wishlistController.createWishlist,
 );
 
 // Get all wishlists (admin)
-Router.route("/").get(wishlistController.getAllWishlists);
+Router.route("/all").get(wishlistController.getAllWishlists);
+
+// Get my wishlists
+Router.route("/me").get(
+  authMiddleware.isAuthorized,
+  wishlistController.getMyWishlists,
+);
+
+Router.route("/me/check/:courseId").get(
+  authMiddleware.isAuthorized,
+  wishlistValidation.checkCourseInWishlist,
+  wishlistController.checkMyCourseInWishlist,
+);
 
 // Get wishlist by ID
 Router.route("/:id").get(
@@ -39,8 +52,15 @@ Router.route("/:id").put(
   wishlistController.updateWishlist,
 );
 
+Router.route("/me/course/:courseId").delete(
+  authMiddleware.isAuthorized,
+  wishlistValidation.deleteMyWishlistByCourse,
+  wishlistController.deleteWishlistByCourse,
+);
+
 // Delete wishlist by ID
 Router.route("/:id").delete(
+  authMiddleware.isAuthorized,
   wishlistValidation.deleteWishlist,
   wishlistController.deleteWishlist,
 );

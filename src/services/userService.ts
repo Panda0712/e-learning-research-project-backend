@@ -8,6 +8,11 @@ import { User } from "@/types/user.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { authUtils } from "@/utils/auth.js";
 import {
+  CONTACT_COOLDOWN_SECONDS,
+  CONTACT_DAILY_WINDOW_SECONDS,
+  CONTACT_DEDUPE_SECONDS,
+  CONTACT_EMAIL_DAILY_LIMIT,
+  CONTACT_IP_DAILY_LIMIT,
   DEFAULT_ITEMS_PER_PAGE,
   DEFAULT_PAGE,
   WEBSITE_DOMAINS,
@@ -20,6 +25,194 @@ import { StatusCodes } from "http-status-codes";
 import { v4 as uuidV4 } from "uuid";
 import KeyTokenService from "./keyTokenService.js";
 import { resourceService } from "./resourceService.js";
+import { RedisDB } from "@/db/init.ioredis.js";
+
+type SubmitContactPayload = {
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  comment: string;
+};
+
+type SubmitContactMeta = {
+  ip: string;
+  userAgent?: string | null;
+};
+
+const memoryCounters = new Map<string, { count: number; expiresAt: number }>();
+const memoryLocks = new Map<string, number>();
+
+const enforceMemoryCounter = (
+  key: string,
+  limit: number,
+  ttlSeconds: number,
+) => {
+  const now = Date.now();
+  const entry = memoryCounters.get(key);
+
+  if (!entry || entry.expiresAt <= now) {
+    memoryCounters.set(key, { count: 1, expiresAt: now + ttlSeconds * 1000 });
+    return;
+  }
+
+  if (entry.count >= limit) {
+    throw new ApiError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      "Too many contact requests. Please try again later.",
+    );
+  }
+
+  entry.count += 1;
+  memoryCounters.set(key, entry);
+};
+
+const setMemoryLock = (key: string, ttlSeconds: number) => {
+  const now = Date.now();
+  const expiredAt = memoryLocks.get(key);
+
+  if (expiredAt && expiredAt > now) {
+    throw new ApiError(
+      StatusCodes.TOO_MANY_REQUESTS,
+      "Please wait before sending another message.",
+    );
+  }
+
+  memoryLocks.set(key, now + ttlSeconds * 1000);
+};
+
+const enforceContactRateLimit = async ({
+  ip,
+  email,
+  fingerprint,
+}: {
+  ip: string;
+  email: string;
+  fingerprint: string;
+}) => {
+  const redis = RedisDB.getIoRedis();
+
+  const cooldownKey = `contact:cooldown:${ip}:${email}`;
+  const ipDailyKey = `contact:daily:ip:${ip}`;
+  const emailDailyKey = `contact:daily:email:${email}`;
+  const dedupeKey = `contact:dedupe:${fingerprint}`;
+
+  if (redis) {
+    const cooldown = await redis.set(
+      cooldownKey,
+      "1",
+      "EX",
+      CONTACT_COOLDOWN_SECONDS,
+      "NX",
+    );
+
+    if (!cooldown) {
+      throw new ApiError(
+        StatusCodes.TOO_MANY_REQUESTS,
+        "Please wait before sending another message.",
+      );
+    }
+
+    const ipCount = await redis.incr(ipDailyKey);
+    if (ipCount === 1)
+      await redis.expire(ipDailyKey, CONTACT_DAILY_WINDOW_SECONDS);
+
+    const emailCount = await redis.incr(emailDailyKey);
+    if (emailCount === 1)
+      await redis.expire(emailDailyKey, CONTACT_DAILY_WINDOW_SECONDS);
+
+    if (
+      ipCount > CONTACT_IP_DAILY_LIMIT ||
+      emailCount > CONTACT_EMAIL_DAILY_LIMIT
+    ) {
+      throw new ApiError(
+        StatusCodes.TOO_MANY_REQUESTS,
+        "Daily contact limit reached. Please try again tomorrow.",
+      );
+    }
+
+    const dedupe = await redis.set(
+      dedupeKey,
+      "1",
+      "EX",
+      CONTACT_DEDUPE_SECONDS,
+      "NX",
+    );
+
+    if (!dedupe) {
+      throw new ApiError(
+        StatusCodes.TOO_MANY_REQUESTS,
+        "Duplicate message detected. Please wait before retrying.",
+      );
+    }
+
+    return;
+  }
+
+  setMemoryLock(cooldownKey, CONTACT_COOLDOWN_SECONDS);
+  enforceMemoryCounter(
+    ipDailyKey,
+    CONTACT_IP_DAILY_LIMIT,
+    CONTACT_DAILY_WINDOW_SECONDS,
+  );
+  enforceMemoryCounter(
+    emailDailyKey,
+    CONTACT_EMAIL_DAILY_LIMIT,
+    CONTACT_DAILY_WINDOW_SECONDS,
+  );
+  setMemoryLock(dedupeKey, CONTACT_DEDUPE_SECONDS);
+};
+
+const submitContact = async (
+  payload: SubmitContactPayload,
+  meta: SubmitContactMeta,
+) => {
+  const name = payload.name.trim();
+  const email = payload.email.trim().toLowerCase();
+  const phone = (payload.phone || "").trim();
+  const subject = payload.subject.trim();
+  const comment = payload.comment.trim();
+
+  const fingerprint = crypto
+    .createHash("sha256")
+    .update(`${email}|${subject}|${comment}`)
+    .digest("hex");
+
+  await enforceContactRateLimit({
+    ip: meta.ip,
+    email,
+    fingerprint,
+  });
+
+  const adminRecipient = env.ADMIN_EMAIL_ADDRESS;
+  if (!adminRecipient) {
+    throw new ApiError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      "Contact recipient is not configured.",
+    );
+  }
+
+  const htmlContent = `
+    <h3>New Contact Message</h3>
+    <p><b>Name:</b> ${name}</p>
+    <p><b>Email:</b> ${email}</p>
+    <p><b>Phone:</b> ${phone || "-"}</p>
+    <p><b>Subject:</b> ${subject}</p>
+    <p><b>Message:</b><br/>${comment.replace(/\n/g, "<br/>")}</p>
+    <p><b>IP:</b> ${meta.ip}</p>
+    <p><b>User-Agent:</b> ${(meta.userAgent || "").slice(0, 500)}</p>
+  `;
+
+  await BrevoProvider.sendEmail({
+    recipientEmail: adminRecipient,
+    subject: `[Contact] ${subject}`,
+    htmlContent,
+  });
+
+  return {
+    message: "Your message has been sent successfully.",
+  };
+};
 
 const issueAuthSession = async (user: {
   id: number;
@@ -632,7 +825,9 @@ const registerLecturerProfile = async (
         "Lecturer profile already registered!",
       );
 
-    const beginStudiesDate = new Date(reqBody.beginStudies as unknown as string);
+    const beginStudiesDate = new Date(
+      reqBody.beginStudies as unknown as string,
+    );
     const dateOfBirthDate = new Date(reqBody.dateOfBirth as unknown as string);
     if (Number.isNaN(beginStudiesDate.getTime())) {
       throw new ApiError(
@@ -1063,6 +1258,7 @@ const deleteUser = async (id: number) => {
 
 export const userService = {
   register,
+  submitContact,
   verifyAccount,
   login,
   logout,

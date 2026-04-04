@@ -25,6 +25,42 @@ const createOrder = async (data: {
       lecturerId?: number;
     }> = [];
     let totalPrice = 0;
+    const targetCourseIds = [...new Set(itemsToOrder.map((i) => i.courseId))];
+
+    const [purchasedRows, enrollmentRows] = await Promise.all([
+      prisma.orderItem.findMany({
+        where: {
+          courseId: { in: targetCourseIds },
+          isDestroyed: false,
+          order: {
+            studentId: data.studentId,
+            isDestroyed: false,
+            isSuccess: true,
+          },
+        },
+        select: { courseId: true },
+      }),
+      prisma.enrollment.findMany({
+        where: {
+          studentId: data.studentId,
+          courseId: { in: targetCourseIds },
+          isDestroyed: false,
+        },
+        select: { courseId: true },
+      }),
+    ]);
+
+    const alreadyOwned = new Set([
+      ...purchasedRows.map((r) => r.courseId),
+      ...enrollmentRows.map((r) => r.courseId),
+    ]);
+
+    if (alreadyOwned.size > 0) {
+      throw new ApiError(
+        StatusCodes.CONFLICT,
+        "One or more courses already purchased.",
+      );
+    }
 
     // Debug log
     console.log("📋 Create Order - Request Data:", {

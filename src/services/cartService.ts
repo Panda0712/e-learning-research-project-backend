@@ -32,74 +32,77 @@ const getCartByUserId = async (userId: number) => {
   }
 };
 
-const addToCart = async (reqBody: {
-  userId: number;
-  courseId: number;
-  price: number;
-}) => {
-  try {
-    const { userId, courseId, price } = reqBody;
+const addToCart = async (reqBody: { userId: number; courseId: number }) => {
+  const { userId, courseId } = reqBody;
 
-    // check cart existence by user id
-    let cart = await prisma.cart.findUnique({
-      where: { userId, isDestroyed: false },
-    });
+  const user = await prisma.user.findUnique({
+    where: { id: userId, isDestroyed: false },
+    select: { id: true, role: true },
+  });
+  if (!user) throw new ApiError(StatusCodes.NOT_FOUND, "User not found!");
 
-    if (!cart) {
-      cart = await prisma.cart.create({
-        data: { userId },
-      });
-    }
+  const course = await prisma.course.findUnique({
+    where: { id: courseId, isDestroyed: false, status: "published" },
+    select: { id: true, price: true, lecturerId: true },
+  });
+  if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
 
-    // check course in cart
-    const checkItem = await prisma.cartItem.findUnique({
-      where: {
-        cartId_courseId: {
-          cartId: cart.id,
-          courseId: courseId,
-        },
-      },
-    });
+  const purchased = await prisma.orderItem.findFirst({
+    where: {
+      courseId,
+      order: { studentId: userId, isSuccess: true, isDestroyed: false },
+      isDestroyed: false,
+    },
+    select: { id: true },
+  });
+  if (purchased) {
+    throw new ApiError(StatusCodes.CONFLICT, "Course already purchased!");
+  }
 
-    if (checkItem) {
-      throw new ApiError(StatusCodes.CONFLICT, "Course already in cart!");
-    }
+  let cart = await prisma.cart.findUnique({
+    where: { userId, isDestroyed: false },
+  });
 
-    // create new cart
-    const newItem = await prisma.cartItem.create({
-      data: {
+  if (!cart) {
+    cart = await prisma.cart.create({ data: { userId } });
+  }
+
+  const existed = await prisma.cartItem.findUnique({
+    where: {
+      cartId_courseId: {
         cartId: cart.id,
         courseId,
-        price,
       },
-    });
+    },
+  });
 
-    return newItem;
-  } catch (error: any) {
-    throw error;
+  if (existed) {
+    throw new ApiError(StatusCodes.CONFLICT, "Course already in cart!");
   }
+
+  return prisma.cartItem.create({
+    data: {
+      cartId: cart.id,
+      courseId,
+      price: Number(course.price || 0),
+    },
+  });
 };
 
-const removeItem = async (itemId: number) => {
-  try {
-    // check cart existence by id
-    const checkItem = await prisma.cartItem.findUnique({
-      where: { id: itemId },
-    });
+const removeItem = async (itemId: number, userId: number) => {
+  const item = await prisma.cartItem.findUnique({
+    where: { id: itemId },
+    include: { cart: { select: { userId: true } } },
+  });
 
-    if (!checkItem) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Item not found in cart!");
-    }
-
-    // delete cart by id
-    await prisma.cartItem.delete({
-      where: { id: itemId },
-    });
-
-    return { message: "Item removed from cart!" };
-  } catch (error: any) {
-    throw error;
+  if (!item)
+    throw new ApiError(StatusCodes.NOT_FOUND, "Item not found in cart!");
+  if (item.cart.userId !== userId) {
+    throw new ApiError(StatusCodes.FORBIDDEN, "You are not allowed.");
   }
+
+  await prisma.cartItem.delete({ where: { id: itemId } });
+  return { message: "Item removed from cart!" };
 };
 
 export const cartService = {

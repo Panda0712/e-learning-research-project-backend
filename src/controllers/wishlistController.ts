@@ -8,8 +8,14 @@ const createWishlist = async (
   next: NextFunction,
 ) => {
   try {
-    const newWishlist = await wishlistService.createWishlist(req.body);
-    res.status(StatusCodes.CREATED).json(newWishlist);
+    const userId = Number(req.jwtDecoded?.id);
+    const { courseId } = req.body;
+
+    const data = await wishlistService.createWishlist({
+      userId,
+      courseId: Number(courseId),
+    });
+    res.status(StatusCodes.CREATED).json(data);
   } catch (error) {
     next(error);
   }
@@ -57,13 +63,51 @@ const getWishlistsByUserId = async (
   try {
     const { userId } = req.params;
     const { page, limit } = req.query;
-    const filterParams: any = { userId: Number(userId) };
 
-    if (page) filterParams.page = Number(page);
-    if (limit) filterParams.limit = Number(limit);
+    const pageNumber = Number(page) || 1;
+    const limitNumber = Number(limit) || 10;
 
-    const wishlists = await wishlistService.getWishlistsByUserId(filterParams);
+    const wishlists = await wishlistService.getWishlistsByUserId({
+      userId: Number(userId),
+      page: pageNumber,
+      limit: limitNumber,
+    });
     res.status(StatusCodes.OK).json(wishlists);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getMyWishlists = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = Number(req.jwtDecoded?.id);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const data = await wishlistService.getWishlistsByUserId({
+      userId,
+      page,
+      limit,
+    });
+    res.status(StatusCodes.OK).json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const checkMyCourseInWishlist = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = Number(req.jwtDecoded?.id);
+    const courseId = Number(req.params.courseId);
+    const data = await wishlistService.checkCourseInWishlist(userId, courseId);
+    res.status(StatusCodes.OK).json(data);
   } catch (error) {
     next(error);
   }
@@ -109,9 +153,10 @@ const deleteWishlist = async (
   next: NextFunction,
 ) => {
   try {
-    const { id } = req.params;
-    const result = await wishlistService.deleteWishlist(Number(id));
-    res.status(StatusCodes.OK).json(result);
+    const userId = Number(req.jwtDecoded?.id);
+    const id = Number(req.params.id);
+    const data = await wishlistService.deleteWishlist(id, userId);
+    res.status(StatusCodes.OK).json(data);
   } catch (error) {
     next(error);
   }
@@ -123,10 +168,12 @@ const deleteWishlistByCourse = async (
   next: NextFunction,
 ) => {
   try {
-    const { userId, courseId } = req.params;
+    const userId = Number(req.jwtDecoded?.id);
+    const courseId = Number(req.params.courseId);
+
     const result = await wishlistService.deleteWishlistByCourse(
-      Number(userId),
-      Number(courseId),
+      userId,
+      courseId,
     );
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -137,6 +184,8 @@ const deleteWishlistByCourse = async (
 export const wishlistController = {
   createWishlist,
   getWishlistById,
+  getMyWishlists,
+  checkMyCourseInWishlist,
   getAllWishlists,
   getWishlistsByUserId,
   checkCourseInWishlist,
