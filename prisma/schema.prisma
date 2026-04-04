@@ -47,6 +47,7 @@ model User {
   enrollments            Enrollment[]
   reviews                CourseReview[]
   blogPosts              BlogPost[]              @relation("AuthorPosts")
+  reviewedBlogPosts      BlogPost[]              @relation("ReviewedPosts")
   lecturerProfile        LecturerProfile?
   lecturerPayout         LecturerPayout[]
   submissions            Submission[]
@@ -59,6 +60,8 @@ model User {
   keyToken               KeyToken?
   revenues               Revenue[]
   notifications          Notification[]
+  authorBlockedUsers     AuthorBannedUser[]      @relation("AuthorBlocker")
+  bannedFromAuthors      AuthorBannedUser[]      @relation("AuthorBlocked")
 }
 
 model KeyToken {
@@ -387,10 +390,14 @@ model Assessment {
 model BlogPost {
   id            Int       @id @default(autoincrement())
   authorId      Int
+  reviewedById  Int?
   categoryId    Int?
   title         String
   slug          String?
-  content       String?
+  content       String?   @db.LongText
+  status        String    @default("draft")
+  reviewNote    String?
+  publishedAt   DateTime?
   thumbnailId   Int?      @unique
   totalComments Int?      @default(0)
   createdAt     DateTime  @default(now())
@@ -399,6 +406,7 @@ model BlogPost {
 
   // relations
   author    User          @relation(fields: [authorId], references: [id], name: "AuthorPosts")
+  reviewedBy User?        @relation(fields: [reviewedById], references: [id], name: "ReviewedPosts", onDelete: SetNull)
   category  BlogCategory? @relation(fields: [categoryId], references: [id])
   thumbnail Resource?     @relation("BlogThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
   comments  BlogComment[]
@@ -665,4 +673,17 @@ model Message {
 
   @@index([conversationId, createdAt(sort: Desc)])
   @@index([senderId, createdAt(sort: Desc)])
+}
+
+model AuthorBannedUser {
+  id        Int      @id @default(autoincrement())
+  authorId  Int      
+  userId    Int      
+  createdAt DateTime @default(now())
+
+  // relations
+  author    User     @relation("AuthorBlocker", fields: [authorId], references: [id])
+  user      User     @relation("AuthorBlocked", fields: [userId], references: [id])
+
+  @@unique([authorId, userId])
 }

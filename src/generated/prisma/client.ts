@@ -214,3 +214,8 @@ export type ConversationMember = Prisma.ConversationMemberModel
  * 
  */
 export type Message = Prisma.MessageModel
+/**
+ * Model AuthorBannedUser
+ * 
+ */
+export type AuthorBannedUser = Prisma.AuthorBannedUserModel

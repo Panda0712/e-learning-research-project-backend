@@ -3,6 +3,13 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import Joi from "joi";
 
+const blogStatusSchema = Joi.string()
+  .valid("draft", "pending", "published", "rejected", "archived")
+  .messages({
+    "any.only":
+      "Status must be one of: draft, pending, published, rejected, archived",
+  });
+
 // CATEGORY VALIDATION
 const createBlogCategory = async (
   req: Request,
@@ -90,6 +97,7 @@ const getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
     page: Joi.number().integer().positive().optional(),
     itemsPerPage: Joi.number().integer().positive().optional(),
+    status: blogStatusSchema.optional(),
   });
 
   try {
@@ -113,7 +121,7 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
       .lowercase()
       .pattern(/^[a-z0-9-]+$/)
       .message("Slug must be lowercase and alphanumeric"),
-    content: Joi.string().required().min(2).max(5000).trim().strict(),
+    content: Joi.string().required().min(2).max(50000).trim().strict(),
     thumbnail: Joi.object({
       publicId: Joi.string().required(),
       fileUrl: Joi.string().required(),
@@ -121,6 +129,7 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
       fileType: Joi.string().optional(),
     }),
     categoryId: Joi.number().required().positive(),
+    status: blogStatusSchema.optional(),
   });
 
   try {
@@ -137,7 +146,7 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 const updatePost = async (req: Request, res: Response, next: NextFunction) => {
   const correctCondition = Joi.object({
     title: Joi.string().min(2).max(50).trim().strict(),
-    content: Joi.string().min(2).max(5000).trim().strict(),
+    content: Joi.string().min(2).max(50000).trim().strict(),
     thumbnail: Joi.object({
       publicId: Joi.string(),
       fileUrl: Joi.string(),
@@ -145,6 +154,31 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
       fileType: Joi.string().optional(),
     }).optional(),
     categoryId: Joi.number().positive(),
+    status: blogStatusSchema.optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, {
+      abortEarly: false,
+      allowUnknown: true,
+    });
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const updatePostStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    status: blogStatusSchema.required(),
+    reviewNote: Joi.string().allow("", null).max(500).optional(),
   });
 
   try {
@@ -205,6 +239,31 @@ const createComment = async (
   }
 };
 
+const getCommentsByBlogId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    blogId: Joi.number().required().positive().integer(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        blogId: Number(req.query.blogId),
+      },
+      { abortEarly: false },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 const updateComment = async (
   req: Request,
   res: Response,
@@ -252,6 +311,87 @@ const deleteComment = async (
   }
 };
 
+const getCommentBans = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive().integer(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+      },
+      { abortEarly: false },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const banCommentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive().integer(),
+    userId: Joi.number().required().positive().integer(),
+    reason: Joi.string().allow("", null).max(500).optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+        userId: Number(req.body.userId),
+        reason: req.body.reason,
+      },
+      { abortEarly: false },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const unbanCommentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    id: Joi.number().required().positive().integer(),
+    userId: Joi.number().required().positive().integer(),
+  });
+
+  try {
+    await correctCondition.validateAsync(
+      {
+        id: Number(req.params.id),
+        userId: Number(req.params.userId),
+      },
+      { abortEarly: false },
+    );
+
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
 export const blogValidation = {
   createBlogCategory,
   updateBlogCategory,
@@ -260,9 +400,14 @@ export const blogValidation = {
   getAllPosts,
   createPost,
   updatePost,
+  updatePostStatus,
   deletePost,
 
   createComment,
+  getCommentsByBlogId,
   updateComment,
   deleteComment,
+  getCommentBans,
+  banCommentUser,
+  unbanCommentUser,
 };
