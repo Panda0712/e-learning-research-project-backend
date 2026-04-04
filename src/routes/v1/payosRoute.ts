@@ -50,7 +50,7 @@ Router.route("/cancel/:orderId").put(
  */
 Router.route("/reconcile-pending").post(
   payosValidation.reconcilePendingPayments,
-  payosController.reconcilePendingPayments,
+  // payosController.reconcilePendingPayments,
 );
 
 export const payosRoute = Router;
