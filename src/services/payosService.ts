@@ -177,6 +177,47 @@ const ensureEnrollments = async ({
   });
 };
 
+const ensureCouponUsage = async ({
+  db,
+  order,
+  studentId,
+}: {
+  db: any;
+  order: { id: number; couponId: number | null; couponCode: string | null };
+  studentId: number;
+}) => {
+  if (!order.couponId || !order.couponCode) return;
+
+  const existingUsage = await db.couponUsage.findUnique({
+    where: { orderId: order.id },
+    select: { id: true },
+  });
+
+  if (existingUsage) return;
+
+  try {
+    await db.couponUsage.create({
+      data: {
+        couponId: order.couponId,
+        userId: studentId,
+        orderId: order.id,
+        couponCode: order.couponCode,
+      },
+    });
+  } catch (error: any) {
+    // If another concurrent flow already inserted the usage, treat as success.
+    if (error?.code === "P2002") return;
+    throw error;
+  }
+
+  await db.coupon.update({
+    where: { id: order.couponId },
+    data: {
+      usedCount: { increment: 1 },
+    },
+  });
+};
+
 /**
  * GIAI ĐOẠN 2: Tạo link thanh toán (Payment Link Creation)
  * Khách hàng gửi yêu cầu lấy link thanh toán từ OrderId
@@ -404,6 +445,16 @@ const handleWebhook = async (webhookBody: any) => {
           courseItems: order.items.map((item) => ({ courseId: item.courseId })),
         });
 
+        await ensureCouponUsage({
+          db: tx,
+          order: {
+            id: order.id,
+            couponId: order.couponId,
+            couponCode: order.couponCode,
+          },
+          studentId: order.studentId,
+        });
+
         for (const item of order.items) {
           // Ensure revenue exists right after a successful payment.
           const totalAmount = Number(item.price || 0);
@@ -573,6 +624,16 @@ const checkPaymentStatus = async (orderId: number) => {
           courseItems: orderWithItems.items.map((item) => ({
             courseId: item.courseId,
           })),
+        });
+
+        await ensureCouponUsage({
+          db: prisma,
+          order: {
+            id: order.id,
+            couponId: order.couponId,
+            couponCode: order.couponCode,
+          },
+          studentId: order.studentId,
         });
 
         for (const item of orderWithItems.items) {

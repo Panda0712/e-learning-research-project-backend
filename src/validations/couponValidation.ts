@@ -113,13 +113,17 @@ const createCoupon = async (
   const correctCondition = Joi.object({
     name: Joi.string().required().min(2).max(100).trim().strict(),
     description: Joi.string().allow("").optional(),
-    status: Joi.string().valid("active", "expired", "scheduled").required(),
+    status: Joi.string().valid("active", "inactive", "expired", "scheduled").required(),
     code: Joi.string().required().min(2).max(100).trim().strict(),
+    scope: Joi.string().valid("ALL_COURSES", "CATEGORY", "SPECIFIC_COURSE").optional(),
+    courseId: Joi.number().integer().positive().allow(null).optional(),
+    scopeCategoryId: Joi.number().integer().positive().allow(null).optional(),
     categoryId: Joi.number().integer().positive().optional(),
     discount: Joi.number().optional().min(0),
     amount: Joi.number().optional().min(0),
     discountUnit: Joi.string().valid("amount", "percent").optional(),
     usageLimit: Joi.number().integer().optional().min(0),
+    usagePerUser: Joi.number().integer().optional().min(0),
     minOrderValue: Joi.number().optional().min(0),
     maxValue: Joi.number().optional().min(0),
     startingDate: Joi.date().optional(),
@@ -196,13 +200,17 @@ const updateCoupon = async (
   const bodyCondition = Joi.object({
     name: Joi.string().min(2).max(100).trim().strict(),
     description: Joi.string().allow(""),
-    status: Joi.string().valid("active", "expired", "scheduled"),
+    status: Joi.string().valid("active", "inactive", "expired", "scheduled"),
     code: Joi.string().min(2).max(100).trim().strict(),
+    scope: Joi.string().valid("ALL_COURSES", "CATEGORY", "SPECIFIC_COURSE"),
+    courseId: Joi.number().integer().positive().allow(null),
+    scopeCategoryId: Joi.number().integer().positive().allow(null),
     categoryId: Joi.number().integer().positive(),
     discount: Joi.number().min(0),
     amount: Joi.number().min(0),
     discountUnit: Joi.string().valid("amount", "percent"),
     usageLimit: Joi.number().integer().min(0),
+    usagePerUser: Joi.number().integer().min(0),
     minOrderValue: Joi.number().min(0),
     maxValue: Joi.number().min(0),
     startingDate: Joi.date(),
@@ -261,6 +269,27 @@ const verifyCouponCode = async (
 ) => {
   const correctCondition = Joi.object({
     code: Joi.string().required().min(3).max(255),
+    orderTotal: Joi.number().min(0).optional(),
+  });
+
+  try {
+    await correctCondition.validateAsync(req.body, { abortEarly: false });
+    next();
+  } catch (error: any) {
+    next(
+      new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message),
+    );
+  }
+};
+
+const previewCoupon = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const correctCondition = Joi.object({
+    code: Joi.string().required().min(3).max(255),
+    courseIds: Joi.array().items(Joi.number().integer().positive()).min(1).required(),
   });
 
   try {
@@ -286,4 +315,5 @@ export const couponValidation = {
   updateCoupon,
   deleteCoupon,
   verifyCouponCode,
+  previewCoupon,
 };

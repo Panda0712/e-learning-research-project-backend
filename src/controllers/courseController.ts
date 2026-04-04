@@ -509,6 +509,7 @@ export const courseController = {
   approveCourse,
   rejectCourse,
   getCourseById,
+  getCourseStudentState,
   getListCourses,
   getAdminCourses,
   getAdminCourseById,
