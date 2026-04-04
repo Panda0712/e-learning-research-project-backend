@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,56 +7,49 @@ datasource db {
   provider = "mysql"
 }
 
-enum ConversationRole {
-  STUDENT
-  LECTURER
-}
-
 model User {
-  id                   Int       @id @default(autoincrement())
-  email                String    @unique
-  password             String
-  firstName            String?
-  lastName             String?
-  avatarId             Int?      @unique
-  phoneNumber          String?
-  dateOfBirth          DateTime?
-  role                 String    @default("student")
-  verifyToken          String?
-  resetPasswordToken   String?
-  resetPasswordExpires DateTime?
-  isVerified           Boolean   @default(false)
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime? @updatedAt
-  isDestroyed          Boolean   @default(false)
-
-  // relations
-  avatar                 Resource?               @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
-  courses                Course[]                @relation("LecturerCourses")
-  studentConversations   Conversation[]          @relation("StudentConversations")
-  lecturerConversations  Conversation[]          @relation("LecturerConversations")
-  memberConversations    ConversationMember[]
-  sentMessages           Message[]               @relation("MessageSender")
-  lastSentConversations  Conversation[]          @relation("ConversationLastMessageSender")
-  enrollments            Enrollment[]
-  reviews                CourseReview[]
-  blogPosts              BlogPost[]              @relation("AuthorPosts")
-  reviewedBlogPosts      BlogPost[]              @relation("ReviewedPosts")
-  lecturerProfile        LecturerProfile?
-  lecturerPayout         LecturerPayout[]
-  submissions            Submission[]
-  blogComments           BlogComment[]
-  wishlist               Wishlist[]
-  cart                   Cart?
-  orders                 Order[]
-  transactions           Transaction[]
-  lecturerPayoutAccounts LecturerPayoutAccount[]
-  keyToken               KeyToken?
-  revenues               Revenue[]
-  notifications          Notification[]
+  id                     Int                     @id @default(autoincrement())
+  email                  String                  @unique
+  password               String
+  firstName              String?
+  lastName               String?
+  phoneNumber            String?
+  dateOfBirth            DateTime?
+  role                   String                  @default("student")
+  isVerified             Boolean                 @default(false)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime?               @updatedAt
+  isDestroyed            Boolean                 @default(false)
+  verifyToken            String?
+  resetPasswordExpires   DateTime?
+  resetPasswordToken     String?
+  avatarId               Int?                    @unique
   authorBlockedUsers     AuthorBannedUser[]      @relation("AuthorBlocker")
   bannedFromAuthors      AuthorBannedUser[]      @relation("AuthorBlocked")
+  blogComments           BlogComment[]
+  blogPosts              BlogPost[]              @relation("AuthorPosts")
+  reviewedBlogPosts      BlogPost[]              @relation("ReviewedPosts")
+  cart                   Cart?
+  lastSentConversations  Conversation[]          @relation("ConversationLastMessageSender")
+  lecturerConversations  Conversation[]          @relation("LecturerConversations")
+  studentConversations   Conversation[]          @relation("StudentConversations")
+  memberConversations    ConversationMember[]
   couponUsages           CouponUsage[]
+  courses                Course[]                @relation("LecturerCourses")
+  reviews                CourseReview[]
+  enrollments            Enrollment[]
+  keyToken               KeyToken?
+  lecturerPayout         LecturerPayout[]
+  lecturerPayoutAccounts LecturerPayoutAccount[]
+  lecturerProfile        LecturerProfile?
+  sentMessages           Message[]               @relation("MessageSender")
+  notifications          Notification[]
+  orders                 Order[]
+  revenues               Revenue[]
+  submissions            Submission[]
+  transactions           Transaction[]
+  avatar                 Resource?               @relation("UserAvatar", fields: [avatarId], references: [id])
+  wishlist               Wishlist[]
 }
 
 model KeyToken {
@@ -71,14 +58,12 @@ model KeyToken {
   publicKey        String
   privateKey       String
   refreshToken     String?  @db.Text
-  refreshTokenUsed Json
-  kid              String
   createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
   isDestroyed      Boolean  @default(false)
-
-  // relations
-  user User @relation(fields: [userId], references: [id])
+  refreshTokenUsed Json
+  updatedAt        DateTime @updatedAt
+  kid              String
+  user             User     @relation(fields: [userId], references: [id])
 }
 
 model Role {
@@ -92,40 +77,41 @@ model Role {
 }
 
 model Course {
-  id            Int       @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   lecturerId    Int
   categoryId    Int?
-  thumbnailId   Int?      @unique
-  introVideoId  Int?      @unique
   name          String
   lecturerName  String?
   duration      String?
-  totalStudents Int       @default(0)
-  totalLessons  Int       @default(0)
-  totalQuizzes  Int       @default(0)
+  totalStudents Int             @default(0)
+  totalLessons  Int             @default(0)
+  totalQuizzes  Int             @default(0)
   level         String?
   overview      String?
-  price         Float     @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  status        String    @default("draft") // draft | pending | published | rejected
-  isDestroyed   Boolean   @default(false)
+  price         Float           @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  isDestroyed   Boolean         @default(false)
+  status        String          @default("draft")
+  thumbnailId   Int?            @unique
+  introVideoId  Int?            @unique
+  assessments   Assessment[]
+  cartItems     CartItem[]
+  coupons       Coupon[]
+  category      CourseCategory? @relation(fields: [categoryId], references: [id])
+  introVideo    Resource?       @relation("CourseIntroVideo", fields: [introVideoId], references: [id])
+  lecturer      User            @relation("LecturerCourses", fields: [lecturerId], references: [id])
+  thumbnail     Resource?       @relation("CourseThumbnail", fields: [thumbnailId], references: [id])
+  courseFAQs    CourseFAQ[]
+  reviews       CourseReview[]
+  enrollments   Enrollment[]
+  modules       Module[]
+  orderItems    OrderItem[]
+  revenues      Revenue[]
+  wishlists     Wishlist[]
 
-  // relations
-  lecturer    User            @relation(fields: [lecturerId], references: [id], name: "LecturerCourses")
-  category    CourseCategory? @relation(fields: [categoryId], references: [id])
-  thumbnail   Resource?       @relation("CourseThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
-  introVideo  Resource?       @relation("CourseIntroVideo", fields: [introVideoId], references: [id], onDelete: SetNull)
-  modules     Module[]
-  reviews     CourseReview[]
-  enrollments Enrollment[]
-  orderItems  OrderItem[]
-  revenues    Revenue[]
-  courseFAQs  CourseFAQ[]
-  assessments Assessment[]
-  cartItems   CartItem[]
-  coupons     Coupon[]
-  wishlists   Wishlist[]
+  @@index([categoryId], map: "Course_categoryId_fkey")
+  @@index([lecturerId], map: "Course_lecturerId_fkey")
 }
 
 model CourseCategory {
@@ -135,22 +121,20 @@ model CourseCategory {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
-
-  // relations
-  courses Course[]
+  courses     Course[]
 }
 
 model CourseFAQ {
   id          Int       @id @default(autoincrement())
-  courseId    Int
   question    String    @db.Text
   answer      String?   @db.Text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
+  courseId    Int
+  course      Course    @relation(fields: [courseId], references: [id])
 
-  // relations
-  course Course @relation(fields: [courseId], references: [id])
+  @@index([courseId], map: "CourseFAQ_courseId_fkey")
 }
 
 model CourseReview {
@@ -164,10 +148,11 @@ model CourseReview {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
   isDestroyed   Boolean   @default(false)
+  course        Course    @relation(fields: [courseId], references: [id])
+  student       User      @relation(fields: [studentId], references: [id])
 
-  // relations
-  course  Course @relation(fields: [courseId], references: [id])
-  student User   @relation(fields: [studentId], references: [id])
+  @@index([courseId], map: "CourseReview_courseId_fkey")
+  @@index([studentId], map: "CourseReview_studentId_fkey")
 }
 
 model Module {
@@ -180,51 +165,49 @@ model Module {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime? @updatedAt
   isDestroyed  Boolean   @default(false)
+  lessons      Lesson[]
+  course       Course    @relation(fields: [courseId], references: [id])
 
-  // relations
-  course  Course   @relation(fields: [courseId], references: [id])
-  lessons Lesson[]
+  @@index([courseId], map: "Module_courseId_fkey")
 }
 
 model Lesson {
-  id            Int       @id @default(autoincrement())
-  lessonFileId  Int?      @unique
+  id            Int          @id @default(autoincrement())
   moduleId      Int
   title         String
   description   String?
   note          String?
-  lessonVideoId Int?      @unique
   duration      String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  isDestroyed   Boolean   @default(false)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime?    @updatedAt
+  isDestroyed   Boolean      @default(false)
+  lessonFileId  Int?         @unique
+  lessonVideoId Int?         @unique
+  assessments   Assessment[]
+  lessonFile    Resource?    @relation("LessonFile", fields: [lessonFileId], references: [id])
+  lessonVideo   Resource?    @relation("LessonVideo", fields: [lessonVideoId], references: [id])
+  module        Module       @relation(fields: [moduleId], references: [id])
+  quizzes       Quiz[]
 
-  // relations
-  module      Module       @relation(fields: [moduleId], references: [id])
-  lessonFile  Resource?    @relation("LessonFile", fields: [lessonFileId], references: [id], onDelete: SetNull)
-  lessonVideo Resource?    @relation("LessonVideo", fields: [lessonVideoId], references: [id], onDelete: SetNull)
-  quizzes     Quiz[]
-  assessments Assessment[]
+  @@index([moduleId], map: "Lesson_moduleId_fkey")
 }
 
 model Resource {
-  id          Int       @id @default(autoincrement())
-  publicId    String    @unique
-  fileSize    Int?
-  fileType    String?
-  fileUrl     String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  isDestroyed Boolean   @default(false)
-
-  // relations
-  userAvatar          User?            @relation("UserAvatar")
+  id                  Int              @id @default(autoincrement())
+  fileSize            Int?
+  fileType            String?
+  fileUrl             String
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime?        @updatedAt
+  isDestroyed         Boolean          @default(false)
+  publicId            String           @unique
+  blogThumbnail       BlogPost?        @relation("BlogThumbnail")
+  courseIntroVideo    Course?          @relation("CourseIntroVideo")
   courseThumbnail     Course?          @relation("CourseThumbnail")
+  lecturerProfileFile LecturerProfile? @relation("LecturerProfileFile")
   lessonFile          Lesson?          @relation("LessonFile")
   lessonVideo         Lesson?          @relation("LessonVideo")
-  blogThumbnail       BlogPost?        @relation("BlogThumbnail")
-  lecturerProfileFile LecturerProfile? @relation("LecturerProfileFile")
-  courseIntroVideo    Course?          @relation("CourseIntroVideo")
+  userAvatar          User?            @relation("UserAvatar")
 }
 
 model Enrollment {
@@ -236,27 +219,28 @@ model Enrollment {
   lastAccessedAt DateTime?
   createdAt      DateTime  @default(now())
   isDestroyed    Boolean   @default(false)
+  course         Course    @relation(fields: [courseId], references: [id])
+  student        User      @relation(fields: [studentId], references: [id])
 
-  // relations
-  student User   @relation(fields: [studentId], references: [id])
-  course  Course @relation(fields: [courseId], references: [id])
+  @@index([courseId], map: "Enrollment_courseId_fkey")
+  @@index([studentId], map: "Enrollment_studentId_fkey")
 }
 
 model Quiz {
-  id           Int       @id @default(autoincrement())
+  id           Int          @id @default(autoincrement())
   lessonId     Int
   title        String
   description  String?
   timeLimit    Int?
   passingScore Int?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime? @updatedAt
-  isDestroyed  Boolean   @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime?    @updatedAt
+  isDestroyed  Boolean      @default(false)
+  questions    Question[]
+  lesson       Lesson       @relation(fields: [lessonId], references: [id])
+  submissions  Submission[]
 
-  // relations
-  lesson      Lesson       @relation(fields: [lessonId], references: [id])
-  questions   Question[]
-  submissions Submission[]
+  @@index([lessonId], map: "Quiz_lessonId_fkey")
 }
 
 model Question {
@@ -270,37 +254,38 @@ model Question {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime? @updatedAt
   isDestroyed   Boolean   @default(false)
+  quiz          Quiz      @relation(fields: [quizId], references: [id])
 
-  // relations
-  quiz Quiz @relation(fields: [quizId], references: [id])
+  @@index([quizId], map: "Question_quizId_fkey")
 }
 
 model Order {
-  id            Int       @id @default(autoincrement())
-  studentId     Int
-  couponId      Int?
-  couponCode    String?
-  discountAmount Float?   @default(0)
-  originalPrice Float?
-  lecturer      String?
-  totalPrice    Float?    @default(0)
-  paymentMethod String?   @default("payos")
-  status        String?   @default("pending") // pending, processing, completed, failed, cancelled
-  paymentLinkId String?   @unique // PayOS payment link ID
-  paymentStatus String?   @default("pending") // pending, paid, cancelled, failed
-  checkoutUrl   String?   @db.Text // PayOS checkout URL
-  qrCode        String?   @db.Text // PayOS QR code
-  isSuccess     Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  isDestroyed   Boolean   @default(false)
+  id             Int          @id @default(autoincrement())
+  studentId      Int
+  lecturer       String?
+  totalPrice     Float?       @default(0)
+  paymentMethod  String?      @default("payos")
+  status         String?      @default("pending")
+  createdAt      DateTime     @default(now())
+  isDestroyed    Boolean      @default(false)
+  checkoutUrl    String?      @db.Text
+  isSuccess      Boolean      @default(false)
+  paymentLinkId  String?      @unique
+  paymentStatus  String?      @default("pending")
+  qrCode         String?      @db.Text
+  updatedAt      DateTime?    @updatedAt
+  couponCode     String?
+  couponId       Int?
+  discountAmount Float?       @default(0)
+  originalPrice  Float?
+  couponUsage    CouponUsage?
+  coupon         Coupon?      @relation(fields: [couponId], references: [id])
+  student        User         @relation(fields: [studentId], references: [id])
+  items          OrderItem[]
+  revenue        Revenue?
 
-  // relations
-  student     User         @relation(fields: [studentId], references: [id])
-  coupon      Coupon?      @relation(fields: [couponId], references: [id])
-  items       OrderItem[]
-  revenue     Revenue?
-  couponUsage CouponUsage?
+  @@index([couponId], map: "Order_couponId_fkey")
+  @@index([studentId], map: "Order_studentId_fkey")
 }
 
 model OrderItem {
@@ -311,45 +296,45 @@ model OrderItem {
   lecturerId  Int?
   createdAt   DateTime @default(now())
   isDestroyed Boolean  @default(false)
-
-  // relations
-  order  Order  @relation(fields: [orderId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
+  course      Course   @relation(fields: [courseId], references: [id])
+  order       Order    @relation(fields: [orderId], references: [id])
 
   @@unique([orderId, courseId])
+  @@index([courseId], map: "OrderItem_courseId_fkey")
 }
 
 model Coupon {
-  id            Int       @id @default(autoincrement())
-  name          String
-  description   String?
-  status        String?   @default("active")
-  code          String    @unique
-  scope         String    @default("ALL_COURSES")
-  courseId      Int?
+  id              Int             @id @default(autoincrement())
+  name            String
+  description     String?
+  status          String?         @default("active")
+  code            String          @unique
+  categoryId      Int?
+  amount          Float?
+  startingDate    DateTime?
+  startingTime    String?
+  endingDate      DateTime?
+  endingTime      String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime?       @updatedAt
+  isDestroyed     Boolean         @default(false)
+  courseId        Int?
+  discount        Float?
+  discountUnit    String?         @default("percent")
+  usageLimit      Int?
+  minOrderValue   Float?
+  maxValue        Float?
+  scope           String          @default("ALL_COURSES")
   scopeCategoryId Int?
-  categoryId    Int?
-  discount      Float?
-  discountUnit  String?   @default("percent") // amount | percent
-  usageLimit    Int?
-  usedCount     Int       @default(0)
-  usagePerUser  Int?
-  minOrderValue Float?
-  maxValue      Float?
-  amount        Float?
-  startingDate  DateTime?
-  startingTime  String?
-  endingDate    DateTime?
-  endingTime    String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  isDestroyed   Boolean   @default(false)
+  usagePerUser    Int?
+  usedCount       Int             @default(0)
+  category        CouponCategory? @relation(fields: [categoryId], references: [id])
+  course          Course?         @relation(fields: [courseId], references: [id])
+  usages          CouponUsage[]
+  orders          Order[]
 
-  // relations
-  category CouponCategory? @relation(fields: [categoryId], references: [id])
-  course   Course?         @relation(fields: [courseId], references: [id])
-  orders   Order[]
-  usages   CouponUsage[]
+  @@index([categoryId], map: "Coupon_categoryId_fkey")
+  @@index([courseId], map: "Coupon_courseId_fkey")
 }
 
 model CouponUsage {
@@ -358,11 +343,9 @@ model CouponUsage {
   userId   Int
   orderId  Int      @unique
   usedAt   DateTime @default(now())
-
-  // relations
-  coupon Coupon @relation(fields: [couponId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
-  order  Order  @relation(fields: [orderId], references: [id])
+  coupon   Coupon   @relation(fields: [couponId], references: [id])
+  order    Order    @relation(fields: [orderId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
 
   @@index([couponId])
   @@index([userId, couponId])
@@ -375,30 +358,30 @@ model CouponCategory {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   isDestroyed Boolean   @default(false)
-
-  // relations
-  coupons Coupon[]
+  coupons     Coupon[]
 }
 
 model Submission {
-  id           Int       @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   assessmentId Int
   quizId       Int
   studentId    Int
   score        Float?
   status       String?
-  feedback     String?
   submittedAt  DateTime?
-  isDestroyed  Boolean?  @default(false)
+  isDestroyed  Boolean?   @default(false)
+  feedback     String?
+  assessment   Assessment @relation(fields: [assessmentId], references: [id])
+  quiz         Quiz       @relation(fields: [quizId], references: [id])
+  student      User       @relation(fields: [studentId], references: [id])
 
-  // relations
-  student    User       @relation(fields: [studentId], references: [id])
-  assessment Assessment @relation(fields: [assessmentId], references: [id])
-  quiz       Quiz       @relation(fields: [quizId], references: [id])
+  @@index([assessmentId], map: "Submission_assessmentId_fkey")
+  @@index([quizId], map: "Submission_quizId_fkey")
+  @@index([studentId], map: "Submission_studentId_fkey")
 }
 
 model Assessment {
-  id               Int       @id @default(autoincrement())
+  id               Int          @id @default(autoincrement())
   courseId         Int
   lessonId         Int?
   title            String
@@ -407,68 +390,71 @@ model Assessment {
   status           String?
   totalSubmissions Int?
   averageScore     Float?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  isDestroyed      Boolean   @default(false)
+  createdAt        DateTime     @default(now())
+  isDestroyed      Boolean      @default(false)
+  updatedAt        DateTime     @updatedAt
+  course           Course       @relation(fields: [courseId], references: [id])
+  lesson           Lesson?      @relation(fields: [lessonId], references: [id])
+  submissions      Submission[]
 
-  // relations
-  submissions Submission[]
-  course      Course       @relation(fields: [courseId], references: [id])
-  lesson      Lesson?      @relation(fields: [lessonId], references: [id])
+  @@index([courseId], map: "Assessment_courseId_fkey")
+  @@index([lessonId], map: "Assessment_lessonId_fkey")
 }
 
 model BlogPost {
-  id            Int       @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   authorId      Int
-  reviewedById  Int?
   categoryId    Int?
   title         String
   slug          String?
-  content       String?   @db.LongText
-  status        String    @default("draft")
+  content       String?       @db.LongText
+  totalComments Int?          @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime?     @updatedAt
+  isDestroyed   Boolean       @default(false)
+  thumbnailId   Int?          @unique
+  reviewedById  Int?
+  status        String        @default("draft")
   reviewNote    String?
   publishedAt   DateTime?
-  thumbnailId   Int?      @unique
-  totalComments Int?      @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  isDestroyed   Boolean   @default(false)
+  comments      BlogComment[]
+  author        User          @relation("AuthorPosts", fields: [authorId], references: [id])
+  category      BlogCategory? @relation(fields: [categoryId], references: [id])
+  reviewedBy    User?         @relation("ReviewedPosts", fields: [reviewedById], references: [id])
+  thumbnail     Resource?     @relation("BlogThumbnail", fields: [thumbnailId], references: [id])
 
-  // relations
-  author    User          @relation(fields: [authorId], references: [id], name: "AuthorPosts")
-  reviewedBy User?        @relation(fields: [reviewedById], references: [id], name: "ReviewedPosts", onDelete: SetNull)
-  category  BlogCategory? @relation(fields: [categoryId], references: [id])
-  thumbnail Resource?     @relation("BlogThumbnail", fields: [thumbnailId], references: [id], onDelete: SetNull)
-  comments  BlogComment[]
+  @@index([authorId], map: "BlogPost_authorId_fkey")
+  @@index([categoryId], map: "BlogPost_categoryId_fkey")
+  @@index([reviewedById])
 }
 
 model BlogCategory {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
-  slug        String    @unique
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  isDestroyed Boolean   @default(false)
-
-  // relations
-  posts BlogPost[]
+  slug        String     @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?  @updatedAt
+  isDestroyed Boolean    @default(false)
+  posts       BlogPost[]
 }
 
 model BlogComment {
-  id          Int       @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   blogId      Int
   userId      Int
   content     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?     @updatedAt
+  isDestroyed Boolean       @default(false)
   parentId    Int?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  isDestroyed Boolean   @default(false)
+  post        BlogPost      @relation(fields: [blogId], references: [id])
+  parent      BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  children    BlogComment[] @relation("CommentReplies")
+  user        User          @relation(fields: [userId], references: [id])
 
-  // relations
-  post     BlogPost      @relation(fields: [blogId], references: [id])
-  user     User          @relation(fields: [userId], references: [id])
-  parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
-  children BlogComment[] @relation("CommentReplies")
+  @@index([blogId], map: "BlogComment_blogId_fkey")
+  @@index([parentId], map: "BlogComment_parentId_fkey")
+  @@index([userId], map: "BlogComment_userId_fkey")
 }
 
 model Wishlist {
@@ -481,80 +467,74 @@ model Wishlist {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime? @updatedAt
   isDestroyed     Boolean   @default(false)
-
-  // relations
-  user   User   @relation(fields: [userId], references: [id])
-  course Course @relation(fields: [courseId], references: [id])
+  course          Course    @relation(fields: [courseId], references: [id])
+  user            User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, courseId])
   @@index([userId, createdAt(sort: Desc)])
+  @@index([courseId], map: "Wishlist_courseId_fkey")
+  @@index([userId], map: "Wishlist_userId_fkey")
 }
 
 model Cart {
-  id          Int      @id @default(autoincrement())
-  userId      Int      @unique
+  id          Int        @id @default(autoincrement())
+  userId      Int        @unique
   courseName  String?
   lecturer    String?
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
-  isDestroyed Boolean  @default(false)
-
-  // Relations
-  user  User       @relation(fields: [userId], references: [id])
-  items CartItem[]
+  createdAt   DateTime   @default(now())
+  isDestroyed Boolean    @default(false)
+  updatedAt   DateTime   @updatedAt
+  user        User       @relation(fields: [userId], references: [id])
+  items       CartItem[]
 }
 
-//Thêm model cartItem
 model CartItem {
   id        Int      @id @default(autoincrement())
   cartId    Int
   courseId  Int
-  price     Float // Lưu giá tại thời điểm thêm vào giỏ
+  price     Float
   createdAt DateTime @default(now())
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  course    Course   @relation(fields: [courseId], references: [id])
 
-  // Relations
-  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  course Course @relation(fields: [courseId], references: [id])
-
-  // Đảm bảo 1 khóa học chỉ xuất hiện 1 lần trong 1 giỏ hàng
   @@unique([cartId, courseId])
+  @@index([courseId], map: "CartItem_courseId_fkey")
 }
 
 model Transaction {
-  id               Int      @id @default(autoincrement())
-  userId           Int
-  userRole         String?
-  amount           Float?
-  paymentMethod    String?
-  status           String?
-  gatewayReference String?
-  createdAt        DateTime @default(now())
-  isDestroyed      Boolean  @default(false)
-
-  // relations
+  id                  Int                  @id @default(autoincrement())
+  userId              Int
+  userRole            String?
+  amount              Float?
+  paymentMethod       String?
+  status              String?
+  gatewayReference    String?
+  createdAt           DateTime             @default(now())
+  isDestroyed         Boolean              @default(false)
   user                User                 @relation(fields: [userId], references: [id])
   studentTransactions TransactionStudent[]
+
+  @@index([userId], map: "Transaction_userId_fkey")
 }
 
 model TransactionStudent {
-  id             Int      @id @default(autoincrement())
+  id             Int         @id @default(autoincrement())
   transactionId  Int
   orderId        Int?
   courseId       Int?
-  isDiscount     Boolean? @default(false)
+  isDiscount     Boolean?    @default(false)
   discountAmount Float?
   discountCode   String?
-  createdAt      DateTime @default(now())
-  isDestroyed    Boolean  @default(false)
+  createdAt      DateTime    @default(now())
+  isDestroyed    Boolean     @default(false)
+  transaction    Transaction @relation(fields: [transactionId], references: [id])
 
-  // relations
-  transaction Transaction @relation(fields: [transactionId], references: [id])
+  @@index([transactionId], map: "TransactionStudent_transactionId_fkey")
 }
 
 model LecturerProfile {
   id                Int       @id @default(autoincrement())
   lecturerId        Int       @unique
-  lecturerFileId    Int?      @unique
   gender            String?
   nationality       String?
   professionalTitle String?
@@ -564,14 +544,13 @@ model LecturerProfile {
   totalCourses      Int?
   avgRating         Float?
   bio               String?
-  isActive          Boolean   @default(false)
   createdAt         DateTime  @default(now())
   updatedAt         DateTime? @updatedAt
   isDestroyed       Boolean   @default(false)
-
-  // relations
-  lecturer     User      @relation(fields: [lecturerId], references: [id])
-  lecturerFile Resource? @relation("LecturerProfileFile", fields: [lecturerFileId], references: [id], onDelete: SetNull)
+  isActive          Boolean   @default(false)
+  lecturerFileId    Int?      @unique
+  lecturerFile      Resource? @relation("LecturerProfileFile", fields: [lecturerFileId], references: [id])
+  lecturer          User      @relation(fields: [lecturerId], references: [id])
 }
 
 model LecturerPayout {
@@ -584,11 +563,11 @@ model LecturerPayout {
   payoutMethod    String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime? @updatedAt
-  status          String    @default("success") // success | failed
   isDestroyed     Boolean   @default(false)
+  status          String    @default("success")
+  lecturer        User      @relation(fields: [lecturerId], references: [id])
 
-  // relations
-  lecturer User @relation(fields: [lecturerId], references: [id])
+  @@index([lecturerId], map: "LecturerPayout_lecturerId_fkey")
 }
 
 model LecturerPayoutAccount {
@@ -603,27 +582,26 @@ model LecturerPayoutAccount {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime? @updatedAt
   isDestroyed    Boolean   @default(false)
+  lecturer       User      @relation(fields: [lecturerId], references: [id])
 
-  // relations
-  lecturer User @relation(fields: [lecturerId], references: [id])
+  @@index([lecturerId], map: "LecturerPayoutAccount_lecturerId_fkey")
 }
 
 model Revenue {
-  id         Int  @id @default(autoincrement())
-  orderId    Int  @unique
-  lecturerId Int?
-  courseId   Int
-
+  id           Int      @id @default(autoincrement())
+  orderId      Int      @unique
+  lecturerId   Int?
+  courseId     Int
   totalAmount  Float
   platformFee  Float
   lecturerEarn Float
+  createdAt    DateTime @default(now())
+  course       Course   @relation(fields: [courseId], references: [id])
+  lecturer     User?    @relation(fields: [lecturerId], references: [id])
+  order        Order    @relation(fields: [orderId], references: [id])
 
-  createdAt DateTime @default(now())
-
-  // Relations
-  order    Order  @relation(fields: [orderId], references: [id])
-  lecturer User?  @relation(fields: [lecturerId], references: [id])
-  course   Course @relation(fields: [courseId], references: [id])
+  @@index([courseId], map: "Revenue_courseId_fkey")
+  @@index([lecturerId], map: "Revenue_lecturerId_fkey")
 }
 
 model Notification {
@@ -631,43 +609,40 @@ model Notification {
   userId      Int
   title       String
   message     String   @db.Text
-  type        String   @default("info") // "order", "payment", "message", "info"
-  relatedId   Int? // Link to order, payment, etc.
+  type        String   @default("info")
+  relatedId   Int?
   isRead      Boolean  @default(false)
   createdAt   DateTime @default(now())
   isDestroyed Boolean  @default(false)
-
-  // Relations
-  user User @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([createdAt])
 }
 
 model Conversation {
-  id                  Int       @id @default(autoincrement())
+  id                  Int                  @id @default(autoincrement())
   studentId           Int
   lecturerId          Int
-  lastMessageId       Int?      @unique
+  lastMessageId       Int?                 @unique
   lastMessageSenderId Int?
-  lastMessageContent  String?   @db.Text
+  lastMessageContent  String?              @db.Text
   lastMessageAt       DateTime?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
-  isDestroyed         Boolean   @default(false)
-
-  // relations
-  student           User                 @relation("StudentConversations", fields: [studentId], references: [id])
-  lecturer          User                 @relation("LecturerConversations", fields: [lecturerId], references: [id])
-  lastMessage       Message?             @relation("ConversationLastMessage", fields: [lastMessageId], references: [id], onDelete: SetNull)
-  lastMessageSender User?                @relation("ConversationLastMessageSender", fields: [lastMessageSenderId], references: [id], onDelete: SetNull)
-  members           ConversationMember[]
-  messages          Message[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  isDestroyed         Boolean              @default(false)
+  lastMessage         Message?             @relation("ConversationLastMessage", fields: [lastMessageId], references: [id])
+  lastMessageSender   User?                @relation("ConversationLastMessageSender", fields: [lastMessageSenderId], references: [id])
+  lecturer            User                 @relation("LecturerConversations", fields: [lecturerId], references: [id])
+  student             User                 @relation("StudentConversations", fields: [studentId], references: [id])
+  members             ConversationMember[]
+  messages            Message[]
 
   @@unique([studentId, lecturerId])
   @@index([studentId, lastMessageAt(sort: Desc)])
   @@index([lecturerId, lastMessageAt(sort: Desc)])
   @@index([lastMessageAt(sort: Desc)])
+  @@index([lastMessageSenderId], map: "Conversation_lastMessageSenderId_fkey")
 }
 
 model ConversationMember {
@@ -678,32 +653,29 @@ model ConversationMember {
   joinedAt          DateTime         @default(now())
   lastReadAt        DateTime?
   lastSeenMessageId Int?
-
-  // relations
-  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  lastSeenMessage Message?     @relation("MemberLastSeenMessage", fields: [lastSeenMessageId], references: [id], onDelete: SetNull)
+  conversation      Conversation     @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  lastSeenMessage   Message?         @relation("MemberLastSeenMessage", fields: [lastSeenMessageId], references: [id])
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([conversationId, userId])
   @@index([userId, conversationId])
   @@index([userId, unreadCount])
+  @@index([lastSeenMessageId], map: "ConversationMember_lastSeenMessageId_fkey")
 }
 
 model Message {
-  id             Int      @id @default(autoincrement())
-  conversationId Int
-  senderId       Int
-  content        String?  @db.Text
-  imgUrl         String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  isDestroyed    Boolean  @default(false)
-
-  // relations
-  conversation         Conversation         @relation(fields: [conversationId], references: [id])
-  sender               User                 @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  id                   Int                  @id @default(autoincrement())
+  conversationId       Int
+  senderId             Int
+  content              String?              @db.Text
+  imgUrl               String?
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  isDestroyed          Boolean              @default(false)
   asLastOfConversation Conversation?        @relation("ConversationLastMessage")
   seenByMembers        ConversationMember[] @relation("MemberLastSeenMessage")
+  conversation         Conversation         @relation(fields: [conversationId], references: [id])
+  sender               User                 @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
 
   @@index([conversationId, createdAt(sort: Desc)])
   @@index([senderId, createdAt(sort: Desc)])
@@ -711,13 +683,17 @@ model Message {
 
 model AuthorBannedUser {
   id        Int      @id @default(autoincrement())
-  authorId  Int      
-  userId    Int      
+  authorId  Int
+  userId    Int
   createdAt DateTime @default(now())
-
-  // relations
   author    User     @relation("AuthorBlocker", fields: [authorId], references: [id])
   user      User     @relation("AuthorBlocked", fields: [userId], references: [id])
 
   @@unique([authorId, userId])
+  @@index([userId], map: "AuthorBannedUser_userId_fkey")
+}
+
+enum ConversationRole {
+  STUDENT
+  LECTURER
 }

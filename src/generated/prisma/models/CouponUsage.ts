@@ -229,8 +229,8 @@ export type CouponUsageWhereInput = {
   orderId?: Prisma.IntFilter<"CouponUsage"> | number
   usedAt?: Prisma.DateTimeFilter<"CouponUsage"> | Date | string
   coupon?: Prisma.XOR<Prisma.CouponScalarRelationFilter, Prisma.CouponWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type CouponUsageOrderByWithRelationInput = {
@@ -240,8 +240,8 @@ export type CouponUsageOrderByWithRelationInput = {
   orderId?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
   coupon?: Prisma.CouponOrderByWithRelationInput
-  user?: Prisma.UserOrderByWithRelationInput
   order?: Prisma.OrderOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type CouponUsageWhereUniqueInput = Prisma.AtLeast<{
@@ -254,8 +254,8 @@ export type CouponUsageWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"CouponUsage"> | number
   usedAt?: Prisma.DateTimeFilter<"CouponUsage"> | Date | string
   coupon?: Prisma.XOR<Prisma.CouponScalarRelationFilter, Prisma.CouponWhereInput>
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "orderId">
 
 export type CouponUsageOrderByWithAggregationInput = {
@@ -285,8 +285,8 @@ export type CouponUsageScalarWhereWithAggregatesInput = {
 export type CouponUsageCreateInput = {
   usedAt?: Date | string
   coupon: Prisma.CouponCreateNestedOneWithoutUsagesInput
-  user: Prisma.UserCreateNestedOneWithoutCouponUsagesInput
   order: Prisma.OrderCreateNestedOneWithoutCouponUsageInput
+  user: Prisma.UserCreateNestedOneWithoutCouponUsagesInput
 }
 
 export type CouponUsageUncheckedCreateInput = {
@@ -300,8 +300,8 @@ export type CouponUsageUncheckedCreateInput = {
 export type CouponUsageUpdateInput = {
   usedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   coupon?: Prisma.CouponUpdateOneRequiredWithoutUsagesNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutCouponUsagesNestedInput
   order?: Prisma.OrderUpdateOneRequiredWithoutCouponUsageNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCouponUsagesNestedInput
 }
 
 export type CouponUsageUncheckedUpdateInput = {
@@ -595,8 +595,8 @@ export type CouponUsageUncheckedUpdateWithoutOrderInput = {
 
 export type CouponUsageCreateWithoutCouponInput = {
   usedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutCouponUsagesInput
   order: Prisma.OrderCreateNestedOneWithoutCouponUsageInput
+  user: Prisma.UserCreateNestedOneWithoutCouponUsagesInput
 }
 
 export type CouponUsageUncheckedCreateWithoutCouponInput = {
@@ -668,8 +668,8 @@ export type CouponUsageCreateManyCouponInput = {
 
 export type CouponUsageUpdateWithoutCouponInput = {
   usedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutCouponUsagesNestedInput
   order?: Prisma.OrderUpdateOneRequiredWithoutCouponUsageNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCouponUsagesNestedInput
 }
 
 export type CouponUsageUncheckedUpdateWithoutCouponInput = {
@@ -695,8 +695,8 @@ export type CouponUsageSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   orderId?: boolean
   usedAt?: boolean
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["couponUsage"]>
 
 
@@ -712,16 +712,16 @@ export type CouponUsageSelectScalar = {
 export type CouponUsageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "couponId" | "userId" | "orderId" | "usedAt", ExtArgs["result"]["couponUsage"]>
 export type CouponUsageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   coupon?: boolean | Prisma.CouponDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $CouponUsagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CouponUsage"
   objects: {
     coupon: Prisma.$CouponPayload<ExtArgs>
-    user: Prisma.$UserPayload<ExtArgs>
     order: Prisma.$OrderPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1070,8 +1070,8 @@ readonly fields: CouponUsageFieldRefs;
 export interface Prisma__CouponUsageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   coupon<T extends Prisma.CouponDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CouponDefaultArgs<ExtArgs>>): Prisma.Prisma__CouponClient<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   order<T extends Prisma.OrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

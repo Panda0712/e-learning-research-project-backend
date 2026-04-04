@@ -28,116 +28,116 @@ export type AggregateLesson = {
 
 export type LessonAvgAggregateOutputType = {
   id: number | null
-  lessonFileId: number | null
   moduleId: number | null
+  lessonFileId: number | null
   lessonVideoId: number | null
 }
 
 export type LessonSumAggregateOutputType = {
   id: number | null
-  lessonFileId: number | null
   moduleId: number | null
+  lessonFileId: number | null
   lessonVideoId: number | null
 }
 
 export type LessonMinAggregateOutputType = {
   id: number | null
-  lessonFileId: number | null
   moduleId: number | null
   title: string | null
   description: string | null
   note: string | null
-  lessonVideoId: number | null
   duration: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  lessonFileId: number | null
+  lessonVideoId: number | null
 }
 
 export type LessonMaxAggregateOutputType = {
   id: number | null
-  lessonFileId: number | null
   moduleId: number | null
   title: string | null
   description: string | null
   note: string | null
-  lessonVideoId: number | null
   duration: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  lessonFileId: number | null
+  lessonVideoId: number | null
 }
 
 export type LessonCountAggregateOutputType = {
   id: number
-  lessonFileId: number
   moduleId: number
   title: number
   description: number
   note: number
-  lessonVideoId: number
   duration: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
+  lessonFileId: number
+  lessonVideoId: number
   _all: number
 }
 
 
 export type LessonAvgAggregateInputType = {
   id?: true
-  lessonFileId?: true
   moduleId?: true
+  lessonFileId?: true
   lessonVideoId?: true
 }
 
 export type LessonSumAggregateInputType = {
   id?: true
-  lessonFileId?: true
   moduleId?: true
+  lessonFileId?: true
   lessonVideoId?: true
 }
 
 export type LessonMinAggregateInputType = {
   id?: true
-  lessonFileId?: true
   moduleId?: true
   title?: true
   description?: true
   note?: true
-  lessonVideoId?: true
   duration?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  lessonFileId?: true
+  lessonVideoId?: true
 }
 
 export type LessonMaxAggregateInputType = {
   id?: true
-  lessonFileId?: true
   moduleId?: true
   title?: true
   description?: true
   note?: true
-  lessonVideoId?: true
   duration?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  lessonFileId?: true
+  lessonVideoId?: true
 }
 
 export type LessonCountAggregateInputType = {
   id?: true
-  lessonFileId?: true
   moduleId?: true
   title?: true
   description?: true
   note?: true
-  lessonVideoId?: true
   duration?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  lessonFileId?: true
+  lessonVideoId?: true
   _all?: true
 }
 
@@ -229,16 +229,16 @@ export type LessonGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type LessonGroupByOutputType = {
   id: number
-  lessonFileId: number | null
   moduleId: number
   title: string
   description: string | null
   note: string | null
-  lessonVideoId: number | null
   duration: string | null
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
+  lessonFileId: number | null
+  lessonVideoId: number | null
   _count: LessonCountAggregateOutputType | null
   _avg: LessonAvgAggregateOutputType | null
   _sum: LessonSumAggregateOutputType | null
@@ -266,40 +266,40 @@ export type LessonWhereInput = {
   OR?: Prisma.LessonWhereInput[]
   NOT?: Prisma.LessonWhereInput | Prisma.LessonWhereInput[]
   id?: Prisma.IntFilter<"Lesson"> | number
-  lessonFileId?: Prisma.IntNullableFilter<"Lesson"> | number | null
   moduleId?: Prisma.IntFilter<"Lesson"> | number
   title?: Prisma.StringFilter<"Lesson"> | string
   description?: Prisma.StringNullableFilter<"Lesson"> | string | null
   note?: Prisma.StringNullableFilter<"Lesson"> | string | null
-  lessonVideoId?: Prisma.IntNullableFilter<"Lesson"> | number | null
   duration?: Prisma.StringNullableFilter<"Lesson"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Lesson"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Lesson"> | boolean
-  module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
+  lessonFileId?: Prisma.IntNullableFilter<"Lesson"> | number | null
+  lessonVideoId?: Prisma.IntNullableFilter<"Lesson"> | number | null
+  assessments?: Prisma.AssessmentListRelationFilter
   lessonFile?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
   lessonVideo?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
+  module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   quizzes?: Prisma.QuizListRelationFilter
-  assessments?: Prisma.AssessmentListRelationFilter
 }
 
 export type LessonOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  lessonVideoId?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
-  module?: Prisma.ModuleOrderByWithRelationInput
+  lessonFileId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lessonVideoId?: Prisma.SortOrderInput | Prisma.SortOrder
+  assessments?: Prisma.AssessmentOrderByRelationAggregateInput
   lessonFile?: Prisma.ResourceOrderByWithRelationInput
   lessonVideo?: Prisma.ResourceOrderByWithRelationInput
+  module?: Prisma.ModuleOrderByWithRelationInput
   quizzes?: Prisma.QuizOrderByRelationAggregateInput
-  assessments?: Prisma.AssessmentOrderByRelationAggregateInput
   _relevance?: Prisma.LessonOrderByRelevanceInput
 }
 
@@ -318,25 +318,25 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Lesson"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Lesson"> | boolean
-  module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
+  assessments?: Prisma.AssessmentListRelationFilter
   lessonFile?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
   lessonVideo?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
+  module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   quizzes?: Prisma.QuizListRelationFilter
-  assessments?: Prisma.AssessmentListRelationFilter
 }, "id" | "lessonFileId" | "lessonVideoId">
 
 export type LessonOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  lessonVideoId?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lessonVideoId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LessonCountOrderByAggregateInput
   _avg?: Prisma.LessonAvgOrderByAggregateInput
   _max?: Prisma.LessonMaxOrderByAggregateInput
@@ -349,16 +349,16 @@ export type LessonScalarWhereWithAggregatesInput = {
   OR?: Prisma.LessonScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LessonScalarWhereWithAggregatesInput | Prisma.LessonScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Lesson"> | number
-  lessonFileId?: Prisma.IntNullableWithAggregatesFilter<"Lesson"> | number | null
   moduleId?: Prisma.IntWithAggregatesFilter<"Lesson"> | number
   title?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   note?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
-  lessonVideoId?: Prisma.IntNullableWithAggregatesFilter<"Lesson"> | number | null
   duration?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lesson"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Lesson"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"Lesson"> | boolean
+  lessonFileId?: Prisma.IntNullableWithAggregatesFilter<"Lesson"> | number | null
+  lessonVideoId?: Prisma.IntNullableWithAggregatesFilter<"Lesson"> | number | null
 }
 
 export type LessonCreateInput = {
@@ -369,27 +369,27 @@ export type LessonCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
   lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
-  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateInput = {
   id?: number
-  lessonFileId?: number | null
   moduleId: number
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUpdateInput = {
@@ -400,41 +400,41 @@ export type LessonUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
   lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
-  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   moduleId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateManyInput = {
   id?: number
-  lessonFileId?: number | null
   moduleId: number
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
 }
 
 export type LessonUpdateManyMutationInput = {
@@ -449,16 +449,16 @@ export type LessonUpdateManyMutationInput = {
 
 export type LessonUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   moduleId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type LessonListRelationFilter = {
@@ -479,57 +479,57 @@ export type LessonOrderByRelevanceInput = {
 
 export type LessonCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  lessonVideoId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrder
+  lessonVideoId?: Prisma.SortOrder
 }
 
 export type LessonAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrder
   lessonVideoId?: Prisma.SortOrder
 }
 
 export type LessonMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  lessonVideoId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrder
+  lessonVideoId?: Prisma.SortOrder
 }
 
 export type LessonMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  lessonVideoId?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrder
+  lessonVideoId?: Prisma.SortOrder
 }
 
 export type LessonSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  lessonFileId?: Prisma.SortOrder
   moduleId?: Prisma.SortOrder
+  lessonFileId?: Prisma.SortOrder
   lessonVideoId?: Prisma.SortOrder
 }
 
@@ -687,25 +687,25 @@ export type LessonCreateWithoutModuleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
   lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
-  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutModuleInput = {
   id?: number
-  lessonFileId?: number | null
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutModuleInput = {
@@ -739,16 +739,16 @@ export type LessonScalarWhereInput = {
   OR?: Prisma.LessonScalarWhereInput[]
   NOT?: Prisma.LessonScalarWhereInput | Prisma.LessonScalarWhereInput[]
   id?: Prisma.IntFilter<"Lesson"> | number
-  lessonFileId?: Prisma.IntNullableFilter<"Lesson"> | number | null
   moduleId?: Prisma.IntFilter<"Lesson"> | number
   title?: Prisma.StringFilter<"Lesson"> | string
   description?: Prisma.StringNullableFilter<"Lesson"> | string | null
   note?: Prisma.StringNullableFilter<"Lesson"> | string | null
-  lessonVideoId?: Prisma.IntNullableFilter<"Lesson"> | number | null
   duration?: Prisma.StringNullableFilter<"Lesson"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Lesson"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Lesson"> | boolean
+  lessonFileId?: Prisma.IntNullableFilter<"Lesson"> | number | null
+  lessonVideoId?: Prisma.IntNullableFilter<"Lesson"> | number | null
 }
 
 export type LessonCreateWithoutLessonFileInput = {
@@ -759,10 +759,10 @@ export type LessonCreateWithoutLessonFileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
-  lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
-  quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
   assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
+  lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
+  quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutLessonFileInput = {
@@ -771,13 +771,13 @@ export type LessonUncheckedCreateWithoutLessonFileInput = {
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  lessonVideoId?: number | null
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutLessonFileInput = {
@@ -793,15 +793,14 @@ export type LessonCreateWithoutLessonVideoInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
-  lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
-  quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
   assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
+  lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
+  quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutLessonVideoInput = {
   id?: number
-  lessonFileId?: number | null
   moduleId: number
   title: string
   description?: string | null
@@ -810,8 +809,9 @@ export type LessonUncheckedCreateWithoutLessonVideoInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
+  lessonFileId?: number | null
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
+  quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
 }
 
 export type LessonCreateOrConnectWithoutLessonVideoInput = {
@@ -838,10 +838,10 @@ export type LessonUpdateWithoutLessonFileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
-  lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
-  quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
   assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
+  lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
+  quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutLessonFileInput = {
@@ -850,13 +850,13 @@ export type LessonUncheckedUpdateWithoutLessonFileInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUpsertWithoutLessonVideoInput = {
@@ -878,15 +878,14 @@ export type LessonUpdateWithoutLessonVideoInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
-  lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
-  quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
   assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
+  lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
+  quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutLessonVideoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   moduleId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -895,8 +894,9 @@ export type LessonUncheckedUpdateWithoutLessonVideoInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateWithoutQuizzesInput = {
@@ -907,24 +907,24 @@ export type LessonCreateWithoutQuizzesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
+  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
   lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
-  assessments?: Prisma.AssessmentCreateNestedManyWithoutLessonInput
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
 }
 
 export type LessonUncheckedCreateWithoutQuizzesInput = {
   id?: number
-  lessonFileId?: number | null
   moduleId: number
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
   assessments?: Prisma.AssessmentUncheckedCreateNestedManyWithoutLessonInput
 }
 
@@ -952,24 +952,24 @@ export type LessonUpdateWithoutQuizzesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
   lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
-  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutQuizzesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   moduleId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
 }
 
@@ -981,24 +981,24 @@ export type LessonCreateWithoutAssessmentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   lessonFile?: Prisma.ResourceCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.ResourceCreateNestedOneWithoutLessonVideoInput
+  module: Prisma.ModuleCreateNestedOneWithoutLessonsInput
   quizzes?: Prisma.QuizCreateNestedManyWithoutLessonInput
 }
 
 export type LessonUncheckedCreateWithoutAssessmentsInput = {
   id?: number
-  lessonFileId?: number | null
   moduleId: number
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
   quizzes?: Prisma.QuizUncheckedCreateNestedManyWithoutLessonInput
 }
 
@@ -1026,38 +1026,38 @@ export type LessonUpdateWithoutAssessmentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
+  module?: Prisma.ModuleUpdateOneRequiredWithoutLessonsNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutAssessmentsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   moduleId?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonCreateManyModuleInput = {
   id?: number
-  lessonFileId?: number | null
   title: string
   description?: string | null
   note?: string | null
-  lessonVideoId?: number | null
   duration?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  lessonFileId?: number | null
+  lessonVideoId?: number | null
 }
 
 export type LessonUpdateWithoutModuleInput = {
@@ -1068,38 +1068,38 @@ export type LessonUpdateWithoutModuleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
   lessonFile?: Prisma.ResourceUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.ResourceUpdateOneWithoutLessonVideoNestedInput
   quizzes?: Prisma.QuizUpdateManyWithoutLessonNestedInput
-  assessments?: Prisma.AssessmentUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateWithoutModuleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   assessments?: Prisma.AssessmentUncheckedUpdateManyWithoutLessonNestedInput
+  quizzes?: Prisma.QuizUncheckedUpdateManyWithoutLessonNestedInput
 }
 
 export type LessonUncheckedUpdateManyWithoutModuleInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lessonFileId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lessonVideoId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1108,13 +1108,13 @@ export type LessonUncheckedUpdateManyWithoutModuleInput = {
  */
 
 export type LessonCountOutputType = {
-  quizzes: number
   assessments: number
+  quizzes: number
 }
 
 export type LessonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  quizzes?: boolean | LessonCountOutputTypeCountQuizzesArgs
   assessments?: boolean | LessonCountOutputTypeCountAssessmentsArgs
+  quizzes?: boolean | LessonCountOutputTypeCountQuizzesArgs
 }
 
 /**
@@ -1130,35 +1130,35 @@ export type LessonCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * LessonCountOutputType without action
  */
-export type LessonCountOutputTypeCountQuizzesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.QuizWhereInput
+export type LessonCountOutputTypeCountAssessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssessmentWhereInput
 }
 
 /**
  * LessonCountOutputType without action
  */
-export type LessonCountOutputTypeCountAssessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AssessmentWhereInput
+export type LessonCountOutputTypeCountQuizzesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.QuizWhereInput
 }
 
 
 export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  lessonFileId?: boolean
   moduleId?: boolean
   title?: boolean
   description?: boolean
   note?: boolean
-  lessonVideoId?: boolean
   duration?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
-  module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
+  lessonFileId?: boolean
+  lessonVideoId?: boolean
+  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   lessonFile?: boolean | Prisma.Lesson$lessonFileArgs<ExtArgs>
   lessonVideo?: boolean | Prisma.Lesson$lessonVideoArgs<ExtArgs>
+  module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   quizzes?: boolean | Prisma.Lesson$quizzesArgs<ExtArgs>
-  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lesson"]>
 
@@ -1166,49 +1166,49 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type LessonSelectScalar = {
   id?: boolean
-  lessonFileId?: boolean
   moduleId?: boolean
   title?: boolean
   description?: boolean
   note?: boolean
-  lessonVideoId?: boolean
   duration?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
+  lessonFileId?: boolean
+  lessonVideoId?: boolean
 }
 
-export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lessonFileId" | "moduleId" | "title" | "description" | "note" | "lessonVideoId" | "duration" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["lesson"]>
+export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "title" | "description" | "note" | "duration" | "createdAt" | "updatedAt" | "isDestroyed" | "lessonFileId" | "lessonVideoId", ExtArgs["result"]["lesson"]>
 export type LessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
+  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   lessonFile?: boolean | Prisma.Lesson$lessonFileArgs<ExtArgs>
   lessonVideo?: boolean | Prisma.Lesson$lessonVideoArgs<ExtArgs>
+  module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   quizzes?: boolean | Prisma.Lesson$quizzesArgs<ExtArgs>
-  assessments?: boolean | Prisma.Lesson$assessmentsArgs<ExtArgs>
   _count?: boolean | Prisma.LessonCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Lesson"
   objects: {
-    module: Prisma.$ModulePayload<ExtArgs>
+    assessments: Prisma.$AssessmentPayload<ExtArgs>[]
     lessonFile: Prisma.$ResourcePayload<ExtArgs> | null
     lessonVideo: Prisma.$ResourcePayload<ExtArgs> | null
+    module: Prisma.$ModulePayload<ExtArgs>
     quizzes: Prisma.$QuizPayload<ExtArgs>[]
-    assessments: Prisma.$AssessmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    lessonFileId: number | null
     moduleId: number
     title: string
     description: string | null
     note: string | null
-    lessonVideoId: number | null
     duration: string | null
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
+    lessonFileId: number | null
+    lessonVideoId: number | null
   }, ExtArgs["result"]["lesson"]>
   composites: {}
 }
@@ -1549,11 +1549,11 @@ readonly fields: LessonFieldRefs;
  */
 export interface Prisma__LessonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  module<T extends Prisma.ModuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  assessments<T extends Prisma.Lesson$assessmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lessonFile<T extends Prisma.Lesson$lessonFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$lessonFileArgs<ExtArgs>>): Prisma.Prisma__ResourceClient<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lessonVideo<T extends Prisma.Lesson$lessonVideoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$lessonVideoArgs<ExtArgs>>): Prisma.Prisma__ResourceClient<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  module<T extends Prisma.ModuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   quizzes<T extends Prisma.Lesson$quizzesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$quizzesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assessments<T extends Prisma.Lesson$assessmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$assessmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssessmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1584,16 +1584,16 @@ export interface Prisma__LessonClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface LessonFieldRefs {
   readonly id: Prisma.FieldRef<"Lesson", 'Int'>
-  readonly lessonFileId: Prisma.FieldRef<"Lesson", 'Int'>
   readonly moduleId: Prisma.FieldRef<"Lesson", 'Int'>
   readonly title: Prisma.FieldRef<"Lesson", 'String'>
   readonly description: Prisma.FieldRef<"Lesson", 'String'>
   readonly note: Prisma.FieldRef<"Lesson", 'String'>
-  readonly lessonVideoId: Prisma.FieldRef<"Lesson", 'Int'>
   readonly duration: Prisma.FieldRef<"Lesson", 'String'>
   readonly createdAt: Prisma.FieldRef<"Lesson", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Lesson", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Lesson", 'Boolean'>
+  readonly lessonFileId: Prisma.FieldRef<"Lesson", 'Int'>
+  readonly lessonVideoId: Prisma.FieldRef<"Lesson", 'Int'>
 }
     
 
@@ -1937,6 +1937,30 @@ export type LessonDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Lesson.assessments
+ */
+export type Lesson$assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Assessment
+   */
+  select?: Prisma.AssessmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Assessment
+   */
+  omit?: Prisma.AssessmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssessmentInclude<ExtArgs> | null
+  where?: Prisma.AssessmentWhereInput
+  orderBy?: Prisma.AssessmentOrderByWithRelationInput | Prisma.AssessmentOrderByWithRelationInput[]
+  cursor?: Prisma.AssessmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssessmentScalarFieldEnum | Prisma.AssessmentScalarFieldEnum[]
+}
+
+/**
  * Lesson.lessonFile
  */
 export type Lesson$lessonFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1996,30 +2020,6 @@ export type Lesson$quizzesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.QuizScalarFieldEnum | Prisma.QuizScalarFieldEnum[]
-}
-
-/**
- * Lesson.assessments
- */
-export type Lesson$assessmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Assessment
-   */
-  select?: Prisma.AssessmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Assessment
-   */
-  omit?: Prisma.AssessmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AssessmentInclude<ExtArgs> | null
-  where?: Prisma.AssessmentWhereInput
-  orderBy?: Prisma.AssessmentOrderByWithRelationInput | Prisma.AssessmentOrderByWithRelationInput[]
-  cursor?: Prisma.AssessmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AssessmentScalarFieldEnum | Prisma.AssessmentScalarFieldEnum[]
 }
 
 /**

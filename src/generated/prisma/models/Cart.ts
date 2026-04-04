@@ -41,9 +41,9 @@ export type CartMinAggregateOutputType = {
   userId: number | null
   courseName: string | null
   lecturer: string | null
-  updatedAt: Date | null
   createdAt: Date | null
   isDestroyed: boolean | null
+  updatedAt: Date | null
 }
 
 export type CartMaxAggregateOutputType = {
@@ -51,9 +51,9 @@ export type CartMaxAggregateOutputType = {
   userId: number | null
   courseName: string | null
   lecturer: string | null
-  updatedAt: Date | null
   createdAt: Date | null
   isDestroyed: boolean | null
+  updatedAt: Date | null
 }
 
 export type CartCountAggregateOutputType = {
@@ -61,9 +61,9 @@ export type CartCountAggregateOutputType = {
   userId: number
   courseName: number
   lecturer: number
-  updatedAt: number
   createdAt: number
   isDestroyed: number
+  updatedAt: number
   _all: number
 }
 
@@ -83,9 +83,9 @@ export type CartMinAggregateInputType = {
   userId?: true
   courseName?: true
   lecturer?: true
-  updatedAt?: true
   createdAt?: true
   isDestroyed?: true
+  updatedAt?: true
 }
 
 export type CartMaxAggregateInputType = {
@@ -93,9 +93,9 @@ export type CartMaxAggregateInputType = {
   userId?: true
   courseName?: true
   lecturer?: true
-  updatedAt?: true
   createdAt?: true
   isDestroyed?: true
+  updatedAt?: true
 }
 
 export type CartCountAggregateInputType = {
@@ -103,9 +103,9 @@ export type CartCountAggregateInputType = {
   userId?: true
   courseName?: true
   lecturer?: true
-  updatedAt?: true
   createdAt?: true
   isDestroyed?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -200,9 +200,9 @@ export type CartGroupByOutputType = {
   userId: number
   courseName: string | null
   lecturer: string | null
-  updatedAt: Date
   createdAt: Date
   isDestroyed: boolean
+  updatedAt: Date
   _count: CartCountAggregateOutputType | null
   _avg: CartAvgAggregateOutputType | null
   _sum: CartSumAggregateOutputType | null
@@ -233,9 +233,9 @@ export type CartWhereInput = {
   userId?: Prisma.IntFilter<"Cart"> | number
   courseName?: Prisma.StringNullableFilter<"Cart"> | string | null
   lecturer?: Prisma.StringNullableFilter<"Cart"> | string | null
-  updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Cart"> | boolean
+  updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
 }
@@ -245,9 +245,9 @@ export type CartOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   courseName?: Prisma.SortOrderInput | Prisma.SortOrder
   lecturer?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.CartItemOrderByRelationAggregateInput
   _relevance?: Prisma.CartOrderByRelevanceInput
@@ -261,9 +261,9 @@ export type CartWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CartWhereInput | Prisma.CartWhereInput[]
   courseName?: Prisma.StringNullableFilter<"Cart"> | string | null
   lecturer?: Prisma.StringNullableFilter<"Cart"> | string | null
-  updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Cart"> | boolean
+  updatedAt?: Prisma.DateTimeFilter<"Cart"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   items?: Prisma.CartItemListRelationFilter
 }, "id" | "userId">
@@ -273,9 +273,9 @@ export type CartOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   courseName?: Prisma.SortOrderInput | Prisma.SortOrder
   lecturer?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.CartCountOrderByAggregateInput
   _avg?: Prisma.CartAvgOrderByAggregateInput
   _max?: Prisma.CartMaxOrderByAggregateInput
@@ -291,17 +291,17 @@ export type CartScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"Cart"> | number
   courseName?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
   lecturer?: Prisma.StringNullableWithAggregatesFilter<"Cart"> | string | null
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Cart"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Cart"> | Date | string
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"Cart"> | boolean
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Cart"> | Date | string
 }
 
 export type CartCreateInput = {
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCartInput
   items?: Prisma.CartItemCreateNestedManyWithoutCartInput
 }
@@ -311,18 +311,18 @@ export type CartUncheckedCreateInput = {
   userId: number
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutCartInput
 }
 
 export type CartUpdateInput = {
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCartNestedInput
   items?: Prisma.CartItemUpdateManyWithoutCartNestedInput
 }
@@ -332,9 +332,9 @@ export type CartUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutCartNestedInput
 }
 
@@ -343,17 +343,17 @@ export type CartCreateManyInput = {
   userId: number
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type CartUpdateManyMutationInput = {
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CartUncheckedUpdateManyInput = {
@@ -361,9 +361,9 @@ export type CartUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CartNullableScalarRelationFilter = {
@@ -382,9 +382,9 @@ export type CartCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   courseName?: Prisma.SortOrder
   lecturer?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CartAvgOrderByAggregateInput = {
@@ -397,9 +397,9 @@ export type CartMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   courseName?: Prisma.SortOrder
   lecturer?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CartMinOrderByAggregateInput = {
@@ -407,9 +407,9 @@ export type CartMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   courseName?: Prisma.SortOrder
   lecturer?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CartSumOrderByAggregateInput = {
@@ -471,9 +471,9 @@ export type CartUpdateOneRequiredWithoutItemsNestedInput = {
 export type CartCreateWithoutUserInput = {
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   items?: Prisma.CartItemCreateNestedManyWithoutCartInput
 }
 
@@ -481,9 +481,9 @@ export type CartUncheckedCreateWithoutUserInput = {
   id?: number
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   items?: Prisma.CartItemUncheckedCreateNestedManyWithoutCartInput
 }
 
@@ -506,9 +506,9 @@ export type CartUpdateToOneWithWhereWithoutUserInput = {
 export type CartUpdateWithoutUserInput = {
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUpdateManyWithoutCartNestedInput
 }
 
@@ -516,18 +516,18 @@ export type CartUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.CartItemUncheckedUpdateManyWithoutCartNestedInput
 }
 
 export type CartCreateWithoutItemsInput = {
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCartInput
 }
 
@@ -536,9 +536,9 @@ export type CartUncheckedCreateWithoutItemsInput = {
   userId: number
   courseName?: string | null
   lecturer?: string | null
-  updatedAt?: Date | string
   createdAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type CartCreateOrConnectWithoutItemsInput = {
@@ -560,9 +560,9 @@ export type CartUpdateToOneWithWhereWithoutItemsInput = {
 export type CartUpdateWithoutItemsInput = {
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCartNestedInput
 }
 
@@ -571,9 +571,9 @@ export type CartUncheckedUpdateWithoutItemsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   courseName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lecturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -612,9 +612,9 @@ export type CartSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userId?: boolean
   courseName?: boolean
   lecturer?: boolean
-  updatedAt?: boolean
   createdAt?: boolean
   isDestroyed?: boolean
+  updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Cart$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.CartCountOutputTypeDefaultArgs<ExtArgs>
@@ -627,12 +627,12 @@ export type CartSelectScalar = {
   userId?: boolean
   courseName?: boolean
   lecturer?: boolean
-  updatedAt?: boolean
   createdAt?: boolean
   isDestroyed?: boolean
+  updatedAt?: boolean
 }
 
-export type CartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "courseName" | "lecturer" | "updatedAt" | "createdAt" | "isDestroyed", ExtArgs["result"]["cart"]>
+export type CartOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "courseName" | "lecturer" | "createdAt" | "isDestroyed" | "updatedAt", ExtArgs["result"]["cart"]>
 export type CartInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Cart$itemsArgs<ExtArgs>
@@ -650,9 +650,9 @@ export type $CartPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     userId: number
     courseName: string | null
     lecturer: string | null
-    updatedAt: Date
     createdAt: Date
     isDestroyed: boolean
+    updatedAt: Date
   }, ExtArgs["result"]["cart"]>
   composites: {}
 }
@@ -1028,9 +1028,9 @@ export interface CartFieldRefs {
   readonly userId: Prisma.FieldRef<"Cart", 'Int'>
   readonly courseName: Prisma.FieldRef<"Cart", 'String'>
   readonly lecturer: Prisma.FieldRef<"Cart", 'String'>
-  readonly updatedAt: Prisma.FieldRef<"Cart", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Cart", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Cart", 'Boolean'>
+  readonly updatedAt: Prisma.FieldRef<"Cart", 'DateTime'>
 }
     
 

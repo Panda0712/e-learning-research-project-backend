@@ -53,8 +53,8 @@ export type AssessmentMinAggregateOutputType = {
   totalSubmissions: number | null
   averageScore: number | null
   createdAt: Date | null
-  updatedAt: Date | null
   isDestroyed: boolean | null
+  updatedAt: Date | null
 }
 
 export type AssessmentMaxAggregateOutputType = {
@@ -68,8 +68,8 @@ export type AssessmentMaxAggregateOutputType = {
   totalSubmissions: number | null
   averageScore: number | null
   createdAt: Date | null
-  updatedAt: Date | null
   isDestroyed: boolean | null
+  updatedAt: Date | null
 }
 
 export type AssessmentCountAggregateOutputType = {
@@ -83,8 +83,8 @@ export type AssessmentCountAggregateOutputType = {
   totalSubmissions: number
   averageScore: number
   createdAt: number
-  updatedAt: number
   isDestroyed: number
+  updatedAt: number
   _all: number
 }
 
@@ -116,8 +116,8 @@ export type AssessmentMinAggregateInputType = {
   totalSubmissions?: true
   averageScore?: true
   createdAt?: true
-  updatedAt?: true
   isDestroyed?: true
+  updatedAt?: true
 }
 
 export type AssessmentMaxAggregateInputType = {
@@ -131,8 +131,8 @@ export type AssessmentMaxAggregateInputType = {
   totalSubmissions?: true
   averageScore?: true
   createdAt?: true
-  updatedAt?: true
   isDestroyed?: true
+  updatedAt?: true
 }
 
 export type AssessmentCountAggregateInputType = {
@@ -146,8 +146,8 @@ export type AssessmentCountAggregateInputType = {
   totalSubmissions?: true
   averageScore?: true
   createdAt?: true
-  updatedAt?: true
   isDestroyed?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -248,8 +248,8 @@ export type AssessmentGroupByOutputType = {
   totalSubmissions: number | null
   averageScore: number | null
   createdAt: Date
-  updatedAt: Date
   isDestroyed: boolean
+  updatedAt: Date
   _count: AssessmentCountAggregateOutputType | null
   _avg: AssessmentAvgAggregateOutputType | null
   _sum: AssessmentSumAggregateOutputType | null
@@ -286,11 +286,11 @@ export type AssessmentWhereInput = {
   totalSubmissions?: Prisma.IntNullableFilter<"Assessment"> | number | null
   averageScore?: Prisma.FloatNullableFilter<"Assessment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Assessment"> | boolean
-  submissions?: Prisma.SubmissionListRelationFilter
+  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   lesson?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
+  submissions?: Prisma.SubmissionListRelationFilter
 }
 
 export type AssessmentOrderByWithRelationInput = {
@@ -304,11 +304,11 @@ export type AssessmentOrderByWithRelationInput = {
   totalSubmissions?: Prisma.SortOrderInput | Prisma.SortOrder
   averageScore?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
-  submissions?: Prisma.SubmissionOrderByRelationAggregateInput
+  updatedAt?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   lesson?: Prisma.LessonOrderByWithRelationInput
+  submissions?: Prisma.SubmissionOrderByRelationAggregateInput
   _relevance?: Prisma.AssessmentOrderByRelevanceInput
 }
 
@@ -326,11 +326,11 @@ export type AssessmentWhereUniqueInput = Prisma.AtLeast<{
   totalSubmissions?: Prisma.IntNullableFilter<"Assessment"> | number | null
   averageScore?: Prisma.FloatNullableFilter<"Assessment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Assessment"> | boolean
-  submissions?: Prisma.SubmissionListRelationFilter
+  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   lesson?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
+  submissions?: Prisma.SubmissionListRelationFilter
 }, "id">
 
 export type AssessmentOrderByWithAggregationInput = {
@@ -344,8 +344,8 @@ export type AssessmentOrderByWithAggregationInput = {
   totalSubmissions?: Prisma.SortOrderInput | Prisma.SortOrder
   averageScore?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.AssessmentCountOrderByAggregateInput
   _avg?: Prisma.AssessmentAvgOrderByAggregateInput
   _max?: Prisma.AssessmentMaxOrderByAggregateInput
@@ -367,8 +367,8 @@ export type AssessmentScalarWhereWithAggregatesInput = {
   totalSubmissions?: Prisma.IntNullableWithAggregatesFilter<"Assessment"> | number | null
   averageScore?: Prisma.FloatNullableWithAggregatesFilter<"Assessment"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Assessment"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Assessment"> | Date | string
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"Assessment"> | boolean
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Assessment"> | Date | string
 }
 
 export type AssessmentCreateInput = {
@@ -379,11 +379,11 @@ export type AssessmentCreateInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
-  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
+  updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutAssessmentsInput
   lesson?: Prisma.LessonCreateNestedOneWithoutAssessmentsInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
 }
 
 export type AssessmentUncheckedCreateInput = {
@@ -397,8 +397,8 @@ export type AssessmentUncheckedCreateInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutAssessmentInput
 }
 
@@ -410,11 +410,11 @@ export type AssessmentUpdateInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutAssessmentsNestedInput
   lesson?: Prisma.LessonUpdateOneWithoutAssessmentsNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
 }
 
 export type AssessmentUncheckedUpdateInput = {
@@ -428,8 +428,8 @@ export type AssessmentUncheckedUpdateInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutAssessmentNestedInput
 }
 
@@ -444,8 +444,8 @@ export type AssessmentCreateManyInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type AssessmentUpdateManyMutationInput = {
@@ -456,8 +456,8 @@ export type AssessmentUpdateManyMutationInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentUncheckedUpdateManyInput = {
@@ -471,8 +471,8 @@ export type AssessmentUncheckedUpdateManyInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentListRelationFilter = {
@@ -507,8 +507,8 @@ export type AssessmentCountOrderByAggregateInput = {
   totalSubmissions?: Prisma.SortOrder
   averageScore?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AssessmentAvgOrderByAggregateInput = {
@@ -530,8 +530,8 @@ export type AssessmentMaxOrderByAggregateInput = {
   totalSubmissions?: Prisma.SortOrder
   averageScore?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AssessmentMinOrderByAggregateInput = {
@@ -545,8 +545,8 @@ export type AssessmentMinOrderByAggregateInput = {
   totalSubmissions?: Prisma.SortOrder
   averageScore?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type AssessmentSumOrderByAggregateInput = {
@@ -663,10 +663,10 @@ export type AssessmentCreateWithoutCourseInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
-  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
+  updatedAt?: Date | string
   lesson?: Prisma.LessonCreateNestedOneWithoutAssessmentsInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
 }
 
 export type AssessmentUncheckedCreateWithoutCourseInput = {
@@ -679,8 +679,8 @@ export type AssessmentUncheckedCreateWithoutCourseInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutAssessmentInput
 }
 
@@ -724,8 +724,8 @@ export type AssessmentScalarWhereInput = {
   totalSubmissions?: Prisma.IntNullableFilter<"Assessment"> | number | null
   averageScore?: Prisma.FloatNullableFilter<"Assessment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Assessment"> | boolean
+  updatedAt?: Prisma.DateTimeFilter<"Assessment"> | Date | string
 }
 
 export type AssessmentCreateWithoutLessonInput = {
@@ -736,10 +736,10 @@ export type AssessmentCreateWithoutLessonInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
-  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
+  updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutAssessmentsInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutAssessmentInput
 }
 
 export type AssessmentUncheckedCreateWithoutLessonInput = {
@@ -752,8 +752,8 @@ export type AssessmentUncheckedCreateWithoutLessonInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutAssessmentInput
 }
 
@@ -791,8 +791,8 @@ export type AssessmentCreateWithoutSubmissionsInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutAssessmentsInput
   lesson?: Prisma.LessonCreateNestedOneWithoutAssessmentsInput
 }
@@ -808,8 +808,8 @@ export type AssessmentUncheckedCreateWithoutSubmissionsInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type AssessmentCreateOrConnectWithoutSubmissionsInput = {
@@ -836,8 +836,8 @@ export type AssessmentUpdateWithoutSubmissionsInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutAssessmentsNestedInput
   lesson?: Prisma.LessonUpdateOneWithoutAssessmentsNestedInput
 }
@@ -853,8 +853,8 @@ export type AssessmentUncheckedUpdateWithoutSubmissionsInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentCreateManyCourseInput = {
@@ -867,8 +867,8 @@ export type AssessmentCreateManyCourseInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type AssessmentUpdateWithoutCourseInput = {
@@ -879,10 +879,10 @@ export type AssessmentUpdateWithoutCourseInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lesson?: Prisma.LessonUpdateOneWithoutAssessmentsNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
 }
 
 export type AssessmentUncheckedUpdateWithoutCourseInput = {
@@ -895,8 +895,8 @@ export type AssessmentUncheckedUpdateWithoutCourseInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutAssessmentNestedInput
 }
 
@@ -910,8 +910,8 @@ export type AssessmentUncheckedUpdateManyWithoutCourseInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AssessmentCreateManyLessonInput = {
@@ -924,8 +924,8 @@ export type AssessmentCreateManyLessonInput = {
   totalSubmissions?: number | null
   averageScore?: number | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   isDestroyed?: boolean
+  updatedAt?: Date | string
 }
 
 export type AssessmentUpdateWithoutLessonInput = {
@@ -936,10 +936,10 @@ export type AssessmentUpdateWithoutLessonInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutAssessmentsNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutAssessmentNestedInput
 }
 
 export type AssessmentUncheckedUpdateWithoutLessonInput = {
@@ -952,8 +952,8 @@ export type AssessmentUncheckedUpdateWithoutLessonInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutAssessmentNestedInput
 }
 
@@ -967,8 +967,8 @@ export type AssessmentUncheckedUpdateManyWithoutLessonInput = {
   totalSubmissions?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   averageScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1013,11 +1013,11 @@ export type AssessmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   totalSubmissions?: boolean
   averageScore?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   isDestroyed?: boolean
-  submissions?: boolean | Prisma.Assessment$submissionsArgs<ExtArgs>
+  updatedAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   lesson?: boolean | Prisma.Assessment$lessonArgs<ExtArgs>
+  submissions?: boolean | Prisma.Assessment$submissionsArgs<ExtArgs>
   _count?: boolean | Prisma.AssessmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["assessment"]>
 
@@ -1034,24 +1034,24 @@ export type AssessmentSelectScalar = {
   totalSubmissions?: boolean
   averageScore?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   isDestroyed?: boolean
+  updatedAt?: boolean
 }
 
-export type AssessmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "lessonId" | "title" | "type" | "dueDate" | "status" | "totalSubmissions" | "averageScore" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["assessment"]>
+export type AssessmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "lessonId" | "title" | "type" | "dueDate" | "status" | "totalSubmissions" | "averageScore" | "createdAt" | "isDestroyed" | "updatedAt", ExtArgs["result"]["assessment"]>
 export type AssessmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  submissions?: boolean | Prisma.Assessment$submissionsArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   lesson?: boolean | Prisma.Assessment$lessonArgs<ExtArgs>
+  submissions?: boolean | Prisma.Assessment$submissionsArgs<ExtArgs>
   _count?: boolean | Prisma.AssessmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $AssessmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Assessment"
   objects: {
-    submissions: Prisma.$SubmissionPayload<ExtArgs>[]
     course: Prisma.$CoursePayload<ExtArgs>
     lesson: Prisma.$LessonPayload<ExtArgs> | null
+    submissions: Prisma.$SubmissionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1064,8 +1064,8 @@ export type $AssessmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     totalSubmissions: number | null
     averageScore: number | null
     createdAt: Date
-    updatedAt: Date
     isDestroyed: boolean
+    updatedAt: Date
   }, ExtArgs["result"]["assessment"]>
   composites: {}
 }
@@ -1406,9 +1406,9 @@ readonly fields: AssessmentFieldRefs;
  */
 export interface Prisma__AssessmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  submissions<T extends Prisma.Assessment$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Assessment$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lesson<T extends Prisma.Assessment$lessonArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Assessment$lessonArgs<ExtArgs>>): Prisma.Prisma__LessonClient<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  submissions<T extends Prisma.Assessment$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Assessment$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1448,8 +1448,8 @@ export interface AssessmentFieldRefs {
   readonly totalSubmissions: Prisma.FieldRef<"Assessment", 'Int'>
   readonly averageScore: Prisma.FieldRef<"Assessment", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Assessment", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Assessment", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Assessment", 'Boolean'>
+  readonly updatedAt: Prisma.FieldRef<"Assessment", 'DateTime'>
 }
     
 
@@ -1793,6 +1793,25 @@ export type AssessmentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Assessment.lesson
+ */
+export type Assessment$lessonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lesson
+   */
+  select?: Prisma.LessonSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lesson
+   */
+  omit?: Prisma.LessonOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonInclude<ExtArgs> | null
+  where?: Prisma.LessonWhereInput
+}
+
+/**
  * Assessment.submissions
  */
 export type Assessment$submissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1814,25 +1833,6 @@ export type Assessment$submissionsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.SubmissionScalarFieldEnum | Prisma.SubmissionScalarFieldEnum[]
-}
-
-/**
- * Assessment.lesson
- */
-export type Assessment$lessonArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lesson
-   */
-  select?: Prisma.LessonSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lesson
-   */
-  omit?: Prisma.LessonOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LessonInclude<ExtArgs> | null
-  where?: Prisma.LessonWhereInput
 }
 
 /**

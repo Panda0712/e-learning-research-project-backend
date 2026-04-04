@@ -38,35 +38,35 @@ export type ResourceSumAggregateOutputType = {
 
 export type ResourceMinAggregateOutputType = {
   id: number | null
-  publicId: string | null
   fileSize: number | null
   fileType: string | null
   fileUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  publicId: string | null
 }
 
 export type ResourceMaxAggregateOutputType = {
   id: number | null
-  publicId: string | null
   fileSize: number | null
   fileType: string | null
   fileUrl: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  publicId: string | null
 }
 
 export type ResourceCountAggregateOutputType = {
   id: number
-  publicId: number
   fileSize: number
   fileType: number
   fileUrl: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
+  publicId: number
   _all: number
 }
 
@@ -83,35 +83,35 @@ export type ResourceSumAggregateInputType = {
 
 export type ResourceMinAggregateInputType = {
   id?: true
-  publicId?: true
   fileSize?: true
   fileType?: true
   fileUrl?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  publicId?: true
 }
 
 export type ResourceMaxAggregateInputType = {
   id?: true
-  publicId?: true
   fileSize?: true
   fileType?: true
   fileUrl?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  publicId?: true
 }
 
 export type ResourceCountAggregateInputType = {
   id?: true
-  publicId?: true
   fileSize?: true
   fileType?: true
   fileUrl?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  publicId?: true
   _all?: true
 }
 
@@ -203,13 +203,13 @@ export type ResourceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type ResourceGroupByOutputType = {
   id: number
-  publicId: string
   fileSize: number | null
   fileType: string | null
   fileUrl: string
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
+  publicId: string
   _count: ResourceCountAggregateOutputType | null
   _avg: ResourceAvgAggregateOutputType | null
   _sum: ResourceSumAggregateOutputType | null
@@ -237,38 +237,38 @@ export type ResourceWhereInput = {
   OR?: Prisma.ResourceWhereInput[]
   NOT?: Prisma.ResourceWhereInput | Prisma.ResourceWhereInput[]
   id?: Prisma.IntFilter<"Resource"> | number
-  publicId?: Prisma.StringFilter<"Resource"> | string
   fileSize?: Prisma.IntNullableFilter<"Resource"> | number | null
   fileType?: Prisma.StringNullableFilter<"Resource"> | string | null
   fileUrl?: Prisma.StringFilter<"Resource"> | string
   createdAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Resource"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Resource"> | boolean
-  userAvatar?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  publicId?: Prisma.StringFilter<"Resource"> | string
+  blogThumbnail?: Prisma.XOR<Prisma.BlogPostNullableScalarRelationFilter, Prisma.BlogPostWhereInput> | null
+  courseIntroVideo?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
   courseThumbnail?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  lecturerProfileFile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
   lessonFile?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
   lessonVideo?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
-  blogThumbnail?: Prisma.XOR<Prisma.BlogPostNullableScalarRelationFilter, Prisma.BlogPostWhereInput> | null
-  lecturerProfileFile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
-  courseIntroVideo?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  userAvatar?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ResourceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  publicId?: Prisma.SortOrder
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   fileType?: Prisma.SortOrderInput | Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
-  userAvatar?: Prisma.UserOrderByWithRelationInput
+  publicId?: Prisma.SortOrder
+  blogThumbnail?: Prisma.BlogPostOrderByWithRelationInput
+  courseIntroVideo?: Prisma.CourseOrderByWithRelationInput
   courseThumbnail?: Prisma.CourseOrderByWithRelationInput
+  lecturerProfileFile?: Prisma.LecturerProfileOrderByWithRelationInput
   lessonFile?: Prisma.LessonOrderByWithRelationInput
   lessonVideo?: Prisma.LessonOrderByWithRelationInput
-  blogThumbnail?: Prisma.BlogPostOrderByWithRelationInput
-  lecturerProfileFile?: Prisma.LecturerProfileOrderByWithRelationInput
-  courseIntroVideo?: Prisma.CourseOrderByWithRelationInput
+  userAvatar?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.ResourceOrderByRelevanceInput
 }
 
@@ -284,24 +284,24 @@ export type ResourceWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Resource"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Resource"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"Resource"> | boolean
-  userAvatar?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  blogThumbnail?: Prisma.XOR<Prisma.BlogPostNullableScalarRelationFilter, Prisma.BlogPostWhereInput> | null
+  courseIntroVideo?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
   courseThumbnail?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  lecturerProfileFile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
   lessonFile?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
   lessonVideo?: Prisma.XOR<Prisma.LessonNullableScalarRelationFilter, Prisma.LessonWhereInput> | null
-  blogThumbnail?: Prisma.XOR<Prisma.BlogPostNullableScalarRelationFilter, Prisma.BlogPostWhereInput> | null
-  lecturerProfileFile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
-  courseIntroVideo?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  userAvatar?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "publicId">
 
 export type ResourceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  publicId?: Prisma.SortOrder
   fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
   fileType?: Prisma.SortOrderInput | Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
   _count?: Prisma.ResourceCountOrderByAggregateInput
   _avg?: Prisma.ResourceAvgOrderByAggregateInput
   _max?: Prisma.ResourceMaxOrderByAggregateInput
@@ -314,115 +314,115 @@ export type ResourceScalarWhereWithAggregatesInput = {
   OR?: Prisma.ResourceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ResourceScalarWhereWithAggregatesInput | Prisma.ResourceScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Resource"> | number
-  publicId?: Prisma.StringWithAggregatesFilter<"Resource"> | string
   fileSize?: Prisma.IntNullableWithAggregatesFilter<"Resource"> | number | null
   fileType?: Prisma.StringNullableWithAggregatesFilter<"Resource"> | string | null
   fileUrl?: Prisma.StringWithAggregatesFilter<"Resource"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Resource"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"Resource"> | boolean
+  publicId?: Prisma.StringWithAggregatesFilter<"Resource"> | string
 }
 
 export type ResourceCreateInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUpdateInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceCreateManyInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  publicId: string
 }
 
 export type ResourceUpdateManyMutationInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ResourceUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ResourceNullableScalarRelationFilter = {
@@ -438,13 +438,13 @@ export type ResourceOrderByRelevanceInput = {
 
 export type ResourceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publicId?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
 }
 
 export type ResourceAvgOrderByAggregateInput = {
@@ -454,24 +454,24 @@ export type ResourceAvgOrderByAggregateInput = {
 
 export type ResourceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publicId?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
 }
 
 export type ResourceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  publicId?: Prisma.SortOrder
   fileSize?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  publicId?: Prisma.SortOrder
 }
 
 export type ResourceSumOrderByAggregateInput = {
@@ -495,26 +495,16 @@ export type ResourceUpdateOneWithoutUserAvatarNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResourceUpdateToOneWithWhereWithoutUserAvatarInput, Prisma.ResourceUpdateWithoutUserAvatarInput>, Prisma.ResourceUncheckedUpdateWithoutUserAvatarInput>
 }
 
-export type ResourceCreateNestedOneWithoutCourseThumbnailInput = {
-  create?: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
-  connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutCourseThumbnailInput
-  connect?: Prisma.ResourceWhereUniqueInput
-}
-
 export type ResourceCreateNestedOneWithoutCourseIntroVideoInput = {
   create?: Prisma.XOR<Prisma.ResourceCreateWithoutCourseIntroVideoInput, Prisma.ResourceUncheckedCreateWithoutCourseIntroVideoInput>
   connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutCourseIntroVideoInput
   connect?: Prisma.ResourceWhereUniqueInput
 }
 
-export type ResourceUpdateOneWithoutCourseThumbnailNestedInput = {
+export type ResourceCreateNestedOneWithoutCourseThumbnailInput = {
   create?: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
   connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutCourseThumbnailInput
-  upsert?: Prisma.ResourceUpsertWithoutCourseThumbnailInput
-  disconnect?: Prisma.ResourceWhereInput | boolean
-  delete?: Prisma.ResourceWhereInput | boolean
   connect?: Prisma.ResourceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ResourceUpdateToOneWithWhereWithoutCourseThumbnailInput, Prisma.ResourceUpdateWithoutCourseThumbnailInput>, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
 }
 
 export type ResourceUpdateOneWithoutCourseIntroVideoNestedInput = {
@@ -525,6 +515,16 @@ export type ResourceUpdateOneWithoutCourseIntroVideoNestedInput = {
   delete?: Prisma.ResourceWhereInput | boolean
   connect?: Prisma.ResourceWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResourceUpdateToOneWithWhereWithoutCourseIntroVideoInput, Prisma.ResourceUpdateWithoutCourseIntroVideoInput>, Prisma.ResourceUncheckedUpdateWithoutCourseIntroVideoInput>
+}
+
+export type ResourceUpdateOneWithoutCourseThumbnailNestedInput = {
+  create?: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
+  connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutCourseThumbnailInput
+  upsert?: Prisma.ResourceUpsertWithoutCourseThumbnailInput
+  disconnect?: Prisma.ResourceWhereInput | boolean
+  delete?: Prisma.ResourceWhereInput | boolean
+  connect?: Prisma.ResourceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ResourceUpdateToOneWithWhereWithoutCourseThumbnailInput, Prisma.ResourceUpdateWithoutCourseThumbnailInput>, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
 }
 
 export type ResourceCreateNestedOneWithoutLessonFileInput = {
@@ -592,36 +592,36 @@ export type ResourceUpdateOneWithoutLecturerProfileFileNestedInput = {
 }
 
 export type ResourceCreateWithoutUserAvatarInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
 }
 
 export type ResourceUncheckedCreateWithoutUserAvatarInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
 }
 
 export type ResourceCreateOrConnectWithoutUserAvatarInput = {
@@ -641,107 +641,69 @@ export type ResourceUpdateToOneWithWhereWithoutUserAvatarInput = {
 }
 
 export type ResourceUpdateWithoutUserAvatarInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutUserAvatarInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
-}
-
-export type ResourceCreateWithoutCourseThumbnailInput = {
-  publicId: string
-  fileSize?: number | null
-  fileType?: string | null
-  fileUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
-  lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
-  lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
-}
-
-export type ResourceUncheckedCreateWithoutCourseThumbnailInput = {
-  id?: number
-  publicId: string
-  fileSize?: number | null
-  fileType?: string | null
-  fileUrl: string
-  createdAt?: Date | string
-  updatedAt?: Date | string | null
-  isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
-  lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
-  lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
-}
-
-export type ResourceCreateOrConnectWithoutCourseThumbnailInput = {
-  where: Prisma.ResourceWhereUniqueInput
-  create: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
 }
 
 export type ResourceCreateWithoutCourseIntroVideoInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
   courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateWithoutCourseIntroVideoInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
   courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceCreateOrConnectWithoutCourseIntroVideoInput = {
@@ -749,48 +711,42 @@ export type ResourceCreateOrConnectWithoutCourseIntroVideoInput = {
   create: Prisma.XOR<Prisma.ResourceCreateWithoutCourseIntroVideoInput, Prisma.ResourceUncheckedCreateWithoutCourseIntroVideoInput>
 }
 
-export type ResourceUpsertWithoutCourseThumbnailInput = {
-  update: Prisma.XOR<Prisma.ResourceUpdateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
+export type ResourceCreateWithoutCourseThumbnailInput = {
+  fileSize?: number | null
+  fileType?: string | null
+  fileUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
+  lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
+  lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
+}
+
+export type ResourceUncheckedCreateWithoutCourseThumbnailInput = {
+  id?: number
+  fileSize?: number | null
+  fileType?: string | null
+  fileUrl: string
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
+  lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
+  lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
+}
+
+export type ResourceCreateOrConnectWithoutCourseThumbnailInput = {
+  where: Prisma.ResourceWhereUniqueInput
   create: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
-  where?: Prisma.ResourceWhereInput
-}
-
-export type ResourceUpdateToOneWithWhereWithoutCourseThumbnailInput = {
-  where?: Prisma.ResourceWhereInput
-  data: Prisma.XOR<Prisma.ResourceUpdateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
-}
-
-export type ResourceUpdateWithoutCourseThumbnailInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
-  lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
-  lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
-}
-
-export type ResourceUncheckedUpdateWithoutCourseThumbnailInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
-  lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
-  lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
 }
 
 export type ResourceUpsertWithoutCourseIntroVideoInput = {
@@ -805,69 +761,113 @@ export type ResourceUpdateToOneWithWhereWithoutCourseIntroVideoInput = {
 }
 
 export type ResourceUpdateWithoutCourseIntroVideoInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
   courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutCourseIntroVideoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
   courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
+}
+
+export type ResourceUpsertWithoutCourseThumbnailInput = {
+  update: Prisma.XOR<Prisma.ResourceUpdateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
+  create: Prisma.XOR<Prisma.ResourceCreateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedCreateWithoutCourseThumbnailInput>
+  where?: Prisma.ResourceWhereInput
+}
+
+export type ResourceUpdateToOneWithWhereWithoutCourseThumbnailInput = {
+  where?: Prisma.ResourceWhereInput
+  data: Prisma.XOR<Prisma.ResourceUpdateWithoutCourseThumbnailInput, Prisma.ResourceUncheckedUpdateWithoutCourseThumbnailInput>
+}
+
+export type ResourceUpdateWithoutCourseThumbnailInput = {
+  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
+  lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
+  lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
+}
+
+export type ResourceUncheckedUpdateWithoutCourseThumbnailInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
   lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
+  lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
+  lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceCreateWithoutLessonFileInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
-  courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
-  lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
+  publicId: string
   blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
+  lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateWithoutLessonFileInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
-  courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
-  lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
+  publicId: string
   blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
+  lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceCreateOrConnectWithoutLessonFileInput = {
@@ -876,36 +876,36 @@ export type ResourceCreateOrConnectWithoutLessonFileInput = {
 }
 
 export type ResourceCreateWithoutLessonVideoInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
-  courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
-  lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
+  publicId: string
   blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
+  lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateWithoutLessonVideoInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
-  courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
-  lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
+  publicId: string
   blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
+  lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceCreateOrConnectWithoutLessonVideoInput = {
@@ -925,36 +925,36 @@ export type ResourceUpdateToOneWithWhereWithoutLessonFileInput = {
 }
 
 export type ResourceUpdateWithoutLessonFileInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
-  courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
-  lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
+  lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutLessonFileInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
-  courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
-  lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
+  courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
+  lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUpsertWithoutLessonVideoInput = {
@@ -969,69 +969,69 @@ export type ResourceUpdateToOneWithWhereWithoutLessonVideoInput = {
 }
 
 export type ResourceUpdateWithoutLessonVideoInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
-  courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
-  lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
+  lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutLessonVideoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
-  courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
-  lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
+  courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
+  lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceCreateWithoutBlogThumbnailInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
+  publicId: string
+  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  lecturerProfileFile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateWithoutBlogThumbnailInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
+  publicId: string
+  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
   lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerFileInput
-  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceCreateOrConnectWithoutBlogThumbnailInput = {
@@ -1051,69 +1051,69 @@ export type ResourceUpdateToOneWithWhereWithoutBlogThumbnailInput = {
 }
 
 export type ResourceUpdateWithoutBlogThumbnailInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutBlogThumbnailInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
+  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
   lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
-  lecturerProfileFile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerFileNestedInput
-  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceCreateWithoutLecturerProfileFileInput = {
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseCreateNestedOneWithoutThumbnailInput
   lessonFile?: Prisma.LessonCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostCreateNestedOneWithoutThumbnailInput
-  courseIntroVideo?: Prisma.CourseCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceUncheckedCreateWithoutLecturerProfileFileInput = {
   id?: number
-  publicId: string
   fileSize?: number | null
   fileType?: string | null
   fileUrl: string
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
-  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
+  publicId: string
+  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
+  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
   courseThumbnail?: Prisma.CourseUncheckedCreateNestedOneWithoutThumbnailInput
   lessonFile?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonFileInput
   lessonVideo?: Prisma.LessonUncheckedCreateNestedOneWithoutLessonVideoInput
-  blogThumbnail?: Prisma.BlogPostUncheckedCreateNestedOneWithoutThumbnailInput
-  courseIntroVideo?: Prisma.CourseUncheckedCreateNestedOneWithoutIntroVideoInput
+  userAvatar?: Prisma.UserUncheckedCreateNestedOneWithoutAvatarInput
 }
 
 export type ResourceCreateOrConnectWithoutLecturerProfileFileInput = {
@@ -1133,102 +1133,102 @@ export type ResourceUpdateToOneWithWhereWithoutLecturerProfileFileInput = {
 }
 
 export type ResourceUpdateWithoutLecturerProfileFileInput = {
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUpdateOneWithoutThumbnailNestedInput
   lessonFile?: Prisma.LessonUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUpdateOneWithoutThumbnailNestedInput
-  courseIntroVideo?: Prisma.CourseUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUpdateOneWithoutAvatarNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutLecturerProfileFileInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  publicId?: Prisma.StringFieldUpdateOperationsInput | string
   fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
+  publicId?: Prisma.StringFieldUpdateOperationsInput | string
+  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
+  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
   courseThumbnail?: Prisma.CourseUncheckedUpdateOneWithoutThumbnailNestedInput
   lessonFile?: Prisma.LessonUncheckedUpdateOneWithoutLessonFileNestedInput
   lessonVideo?: Prisma.LessonUncheckedUpdateOneWithoutLessonVideoNestedInput
-  blogThumbnail?: Prisma.BlogPostUncheckedUpdateOneWithoutThumbnailNestedInput
-  courseIntroVideo?: Prisma.CourseUncheckedUpdateOneWithoutIntroVideoNestedInput
+  userAvatar?: Prisma.UserUncheckedUpdateOneWithoutAvatarNestedInput
 }
 
 
 
 export type ResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  publicId?: boolean
   fileSize?: boolean
   fileType?: boolean
   fileUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
-  userAvatar?: boolean | Prisma.Resource$userAvatarArgs<ExtArgs>
+  publicId?: boolean
+  blogThumbnail?: boolean | Prisma.Resource$blogThumbnailArgs<ExtArgs>
+  courseIntroVideo?: boolean | Prisma.Resource$courseIntroVideoArgs<ExtArgs>
   courseThumbnail?: boolean | Prisma.Resource$courseThumbnailArgs<ExtArgs>
+  lecturerProfileFile?: boolean | Prisma.Resource$lecturerProfileFileArgs<ExtArgs>
   lessonFile?: boolean | Prisma.Resource$lessonFileArgs<ExtArgs>
   lessonVideo?: boolean | Prisma.Resource$lessonVideoArgs<ExtArgs>
-  blogThumbnail?: boolean | Prisma.Resource$blogThumbnailArgs<ExtArgs>
-  lecturerProfileFile?: boolean | Prisma.Resource$lecturerProfileFileArgs<ExtArgs>
-  courseIntroVideo?: boolean | Prisma.Resource$courseIntroVideoArgs<ExtArgs>
+  userAvatar?: boolean | Prisma.Resource$userAvatarArgs<ExtArgs>
 }, ExtArgs["result"]["resource"]>
 
 
 
 export type ResourceSelectScalar = {
   id?: boolean
-  publicId?: boolean
   fileSize?: boolean
   fileType?: boolean
   fileUrl?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
+  publicId?: boolean
 }
 
-export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "publicId" | "fileSize" | "fileType" | "fileUrl" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["resource"]>
+export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fileSize" | "fileType" | "fileUrl" | "createdAt" | "updatedAt" | "isDestroyed" | "publicId", ExtArgs["result"]["resource"]>
 export type ResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userAvatar?: boolean | Prisma.Resource$userAvatarArgs<ExtArgs>
+  blogThumbnail?: boolean | Prisma.Resource$blogThumbnailArgs<ExtArgs>
+  courseIntroVideo?: boolean | Prisma.Resource$courseIntroVideoArgs<ExtArgs>
   courseThumbnail?: boolean | Prisma.Resource$courseThumbnailArgs<ExtArgs>
+  lecturerProfileFile?: boolean | Prisma.Resource$lecturerProfileFileArgs<ExtArgs>
   lessonFile?: boolean | Prisma.Resource$lessonFileArgs<ExtArgs>
   lessonVideo?: boolean | Prisma.Resource$lessonVideoArgs<ExtArgs>
-  blogThumbnail?: boolean | Prisma.Resource$blogThumbnailArgs<ExtArgs>
-  lecturerProfileFile?: boolean | Prisma.Resource$lecturerProfileFileArgs<ExtArgs>
-  courseIntroVideo?: boolean | Prisma.Resource$courseIntroVideoArgs<ExtArgs>
+  userAvatar?: boolean | Prisma.Resource$userAvatarArgs<ExtArgs>
 }
 
 export type $ResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Resource"
   objects: {
-    userAvatar: Prisma.$UserPayload<ExtArgs> | null
+    blogThumbnail: Prisma.$BlogPostPayload<ExtArgs> | null
+    courseIntroVideo: Prisma.$CoursePayload<ExtArgs> | null
     courseThumbnail: Prisma.$CoursePayload<ExtArgs> | null
+    lecturerProfileFile: Prisma.$LecturerProfilePayload<ExtArgs> | null
     lessonFile: Prisma.$LessonPayload<ExtArgs> | null
     lessonVideo: Prisma.$LessonPayload<ExtArgs> | null
-    blogThumbnail: Prisma.$BlogPostPayload<ExtArgs> | null
-    lecturerProfileFile: Prisma.$LecturerProfilePayload<ExtArgs> | null
-    courseIntroVideo: Prisma.$CoursePayload<ExtArgs> | null
+    userAvatar: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    publicId: string
     fileSize: number | null
     fileType: string | null
     fileUrl: string
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
+    publicId: string
   }, ExtArgs["result"]["resource"]>
   composites: {}
 }
@@ -1569,13 +1569,13 @@ readonly fields: ResourceFieldRefs;
  */
 export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  userAvatar<T extends Prisma.Resource$userAvatarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$userAvatarArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  blogThumbnail<T extends Prisma.Resource$blogThumbnailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$blogThumbnailArgs<ExtArgs>>): Prisma.Prisma__BlogPostClient<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  courseIntroVideo<T extends Prisma.Resource$courseIntroVideoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$courseIntroVideoArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   courseThumbnail<T extends Prisma.Resource$courseThumbnailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$courseThumbnailArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  lecturerProfileFile<T extends Prisma.Resource$lecturerProfileFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$lecturerProfileFileArgs<ExtArgs>>): Prisma.Prisma__LecturerProfileClient<runtime.Types.Result.GetResult<Prisma.$LecturerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lessonFile<T extends Prisma.Resource$lessonFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$lessonFileArgs<ExtArgs>>): Prisma.Prisma__LessonClient<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lessonVideo<T extends Prisma.Resource$lessonVideoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$lessonVideoArgs<ExtArgs>>): Prisma.Prisma__LessonClient<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  blogThumbnail<T extends Prisma.Resource$blogThumbnailArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$blogThumbnailArgs<ExtArgs>>): Prisma.Prisma__BlogPostClient<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  lecturerProfileFile<T extends Prisma.Resource$lecturerProfileFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$lecturerProfileFileArgs<ExtArgs>>): Prisma.Prisma__LecturerProfileClient<runtime.Types.Result.GetResult<Prisma.$LecturerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  courseIntroVideo<T extends Prisma.Resource$courseIntroVideoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$courseIntroVideoArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  userAvatar<T extends Prisma.Resource$userAvatarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$userAvatarArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1606,13 +1606,13 @@ export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends runtime
  */
 export interface ResourceFieldRefs {
   readonly id: Prisma.FieldRef<"Resource", 'Int'>
-  readonly publicId: Prisma.FieldRef<"Resource", 'String'>
   readonly fileSize: Prisma.FieldRef<"Resource", 'Int'>
   readonly fileType: Prisma.FieldRef<"Resource", 'String'>
   readonly fileUrl: Prisma.FieldRef<"Resource", 'String'>
   readonly createdAt: Prisma.FieldRef<"Resource", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Resource", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"Resource", 'Boolean'>
+  readonly publicId: Prisma.FieldRef<"Resource", 'String'>
 }
     
 
@@ -1956,22 +1956,41 @@ export type ResourceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Resource.userAvatar
+ * Resource.blogThumbnail
  */
-export type Resource$userAvatarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Resource$blogThumbnailArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the User
+   * Select specific fields to fetch from the BlogPost
    */
-  select?: Prisma.UserSelect<ExtArgs> | null
+  select?: Prisma.BlogPostSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the User
+   * Omit specific fields from the BlogPost
    */
-  omit?: Prisma.UserOmit<ExtArgs> | null
+  omit?: Prisma.BlogPostOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
+  include?: Prisma.BlogPostInclude<ExtArgs> | null
+  where?: Prisma.BlogPostWhereInput
+}
+
+/**
+ * Resource.courseIntroVideo
+ */
+export type Resource$courseIntroVideoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Course
+   */
+  select?: Prisma.CourseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Course
+   */
+  omit?: Prisma.CourseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CourseInclude<ExtArgs> | null
+  where?: Prisma.CourseWhereInput
 }
 
 /**
@@ -1991,6 +2010,25 @@ export type Resource$courseThumbnailArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.CourseInclude<ExtArgs> | null
   where?: Prisma.CourseWhereInput
+}
+
+/**
+ * Resource.lecturerProfileFile
+ */
+export type Resource$lecturerProfileFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LecturerProfile
+   */
+  select?: Prisma.LecturerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LecturerProfile
+   */
+  omit?: Prisma.LecturerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LecturerProfileInclude<ExtArgs> | null
+  where?: Prisma.LecturerProfileWhereInput
 }
 
 /**
@@ -2032,60 +2070,22 @@ export type Resource$lessonVideoArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Resource.blogThumbnail
+ * Resource.userAvatar
  */
-export type Resource$blogThumbnailArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Resource$userAvatarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the BlogPost
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.BlogPostSelect<ExtArgs> | null
+  select?: Prisma.UserSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the BlogPost
+   * Omit specific fields from the User
    */
-  omit?: Prisma.BlogPostOmit<ExtArgs> | null
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.BlogPostInclude<ExtArgs> | null
-  where?: Prisma.BlogPostWhereInput
-}
-
-/**
- * Resource.lecturerProfileFile
- */
-export type Resource$lecturerProfileFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LecturerProfile
-   */
-  select?: Prisma.LecturerProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LecturerProfile
-   */
-  omit?: Prisma.LecturerProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LecturerProfileInclude<ExtArgs> | null
-  where?: Prisma.LecturerProfileWhereInput
-}
-
-/**
- * Resource.courseIntroVideo
- */
-export type Resource$courseIntroVideoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Course
-   */
-  select?: Prisma.CourseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Course
-   */
-  omit?: Prisma.CourseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CourseInclude<ExtArgs> | null
-  where?: Prisma.CourseWhereInput
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

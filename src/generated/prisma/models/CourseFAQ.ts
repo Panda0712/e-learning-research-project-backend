@@ -38,32 +38,32 @@ export type CourseFAQSumAggregateOutputType = {
 
 export type CourseFAQMinAggregateOutputType = {
   id: number | null
-  courseId: number | null
   question: string | null
   answer: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  courseId: number | null
 }
 
 export type CourseFAQMaxAggregateOutputType = {
   id: number | null
-  courseId: number | null
   question: string | null
   answer: string | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
+  courseId: number | null
 }
 
 export type CourseFAQCountAggregateOutputType = {
   id: number
-  courseId: number
   question: number
   answer: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
+  courseId: number
   _all: number
 }
 
@@ -80,32 +80,32 @@ export type CourseFAQSumAggregateInputType = {
 
 export type CourseFAQMinAggregateInputType = {
   id?: true
-  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  courseId?: true
 }
 
 export type CourseFAQMaxAggregateInputType = {
   id?: true
-  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  courseId?: true
 }
 
 export type CourseFAQCountAggregateInputType = {
   id?: true
-  courseId?: true
   question?: true
   answer?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
+  courseId?: true
   _all?: true
 }
 
@@ -197,12 +197,12 @@ export type CourseFAQGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type CourseFAQGroupByOutputType = {
   id: number
-  courseId: number
   question: string
   answer: string | null
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
+  courseId: number
   _count: CourseFAQCountAggregateOutputType | null
   _avg: CourseFAQAvgAggregateOutputType | null
   _sum: CourseFAQSumAggregateOutputType | null
@@ -230,23 +230,23 @@ export type CourseFAQWhereInput = {
   OR?: Prisma.CourseFAQWhereInput[]
   NOT?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
   id?: Prisma.IntFilter<"CourseFAQ"> | number
-  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   question?: Prisma.StringFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type CourseFAQOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
   _relevance?: Prisma.CourseFAQOrderByRelevanceInput
 }
@@ -256,23 +256,23 @@ export type CourseFAQWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
   OR?: Prisma.CourseFAQWhereInput[]
   NOT?: Prisma.CourseFAQWhereInput | Prisma.CourseFAQWhereInput[]
-  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   question?: Prisma.StringFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }, "id">
 
 export type CourseFAQOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   _count?: Prisma.CourseFAQCountOrderByAggregateInput
   _avg?: Prisma.CourseFAQAvgOrderByAggregateInput
   _max?: Prisma.CourseFAQMaxOrderByAggregateInput
@@ -285,12 +285,12 @@ export type CourseFAQScalarWhereWithAggregatesInput = {
   OR?: Prisma.CourseFAQScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CourseFAQScalarWhereWithAggregatesInput | Prisma.CourseFAQScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"CourseFAQ"> | number
-  courseId?: Prisma.IntWithAggregatesFilter<"CourseFAQ"> | number
   question?: Prisma.StringWithAggregatesFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableWithAggregatesFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"CourseFAQ"> | boolean
+  courseId?: Prisma.IntWithAggregatesFilter<"CourseFAQ"> | number
 }
 
 export type CourseFAQCreateInput = {
@@ -304,12 +304,12 @@ export type CourseFAQCreateInput = {
 
 export type CourseFAQUncheckedCreateInput = {
   id?: number
-  courseId: number
   question: string
   answer?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  courseId: number
 }
 
 export type CourseFAQUpdateInput = {
@@ -323,22 +323,22 @@ export type CourseFAQUpdateInput = {
 
 export type CourseFAQUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   question?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CourseFAQCreateManyInput = {
   id?: number
-  courseId: number
   question: string
   answer?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
+  courseId: number
 }
 
 export type CourseFAQUpdateManyMutationInput = {
@@ -351,12 +351,12 @@ export type CourseFAQUpdateManyMutationInput = {
 
 export type CourseFAQUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  courseId?: Prisma.IntFieldUpdateOperationsInput | number
   question?: Prisma.StringFieldUpdateOperationsInput | string
   answer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courseId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CourseFAQListRelationFilter = {
@@ -377,12 +377,12 @@ export type CourseFAQOrderByRelevanceInput = {
 
 export type CourseFAQCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type CourseFAQAvgOrderByAggregateInput = {
@@ -392,22 +392,22 @@ export type CourseFAQAvgOrderByAggregateInput = {
 
 export type CourseFAQMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type CourseFAQMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
   question?: Prisma.SortOrder
   answer?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type CourseFAQSumOrderByAggregateInput = {
@@ -505,12 +505,12 @@ export type CourseFAQScalarWhereInput = {
   OR?: Prisma.CourseFAQScalarWhereInput[]
   NOT?: Prisma.CourseFAQScalarWhereInput | Prisma.CourseFAQScalarWhereInput[]
   id?: Prisma.IntFilter<"CourseFAQ"> | number
-  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
   question?: Prisma.StringFilter<"CourseFAQ"> | string
   answer?: Prisma.StringNullableFilter<"CourseFAQ"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseFAQ"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseFAQ"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseFAQ"> | boolean
+  courseId?: Prisma.IntFilter<"CourseFAQ"> | number
 }
 
 export type CourseFAQCreateManyCourseInput = {
@@ -552,12 +552,12 @@ export type CourseFAQUncheckedUpdateManyWithoutCourseInput = {
 
 export type CourseFAQSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  courseId?: boolean
   question?: boolean
   answer?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
+  courseId?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["courseFAQ"]>
 
@@ -565,15 +565,15 @@ export type CourseFAQSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type CourseFAQSelectScalar = {
   id?: boolean
-  courseId?: boolean
   question?: boolean
   answer?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
+  courseId?: boolean
 }
 
-export type CourseFAQOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "question" | "answer" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["courseFAQ"]>
+export type CourseFAQOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "question" | "answer" | "createdAt" | "updatedAt" | "isDestroyed" | "courseId", ExtArgs["result"]["courseFAQ"]>
 export type CourseFAQInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
@@ -585,12 +585,12 @@ export type $CourseFAQPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    courseId: number
     question: string
     answer: string | null
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
+    courseId: number
   }, ExtArgs["result"]["courseFAQ"]>
   composites: {}
 }
@@ -962,12 +962,12 @@ export interface Prisma__CourseFAQClient<T, Null = never, ExtArgs extends runtim
  */
 export interface CourseFAQFieldRefs {
   readonly id: Prisma.FieldRef<"CourseFAQ", 'Int'>
-  readonly courseId: Prisma.FieldRef<"CourseFAQ", 'Int'>
   readonly question: Prisma.FieldRef<"CourseFAQ", 'String'>
   readonly answer: Prisma.FieldRef<"CourseFAQ", 'String'>
   readonly createdAt: Prisma.FieldRef<"CourseFAQ", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CourseFAQ", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"CourseFAQ", 'Boolean'>
+  readonly courseId: Prisma.FieldRef<"CourseFAQ", 'Int'>
 }
     
 
