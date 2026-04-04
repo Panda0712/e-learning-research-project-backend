@@ -36,7 +36,9 @@ const normalizeRedirect = (raw?: string) => {
 };
 
 const ensureAdminRequest = (req: Request) => {
-  const role = req.jwtDecoded?.role;
+  const role = String(req.jwtDecoded?.role || "")
+    .trim()
+    .toLowerCase();
   if (role !== "admin") {
     throw new ApiError(
       StatusCodes.FORBIDDEN,

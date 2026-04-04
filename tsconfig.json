@@ -4,6 +4,7 @@
     // File Layout
     "rootDir": ".",
     "outDir": "./dist",
+    "ignoreDeprecations": "6.0",
 
     "baseUrl": ".",
     "paths": {
@@ -37,8 +38,6 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-
-    "esModuleInterop": true,
 
     // Recommended Options
     "strict": true,

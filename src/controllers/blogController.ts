@@ -1,9 +1,24 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
 import { blogService } from "@/services/blogService.js";
+import { BlogActor } from "@/types/blog.type.js";
 import ApiError from "@/utils/ApiError.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
+
+const getActorFromJwt = (req: Request): BlogActor => {
+  const decodedUserId = Number(req.jwtDecoded?.id);
+  const role = String(req.jwtDecoded?.role || "student").toLowerCase() as BlogActor["role"];
+
+  if (!decodedUserId || Number.isNaN(decodedUserId) || decodedUserId <= 0) {
+    throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
+  }
+
+  return {
+    id: decodedUserId,
+    role,
+  };
+};
 
 // BLOG CATEGORY CONTROLLER
 const createBlogCategory = async (
@@ -84,11 +99,34 @@ const getAdminPosts = async (
   next: NextFunction,
 ) => {
   try {
-    const { page, limit, itemsPerPage } = req.query;
+    const { page, limit, itemsPerPage, status } = req.query;
     const result = await blogService.getAdminPosts({
       page: Number(page) || 1,
       itemsPerPage: Number(itemsPerPage || limit) || 10,
+      status: typeof status === "string" ? (status as any) : undefined,
     });
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getLecturerPosts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { page, limit, itemsPerPage, status } = req.query;
+    const actor = getActorFromJwt(req);
+
+    const result = await blogService.getLecturerPosts({
+      page: Number(page) || 1,
+      itemsPerPage: Number(itemsPerPage || limit) || 10,
+      actor,
+      status: typeof status === "string" ? (status as any) : undefined,
+    });
+
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
@@ -102,8 +140,14 @@ const getPostDetail = async (
 ) => {
   try {
     const { id } = req.params;
+    const actor = req.jwtDecoded?.id
+      ? {
+          id: Number(req.jwtDecoded.id),
+          role: String(req.jwtDecoded?.role || "student").toLowerCase() as BlogActor["role"],
+        }
+      : undefined;
 
-    const result = await blogService.getPostDetail(Number(id));
+    const result = await blogService.getPostDetail(Number(id), actor);
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -127,16 +171,29 @@ const getAdminPostDetail = async (
   }
 };
 
+const getLecturerPostDetail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const actor = getActorFromJwt(req);
+
+    const result = await blogService.getPostDetail(Number(id), actor);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createPost = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const decodedUserId = req.jwtDecoded?.id;
-    const authorId = Number(decodedUserId);
+    const actor = getActorFromJwt(req);
+    const authorId = actor.id;
 
-    if (!decodedUserId || Number.isNaN(authorId) || authorId <= 0) {
-      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized!");
-    }
-
-    const result = await blogService.createPost({ ...req.body, authorId });
+    const result = await blogService.createPost({ ...req.body, authorId }, actor);
     res.status(StatusCodes.CREATED).json(result);
   } catch (error) {
     next(error);
@@ -146,8 +203,26 @@ const createPost = async (req: Request, res: Response, next: NextFunction) => {
 const updatePost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const actor = getActorFromJwt(req);
 
-    const result = await blogService.updatePost(Number(id), req.body);
+    const result = await blogService.updatePost(Number(id), req.body, actor);
+
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updatePostStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { id } = req.params;
+    const actor = getActorFromJwt(req);
+
+    const result = await blogService.updatePostStatus(Number(id), req.body, actor);
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -158,8 +233,9 @@ const updatePost = async (req: Request, res: Response, next: NextFunction) => {
 const deletePost = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    const actor = getActorFromJwt(req);
 
-    const result = await blogService.deletePost(Number(id));
+    const result = await blogService.deletePost(Number(id), actor);
 
     res.status(StatusCodes.OK).json(result);
   } catch (error) {
@@ -177,6 +253,20 @@ const createComment = async (
     const userId = Number(req.jwtDecoded.id);
     const result = await blogService.createComment({ ...req.body, userId });
     res.status(StatusCodes.CREATED).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCommentsByBlogId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const blogId = Number(req.query.blogId);
+    const result = await blogService.getCommentsByBlogId(blogId);
+    res.status(StatusCodes.OK).json(result);
   } catch (error) {
     next(error);
   }
@@ -214,6 +304,54 @@ const deleteComment = async (
   }
 };
 
+const banCommentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const actor = getActorFromJwt(req);
+    const blogId = Number(req.params.id);
+    const result = await blogService.banCommentUser(blogId, req.body, actor);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const unbanCommentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const actor = getActorFromJwt(req);
+    const blogId = Number(req.params.id);
+    const userId = Number(req.params.userId);
+
+    const result = await blogService.unbanCommentUser(blogId, userId, actor);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getBannedCommentUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const actor = getActorFromJwt(req);
+    const blogId = Number(req.params.id);
+
+    const result = await blogService.getBannedCommentUsers(blogId, actor);
+    res.status(StatusCodes.OK).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const uploadBlogThumbnail = async (
   req: Request,
   res: Response,
@@ -241,11 +379,18 @@ export const blogController = {
   deletePost,
   getAllPosts,
   getAdminPosts,
+  getLecturerPosts,
   getPostDetail,
   getAdminPostDetail,
+  getLecturerPostDetail,
+  updatePostStatus,
   uploadBlogThumbnail,
 
   createComment,
+  getCommentsByBlogId,
   updateComment,
   deleteComment,
+  banCommentUser,
+  unbanCommentUser,
+  getBannedCommentUsers,
 };

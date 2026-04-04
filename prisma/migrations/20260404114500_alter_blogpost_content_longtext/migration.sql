@@ -1,0 +1,2 @@
+ALTER TABLE `BlogPost`
+  MODIFY COLUMN `content` LONGTEXT NULL;

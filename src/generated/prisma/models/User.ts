@@ -318,6 +318,7 @@ export type UserWhereInput = {
   enrollments?: Prisma.EnrollmentListRelationFilter
   reviews?: Prisma.CourseReviewListRelationFilter
   blogPosts?: Prisma.BlogPostListRelationFilter
+  reviewedBlogPosts?: Prisma.BlogPostListRelationFilter
   lecturerProfile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
   lecturerPayout?: Prisma.LecturerPayoutListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
@@ -330,6 +331,8 @@ export type UserWhereInput = {
   keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null
   revenues?: Prisma.RevenueListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  authorBlockedUsers?: Prisma.AuthorBannedUserListRelationFilter
+  bannedFromAuthors?: Prisma.AuthorBannedUserListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -359,6 +362,7 @@ export type UserOrderByWithRelationInput = {
   enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput
   reviews?: Prisma.CourseReviewOrderByRelationAggregateInput
   blogPosts?: Prisma.BlogPostOrderByRelationAggregateInput
+  reviewedBlogPosts?: Prisma.BlogPostOrderByRelationAggregateInput
   lecturerProfile?: Prisma.LecturerProfileOrderByWithRelationInput
   lecturerPayout?: Prisma.LecturerPayoutOrderByRelationAggregateInput
   submissions?: Prisma.SubmissionOrderByRelationAggregateInput
@@ -371,6 +375,8 @@ export type UserOrderByWithRelationInput = {
   keyToken?: Prisma.KeyTokenOrderByWithRelationInput
   revenues?: Prisma.RevenueOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserOrderByRelationAggregateInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -404,6 +410,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   enrollments?: Prisma.EnrollmentListRelationFilter
   reviews?: Prisma.CourseReviewListRelationFilter
   blogPosts?: Prisma.BlogPostListRelationFilter
+  reviewedBlogPosts?: Prisma.BlogPostListRelationFilter
   lecturerProfile?: Prisma.XOR<Prisma.LecturerProfileNullableScalarRelationFilter, Prisma.LecturerProfileWhereInput> | null
   lecturerPayout?: Prisma.LecturerPayoutListRelationFilter
   submissions?: Prisma.SubmissionListRelationFilter
@@ -416,6 +423,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   keyToken?: Prisma.XOR<Prisma.KeyTokenNullableScalarRelationFilter, Prisma.KeyTokenWhereInput> | null
   revenues?: Prisma.RevenueListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  authorBlockedUsers?: Prisma.AuthorBannedUserListRelationFilter
+  bannedFromAuthors?: Prisma.AuthorBannedUserListRelationFilter
 }, "id" | "email" | "avatarId">
 
 export type UserOrderByWithAggregationInput = {
@@ -489,6 +498,7 @@ export type UserCreateInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -501,6 +511,8 @@ export type UserCreateInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -529,6 +541,7 @@ export type UserUncheckedCreateInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -541,6 +554,8 @@ export type UserUncheckedCreateInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -568,6 +583,7 @@ export type UserUpdateInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -580,6 +596,8 @@ export type UserUpdateInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -608,6 +626,7 @@ export type UserUncheckedUpdateInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -620,6 +639,8 @@ export type UserUncheckedUpdateInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -918,12 +939,28 @@ export type UserCreateNestedOneWithoutBlogPostsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutReviewedBlogPostsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedCreateWithoutReviewedBlogPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedBlogPostsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutBlogPostsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutBlogPostsInput
   upsert?: Prisma.UserUpsertWithoutBlogPostsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBlogPostsInput, Prisma.UserUpdateWithoutBlogPostsInput>, Prisma.UserUncheckedUpdateWithoutBlogPostsInput>
+}
+
+export type UserUpdateOneWithoutReviewedBlogPostsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedCreateWithoutReviewedBlogPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedBlogPostsInput
+  upsert?: Prisma.UserUpsertWithoutReviewedBlogPostsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewedBlogPostsInput, Prisma.UserUpdateWithoutReviewedBlogPostsInput>, Prisma.UserUncheckedUpdateWithoutReviewedBlogPostsInput>
 }
 
 export type UserCreateNestedOneWithoutBlogCommentsInput = {
@@ -1126,6 +1163,34 @@ export type UserUpdateOneRequiredWithoutSentMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentMessagesInput, Prisma.UserUpdateWithoutSentMessagesInput>, Prisma.UserUncheckedUpdateWithoutSentMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutAuthorBlockedUsersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedCreateWithoutAuthorBlockedUsersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthorBlockedUsersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutBannedFromAuthorsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedCreateWithoutBannedFromAuthorsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBannedFromAuthorsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuthorBlockedUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedCreateWithoutAuthorBlockedUsersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthorBlockedUsersInput
+  upsert?: Prisma.UserUpsertWithoutAuthorBlockedUsersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthorBlockedUsersInput, Prisma.UserUpdateWithoutAuthorBlockedUsersInput>, Prisma.UserUncheckedUpdateWithoutAuthorBlockedUsersInput>
+}
+
+export type UserUpdateOneRequiredWithoutBannedFromAuthorsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedCreateWithoutBannedFromAuthorsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBannedFromAuthorsInput
+  upsert?: Prisma.UserUpsertWithoutBannedFromAuthorsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBannedFromAuthorsInput, Prisma.UserUpdateWithoutBannedFromAuthorsInput>, Prisma.UserUncheckedUpdateWithoutBannedFromAuthorsInput>
+}
+
 export type UserCreateWithoutKeyTokenInput = {
   email: string
   password: string
@@ -1151,6 +1216,7 @@ export type UserCreateWithoutKeyTokenInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -1162,6 +1228,8 @@ export type UserCreateWithoutKeyTokenInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutKeyTokenInput = {
@@ -1190,6 +1258,7 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -1201,6 +1270,8 @@ export type UserUncheckedCreateWithoutKeyTokenInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutKeyTokenInput = {
@@ -1244,6 +1315,7 @@ export type UserUpdateWithoutKeyTokenInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -1255,6 +1327,8 @@ export type UserUpdateWithoutKeyTokenInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutKeyTokenInput = {
@@ -1283,6 +1357,7 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -1294,6 +1369,8 @@ export type UserUncheckedUpdateWithoutKeyTokenInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCoursesInput = {
@@ -1320,6 +1397,7 @@ export type UserCreateWithoutCoursesInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -1332,6 +1410,8 @@ export type UserCreateWithoutCoursesInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCoursesInput = {
@@ -1359,6 +1439,7 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -1371,6 +1452,8 @@ export type UserUncheckedCreateWithoutCoursesInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCoursesInput = {
@@ -1413,6 +1496,7 @@ export type UserUpdateWithoutCoursesInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -1425,6 +1509,8 @@ export type UserUpdateWithoutCoursesInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -1452,6 +1538,7 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -1464,6 +1551,8 @@ export type UserUncheckedUpdateWithoutCoursesInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -1490,6 +1579,7 @@ export type UserCreateWithoutReviewsInput = {
   lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -1502,6 +1592,8 @@ export type UserCreateWithoutReviewsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -1529,6 +1621,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -1541,6 +1634,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -1583,6 +1678,7 @@ export type UserUpdateWithoutReviewsInput = {
   lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -1595,6 +1691,8 @@ export type UserUpdateWithoutReviewsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -1622,6 +1720,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -1634,6 +1733,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAvatarInput = {
@@ -1660,6 +1761,7 @@ export type UserCreateWithoutAvatarInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -1672,6 +1774,8 @@ export type UserCreateWithoutAvatarInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAvatarInput = {
@@ -1699,6 +1803,7 @@ export type UserUncheckedCreateWithoutAvatarInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -1711,6 +1816,8 @@ export type UserUncheckedCreateWithoutAvatarInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAvatarInput = {
@@ -1753,6 +1860,7 @@ export type UserUpdateWithoutAvatarInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -1765,6 +1873,8 @@ export type UserUpdateWithoutAvatarInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -1792,6 +1902,7 @@ export type UserUncheckedUpdateWithoutAvatarInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -1804,6 +1915,8 @@ export type UserUncheckedUpdateWithoutAvatarInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEnrollmentsInput = {
@@ -1830,6 +1943,7 @@ export type UserCreateWithoutEnrollmentsInput = {
   lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -1842,6 +1956,8 @@ export type UserCreateWithoutEnrollmentsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEnrollmentsInput = {
@@ -1869,6 +1985,7 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -1881,6 +1998,8 @@ export type UserUncheckedCreateWithoutEnrollmentsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEnrollmentsInput = {
@@ -1923,6 +2042,7 @@ export type UserUpdateWithoutEnrollmentsInput = {
   lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -1935,6 +2055,8 @@ export type UserUpdateWithoutEnrollmentsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1962,6 +2084,7 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -1974,6 +2097,8 @@ export type UserUncheckedUpdateWithoutEnrollmentsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -2001,6 +2126,7 @@ export type UserCreateWithoutOrdersInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -2012,6 +2138,8 @@ export type UserCreateWithoutOrdersInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -2040,6 +2168,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -2051,6 +2180,8 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -2094,6 +2225,7 @@ export type UserUpdateWithoutOrdersInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -2105,6 +2237,8 @@ export type UserUpdateWithoutOrdersInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -2133,6 +2267,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -2144,6 +2279,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSubmissionsInput = {
@@ -2171,6 +2308,7 @@ export type UserCreateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
@@ -2182,6 +2320,8 @@ export type UserCreateWithoutSubmissionsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSubmissionsInput = {
@@ -2210,6 +2350,7 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
@@ -2221,6 +2362,8 @@ export type UserUncheckedCreateWithoutSubmissionsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSubmissionsInput = {
@@ -2264,6 +2407,7 @@ export type UserUpdateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
@@ -2275,6 +2419,8 @@ export type UserUpdateWithoutSubmissionsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmissionsInput = {
@@ -2303,6 +2449,7 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
@@ -2314,6 +2461,8 @@ export type UserUncheckedUpdateWithoutSubmissionsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogPostsInput = {
@@ -2340,6 +2489,7 @@ export type UserCreateWithoutBlogPostsInput = {
   lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -2352,6 +2502,8 @@ export type UserCreateWithoutBlogPostsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogPostsInput = {
@@ -2379,6 +2531,7 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -2391,11 +2544,101 @@ export type UserUncheckedCreateWithoutBlogPostsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogPostsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutBlogPostsInput, Prisma.UserUncheckedCreateWithoutBlogPostsInput>
+}
+
+export type UserCreateWithoutReviewedBlogPostsInput = {
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput
+  courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReviewedBlogPostsInput = {
+  id?: number
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatarId?: number | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewedBlogPostsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedCreateWithoutReviewedBlogPostsInput>
 }
 
 export type UserUpsertWithoutBlogPostsInput = {
@@ -2433,6 +2676,7 @@ export type UserUpdateWithoutBlogPostsInput = {
   lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -2445,6 +2689,8 @@ export type UserUpdateWithoutBlogPostsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogPostsInput = {
@@ -2472,6 +2718,7 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -2484,6 +2731,102 @@ export type UserUncheckedUpdateWithoutBlogPostsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutReviewedBlogPostsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedUpdateWithoutReviewedBlogPostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedCreateWithoutReviewedBlogPostsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewedBlogPostsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewedBlogPostsInput, Prisma.UserUncheckedUpdateWithoutReviewedBlogPostsInput>
+}
+
+export type UserUpdateWithoutReviewedBlogPostsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewedBlogPostsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlogCommentsInput = {
@@ -2511,6 +2854,7 @@ export type UserCreateWithoutBlogCommentsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -2522,6 +2866,8 @@ export type UserCreateWithoutBlogCommentsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlogCommentsInput = {
@@ -2550,6 +2896,7 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -2561,6 +2908,8 @@ export type UserUncheckedCreateWithoutBlogCommentsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlogCommentsInput = {
@@ -2604,6 +2953,7 @@ export type UserUpdateWithoutBlogCommentsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -2615,6 +2965,8 @@ export type UserUpdateWithoutBlogCommentsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlogCommentsInput = {
@@ -2643,6 +2995,7 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -2654,6 +3007,8 @@ export type UserUncheckedUpdateWithoutBlogCommentsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWishlistInput = {
@@ -2681,6 +3036,7 @@ export type UserCreateWithoutWishlistInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -2692,6 +3048,8 @@ export type UserCreateWithoutWishlistInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWishlistInput = {
@@ -2720,6 +3078,7 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -2731,6 +3090,8 @@ export type UserUncheckedCreateWithoutWishlistInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWishlistInput = {
@@ -2774,6 +3135,7 @@ export type UserUpdateWithoutWishlistInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -2785,6 +3147,8 @@ export type UserUpdateWithoutWishlistInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistInput = {
@@ -2813,6 +3177,7 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -2824,6 +3189,8 @@ export type UserUncheckedUpdateWithoutWishlistInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCartInput = {
@@ -2851,6 +3218,7 @@ export type UserCreateWithoutCartInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -2862,6 +3230,8 @@ export type UserCreateWithoutCartInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCartInput = {
@@ -2890,6 +3260,7 @@ export type UserUncheckedCreateWithoutCartInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -2901,6 +3272,8 @@ export type UserUncheckedCreateWithoutCartInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCartInput = {
@@ -2944,6 +3317,7 @@ export type UserUpdateWithoutCartInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -2955,6 +3329,8 @@ export type UserUpdateWithoutCartInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCartInput = {
@@ -2983,6 +3359,7 @@ export type UserUncheckedUpdateWithoutCartInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -2994,6 +3371,8 @@ export type UserUncheckedUpdateWithoutCartInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -3021,6 +3400,7 @@ export type UserCreateWithoutTransactionsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -3032,6 +3412,8 @@ export type UserCreateWithoutTransactionsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -3060,6 +3442,7 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -3071,6 +3454,8 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -3114,6 +3499,7 @@ export type UserUpdateWithoutTransactionsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -3125,6 +3511,8 @@ export type UserUpdateWithoutTransactionsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -3153,6 +3541,7 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -3164,6 +3553,8 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerProfileInput = {
@@ -3191,6 +3582,7 @@ export type UserCreateWithoutLecturerProfileInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
@@ -3202,6 +3594,8 @@ export type UserCreateWithoutLecturerProfileInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerProfileInput = {
@@ -3230,6 +3624,7 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
@@ -3241,6 +3636,8 @@ export type UserUncheckedCreateWithoutLecturerProfileInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerProfileInput = {
@@ -3284,6 +3681,7 @@ export type UserUpdateWithoutLecturerProfileInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
@@ -3295,6 +3693,8 @@ export type UserUpdateWithoutLecturerProfileInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerProfileInput = {
@@ -3323,6 +3723,7 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
@@ -3334,6 +3735,8 @@ export type UserUncheckedUpdateWithoutLecturerProfileInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutInput = {
@@ -3361,6 +3764,7 @@ export type UserCreateWithoutLecturerPayoutInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
@@ -3372,6 +3776,8 @@ export type UserCreateWithoutLecturerPayoutInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutInput = {
@@ -3400,6 +3806,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
   blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
@@ -3411,6 +3818,8 @@ export type UserUncheckedCreateWithoutLecturerPayoutInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutInput = {
@@ -3454,6 +3863,7 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
@@ -3465,6 +3875,8 @@ export type UserUpdateWithoutLecturerPayoutInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
@@ -3493,6 +3905,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
   blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
@@ -3504,6 +3917,8 @@ export type UserUncheckedUpdateWithoutLecturerPayoutInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLecturerPayoutAccountsInput = {
@@ -3531,6 +3946,7 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -3542,6 +3958,8 @@ export type UserCreateWithoutLecturerPayoutAccountsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
@@ -3570,6 +3988,7 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -3581,6 +4000,8 @@ export type UserUncheckedCreateWithoutLecturerPayoutAccountsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerPayoutAccountsInput = {
@@ -3624,6 +4045,7 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -3635,6 +4057,8 @@ export type UserUpdateWithoutLecturerPayoutAccountsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
@@ -3663,6 +4087,7 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -3674,6 +4099,8 @@ export type UserUncheckedUpdateWithoutLecturerPayoutAccountsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRevenuesInput = {
@@ -3701,6 +4128,7 @@ export type UserCreateWithoutRevenuesInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -3712,6 +4140,8 @@ export type UserCreateWithoutRevenuesInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRevenuesInput = {
@@ -3740,6 +4170,7 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -3751,6 +4182,8 @@ export type UserUncheckedCreateWithoutRevenuesInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRevenuesInput = {
@@ -3794,6 +4227,7 @@ export type UserUpdateWithoutRevenuesInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -3805,6 +4239,8 @@ export type UserUpdateWithoutRevenuesInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRevenuesInput = {
@@ -3833,6 +4269,7 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -3844,6 +4281,8 @@ export type UserUncheckedUpdateWithoutRevenuesInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -3871,6 +4310,7 @@ export type UserCreateWithoutNotificationsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -3882,6 +4322,8 @@ export type UserCreateWithoutNotificationsInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -3910,6 +4352,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -3921,6 +4364,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -3964,6 +4409,7 @@ export type UserUpdateWithoutNotificationsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -3975,6 +4421,8 @@ export type UserUpdateWithoutNotificationsInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -4003,6 +4451,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4014,6 +4463,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStudentConversationsInput = {
@@ -4040,6 +4491,7 @@ export type UserCreateWithoutStudentConversationsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -4052,6 +4504,8 @@ export type UserCreateWithoutStudentConversationsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStudentConversationsInput = {
@@ -4079,6 +4533,7 @@ export type UserUncheckedCreateWithoutStudentConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -4091,6 +4546,8 @@ export type UserUncheckedCreateWithoutStudentConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStudentConversationsInput = {
@@ -4122,6 +4579,7 @@ export type UserCreateWithoutLecturerConversationsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -4134,6 +4592,8 @@ export type UserCreateWithoutLecturerConversationsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLecturerConversationsInput = {
@@ -4161,6 +4621,7 @@ export type UserUncheckedCreateWithoutLecturerConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -4173,6 +4634,8 @@ export type UserUncheckedCreateWithoutLecturerConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLecturerConversationsInput = {
@@ -4204,6 +4667,7 @@ export type UserCreateWithoutLastSentConversationsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -4216,6 +4680,8 @@ export type UserCreateWithoutLastSentConversationsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLastSentConversationsInput = {
@@ -4243,6 +4709,7 @@ export type UserUncheckedCreateWithoutLastSentConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -4255,6 +4722,8 @@ export type UserUncheckedCreateWithoutLastSentConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLastSentConversationsInput = {
@@ -4297,6 +4766,7 @@ export type UserUpdateWithoutStudentConversationsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -4309,6 +4779,8 @@ export type UserUpdateWithoutStudentConversationsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentConversationsInput = {
@@ -4336,6 +4808,7 @@ export type UserUncheckedUpdateWithoutStudentConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4348,6 +4821,8 @@ export type UserUncheckedUpdateWithoutStudentConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLecturerConversationsInput = {
@@ -4385,6 +4860,7 @@ export type UserUpdateWithoutLecturerConversationsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -4397,6 +4873,8 @@ export type UserUpdateWithoutLecturerConversationsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
@@ -4424,6 +4902,7 @@ export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4436,6 +4915,8 @@ export type UserUncheckedUpdateWithoutLecturerConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutLastSentConversationsInput = {
@@ -4473,6 +4954,7 @@ export type UserUpdateWithoutLastSentConversationsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -4485,6 +4967,8 @@ export type UserUpdateWithoutLastSentConversationsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
@@ -4512,6 +4996,7 @@ export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4524,6 +5009,8 @@ export type UserUncheckedUpdateWithoutLastSentConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMemberConversationsInput = {
@@ -4550,6 +5037,7 @@ export type UserCreateWithoutMemberConversationsInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -4562,6 +5050,8 @@ export type UserCreateWithoutMemberConversationsInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMemberConversationsInput = {
@@ -4589,6 +5079,7 @@ export type UserUncheckedCreateWithoutMemberConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -4601,6 +5092,8 @@ export type UserUncheckedCreateWithoutMemberConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMemberConversationsInput = {
@@ -4643,6 +5136,7 @@ export type UserUpdateWithoutMemberConversationsInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -4655,6 +5149,8 @@ export type UserUpdateWithoutMemberConversationsInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMemberConversationsInput = {
@@ -4682,6 +5178,7 @@ export type UserUncheckedUpdateWithoutMemberConversationsInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4694,6 +5191,8 @@ export type UserUncheckedUpdateWithoutMemberConversationsInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -4720,6 +5219,7 @@ export type UserCreateWithoutSentMessagesInput = {
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
@@ -4732,6 +5232,8 @@ export type UserCreateWithoutSentMessagesInput = {
   keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -4759,6 +5261,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
   blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
@@ -4771,6 +5274,8 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
   revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -4813,6 +5318,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
@@ -4825,6 +5331,8 @@ export type UserUpdateWithoutSentMessagesInput = {
   keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -4852,6 +5360,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
   blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
   lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
   lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
@@ -4864,6 +5373,372 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
   revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAuthorBlockedUsersInput = {
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput
+  courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAuthorBlockedUsersInput = {
+  id?: number
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatarId?: number | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAuthorBlockedUsersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedCreateWithoutAuthorBlockedUsersInput>
+}
+
+export type UserCreateWithoutBannedFromAuthorsInput = {
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  avatar?: Prisma.ResourceCreateNestedOneWithoutUserAvatarInput
+  courses?: Prisma.CourseCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserCreateNestedManyWithoutAuthorInput
+}
+
+export type UserUncheckedCreateWithoutBannedFromAuthorsInput = {
+  id?: number
+  email: string
+  password: string
+  firstName?: string | null
+  lastName?: string | null
+  avatarId?: number | null
+  phoneNumber?: string | null
+  dateOfBirth?: Date | string | null
+  role?: string
+  verifyToken?: string | null
+  resetPasswordToken?: string | null
+  resetPasswordExpires?: Date | string | null
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  isDestroyed?: boolean
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutLecturerInput
+  studentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutStudentInput
+  lecturerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLecturerInput
+  memberConversations?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  lastSentConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  reviews?: Prisma.CourseReviewUncheckedCreateNestedManyWithoutStudentInput
+  blogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutReviewedByInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedCreateNestedOneWithoutLecturerInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedCreateNestedManyWithoutLecturerInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutStudentInput
+  blogComments?: Prisma.BlogCommentUncheckedCreateNestedManyWithoutUserInput
+  wishlist?: Prisma.WishlistUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutStudentInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedCreateNestedManyWithoutLecturerInput
+  keyToken?: Prisma.KeyTokenUncheckedCreateNestedOneWithoutUserInput
+  revenues?: Prisma.RevenueUncheckedCreateNestedManyWithoutLecturerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedCreateNestedManyWithoutAuthorInput
+}
+
+export type UserCreateOrConnectWithoutBannedFromAuthorsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedCreateWithoutBannedFromAuthorsInput>
+}
+
+export type UserUpsertWithoutAuthorBlockedUsersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedUpdateWithoutAuthorBlockedUsersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedCreateWithoutAuthorBlockedUsersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuthorBlockedUsersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuthorBlockedUsersInput, Prisma.UserUncheckedUpdateWithoutAuthorBlockedUsersInput>
+}
+
+export type UserUpdateWithoutAuthorBlockedUsersInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuthorBlockedUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  bannedFromAuthors?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutBannedFromAuthorsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedUpdateWithoutBannedFromAuthorsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedCreateWithoutBannedFromAuthorsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutBannedFromAuthorsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBannedFromAuthorsInput, Prisma.UserUncheckedUpdateWithoutBannedFromAuthorsInput>
+}
+
+export type UserUpdateWithoutBannedFromAuthorsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avatar?: Prisma.ResourceUpdateOneWithoutUserAvatarNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUpdateManyWithoutAuthorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBannedFromAuthorsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  verifyToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutLecturerNestedInput
+  studentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutStudentNestedInput
+  lecturerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLecturerNestedInput
+  memberConversations?: Prisma.ConversationMemberUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  lastSentConversations?: Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  reviews?: Prisma.CourseReviewUncheckedUpdateManyWithoutStudentNestedInput
+  blogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  reviewedBlogPosts?: Prisma.BlogPostUncheckedUpdateManyWithoutReviewedByNestedInput
+  lecturerProfile?: Prisma.LecturerProfileUncheckedUpdateOneWithoutLecturerNestedInput
+  lecturerPayout?: Prisma.LecturerPayoutUncheckedUpdateManyWithoutLecturerNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutStudentNestedInput
+  blogComments?: Prisma.BlogCommentUncheckedUpdateManyWithoutUserNestedInput
+  wishlist?: Prisma.WishlistUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutStudentNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+  lecturerPayoutAccounts?: Prisma.LecturerPayoutAccountUncheckedUpdateManyWithoutLecturerNestedInput
+  keyToken?: Prisma.KeyTokenUncheckedUpdateOneWithoutUserNestedInput
+  revenues?: Prisma.RevenueUncheckedUpdateManyWithoutLecturerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  authorBlockedUsers?: Prisma.AuthorBannedUserUncheckedUpdateManyWithoutAuthorNestedInput
 }
 
 
@@ -4881,6 +5756,7 @@ export type UserCountOutputType = {
   enrollments: number
   reviews: number
   blogPosts: number
+  reviewedBlogPosts: number
   lecturerPayout: number
   submissions: number
   blogComments: number
@@ -4890,6 +5766,8 @@ export type UserCountOutputType = {
   lecturerPayoutAccounts: number
   revenues: number
   notifications: number
+  authorBlockedUsers: number
+  bannedFromAuthors: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4902,6 +5780,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   enrollments?: boolean | UserCountOutputTypeCountEnrollmentsArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   blogPosts?: boolean | UserCountOutputTypeCountBlogPostsArgs
+  reviewedBlogPosts?: boolean | UserCountOutputTypeCountReviewedBlogPostsArgs
   lecturerPayout?: boolean | UserCountOutputTypeCountLecturerPayoutArgs
   submissions?: boolean | UserCountOutputTypeCountSubmissionsArgs
   blogComments?: boolean | UserCountOutputTypeCountBlogCommentsArgs
@@ -4911,6 +5790,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   lecturerPayoutAccounts?: boolean | UserCountOutputTypeCountLecturerPayoutAccountsArgs
   revenues?: boolean | UserCountOutputTypeCountRevenuesArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  authorBlockedUsers?: boolean | UserCountOutputTypeCountAuthorBlockedUsersArgs
+  bannedFromAuthors?: boolean | UserCountOutputTypeCountBannedFromAuthorsArgs
 }
 
 /**
@@ -4989,6 +5870,13 @@ export type UserCountOutputTypeCountBlogPostsArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountReviewedBlogPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BlogPostWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountLecturerPayoutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LecturerPayoutWhereInput
 }
@@ -5049,6 +5937,20 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuthorBlockedUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthorBannedUserWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountBannedFromAuthorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthorBannedUserWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5077,6 +5979,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   blogPosts?: boolean | Prisma.User$blogPostsArgs<ExtArgs>
+  reviewedBlogPosts?: boolean | Prisma.User$reviewedBlogPostsArgs<ExtArgs>
   lecturerProfile?: boolean | Prisma.User$lecturerProfileArgs<ExtArgs>
   lecturerPayout?: boolean | Prisma.User$lecturerPayoutArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
@@ -5089,6 +5992,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  authorBlockedUsers?: boolean | Prisma.User$authorBlockedUsersArgs<ExtArgs>
+  bannedFromAuthors?: boolean | Prisma.User$bannedFromAuthorsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -5125,6 +6030,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   enrollments?: boolean | Prisma.User$enrollmentsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   blogPosts?: boolean | Prisma.User$blogPostsArgs<ExtArgs>
+  reviewedBlogPosts?: boolean | Prisma.User$reviewedBlogPostsArgs<ExtArgs>
   lecturerProfile?: boolean | Prisma.User$lecturerProfileArgs<ExtArgs>
   lecturerPayout?: boolean | Prisma.User$lecturerPayoutArgs<ExtArgs>
   submissions?: boolean | Prisma.User$submissionsArgs<ExtArgs>
@@ -5137,6 +6043,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   keyToken?: boolean | Prisma.User$keyTokenArgs<ExtArgs>
   revenues?: boolean | Prisma.User$revenuesArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  authorBlockedUsers?: boolean | Prisma.User$authorBlockedUsersArgs<ExtArgs>
+  bannedFromAuthors?: boolean | Prisma.User$bannedFromAuthorsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 
@@ -5153,6 +6061,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
     reviews: Prisma.$CourseReviewPayload<ExtArgs>[]
     blogPosts: Prisma.$BlogPostPayload<ExtArgs>[]
+    reviewedBlogPosts: Prisma.$BlogPostPayload<ExtArgs>[]
     lecturerProfile: Prisma.$LecturerProfilePayload<ExtArgs> | null
     lecturerPayout: Prisma.$LecturerPayoutPayload<ExtArgs>[]
     submissions: Prisma.$SubmissionPayload<ExtArgs>[]
@@ -5165,6 +6074,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     keyToken: Prisma.$KeyTokenPayload<ExtArgs> | null
     revenues: Prisma.$RevenuePayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    authorBlockedUsers: Prisma.$AuthorBannedUserPayload<ExtArgs>[]
+    bannedFromAuthors: Prisma.$AuthorBannedUserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -5533,6 +6444,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   enrollments<T extends Prisma.User$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   blogPosts<T extends Prisma.User$blogPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$blogPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedBlogPosts<T extends Prisma.User$reviewedBlogPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedBlogPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   lecturerProfile<T extends Prisma.User$lecturerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerProfileArgs<ExtArgs>>): Prisma.Prisma__LecturerProfileClient<runtime.Types.Result.GetResult<Prisma.$LecturerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lecturerPayout<T extends Prisma.User$lecturerPayoutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$lecturerPayoutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LecturerPayoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   submissions<T extends Prisma.User$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5545,6 +6457,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   keyToken<T extends Prisma.User$keyTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$keyTokenArgs<ExtArgs>>): Prisma.Prisma__KeyTokenClient<runtime.Types.Result.GetResult<Prisma.$KeyTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   revenues<T extends Prisma.User$revenuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$revenuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RevenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  authorBlockedUsers<T extends Prisma.User$authorBlockedUsersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authorBlockedUsersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthorBannedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bannedFromAuthors<T extends Prisma.User$bannedFromAuthorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bannedFromAuthorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthorBannedUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6168,6 +7082,30 @@ export type User$blogPostsArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.reviewedBlogPosts
+ */
+export type User$reviewedBlogPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BlogPost
+   */
+  select?: Prisma.BlogPostSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BlogPost
+   */
+  omit?: Prisma.BlogPostOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogPostInclude<ExtArgs> | null
+  where?: Prisma.BlogPostWhereInput
+  orderBy?: Prisma.BlogPostOrderByWithRelationInput | Prisma.BlogPostOrderByWithRelationInput[]
+  cursor?: Prisma.BlogPostWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BlogPostScalarFieldEnum | Prisma.BlogPostScalarFieldEnum[]
+}
+
+/**
  * User.lecturerProfile
  */
 export type User$lecturerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6438,6 +7376,54 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.authorBlockedUsers
+ */
+export type User$authorBlockedUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthorBannedUser
+   */
+  select?: Prisma.AuthorBannedUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthorBannedUser
+   */
+  omit?: Prisma.AuthorBannedUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthorBannedUserInclude<ExtArgs> | null
+  where?: Prisma.AuthorBannedUserWhereInput
+  orderBy?: Prisma.AuthorBannedUserOrderByWithRelationInput | Prisma.AuthorBannedUserOrderByWithRelationInput[]
+  cursor?: Prisma.AuthorBannedUserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthorBannedUserScalarFieldEnum | Prisma.AuthorBannedUserScalarFieldEnum[]
+}
+
+/**
+ * User.bannedFromAuthors
+ */
+export type User$bannedFromAuthorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthorBannedUser
+   */
+  select?: Prisma.AuthorBannedUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthorBannedUser
+   */
+  omit?: Prisma.AuthorBannedUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthorBannedUserInclude<ExtArgs> | null
+  where?: Prisma.AuthorBannedUserWhereInput
+  orderBy?: Prisma.AuthorBannedUserOrderByWithRelationInput | Prisma.AuthorBannedUserOrderByWithRelationInput[]
+  cursor?: Prisma.AuthorBannedUserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthorBannedUserScalarFieldEnum | Prisma.AuthorBannedUserScalarFieldEnum[]
 }
 
 /**

@@ -85,7 +85,8 @@ export const ModelName = {
   Notification: 'Notification',
   Conversation: 'Conversation',
   ConversationMember: 'ConversationMember',
-  Message: 'Message'
+  Message: 'Message',
+  AuthorBannedUser: 'AuthorBannedUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -418,10 +419,14 @@ export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof
 export const BlogPostScalarFieldEnum = {
   id: 'id',
   authorId: 'authorId',
+  reviewedById: 'reviewedById',
   categoryId: 'categoryId',
   title: 'title',
   slug: 'slug',
   content: 'content',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  publishedAt: 'publishedAt',
   thumbnailId: 'thumbnailId',
   totalComments: 'totalComments',
   createdAt: 'createdAt',
@@ -655,6 +660,16 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const AuthorBannedUserScalarFieldEnum = {
+  id: 'id',
+  authorId: 'authorId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthorBannedUserScalarFieldEnum = (typeof AuthorBannedUserScalarFieldEnum)[keyof typeof AuthorBannedUserScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -877,7 +892,9 @@ export type AssessmentOrderByRelevanceFieldEnum = (typeof AssessmentOrderByRelev
 export const BlogPostOrderByRelevanceFieldEnum = {
   title: 'title',
   slug: 'slug',
-  content: 'content'
+  content: 'content',
+  status: 'status',
+  reviewNote: 'reviewNote'
 } as const
 
 export type BlogPostOrderByRelevanceFieldEnum = (typeof BlogPostOrderByRelevanceFieldEnum)[keyof typeof BlogPostOrderByRelevanceFieldEnum]

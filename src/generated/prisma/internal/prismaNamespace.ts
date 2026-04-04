@@ -418,7 +418,8 @@ export const ModelName = {
   Notification: 'Notification',
   Conversation: 'Conversation',
   ConversationMember: 'ConversationMember',
-  Message: 'Message'
+  Message: 'Message',
+  AuthorBannedUser: 'AuthorBannedUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "notification" | "conversation" | "conversationMember" | "message"
+    modelProps: "user" | "keyToken" | "role" | "course" | "courseCategory" | "courseFAQ" | "courseReview" | "module" | "lesson" | "resource" | "enrollment" | "quiz" | "question" | "order" | "orderItem" | "coupon" | "couponCategory" | "submission" | "assessment" | "blogPost" | "blogCategory" | "blogComment" | "wishlist" | "cart" | "cartItem" | "transaction" | "transactionStudent" | "lecturerProfile" | "lecturerPayout" | "lecturerPayoutAccount" | "revenue" | "notification" | "conversation" | "conversationMember" | "message" | "authorBannedUser"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2748,6 +2749,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AuthorBannedUser: {
+      payload: Prisma.$AuthorBannedUserPayload<ExtArgs>
+      fields: Prisma.AuthorBannedUserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AuthorBannedUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AuthorBannedUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        findFirst: {
+          args: Prisma.AuthorBannedUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AuthorBannedUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        findMany: {
+          args: Prisma.AuthorBannedUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>[]
+        }
+        create: {
+          args: Prisma.AuthorBannedUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        createMany: {
+          args: Prisma.AuthorBannedUserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.AuthorBannedUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        update: {
+          args: Prisma.AuthorBannedUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        deleteMany: {
+          args: Prisma.AuthorBannedUserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AuthorBannedUserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.AuthorBannedUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthorBannedUserPayload>
+        }
+        aggregate: {
+          args: Prisma.AuthorBannedUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthorBannedUser>
+        }
+        groupBy: {
+          args: Prisma.AuthorBannedUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthorBannedUserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AuthorBannedUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthorBannedUserCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3101,10 +3168,14 @@ export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof
 export const BlogPostScalarFieldEnum = {
   id: 'id',
   authorId: 'authorId',
+  reviewedById: 'reviewedById',
   categoryId: 'categoryId',
   title: 'title',
   slug: 'slug',
   content: 'content',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  publishedAt: 'publishedAt',
   thumbnailId: 'thumbnailId',
   totalComments: 'totalComments',
   createdAt: 'createdAt',
@@ -3338,6 +3409,16 @@ export const MessageScalarFieldEnum = {
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+export const AuthorBannedUserScalarFieldEnum = {
+  id: 'id',
+  authorId: 'authorId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthorBannedUserScalarFieldEnum = (typeof AuthorBannedUserScalarFieldEnum)[keyof typeof AuthorBannedUserScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3560,7 +3641,9 @@ export type AssessmentOrderByRelevanceFieldEnum = (typeof AssessmentOrderByRelev
 export const BlogPostOrderByRelevanceFieldEnum = {
   title: 'title',
   slug: 'slug',
-  content: 'content'
+  content: 'content',
+  status: 'status',
+  reviewNote: 'reviewNote'
 } as const
 
 export type BlogPostOrderByRelevanceFieldEnum = (typeof BlogPostOrderByRelevanceFieldEnum)[keyof typeof BlogPostOrderByRelevanceFieldEnum]
@@ -3859,6 +3942,7 @@ export type GlobalOmitConfig = {
   conversation?: Prisma.ConversationOmit
   conversationMember?: Prisma.ConversationMemberOmit
   message?: Prisma.MessageOmit
+  authorBannedUser?: Prisma.AuthorBannedUserOmit
 }
 
 /* Types for Logging */
