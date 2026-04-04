@@ -47,15 +47,31 @@ const addToCart = async (reqBody: { userId: number; courseId: number }) => {
   });
   if (!course) throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
 
-  const purchased = await prisma.orderItem.findFirst({
-    where: {
-      courseId,
-      order: { studentId: userId, isSuccess: true, isDestroyed: false },
-      isDestroyed: false,
-    },
-    select: { id: true },
-  });
-  if (purchased) {
+  const [purchased, enrolled] = await Promise.all([
+    prisma.orderItem.findFirst({
+      where: {
+        courseId,
+        order: {
+          studentId: userId,
+          isSuccess: true,
+          paymentStatus: "paid",
+          isDestroyed: false,
+        },
+        isDestroyed: false,
+      },
+      select: { id: true },
+    }),
+    prisma.enrollment.findFirst({
+      where: {
+        studentId: userId,
+        courseId,
+        isDestroyed: false,
+      },
+      select: { id: true },
+    }),
+  ]);
+
+  if (purchased || enrolled) {
     throw new ApiError(StatusCodes.CONFLICT, "Course already purchased!");
   }
 

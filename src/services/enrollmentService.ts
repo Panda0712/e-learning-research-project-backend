@@ -1,6 +1,6 @@
 import ApiError from "@/utils/ApiError.js";
-import { prisma } from "../lib/prisma.js";
 import { StatusCodes } from "http-status-codes";
+import { prisma } from "../lib/prisma.js";
 
 const createEnrollment = async (data: {
   studentId: number;
@@ -174,10 +174,98 @@ const getStudentsByLecturerId = async (lecturerId: number) => {
   }
 };
 
+const updateEnrollmentProgress = async (
+  studentId: number,
+  data: {
+    courseId: number;
+    progress: number;
+  },
+) => {
+  const courseId = Number(data.courseId);
+  const requestedProgress = Number(data.progress);
+
+  if (!Number.isInteger(courseId) || courseId <= 0) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid course id!");
+  }
+
+  if (!Number.isFinite(requestedProgress)) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid progress value!");
+  }
+
+  const clampedProgress = Math.min(100, Math.max(0, requestedProgress));
+
+  const enrollment = await prisma.enrollment.findFirst({
+    where: {
+      studentId,
+      courseId,
+      isDestroyed: false,
+    },
+    select: {
+      id: true,
+      progress: true,
+    },
+  });
+
+  if (!enrollment) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Enrollment not found!");
+  }
+
+  const normalizedCurrentProgress = Number(enrollment.progress || 0);
+  const nextProgress = Math.max(normalizedCurrentProgress, clampedProgress);
+
+  const updated = await prisma.enrollment.update({
+    where: { id: enrollment.id },
+    data: {
+      progress: nextProgress,
+      status: nextProgress >= 100 ? "completed" : "enrolled",
+      lastAccessedAt: new Date(),
+    },
+    select: {
+      id: true,
+      studentId: true,
+      courseId: true,
+      progress: true,
+      status: true,
+      lastAccessedAt: true,
+    },
+  });
+
+  return updated;
+};
+
+const getEnrollmentProgressByCourse = async (
+  studentId: number,
+  courseId: number,
+) => {
+  const enrollment = await prisma.enrollment.findFirst({
+    where: {
+      studentId,
+      courseId,
+      isDestroyed: false,
+    },
+    select: {
+      id: true,
+      studentId: true,
+      courseId: true,
+      progress: true,
+      status: true,
+      lastAccessedAt: true,
+    },
+  });
+
+  if (!enrollment) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Enrollment not found!");
+  }
+
+  return enrollment;
+};
+
 export const enrollmentService = {
   createEnrollment,
   getEnrollmentsByStudentId,
   getStudentsByLecturerId,
   getStudentsByLecturerIdAndCourseId,
   getStudentsByLecturerIdAndCourseIdV2,
+  updateEnrollmentProgress,
+  getEnrollmentProgressByCourse,
 };
