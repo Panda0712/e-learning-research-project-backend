@@ -12,7 +12,7 @@ const createLecturerPayout = async (
     transactionId: Joi.number().optional().positive(),
     lecturerId: Joi.number().required().positive(),
     payoutAccountId: Joi.number().optional().positive(),
-    currency: Joi.string().optional(),
+    currency: Joi.string().optional().valid("VND"),
     amount: Joi.number().optional().positive(),
     payoutMethod: Joi.string().optional(),
     status: Joi.string().optional().valid("success", "failed"),
@@ -88,7 +88,7 @@ const updateLecturerPayout = async (
   const bodyCondition = Joi.object({
     transactionId: Joi.number().optional().positive(),
     payoutAccountId: Joi.number().optional().positive(),
-    currency: Joi.string().optional(),
+    currency: Joi.string().optional().valid("VND"),
     amount: Joi.number().optional().positive(),
     payoutMethod: Joi.string().optional(),
     status: Joi.string().optional().valid("success", "failed"),

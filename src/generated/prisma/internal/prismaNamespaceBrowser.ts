@@ -214,6 +214,8 @@ export const CourseReviewScalarFieldEnum = {
   studentAvatar: 'studentAvatar',
   rating: 'rating',
   content: 'content',
+  lecturerReply: 'lecturerReply',
+  lecturerReplyAt: 'lecturerReplyAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   isDestroyed: 'isDestroyed'
@@ -800,7 +802,8 @@ export type CourseFAQOrderByRelevanceFieldEnum = (typeof CourseFAQOrderByRelevan
 export const CourseReviewOrderByRelevanceFieldEnum = {
   studentName: 'studentName',
   studentAvatar: 'studentAvatar',
-  content: 'content'
+  content: 'content',
+  lecturerReply: 'lecturerReply'
 } as const
 
 export type CourseReviewOrderByRelevanceFieldEnum = (typeof CourseReviewOrderByRelevanceFieldEnum)[keyof typeof CourseReviewOrderByRelevanceFieldEnum]

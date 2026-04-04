@@ -46,7 +46,7 @@ const createLecturerPayout = async (data: {
         transactionId: data.transactionId ?? null,
         lecturerId: data.lecturerId,
         payoutAccountId: data.payoutAccountId ?? null,
-        currency: data.currency ?? null,
+        currency: "VND",
         amount: data.amount ?? null,
         payoutMethod: data.payoutMethod ?? null,
         status: data.status || "success",
@@ -248,7 +248,7 @@ const updateLecturerPayout = async (
       data: {
         transactionId: data.transactionId ?? null,
         payoutAccountId: data.payoutAccountId ?? null,
-        currency: data.currency ?? null,
+        currency: "VND",
         amount: data.amount ?? null,
         payoutMethod: data.payoutMethod ?? null,
       },

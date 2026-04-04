@@ -111,6 +111,7 @@ const updateCourseReview = async (
   const bodyCondition = Joi.object({
     rating: Joi.number().optional().min(1).max(5),
     content: Joi.string().optional(),
+    lecturerReply: Joi.string().allow("", null).optional(),
   });
 
   try {
