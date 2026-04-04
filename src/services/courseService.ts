@@ -1,3 +1,4 @@
+import { Prisma } from "@/generated/prisma/client.js";
 import { CreateCourse, UpdateCourse } from "@/types/course.type.js";
 import ApiError from "@/utils/ApiError.js";
 import {
@@ -252,6 +253,21 @@ const getCourseFaqById = async (id: number) => {
 
 const createCourse = async (data: CreateCourse) => {
   try {
+    const lecturerId = Number(data.lecturerId);
+    if (!Number.isInteger(lecturerId) || lecturerId <= 0) {
+      throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized lecturer.");
+    }
+
+    await ensureLecturerOrAdmin(lecturerId);
+
+    const category = await prisma.courseCategory.findUnique({
+      where: { id: Number(data.categoryId), isDestroyed: false },
+      select: { id: true },
+    });
+    if (!category) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course category not found!");
+    }
+
     // check course existence
     const course = await prisma.course.findFirst({
       where: { name: data.name, isDestroyed: false },
@@ -287,10 +303,10 @@ const createCourse = async (data: CreateCourse) => {
           );
       }
 
-      const newCourse = await prisma.course.create({
+      const newCourse = await tx.course.create({
         data: {
-          lecturerId: data.lecturerId,
-          categoryId: data.categoryId,
+          lecturerId,
+          categoryId: category.id,
           name: data.name,
           lecturerName: data.lecturerName,
           duration: data.duration,
@@ -309,6 +325,22 @@ const createCourse = async (data: CreateCourse) => {
       return newCourse;
     });
   } catch (error: any) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        throw new ApiError(StatusCodes.CONFLICT, "Course data already exists!");
+      }
+
+      if (error.code === "P2003") {
+        const fieldName =
+          (error.meta as { field_name?: string } | undefined)?.field_name ||
+          "unknown-field";
+        throw new ApiError(
+          StatusCodes.BAD_REQUEST,
+          `Invalid relation data for creating course (${fieldName}).`,
+        );
+      }
+    }
+
     throw error;
   }
 };
@@ -537,6 +569,34 @@ const getCourseById = async (id: number) => {
             lastName: true,
             avatar: { select: { fileUrl: true } },
           },
+        },
+      },
+    });
+
+    if (!course) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    return course;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+const getCourseByIdForLecturer = async (courseId: number, actorId: number) => {
+  try {
+    await ensureCourseOwnerOrAdmin(courseId, actorId);
+
+    const course = await prisma.course.findUnique({
+      where: { id: courseId, isDestroyed: false },
+      include: {
+        thumbnail: true,
+        introVideo: true,
+        category: { select: { id: true, name: true } },
+        courseFAQs: {
+          where: { isDestroyed: false },
+          select: { id: true, question: true, answer: true },
+          orderBy: { id: "asc" },
         },
       },
     });
@@ -1105,6 +1165,7 @@ export const courseService = {
   getAdminCourseById,
   getLecturerMyCourses,
   getCourseById,
+  getCourseByIdForLecturer,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,
   getAllCoursesByLecturerId,

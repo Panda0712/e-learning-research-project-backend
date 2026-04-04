@@ -70,6 +70,11 @@ Router.route("/get-course-by-id/:id").get(
   courseValidation.getCourseById,
   courseController.getCourseById,
 );
+Router.route("/lecturer/course/:id").get(
+  authMiddleware.isAuthorized,
+  courseValidation.getCourseById,
+  courseController.getCourseByIdForLecturer,
+);
 Router.route("/list-lecturers-by-student-id/:studentId").get(
   courseValidation.getListLecturersByStudentId,
   courseController.getListLecturersByStudentId,
