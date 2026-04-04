@@ -43,4 +43,14 @@ Router.route("/cancel/:orderId").put(
   payosController.cancelPayment,
 );
 
+/**
+ * Reconcile pending payments
+ * POST /api/payos/reconcile-pending
+ * Manual backfill for orders that are pending locally but PAID on PayOS
+ */
+Router.route("/reconcile-pending").post(
+  payosValidation.reconcilePendingPayments,
+  payosController.reconcilePendingPayments,
+);
+
 export const payosRoute = Router;

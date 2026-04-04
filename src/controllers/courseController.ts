@@ -1,8 +1,9 @@
 import { CloudinaryProvider } from "@/providers/CloudinaryProvider.js";
+import ApiError from "@/utils/ApiError.js";
+import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { courseService } from "../services/courseService.js";
-import { DEFAULT_ITEMS_PER_PAGE } from "@/utils/constants.js";
 
 const createCourseCategory = async (
   req: Request,
@@ -101,6 +102,14 @@ const createCourse = async (
 ) => {
   try {
     const lecturerId = Number(req.jwtDecoded?.id);
+    if (!Number.isInteger(lecturerId) || lecturerId <= 0) {
+      return next(
+        new ApiError(
+          StatusCodes.UNAUTHORIZED,
+          "Unauthorized lecturer identity.",
+        ),
+      );
+    }
 
     const createdCourse = await courseService.createCourse({
       ...req.body,
@@ -198,6 +207,26 @@ const getCourseById = async (
     const { id } = req.params;
 
     const course = await courseService.getCourseById(Number(id));
+
+    res.status(StatusCodes.OK).json(course);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getCourseByIdForLecturer = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const courseId = Number(req.params.id);
+    const actorId = Number(req.jwtDecoded?.id);
+
+    const course = await courseService.getCourseByIdForLecturer(
+      courseId,
+      actorId,
+    );
 
     res.status(StatusCodes.OK).json(course);
   } catch (error) {
@@ -483,6 +512,7 @@ export const courseController = {
   getListCourses,
   getAdminCourses,
   getAdminCourseById,
+  getCourseByIdForLecturer,
   getListLecturersByStudentId,
   getAllCoursesByStudentId,
   getAllCoursesByLecturerId,

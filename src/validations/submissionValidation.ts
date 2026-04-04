@@ -9,7 +9,7 @@ const createSubmission = async (
   next: NextFunction,
 ) => {
   const correctCondition = Joi.object({
-    assessmentId: Joi.number().required().positive(),
+    assessmentId: Joi.number().optional().positive(),
     quizId: Joi.number().required().positive(),
     studentId: Joi.number().required().positive(),
     score: Joi.number().optional().min(0),

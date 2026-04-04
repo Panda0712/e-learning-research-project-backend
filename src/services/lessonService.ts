@@ -212,6 +212,24 @@ const getAllLessonsByModuleId = async (moduleId: number, actorId?: number) => {
     const lessons = await prisma.lesson.findMany({
       where: { moduleId, isDestroyed: false },
       orderBy: { id: "asc" },
+      include: {
+        lessonVideo: {
+          select: {
+            id: true,
+            fileUrl: true,
+            fileType: true,
+            publicId: true,
+          },
+        },
+        lessonFile: {
+          select: {
+            id: true,
+            fileUrl: true,
+            fileType: true,
+            publicId: true,
+          },
+        },
+      },
     });
 
     return lessons;

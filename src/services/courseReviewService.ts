@@ -21,13 +21,22 @@ const createCourseReview = async (data: {
       throw new ApiError(StatusCodes.NOT_FOUND, "Student not found!");
     }
 
-    // Check if course exists
+    // Check if course exists. Query by id first to avoid false negatives
+    // when legacy rows have nullable/dirty isDestroyed values.
     const course = await prisma.course.findUnique({
-      where: { id: data.courseId, isDestroyed: false },
+      where: { id: data.courseId },
+      select: { id: true, isDestroyed: true },
     });
 
     if (!course) {
-      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+      throw new ApiError(
+        StatusCodes.NOT_FOUND,
+        `Course not found (id=${data.courseId})!`,
+      );
+    }
+
+    if (course.isDestroyed === true) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course has been deleted!");
     }
 
     // Check if student already reviewed this course
@@ -196,6 +205,15 @@ const getReviewsByCourseId = async (params: {
   rating?: number;
 }) => {
   try {
+    const course = await prisma.course.findUnique({
+      where: { id: params.courseId },
+      select: { id: true, isDestroyed: true },
+    });
+
+    if (!course || course.isDestroyed === true) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
     const page = params.page || DEFAULT_PAGE;
     const limit = params.limit || DEFAULT_ITEMS_PER_PAGE;
     const skip = (page - 1) * limit;
