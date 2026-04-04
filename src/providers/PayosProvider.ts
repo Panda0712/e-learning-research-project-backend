@@ -22,15 +22,20 @@ interface CreatePaymentLinkData {
 interface WebhookData {
   code: string;
   desc: string;
+  success?: boolean;
   data: {
     orderCode: number;
-    orderCodeV2: string;
     amount: number;
-    amountPaid: number;
-    amountRemaining: number;
+    description?: string;
+    accountNumber?: string;
+    reference?: string;
     transactionDateTime: string;
-    status: string;
-    createdAt: string;
+    currency?: string;
+    paymentLinkId?: string;
+    code?: string;
+    desc?: string;
+    status?: string;
+    createdAt?: string;
     canceledAt?: string;
   };
   signature: string;
@@ -95,31 +100,22 @@ export const PayosProvider = {
     }
   },
 
+  async confirmWebhook(webhookUrl: string) {
+    try {
+      return await payos.webhooks.confirm(webhookUrl);
+    } catch (error: any) {
+      throw new Error(`Failed to confirm webhook: ${error.message}`);
+    }
+  },
+
   /**
    * Verify webhook signature
    * This is critical for security - ensures webhook is from PayOS
    */
-  verifyWebhookSignature(webhookBody: any): boolean {
+  async verifyWebhookSignature(webhookBody: any): Promise<boolean> {
     try {
-      const signature = webhookBody.signature;
-      const body = webhookBody.data;
-
-      // Create the string to be hashed
-      let strToHash = `${body.orderCode}${body.amount}${body.description}${body.buyerName}${body.buyerEmail}${body.buyerPhone}${body.cancelUrl}${body.returnUrl}`;
-
-      // If webhook has payment response, include it
-      if (webhookBody.data && webhookBody.data.status) {
-        strToHash = `${body.orderCode}${body.amount}${body.amountPaid}${body.transactionDateTime}${body.status}`;
-      }
-
-      // Verify signature
-      const crypto = require("crypto");
-      const hash = crypto
-        .createHmac("sha256", env.PAYOS_CHECKSUM_KEY!)
-        .update(strToHash)
-        .digest("hex");
-
-      return hash === signature;
+      await payos.webhooks.verify(webhookBody);
+      return true;
     } catch (error) {
       console.error("Webhook verification error:", error);
       return false;
@@ -132,10 +128,11 @@ export const PayosProvider = {
   extractWebhookData(webhookBody: any): WebhookData | null {
     try {
       return {
-        code: webhookBody.code,
-        desc: webhookBody.desc,
+        code: String(webhookBody.code || ""),
+        desc: String(webhookBody.desc || ""),
+        success: Boolean(webhookBody.success),
         data: webhookBody.data,
-        signature: webhookBody.signature,
+        signature: String(webhookBody.signature || ""),
       };
     } catch (error) {
       console.error("Failed to extract webhook data:", error);

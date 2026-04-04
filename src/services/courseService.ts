@@ -1107,7 +1107,14 @@ const getLecturerMyCourses = async (
   },
 ) => {
   try {
-    const skip = (params.page - 1) * params.itemsPerPage;
+    const page =
+      Number.isFinite(params.page) && params.page > 0 ? params.page : 1;
+    const itemsPerPage =
+      Number.isFinite(params.itemsPerPage) && params.itemsPerPage > 0
+        ? params.itemsPerPage
+        : DEFAULT_ITEMS_PER_PAGE;
+    const skip = (page - 1) * itemsPerPage;
+
     const where = {
       lecturerId,
       isDestroyed: false,
@@ -1132,18 +1139,69 @@ const getLecturerMyCourses = async (
             ? { updatedAt: "desc" }
             : { createdAt: "desc" },
         skip,
-        take: params.itemsPerPage,
+        take: itemsPerPage,
       }),
       prisma.course.count({ where }),
     ]);
 
+    const courseIds = rows.map((row) => row.id);
+    const enrollmentCounts =
+      courseIds.length > 0
+        ? await prisma.enrollment.groupBy({
+            by: ["courseId"],
+            where: {
+              courseId: { in: courseIds },
+              isDestroyed: false,
+            },
+            _count: { _all: true },
+          })
+        : [];
+
+    const completedEnrollmentCounts =
+      courseIds.length > 0
+        ? await prisma.enrollment.groupBy({
+            by: ["courseId"],
+            where: {
+              courseId: { in: courseIds },
+              isDestroyed: false,
+              OR: [{ status: "completed" }, { progress: { gte: 100 } }],
+            },
+            _count: { _all: true },
+          })
+        : [];
+
+    const enrollmentCountMap = new Map<number, number>(
+      enrollmentCounts.map((item) => [item.courseId, item._count._all]),
+    );
+
+    const completedEnrollmentCountMap = new Map<number, number>(
+      completedEnrollmentCounts.map((item) => [
+        item.courseId,
+        item._count._all,
+      ]),
+    );
+
+    const data = rows.map((row) => ({
+      ...row,
+      totalStudents: enrollmentCountMap.get(row.id) ?? 0,
+      completionRate:
+        (enrollmentCountMap.get(row.id) ?? 0) > 0
+          ? Number(
+              (
+                ((completedEnrollmentCountMap.get(row.id) ?? 0) * 100) /
+                (enrollmentCountMap.get(row.id) ?? 0)
+              ).toFixed(1),
+            )
+          : 0,
+    }));
+
     return {
-      data: rows,
+      data,
       pagination: {
-        page: params.page,
-        itemsPerPage: params.itemsPerPage,
+        page,
+        itemsPerPage,
         total,
-        totalPages: Math.ceil(total / params.itemsPerPage),
+        totalPages: Math.max(1, Math.ceil(total / itemsPerPage)),
       },
     };
   } catch (error: any) {

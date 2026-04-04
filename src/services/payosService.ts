@@ -367,7 +367,8 @@ const createPaymentLink = async (data: {
 const handleWebhook = async (webhookBody: any) => {
   try {
     // Bước 1: Xác thực chữ ký (Signature Verification) - CỰC KỲ QUAN TRỌNG để bảo mật
-    const isValidSignature = PayosProvider.verifyWebhookSignature(webhookBody);
+    const isValidSignature =
+      await PayosProvider.verifyWebhookSignature(webhookBody);
 
     if (!isValidSignature) {
       console.error("❌ Webhook signature verification failed!");
@@ -387,11 +388,18 @@ const handleWebhook = async (webhookBody: any) => {
       );
     }
 
-    const orderCode = webhookData.data.orderCode;
-    const transactionStatus = webhookData.data.status;
+    const orderCode = Number(webhookData.data.orderCode);
+    const rootCode = String((webhookData as any).code || "").toUpperCase();
+    const dataCode = String((webhookData.data as any).code || "").toUpperCase();
+    const transactionStatus = String(
+      (webhookData.data as any).status || "",
+    ).toUpperCase();
     const paymentTimestamp = extractPaymentTimestamp(webhookData.data);
     const isSuccessful =
-      webhookData.code === "00" && transactionStatus === "PAID";
+      Boolean((webhookData as any).success) ||
+      rootCode === "00" ||
+      dataCode === "00" ||
+      transactionStatus === "PAID";
 
     // Bước 3: Cập nhật đơn hàng trong database
     const order = await prisma.order.findUnique({
@@ -500,16 +508,23 @@ const handleWebhook = async (webhookBody: any) => {
       ];
 
       for (const lecturerId of lecturerIds) {
-        await notificationService.createAndDispatchNotification(
-          {
-            userId: lecturerId,
-            title: "New course purchase",
-            message: `${buyerName || "A student"} has completed payment for your course.`,
-            type: "purchase",
-            relatedId: orderCode,
-          },
-          { dedupe: true },
-        );
+        try {
+          await notificationService.createAndDispatchNotification(
+            {
+              userId: lecturerId,
+              title: "New course purchase",
+              message: `${buyerName || "A student"} has completed payment for your course.`,
+              type: "purchase",
+              relatedId: orderCode,
+            },
+            { dedupe: true },
+          );
+        } catch (notifyError) {
+          console.error(
+            `Failed to dispatch purchase notification for lecturer ${lecturerId}:`,
+            notifyError,
+          );
+        }
       }
 
       console.log(`✅ Order ${orderCode} payment successful!`);
@@ -562,72 +577,81 @@ const checkPaymentStatus = async (orderId: number) => {
       throw new ApiError(StatusCodes.NOT_FOUND, "Order not found!");
     }
 
-    // Nếu chưa có paymentLinkId, không thể check
-    if (!order.paymentLinkId) {
-      return {
-        orderId: order.id,
-        status: order.paymentStatus,
-        note: "No payment link found",
-      };
+    // Gọi trực tiếp đến PayOS để lấy trạng thái mới nhất.
+    // Không phụ thuộc paymentLinkId vì PayOS API có thể tra cứu theo orderCode.
+    let latestPaymentInfo: any = null;
+    let paymentTimestamp: Date | undefined;
+
+    try {
+      latestPaymentInfo = await PayosProvider.getPaymentLinkInfo(order.id);
+      paymentTimestamp = extractPaymentTimestamp(latestPaymentInfo);
+    } catch (error) {
+      // Nếu DB đã ghi nhận paid thì vẫn tiếp tục backfill side-effects.
+      if (order.paymentStatus !== "paid") {
+        throw error;
+      }
     }
 
-    // Gọi trực tiếp đến PayOS để lấy trạng thái mới nhất
-    const latestPaymentInfo = await PayosProvider.getPaymentLinkInfo(order.id);
-    const paymentTimestamp = extractPaymentTimestamp(latestPaymentInfo);
-
     // Nếu PayOS trả về status PAID (hoặc DB đã paid trước đó), đảm bảo side-effects đầy đủ.
-    if (latestPaymentInfo.status === "PAID" || order.paymentStatus === "paid") {
-      if (order.paymentStatus !== "paid") {
-        await prisma.order.update({
-          where: { id: orderId },
-          data: {
-            paymentStatus: "paid",
-            status: "processing",
-            isSuccess: true,
-            updatedAt: new Date(),
-          },
-        });
-      }
+    if (
+      latestPaymentInfo?.status === "PAID" ||
+      order.paymentStatus === "paid"
+    ) {
+      // Đảm bảo cập nhật trạng thái paid + backfill dữ liệu học viên diễn ra atomically.
+      const orderWithItems = await prisma.$transaction(async (tx) => {
+        if (order.paymentStatus !== "paid") {
+          await tx.order.update({
+            where: { id: orderId },
+            data: {
+              paymentStatus: "paid",
+              status: "processing",
+              isSuccess: true,
+              updatedAt: new Date(),
+            },
+          });
+        }
 
-      // Tạo enrollment nếu chưa tạo và đảm bảo có Transaction/TransactionStudent
-      const orderWithItems = await prisma.order.findUnique({
-        where: { id: orderId },
-        include: {
-          items: {
-            select: {
-              courseId: true,
-              price: true,
-              lecturerId: true,
-              course: {
-                select: { lecturerId: true },
+        const hydratedOrder = await tx.order.findUnique({
+          where: { id: orderId },
+          include: {
+            items: {
+              select: {
+                courseId: true,
+                price: true,
+                lecturerId: true,
+                course: {
+                  select: { lecturerId: true },
+                },
               },
             },
           },
-        },
-      });
+        });
 
-      if (orderWithItems) {
+        if (!hydratedOrder) {
+          return null;
+        }
+
         await ensureTransactionRecords({
-          db: prisma,
+          db: tx,
           orderId,
           studentId: order.studentId,
           totalPrice: Number(order.totalPrice || 0),
-          courseItems: orderWithItems.items.map((item) => ({
+          courseItems: hydratedOrder.items.map((item) => ({
             courseId: item.courseId,
           })),
           ...(paymentTimestamp ? { paymentTimestamp } : {}),
         });
 
         await ensureEnrollments({
-          db: prisma,
+          db: tx,
           studentId: order.studentId,
-          courseItems: orderWithItems.items.map((item) => ({
+          courseItems: hydratedOrder.items.map((item) => ({
             courseId: item.courseId,
           })),
         });
 
         await ensureCouponUsage({
-          db: prisma,
+          db: tx,
           order: {
             id: order.id,
             couponId: order.couponId,
@@ -636,12 +660,12 @@ const checkPaymentStatus = async (orderId: number) => {
           studentId: order.studentId,
         });
 
-        for (const item of orderWithItems.items) {
+        for (const item of hydratedOrder.items) {
           const totalAmount = Number(item.price || 0);
           const platformFee = totalAmount * 0.2;
           const lecturerEarn = totalAmount - platformFee;
 
-          await prisma.revenue.upsert({
+          await tx.revenue.upsert({
             where: { orderId },
             update: {
               totalAmount,
@@ -661,6 +685,10 @@ const checkPaymentStatus = async (orderId: number) => {
           });
         }
 
+        return hydratedOrder;
+      });
+
+      if (orderWithItems) {
         const student = await prisma.user.findUnique({
           where: { id: order.studentId, isDestroyed: false },
           select: { firstName: true, lastName: true },
@@ -677,16 +705,23 @@ const checkPaymentStatus = async (orderId: number) => {
         ];
 
         for (const lecturerId of lecturerIds) {
-          await notificationService.createAndDispatchNotification(
-            {
-              userId: lecturerId,
-              title: "New course purchase",
-              message: `${buyerName || "A student"} has completed payment for your course.`,
-              type: "purchase",
-              relatedId: orderId,
-            },
-            { dedupe: true },
-          );
+          try {
+            await notificationService.createAndDispatchNotification(
+              {
+                userId: lecturerId,
+                title: "New course purchase",
+                message: `${buyerName || "A student"} has completed payment for your course.`,
+                type: "purchase",
+                relatedId: orderId,
+              },
+              { dedupe: true },
+            );
+          } catch (notifyError) {
+            console.error(
+              `Failed to dispatch purchase notification for lecturer ${lecturerId}:`,
+              notifyError,
+            );
+          }
         }
       }
     }
@@ -701,6 +736,7 @@ const checkPaymentStatus = async (orderId: number) => {
       orderStatus: updatedOrder?.status,
       isSuccess: updatedOrder?.isSuccess,
       totalPrice: updatedOrder?.totalPrice,
+      gatewayStatus: latestPaymentInfo?.status || null,
     };
   } catch (error: any) {
     throw error;

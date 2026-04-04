@@ -1,6 +1,7 @@
+import { authMiddleware } from "@/middlewares/authMiddleware.js";
+import { enrollmentValidation } from "@/validations/enrollmentValidation.js";
 import express from "express";
 import { enrollmentController } from "../../controllers/enrollmentController.js";
-import { enrollmentValidation } from "@/validations/enrollmentValidation.js";
 
 const Router = express.Router();
 
@@ -15,8 +16,20 @@ Router.route("/create-new").post(
 );
 
 Router.route("/lecturer/:lecturerId/students").get(
-  enrollmentValidation.getStudentsByLecturerId, 
-  enrollmentController.getStudentsByLecturerId 
+  enrollmentValidation.getStudentsByLecturerId,
+  enrollmentController.getStudentsByLecturerId,
+);
+
+Router.route("/my/progress").put(
+  authMiddleware.isAuthorized,
+  enrollmentValidation.updateMyEnrollmentProgress,
+  enrollmentController.updateMyEnrollmentProgress,
+);
+
+Router.route("/my/course/:courseId/progress").get(
+  authMiddleware.isAuthorized,
+  enrollmentValidation.getMyEnrollmentProgressByCourse,
+  enrollmentController.getMyEnrollmentProgressByCourse,
 );
 
 export const enrollmentRoute = Router;

@@ -50,12 +50,8 @@ const handleWebhook = async (
     });
   } catch (error: any) {
     console.error("❌ Webhook error:", error);
-
-    // Vẫn trả 200 để PayOS không gửi lại, nhưng log lỗi
-    res.status(StatusCodes.OK).json({
-      message: "Webhook received but processing failed",
-      error: error.message,
-    });
+    // Trả lỗi để PayOS retry webhook, tránh mất side-effects như enrollment.
+    next(error);
   }
 };
 
