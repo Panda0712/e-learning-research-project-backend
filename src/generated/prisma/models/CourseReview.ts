@@ -48,6 +48,8 @@ export type CourseReviewMinAggregateOutputType = {
   studentAvatar: string | null
   rating: number | null
   content: string | null
+  lecturerReply: string | null
+  lecturerReplyAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -61,6 +63,8 @@ export type CourseReviewMaxAggregateOutputType = {
   studentAvatar: string | null
   rating: number | null
   content: string | null
+  lecturerReply: string | null
+  lecturerReplyAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   isDestroyed: boolean | null
@@ -74,6 +78,8 @@ export type CourseReviewCountAggregateOutputType = {
   studentAvatar: number
   rating: number
   content: number
+  lecturerReply: number
+  lecturerReplyAt: number
   createdAt: number
   updatedAt: number
   isDestroyed: number
@@ -103,6 +109,8 @@ export type CourseReviewMinAggregateInputType = {
   studentAvatar?: true
   rating?: true
   content?: true
+  lecturerReply?: true
+  lecturerReplyAt?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -116,6 +124,8 @@ export type CourseReviewMaxAggregateInputType = {
   studentAvatar?: true
   rating?: true
   content?: true
+  lecturerReply?: true
+  lecturerReplyAt?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -129,6 +139,8 @@ export type CourseReviewCountAggregateInputType = {
   studentAvatar?: true
   rating?: true
   content?: true
+  lecturerReply?: true
+  lecturerReplyAt?: true
   createdAt?: true
   updatedAt?: true
   isDestroyed?: true
@@ -229,6 +241,8 @@ export type CourseReviewGroupByOutputType = {
   studentAvatar: string | null
   rating: number
   content: string | null
+  lecturerReply: string | null
+  lecturerReplyAt: Date | null
   createdAt: Date
   updatedAt: Date | null
   isDestroyed: boolean
@@ -265,6 +279,8 @@ export type CourseReviewWhereInput = {
   studentAvatar?: Prisma.StringNullableFilter<"CourseReview"> | string | null
   rating?: Prisma.IntFilter<"CourseReview"> | number
   content?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReply?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReplyAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseReview"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseReview"> | boolean
@@ -280,6 +296,8 @@ export type CourseReviewOrderByWithRelationInput = {
   studentAvatar?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerReply?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerReplyAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -299,6 +317,8 @@ export type CourseReviewWhereUniqueInput = Prisma.AtLeast<{
   studentAvatar?: Prisma.StringNullableFilter<"CourseReview"> | string | null
   rating?: Prisma.IntFilter<"CourseReview"> | number
   content?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReply?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReplyAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseReview"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseReview"> | boolean
@@ -314,6 +334,8 @@ export type CourseReviewOrderByWithAggregationInput = {
   studentAvatar?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerReply?: Prisma.SortOrderInput | Prisma.SortOrder
+  lecturerReplyAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -335,6 +357,8 @@ export type CourseReviewScalarWhereWithAggregatesInput = {
   studentAvatar?: Prisma.StringNullableWithAggregatesFilter<"CourseReview"> | string | null
   rating?: Prisma.IntWithAggregatesFilter<"CourseReview"> | number
   content?: Prisma.StringNullableWithAggregatesFilter<"CourseReview"> | string | null
+  lecturerReply?: Prisma.StringNullableWithAggregatesFilter<"CourseReview"> | string | null
+  lecturerReplyAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseReview"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CourseReview"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseReview"> | Date | string | null
   isDestroyed?: Prisma.BoolWithAggregatesFilter<"CourseReview"> | boolean
@@ -345,6 +369,8 @@ export type CourseReviewCreateInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -360,6 +386,8 @@ export type CourseReviewUncheckedCreateInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -370,6 +398,8 @@ export type CourseReviewUpdateInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -385,6 +415,8 @@ export type CourseReviewUncheckedUpdateInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -398,6 +430,8 @@ export type CourseReviewCreateManyInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -408,6 +442,8 @@ export type CourseReviewUpdateManyMutationInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -421,6 +457,8 @@ export type CourseReviewUncheckedUpdateManyInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -450,6 +488,8 @@ export type CourseReviewCountOrderByAggregateInput = {
   studentAvatar?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  lecturerReply?: Prisma.SortOrder
+  lecturerReplyAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -470,6 +510,8 @@ export type CourseReviewMaxOrderByAggregateInput = {
   studentAvatar?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  lecturerReply?: Prisma.SortOrder
+  lecturerReplyAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -483,6 +525,8 @@ export type CourseReviewMinOrderByAggregateInput = {
   studentAvatar?: Prisma.SortOrder
   rating?: Prisma.SortOrder
   content?: Prisma.SortOrder
+  lecturerReply?: Prisma.SortOrder
+  lecturerReplyAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
@@ -584,6 +628,8 @@ export type CourseReviewCreateWithoutStudentInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -597,6 +643,8 @@ export type CourseReviewUncheckedCreateWithoutStudentInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -639,6 +687,8 @@ export type CourseReviewScalarWhereInput = {
   studentAvatar?: Prisma.StringNullableFilter<"CourseReview"> | string | null
   rating?: Prisma.IntFilter<"CourseReview"> | number
   content?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReply?: Prisma.StringNullableFilter<"CourseReview"> | string | null
+  lecturerReplyAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CourseReview"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"CourseReview"> | Date | string | null
   isDestroyed?: Prisma.BoolFilter<"CourseReview"> | boolean
@@ -649,6 +699,8 @@ export type CourseReviewCreateWithoutCourseInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -662,6 +714,8 @@ export type CourseReviewUncheckedCreateWithoutCourseInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -700,6 +754,8 @@ export type CourseReviewCreateManyStudentInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -710,6 +766,8 @@ export type CourseReviewUpdateWithoutStudentInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -723,6 +781,8 @@ export type CourseReviewUncheckedUpdateWithoutStudentInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -735,6 +795,8 @@ export type CourseReviewUncheckedUpdateManyWithoutStudentInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -747,6 +809,8 @@ export type CourseReviewCreateManyCourseInput = {
   studentAvatar?: string | null
   rating: number
   content?: string | null
+  lecturerReply?: string | null
+  lecturerReplyAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   isDestroyed?: boolean
@@ -757,6 +821,8 @@ export type CourseReviewUpdateWithoutCourseInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -770,6 +836,8 @@ export type CourseReviewUncheckedUpdateWithoutCourseInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -782,6 +850,8 @@ export type CourseReviewUncheckedUpdateManyWithoutCourseInput = {
   studentAvatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lecturerReplyAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -797,6 +867,8 @@ export type CourseReviewSelect<ExtArgs extends runtime.Types.Extensions.Internal
   studentAvatar?: boolean
   rating?: boolean
   content?: boolean
+  lecturerReply?: boolean
+  lecturerReplyAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
@@ -814,12 +886,14 @@ export type CourseReviewSelectScalar = {
   studentAvatar?: boolean
   rating?: boolean
   content?: boolean
+  lecturerReply?: boolean
+  lecturerReplyAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
 }
 
-export type CourseReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "studentId" | "studentName" | "studentAvatar" | "rating" | "content" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["courseReview"]>
+export type CourseReviewOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "studentId" | "studentName" | "studentAvatar" | "rating" | "content" | "lecturerReply" | "lecturerReplyAt" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["courseReview"]>
 export type CourseReviewInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -839,6 +913,8 @@ export type $CourseReviewPayload<ExtArgs extends runtime.Types.Extensions.Intern
     studentAvatar: string | null
     rating: number
     content: string | null
+    lecturerReply: string | null
+    lecturerReplyAt: Date | null
     createdAt: Date
     updatedAt: Date | null
     isDestroyed: boolean
@@ -1220,6 +1296,8 @@ export interface CourseReviewFieldRefs {
   readonly studentAvatar: Prisma.FieldRef<"CourseReview", 'String'>
   readonly rating: Prisma.FieldRef<"CourseReview", 'Int'>
   readonly content: Prisma.FieldRef<"CourseReview", 'String'>
+  readonly lecturerReply: Prisma.FieldRef<"CourseReview", 'String'>
+  readonly lecturerReplyAt: Prisma.FieldRef<"CourseReview", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"CourseReview", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CourseReview", 'DateTime'>
   readonly isDestroyed: Prisma.FieldRef<"CourseReview", 'Boolean'>

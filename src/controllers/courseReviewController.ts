@@ -8,7 +8,16 @@ const createCourseReview = async (
   next: NextFunction,
 ) => {
   try {
-    const newReview = await courseReviewService.createCourseReview(req.body);
+    const authUserId = Number(req.jwtDecoded?.id);
+    const payload = {
+      ...req.body,
+      studentId:
+        Number.isInteger(authUserId) && authUserId > 0
+          ? authUserId
+          : req.body.studentId,
+    };
+
+    const newReview = await courseReviewService.createCourseReview(payload);
     res.status(StatusCodes.CREATED).json(newReview);
   } catch (error) {
     next(error);
@@ -103,9 +112,11 @@ const updateCourseReview = async (
 ) => {
   try {
     const { id } = req.params;
+    const authUserId = Number(req.jwtDecoded?.id);
     const updatedReview = await courseReviewService.updateCourseReview(
       Number(id),
       req.body,
+      Number.isInteger(authUserId) && authUserId > 0 ? authUserId : undefined,
     );
     res.status(StatusCodes.OK).json(updatedReview);
   } catch (error) {

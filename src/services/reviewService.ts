@@ -12,12 +12,17 @@ const mapReview = (review: any) => {
 
   return {
     id: review.id,
+    courseId: review.courseId,
     heading: review.course?.name || "Student Review",
+    courseName: review.course?.name || "Course",
     content: review.content || "",
     studentName,
     studentAvatar:
       review.studentAvatar || review.student?.avatar?.fileUrl || null,
     rating: review.rating || 0,
+    createdAt: review.createdAt,
+    lecturerReply: review.lecturerReply || null,
+    lecturerReplyAt: review.lecturerReplyAt || null,
   };
 };
 

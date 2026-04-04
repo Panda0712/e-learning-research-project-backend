@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma.js";
+import { notificationService } from "@/services/notificationService.js";
 import ApiError from "@/utils/ApiError.js";
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from "@/utils/constants.js";
 import { StatusCodes } from "http-status-codes";
@@ -91,6 +92,37 @@ const createCourseReview = async (data: {
         },
       },
     });
+
+    if (
+      typeof newReview.content === "string" &&
+      newReview.content.trim() &&
+      Number(newReview.course?.id) > 0
+    ) {
+      const lecturerId = Number(
+        (await prisma.course.findUnique({
+          where: { id: data.courseId },
+          select: { lecturerId: true, name: true },
+        }))?.lecturerId || 0,
+      );
+
+      if (lecturerId > 0 && lecturerId !== data.studentId) {
+        const commenterName =
+          newReview.studentName ||
+          [newReview.student?.firstName, newReview.student?.lastName]
+            .filter(Boolean)
+            .join(" ")
+            .trim() ||
+          "A student";
+
+        await notificationService.createAndDispatchNotification({
+          userId: lecturerId,
+          title: "New course comment",
+          message: `${commenterName} commented on your course "${newReview.course?.name || "Course"}".`,
+          type: "course_comment",
+          relatedId: newReview.id,
+        });
+      }
+    }
 
     return newReview;
   } catch (error) {
@@ -351,11 +383,27 @@ const updateCourseReview = async (
   data: {
     rating?: number;
     content?: string;
+    lecturerReply?: string | null;
   },
+  actorUserId?: number,
 ) => {
   try {
     const review = await prisma.courseReview.findUnique({
       where: { id, isDestroyed: false },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+            lecturerId: true,
+          },
+        },
+        student: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
 
     if (!review) {
@@ -371,8 +419,52 @@ const updateCourseReview = async (
     }
 
     const updateData: any = {};
+    const actor =
+      Number.isInteger(actorUserId) && Number(actorUserId) > 0
+        ? await prisma.user.findUnique({
+            where: { id: Number(actorUserId), isDestroyed: false },
+            select: { id: true, role: true },
+          })
+        : null;
+
+    const actorRole = String(actor?.role || "").toLowerCase();
+    const isAdmin = actorRole === "admin";
+    const isCourseLecturer =
+      Number(actor?.id || 0) > 0 &&
+      Number(actor?.id || 0) === Number(review.course?.lecturerId || 0);
+    const isReviewOwner =
+      Number(actor?.id || 0) > 0 &&
+      Number(actor?.id || 0) === Number(review.student?.id || 0);
+
+    const isUpdatingStudentContent =
+      data.rating !== undefined || data.content !== undefined;
+
+    if (isUpdatingStudentContent && actor && !isAdmin && !isReviewOwner) {
+      throw new ApiError(
+        StatusCodes.FORBIDDEN,
+        "You are not allowed to update this review!",
+      );
+    }
+
     if (data.rating !== undefined) updateData.rating = data.rating;
     if (data.content !== undefined) updateData.content = data.content;
+
+    let normalizedLecturerReply: string | null = null;
+
+    if (data.lecturerReply !== undefined) {
+      if (actor && !isAdmin && !isCourseLecturer) {
+        throw new ApiError(
+          StatusCodes.FORBIDDEN,
+          "Only the course lecturer can reply to this review!",
+        );
+      }
+
+      normalizedLecturerReply =
+        typeof data.lecturerReply === "string" ? data.lecturerReply.trim() : "";
+
+      updateData.lecturerReply = normalizedLecturerReply || null;
+      updateData.lecturerReplyAt = normalizedLecturerReply ? new Date() : null;
+    }
 
     const updatedReview = await prisma.courseReview.update({
       where: { id },
@@ -395,6 +487,22 @@ const updateCourseReview = async (
         },
       },
     });
+
+    if (
+      data.lecturerReply !== undefined &&
+      typeof normalizedLecturerReply === "string" &&
+      normalizedLecturerReply.trim() &&
+      Number(updatedReview.studentId) > 0 &&
+      Number(updatedReview.studentId) !== Number(actor?.id || 0)
+    ) {
+      await notificationService.createAndDispatchNotification({
+        userId: Number(updatedReview.studentId),
+        title: "Lecturer replied to your review",
+        message: `Your review on "${updatedReview.course?.name || "Course"}" has a new reply from the lecturer.`,
+        type: "course_review_reply",
+        relatedId: updatedReview.id,
+      });
+    }
 
     return updatedReview;
   } catch (error) {
