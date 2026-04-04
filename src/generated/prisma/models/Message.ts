@@ -248,10 +248,10 @@ export type MessageWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Message"> | boolean
-  conversation?: Prisma.XOR<Prisma.ConversationScalarRelationFilter, Prisma.ConversationWhereInput>
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   asLastOfConversation?: Prisma.XOR<Prisma.ConversationNullableScalarRelationFilter, Prisma.ConversationWhereInput> | null
   seenByMembers?: Prisma.ConversationMemberListRelationFilter
+  conversation?: Prisma.XOR<Prisma.ConversationScalarRelationFilter, Prisma.ConversationWhereInput>
+  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type MessageOrderByWithRelationInput = {
@@ -263,10 +263,10 @@ export type MessageOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
-  conversation?: Prisma.ConversationOrderByWithRelationInput
-  sender?: Prisma.UserOrderByWithRelationInput
   asLastOfConversation?: Prisma.ConversationOrderByWithRelationInput
   seenByMembers?: Prisma.ConversationMemberOrderByRelationAggregateInput
+  conversation?: Prisma.ConversationOrderByWithRelationInput
+  sender?: Prisma.UserOrderByWithRelationInput
   _relevance?: Prisma.MessageOrderByRelevanceInput
 }
 
@@ -282,10 +282,10 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Message"> | boolean
-  conversation?: Prisma.XOR<Prisma.ConversationScalarRelationFilter, Prisma.ConversationWhereInput>
-  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   asLastOfConversation?: Prisma.XOR<Prisma.ConversationNullableScalarRelationFilter, Prisma.ConversationWhereInput> | null
   seenByMembers?: Prisma.ConversationMemberListRelationFilter
+  conversation?: Prisma.XOR<Prisma.ConversationScalarRelationFilter, Prisma.ConversationWhereInput>
+  sender?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type MessageOrderByWithAggregationInput = {
@@ -324,10 +324,10 @@ export type MessageCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
   asLastOfConversation?: Prisma.ConversationCreateNestedOneWithoutLastMessageInput
   seenByMembers?: Prisma.ConversationMemberCreateNestedManyWithoutLastSeenMessageInput
+  conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
+  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
 }
 
 export type MessageUncheckedCreateInput = {
@@ -349,10 +349,10 @@ export type MessageUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
   asLastOfConversation?: Prisma.ConversationUpdateOneWithoutLastMessageNestedInput
   seenByMembers?: Prisma.ConversationMemberUpdateManyWithoutLastSeenMessageNestedInput
+  conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
+  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
 }
 
 export type MessageUncheckedUpdateInput = {
@@ -586,9 +586,9 @@ export type MessageCreateWithoutSenderInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
   asLastOfConversation?: Prisma.ConversationCreateNestedOneWithoutLastMessageInput
   seenByMembers?: Prisma.ConversationMemberCreateNestedManyWithoutLastSeenMessageInput
+  conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
 }
 
 export type MessageUncheckedCreateWithoutSenderInput = {
@@ -649,9 +649,9 @@ export type MessageCreateWithoutAsLastOfConversationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
+  seenByMembers?: Prisma.ConversationMemberCreateNestedManyWithoutLastSeenMessageInput
   conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
   sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  seenByMembers?: Prisma.ConversationMemberCreateNestedManyWithoutLastSeenMessageInput
 }
 
 export type MessageUncheckedCreateWithoutAsLastOfConversationInput = {
@@ -677,9 +677,9 @@ export type MessageCreateWithoutConversationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
   asLastOfConversation?: Prisma.ConversationCreateNestedOneWithoutLastMessageInput
   seenByMembers?: Prisma.ConversationMemberCreateNestedManyWithoutLastSeenMessageInput
+  sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
 }
 
 export type MessageUncheckedCreateWithoutConversationInput = {
@@ -721,9 +721,9 @@ export type MessageUpdateWithoutAsLastOfConversationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seenByMembers?: Prisma.ConversationMemberUpdateManyWithoutLastSeenMessageNestedInput
   conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
   sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  seenByMembers?: Prisma.ConversationMemberUpdateManyWithoutLastSeenMessageNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutAsLastOfConversationInput = {
@@ -760,9 +760,9 @@ export type MessageCreateWithoutSeenByMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
+  asLastOfConversation?: Prisma.ConversationCreateNestedOneWithoutLastMessageInput
   conversation: Prisma.ConversationCreateNestedOneWithoutMessagesInput
   sender: Prisma.UserCreateNestedOneWithoutSentMessagesInput
-  asLastOfConversation?: Prisma.ConversationCreateNestedOneWithoutLastMessageInput
 }
 
 export type MessageUncheckedCreateWithoutSeenByMembersInput = {
@@ -799,9 +799,9 @@ export type MessageUpdateWithoutSeenByMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  asLastOfConversation?: Prisma.ConversationUpdateOneWithoutLastMessageNestedInput
   conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
   sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
-  asLastOfConversation?: Prisma.ConversationUpdateOneWithoutLastMessageNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutSeenByMembersInput = {
@@ -832,9 +832,9 @@ export type MessageUpdateWithoutSenderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
   asLastOfConversation?: Prisma.ConversationUpdateOneWithoutLastMessageNestedInput
   seenByMembers?: Prisma.ConversationMemberUpdateManyWithoutLastSeenMessageNestedInput
+  conversation?: Prisma.ConversationUpdateOneRequiredWithoutMessagesNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutSenderInput = {
@@ -875,9 +875,9 @@ export type MessageUpdateWithoutConversationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
   asLastOfConversation?: Prisma.ConversationUpdateOneWithoutLastMessageNestedInput
   seenByMembers?: Prisma.ConversationMemberUpdateManyWithoutLastSeenMessageNestedInput
+  sender?: Prisma.UserUpdateOneRequiredWithoutSentMessagesNestedInput
 }
 
 export type MessageUncheckedUpdateWithoutConversationInput = {
@@ -942,10 +942,10 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
-  conversation?: boolean | Prisma.ConversationDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   asLastOfConversation?: boolean | Prisma.Message$asLastOfConversationArgs<ExtArgs>
   seenByMembers?: boolean | Prisma.Message$seenByMembersArgs<ExtArgs>
+  conversation?: boolean | Prisma.ConversationDefaultArgs<ExtArgs>
+  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
 
@@ -964,20 +964,20 @@ export type MessageSelectScalar = {
 
 export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "conversationId" | "senderId" | "content" | "imgUrl" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  conversation?: boolean | Prisma.ConversationDefaultArgs<ExtArgs>
-  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   asLastOfConversation?: boolean | Prisma.Message$asLastOfConversationArgs<ExtArgs>
   seenByMembers?: boolean | Prisma.Message$seenByMembersArgs<ExtArgs>
+  conversation?: boolean | Prisma.ConversationDefaultArgs<ExtArgs>
+  sender?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Message"
   objects: {
-    conversation: Prisma.$ConversationPayload<ExtArgs>
-    sender: Prisma.$UserPayload<ExtArgs>
     asLastOfConversation: Prisma.$ConversationPayload<ExtArgs> | null
     seenByMembers: Prisma.$ConversationMemberPayload<ExtArgs>[]
+    conversation: Prisma.$ConversationPayload<ExtArgs>
+    sender: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1328,10 +1328,10 @@ readonly fields: MessageFieldRefs;
  */
 export interface Prisma__MessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  conversation<T extends Prisma.ConversationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ConversationDefaultArgs<ExtArgs>>): Prisma.Prisma__ConversationClient<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  sender<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   asLastOfConversation<T extends Prisma.Message$asLastOfConversationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$asLastOfConversationArgs<ExtArgs>>): Prisma.Prisma__ConversationClient<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seenByMembers<T extends Prisma.Message$seenByMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Message$seenByMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  conversation<T extends Prisma.ConversationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ConversationDefaultArgs<ExtArgs>>): Prisma.Prisma__ConversationClient<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  sender<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -272,10 +272,10 @@ export type ConversationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Conversation"> | boolean
-  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lastMessage?: Prisma.XOR<Prisma.MessageNullableScalarRelationFilter, Prisma.MessageWhereInput> | null
   lastMessageSender?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   members?: Prisma.ConversationMemberListRelationFilter
   messages?: Prisma.MessageListRelationFilter
 }
@@ -291,10 +291,10 @@ export type ConversationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   isDestroyed?: Prisma.SortOrder
-  student?: Prisma.UserOrderByWithRelationInput
-  lecturer?: Prisma.UserOrderByWithRelationInput
   lastMessage?: Prisma.MessageOrderByWithRelationInput
   lastMessageSender?: Prisma.UserOrderByWithRelationInput
+  lecturer?: Prisma.UserOrderByWithRelationInput
+  student?: Prisma.UserOrderByWithRelationInput
   members?: Prisma.ConversationMemberOrderByRelationAggregateInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
   _relevance?: Prisma.ConversationOrderByRelevanceInput
@@ -315,10 +315,10 @@ export type ConversationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
   isDestroyed?: Prisma.BoolFilter<"Conversation"> | boolean
-  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   lastMessage?: Prisma.XOR<Prisma.MessageNullableScalarRelationFilter, Prisma.MessageWhereInput> | null
   lastMessageSender?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  lecturer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  student?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   members?: Prisma.ConversationMemberListRelationFilter
   messages?: Prisma.MessageListRelationFilter
 }, "id" | "lastMessageId" | "studentId_lecturerId">
@@ -363,10 +363,10 @@ export type ConversationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
   lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
   lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
   members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
@@ -392,10 +392,10 @@ export type ConversationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
   lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
@@ -535,10 +535,10 @@ export type ConversationNullableScalarRelationFilter = {
   isNot?: Prisma.ConversationWhereInput | null
 }
 
-export type ConversationCreateNestedManyWithoutStudentInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput> | Prisma.ConversationCreateWithoutStudentInput[] | Prisma.ConversationUncheckedCreateWithoutStudentInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutStudentInput | Prisma.ConversationCreateOrConnectWithoutStudentInput[]
-  createMany?: Prisma.ConversationCreateManyStudentInputEnvelope
+export type ConversationCreateNestedManyWithoutLastMessageSenderInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput> | Prisma.ConversationCreateWithoutLastMessageSenderInput[] | Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput[]
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput | Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput[]
+  createMany?: Prisma.ConversationCreateManyLastMessageSenderInputEnvelope
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
@@ -549,24 +549,10 @@ export type ConversationCreateNestedManyWithoutLecturerInput = {
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
-export type ConversationCreateNestedManyWithoutLastMessageSenderInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput> | Prisma.ConversationCreateWithoutLastMessageSenderInput[] | Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput | Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput[]
-  createMany?: Prisma.ConversationCreateManyLastMessageSenderInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
-export type ConversationUncheckedCreateNestedManyWithoutStudentInput = {
+export type ConversationCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput> | Prisma.ConversationCreateWithoutStudentInput[] | Prisma.ConversationUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutStudentInput | Prisma.ConversationCreateOrConnectWithoutStudentInput[]
   createMany?: Prisma.ConversationCreateManyStudentInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
-export type ConversationUncheckedCreateNestedManyWithoutLecturerInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput> | Prisma.ConversationCreateWithoutLecturerInput[] | Prisma.ConversationUncheckedCreateWithoutLecturerInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLecturerInput | Prisma.ConversationCreateOrConnectWithoutLecturerInput[]
-  createMany?: Prisma.ConversationCreateManyLecturerInputEnvelope
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
@@ -577,17 +563,31 @@ export type ConversationUncheckedCreateNestedManyWithoutLastMessageSenderInput =
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
-export type ConversationUpdateManyWithoutStudentNestedInput = {
+export type ConversationUncheckedCreateNestedManyWithoutLecturerInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput> | Prisma.ConversationCreateWithoutLecturerInput[] | Prisma.ConversationUncheckedCreateWithoutLecturerInput[]
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLecturerInput | Prisma.ConversationCreateOrConnectWithoutLecturerInput[]
+  createMany?: Prisma.ConversationCreateManyLecturerInputEnvelope
+  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+}
+
+export type ConversationUncheckedCreateNestedManyWithoutStudentInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput> | Prisma.ConversationCreateWithoutStudentInput[] | Prisma.ConversationUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutStudentInput | Prisma.ConversationCreateOrConnectWithoutStudentInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput[]
   createMany?: Prisma.ConversationCreateManyStudentInputEnvelope
+  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+}
+
+export type ConversationUpdateManyWithoutLastMessageSenderNestedInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput> | Prisma.ConversationCreateWithoutLastMessageSenderInput[] | Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput[]
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput | Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput[]
+  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput | Prisma.ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput[]
+  createMany?: Prisma.ConversationCreateManyLastMessageSenderInputEnvelope
   set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
   disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
   delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutStudentInput | Prisma.ConversationUpdateManyWithWhereWithoutStudentInput[]
+  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput | Prisma.ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput[]
+  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutLastMessageSenderInput | Prisma.ConversationUpdateManyWithWhereWithoutLastMessageSenderInput[]
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
@@ -605,21 +605,7 @@ export type ConversationUpdateManyWithoutLecturerNestedInput = {
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
-export type ConversationUpdateManyWithoutLastMessageSenderNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput> | Prisma.ConversationCreateWithoutLastMessageSenderInput[] | Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput | Prisma.ConversationCreateOrConnectWithoutLastMessageSenderInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput | Prisma.ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput[]
-  createMany?: Prisma.ConversationCreateManyLastMessageSenderInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput | Prisma.ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutLastMessageSenderInput | Prisma.ConversationUpdateManyWithWhereWithoutLastMessageSenderInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-}
-
-export type ConversationUncheckedUpdateManyWithoutStudentNestedInput = {
+export type ConversationUpdateManyWithoutStudentNestedInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput> | Prisma.ConversationCreateWithoutStudentInput[] | Prisma.ConversationUncheckedCreateWithoutStudentInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutStudentInput | Prisma.ConversationCreateOrConnectWithoutStudentInput[]
   upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput[]
@@ -630,20 +616,6 @@ export type ConversationUncheckedUpdateManyWithoutStudentNestedInput = {
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
   update?: Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput[]
   updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutStudentInput | Prisma.ConversationUpdateManyWithWhereWithoutStudentInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-}
-
-export type ConversationUncheckedUpdateManyWithoutLecturerNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput> | Prisma.ConversationCreateWithoutLecturerInput[] | Prisma.ConversationUncheckedCreateWithoutLecturerInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLecturerInput | Prisma.ConversationCreateOrConnectWithoutLecturerInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutLecturerInput | Prisma.ConversationUpsertWithWhereUniqueWithoutLecturerInput[]
-  createMany?: Prisma.ConversationCreateManyLecturerInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutLecturerInput | Prisma.ConversationUpdateWithWhereUniqueWithoutLecturerInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutLecturerInput | Prisma.ConversationUpdateManyWithWhereWithoutLecturerInput[]
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
@@ -661,6 +633,34 @@ export type ConversationUncheckedUpdateManyWithoutLastMessageSenderNestedInput =
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
+export type ConversationUncheckedUpdateManyWithoutLecturerNestedInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput> | Prisma.ConversationCreateWithoutLecturerInput[] | Prisma.ConversationUncheckedCreateWithoutLecturerInput[]
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLecturerInput | Prisma.ConversationCreateOrConnectWithoutLecturerInput[]
+  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutLecturerInput | Prisma.ConversationUpsertWithWhereUniqueWithoutLecturerInput[]
+  createMany?: Prisma.ConversationCreateManyLecturerInputEnvelope
+  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutLecturerInput | Prisma.ConversationUpdateWithWhereUniqueWithoutLecturerInput[]
+  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutLecturerInput | Prisma.ConversationUpdateManyWithWhereWithoutLecturerInput[]
+  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
+}
+
+export type ConversationUncheckedUpdateManyWithoutStudentNestedInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput> | Prisma.ConversationCreateWithoutStudentInput[] | Prisma.ConversationUncheckedCreateWithoutStudentInput[]
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutStudentInput | Prisma.ConversationCreateOrConnectWithoutStudentInput[]
+  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpsertWithWhereUniqueWithoutStudentInput[]
+  createMany?: Prisma.ConversationCreateManyStudentInputEnvelope
+  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
+  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput | Prisma.ConversationUpdateWithWhereUniqueWithoutStudentInput[]
+  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutStudentInput | Prisma.ConversationUpdateManyWithWhereWithoutStudentInput[]
+  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
+}
+
 export type ConversationCreateNestedOneWithoutMembersInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutMembersInput, Prisma.ConversationUncheckedCreateWithoutMembersInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMembersInput
@@ -675,15 +675,15 @@ export type ConversationUpdateOneRequiredWithoutMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutMembersInput, Prisma.ConversationUpdateWithoutMembersInput>, Prisma.ConversationUncheckedUpdateWithoutMembersInput>
 }
 
-export type ConversationCreateNestedOneWithoutMessagesInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
-  connect?: Prisma.ConversationWhereUniqueInput
-}
-
 export type ConversationCreateNestedOneWithoutLastMessageInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageInput, Prisma.ConversationUncheckedCreateWithoutLastMessageInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageInput
+  connect?: Prisma.ConversationWhereUniqueInput
+}
+
+export type ConversationCreateNestedOneWithoutMessagesInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
   connect?: Prisma.ConversationWhereUniqueInput
 }
 
@@ -691,14 +691,6 @@ export type ConversationUncheckedCreateNestedOneWithoutLastMessageInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageInput, Prisma.ConversationUncheckedCreateWithoutLastMessageInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageInput
   connect?: Prisma.ConversationWhereUniqueInput
-}
-
-export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
-  upsert?: Prisma.ConversationUpsertWithoutMessagesInput
-  connect?: Prisma.ConversationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutMessagesInput, Prisma.ConversationUpdateWithoutMessagesInput>, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
 }
 
 export type ConversationUpdateOneWithoutLastMessageNestedInput = {
@@ -711,6 +703,14 @@ export type ConversationUpdateOneWithoutLastMessageNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutLastMessageInput, Prisma.ConversationUpdateWithoutLastMessageInput>, Prisma.ConversationUncheckedUpdateWithoutLastMessageInput>
 }
 
+export type ConversationUpdateOneRequiredWithoutMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
+  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
+  upsert?: Prisma.ConversationUpsertWithoutMessagesInput
+  connect?: Prisma.ConversationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutMessagesInput, Prisma.ConversationUpdateWithoutMessagesInput>, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
+}
+
 export type ConversationUncheckedUpdateOneWithoutLastMessageNestedInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageInput, Prisma.ConversationUncheckedCreateWithoutLastMessageInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutLastMessageInput
@@ -721,89 +721,15 @@ export type ConversationUncheckedUpdateOneWithoutLastMessageNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ConversationUpdateToOneWithWhereWithoutLastMessageInput, Prisma.ConversationUpdateWithoutLastMessageInput>, Prisma.ConversationUncheckedUpdateWithoutLastMessageInput>
 }
 
-export type ConversationCreateWithoutStudentInput = {
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
-  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
-  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
-  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
-  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationUncheckedCreateWithoutStudentInput = {
-  id?: number
-  lecturerId: number
-  lastMessageId?: number | null
-  lastMessageSenderId?: number | null
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationCreateOrConnectWithoutStudentInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput>
-}
-
-export type ConversationCreateManyStudentInputEnvelope = {
-  data: Prisma.ConversationCreateManyStudentInput | Prisma.ConversationCreateManyStudentInput[]
-  skipDuplicates?: boolean
-}
-
-export type ConversationCreateWithoutLecturerInput = {
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
-  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
-  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
-  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationUncheckedCreateWithoutLecturerInput = {
-  id?: number
-  studentId: number
-  lastMessageId?: number | null
-  lastMessageSenderId?: number | null
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationCreateOrConnectWithoutLecturerInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput>
-}
-
-export type ConversationCreateManyLecturerInputEnvelope = {
-  data: Prisma.ConversationCreateManyLecturerInput | Prisma.ConversationCreateManyLecturerInput[]
-  skipDuplicates?: boolean
-}
-
 export type ConversationCreateWithoutLastMessageSenderInput = {
   lastMessageContent?: string | null
   lastMessageAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
   lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
   members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
@@ -832,20 +758,94 @@ export type ConversationCreateManyLastMessageSenderInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type ConversationUpsertWithWhereUniqueWithoutStudentInput = {
+export type ConversationCreateWithoutLecturerInput = {
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
+  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
+  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
+  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationUncheckedCreateWithoutLecturerInput = {
+  id?: number
+  studentId: number
+  lastMessageId?: number | null
+  lastMessageSenderId?: number | null
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationCreateOrConnectWithoutLecturerInput = {
   where: Prisma.ConversationWhereUniqueInput
-  update: Prisma.XOR<Prisma.ConversationUpdateWithoutStudentInput, Prisma.ConversationUncheckedUpdateWithoutStudentInput>
+  create: Prisma.XOR<Prisma.ConversationCreateWithoutLecturerInput, Prisma.ConversationUncheckedCreateWithoutLecturerInput>
+}
+
+export type ConversationCreateManyLecturerInputEnvelope = {
+  data: Prisma.ConversationCreateManyLecturerInput | Prisma.ConversationCreateManyLecturerInput[]
+  skipDuplicates?: boolean
+}
+
+export type ConversationCreateWithoutStudentInput = {
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
+  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
+  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationUncheckedCreateWithoutStudentInput = {
+  id?: number
+  lecturerId: number
+  lastMessageId?: number | null
+  lastMessageSenderId?: number | null
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationCreateOrConnectWithoutStudentInput = {
+  where: Prisma.ConversationWhereUniqueInput
   create: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput>
 }
 
-export type ConversationUpdateWithWhereUniqueWithoutStudentInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  data: Prisma.XOR<Prisma.ConversationUpdateWithoutStudentInput, Prisma.ConversationUncheckedUpdateWithoutStudentInput>
+export type ConversationCreateManyStudentInputEnvelope = {
+  data: Prisma.ConversationCreateManyStudentInput | Prisma.ConversationCreateManyStudentInput[]
+  skipDuplicates?: boolean
 }
 
-export type ConversationUpdateManyWithWhereWithoutStudentInput = {
+export type ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput = {
+  where: Prisma.ConversationWhereUniqueInput
+  update: Prisma.XOR<Prisma.ConversationUpdateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedUpdateWithoutLastMessageSenderInput>
+  create: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput>
+}
+
+export type ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput = {
+  where: Prisma.ConversationWhereUniqueInput
+  data: Prisma.XOR<Prisma.ConversationUpdateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedUpdateWithoutLastMessageSenderInput>
+}
+
+export type ConversationUpdateManyWithWhereWithoutLastMessageSenderInput = {
   where: Prisma.ConversationScalarWhereInput
-  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutStudentInput>
+  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderInput>
 }
 
 export type ConversationScalarWhereInput = {
@@ -880,20 +880,20 @@ export type ConversationUpdateManyWithWhereWithoutLecturerInput = {
   data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutLecturerInput>
 }
 
-export type ConversationUpsertWithWhereUniqueWithoutLastMessageSenderInput = {
+export type ConversationUpsertWithWhereUniqueWithoutStudentInput = {
   where: Prisma.ConversationWhereUniqueInput
-  update: Prisma.XOR<Prisma.ConversationUpdateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedUpdateWithoutLastMessageSenderInput>
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedCreateWithoutLastMessageSenderInput>
+  update: Prisma.XOR<Prisma.ConversationUpdateWithoutStudentInput, Prisma.ConversationUncheckedUpdateWithoutStudentInput>
+  create: Prisma.XOR<Prisma.ConversationCreateWithoutStudentInput, Prisma.ConversationUncheckedCreateWithoutStudentInput>
 }
 
-export type ConversationUpdateWithWhereUniqueWithoutLastMessageSenderInput = {
+export type ConversationUpdateWithWhereUniqueWithoutStudentInput = {
   where: Prisma.ConversationWhereUniqueInput
-  data: Prisma.XOR<Prisma.ConversationUpdateWithoutLastMessageSenderInput, Prisma.ConversationUncheckedUpdateWithoutLastMessageSenderInput>
+  data: Prisma.XOR<Prisma.ConversationUpdateWithoutStudentInput, Prisma.ConversationUncheckedUpdateWithoutStudentInput>
 }
 
-export type ConversationUpdateManyWithWhereWithoutLastMessageSenderInput = {
+export type ConversationUpdateManyWithWhereWithoutStudentInput = {
   where: Prisma.ConversationScalarWhereInput
-  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutLastMessageSenderInput>
+  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutStudentInput>
 }
 
 export type ConversationCreateWithoutMembersInput = {
@@ -902,10 +902,10 @@ export type ConversationCreateWithoutMembersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
   lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
   lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
 
@@ -945,10 +945,10 @@ export type ConversationUpdateWithoutMembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
   lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
 
@@ -966,47 +966,15 @@ export type ConversationUncheckedUpdateWithoutMembersInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationCreateWithoutMessagesInput = {
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
-  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
-  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
-  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationUncheckedCreateWithoutMessagesInput = {
-  id?: number
-  studentId: number
-  lecturerId: number
-  lastMessageId?: number | null
-  lastMessageSenderId?: number | null
-  lastMessageContent?: string | null
-  lastMessageAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  isDestroyed?: boolean
-  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationCreateOrConnectWithoutMessagesInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
-}
-
 export type ConversationCreateWithoutLastMessageInput = {
   lastMessageContent?: string | null
   lastMessageAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   isDestroyed?: boolean
-  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
-  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
   lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
   members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
 }
@@ -1030,42 +998,36 @@ export type ConversationCreateOrConnectWithoutLastMessageInput = {
   create: Prisma.XOR<Prisma.ConversationCreateWithoutLastMessageInput, Prisma.ConversationUncheckedCreateWithoutLastMessageInput>
 }
 
-export type ConversationUpsertWithoutMessagesInput = {
-  update: Prisma.XOR<Prisma.ConversationUpdateWithoutMessagesInput, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
+export type ConversationCreateWithoutMessagesInput = {
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  lastMessage?: Prisma.MessageCreateNestedOneWithoutAsLastOfConversationInput
+  lastMessageSender?: Prisma.UserCreateNestedOneWithoutLastSentConversationsInput
+  lecturer: Prisma.UserCreateNestedOneWithoutLecturerConversationsInput
+  student: Prisma.UserCreateNestedOneWithoutStudentConversationsInput
+  members?: Prisma.ConversationMemberCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationUncheckedCreateWithoutMessagesInput = {
+  id?: number
+  studentId: number
+  lecturerId: number
+  lastMessageId?: number | null
+  lastMessageSenderId?: number | null
+  lastMessageContent?: string | null
+  lastMessageAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  isDestroyed?: boolean
+  members?: Prisma.ConversationMemberUncheckedCreateNestedManyWithoutConversationInput
+}
+
+export type ConversationCreateOrConnectWithoutMessagesInput = {
+  where: Prisma.ConversationWhereUniqueInput
   create: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
-  where?: Prisma.ConversationWhereInput
-}
-
-export type ConversationUpdateToOneWithWhereWithoutMessagesInput = {
-  where?: Prisma.ConversationWhereInput
-  data: Prisma.XOR<Prisma.ConversationUpdateWithoutMessagesInput, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
-}
-
-export type ConversationUpdateWithoutMessagesInput = {
-  lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
-  lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
-  lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
-  members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
-}
-
-export type ConversationUncheckedUpdateWithoutMessagesInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  studentId?: Prisma.IntFieldUpdateOperationsInput | number
-  lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
-  lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  members?: Prisma.ConversationMemberUncheckedUpdateManyWithoutConversationNestedInput
 }
 
 export type ConversationUpsertWithoutLastMessageInput = {
@@ -1085,9 +1047,9 @@ export type ConversationUpdateWithoutLastMessageInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
@@ -1106,11 +1068,49 @@ export type ConversationUncheckedUpdateWithoutLastMessageInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationCreateManyStudentInput = {
+export type ConversationUpsertWithoutMessagesInput = {
+  update: Prisma.XOR<Prisma.ConversationUpdateWithoutMessagesInput, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
+  create: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
+  where?: Prisma.ConversationWhereInput
+}
+
+export type ConversationUpdateToOneWithWhereWithoutMessagesInput = {
+  where?: Prisma.ConversationWhereInput
+  data: Prisma.XOR<Prisma.ConversationUpdateWithoutMessagesInput, Prisma.ConversationUncheckedUpdateWithoutMessagesInput>
+}
+
+export type ConversationUpdateWithoutMessagesInput = {
+  lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
+  lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
+  members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
+}
+
+export type ConversationUncheckedUpdateWithoutMessagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+  lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
+  lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  members?: Prisma.ConversationMemberUncheckedUpdateManyWithoutConversationNestedInput
+}
+
+export type ConversationCreateManyLastMessageSenderInput = {
   id?: number
+  studentId: number
   lecturerId: number
   lastMessageId?: number | null
-  lastMessageSenderId?: number | null
   lastMessageContent?: string | null
   lastMessageAt?: Date | string | null
   createdAt?: Date | string
@@ -1130,11 +1130,11 @@ export type ConversationCreateManyLecturerInput = {
   isDestroyed?: boolean
 }
 
-export type ConversationCreateManyLastMessageSenderInput = {
+export type ConversationCreateManyStudentInput = {
   id?: number
-  studentId: number
   lecturerId: number
   lastMessageId?: number | null
+  lastMessageSenderId?: number | null
   lastMessageContent?: string | null
   lastMessageAt?: Date | string | null
   createdAt?: Date | string
@@ -1142,24 +1142,24 @@ export type ConversationCreateManyLastMessageSenderInput = {
   isDestroyed?: boolean
 }
 
-export type ConversationUpdateWithoutStudentInput = {
+export type ConversationUpdateWithoutLastMessageSenderInput = {
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
-  lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationUncheckedUpdateWithoutStudentInput = {
+export type ConversationUncheckedUpdateWithoutLastMessageSenderInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
   lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1169,11 +1169,11 @@ export type ConversationUncheckedUpdateWithoutStudentInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationUncheckedUpdateManyWithoutStudentInput = {
+export type ConversationUncheckedUpdateManyWithoutLastMessageSenderInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
   lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1187,9 +1187,9 @@ export type ConversationUpdateWithoutLecturerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
   lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
   members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
@@ -1220,24 +1220,24 @@ export type ConversationUncheckedUpdateManyWithoutLecturerInput = {
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type ConversationUpdateWithoutLastMessageSenderInput = {
+export type ConversationUpdateWithoutStudentInput = {
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDestroyed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  student?: Prisma.UserUpdateOneRequiredWithoutStudentConversationsNestedInput
-  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   lastMessage?: Prisma.MessageUpdateOneWithoutAsLastOfConversationNestedInput
+  lastMessageSender?: Prisma.UserUpdateOneWithoutLastSentConversationsNestedInput
+  lecturer?: Prisma.UserUpdateOneRequiredWithoutLecturerConversationsNestedInput
   members?: Prisma.ConversationMemberUpdateManyWithoutConversationNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationUncheckedUpdateWithoutLastMessageSenderInput = {
+export type ConversationUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  studentId?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
   lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1247,11 +1247,11 @@ export type ConversationUncheckedUpdateWithoutLastMessageSenderInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
-export type ConversationUncheckedUpdateManyWithoutLastMessageSenderInput = {
+export type ConversationUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  studentId?: Prisma.IntFieldUpdateOperationsInput | number
   lecturerId?: Prisma.IntFieldUpdateOperationsInput | number
   lastMessageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastMessageSenderId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   lastMessageContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastMessageAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1310,10 +1310,10 @@ export type ConversationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   createdAt?: boolean
   updatedAt?: boolean
   isDestroyed?: boolean
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lastMessage?: boolean | Prisma.Conversation$lastMessageArgs<ExtArgs>
   lastMessageSender?: boolean | Prisma.Conversation$lastMessageSenderArgs<ExtArgs>
+  lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   members?: boolean | Prisma.Conversation$membersArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
@@ -1336,10 +1336,10 @@ export type ConversationSelectScalar = {
 
 export type ConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "lecturerId" | "lastMessageId" | "lastMessageSenderId" | "lastMessageContent" | "lastMessageAt" | "createdAt" | "updatedAt" | "isDestroyed", ExtArgs["result"]["conversation"]>
 export type ConversationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   lastMessage?: boolean | Prisma.Conversation$lastMessageArgs<ExtArgs>
   lastMessageSender?: boolean | Prisma.Conversation$lastMessageSenderArgs<ExtArgs>
+  lecturer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  student?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   members?: boolean | Prisma.Conversation$membersArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
@@ -1348,10 +1348,10 @@ export type ConversationInclude<ExtArgs extends runtime.Types.Extensions.Interna
 export type $ConversationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Conversation"
   objects: {
-    student: Prisma.$UserPayload<ExtArgs>
-    lecturer: Prisma.$UserPayload<ExtArgs>
     lastMessage: Prisma.$MessagePayload<ExtArgs> | null
     lastMessageSender: Prisma.$UserPayload<ExtArgs> | null
+    lecturer: Prisma.$UserPayload<ExtArgs>
+    student: Prisma.$UserPayload<ExtArgs>
     members: Prisma.$ConversationMemberPayload<ExtArgs>[]
     messages: Prisma.$MessagePayload<ExtArgs>[]
   }
@@ -1706,10 +1706,10 @@ readonly fields: ConversationFieldRefs;
  */
 export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  lecturer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lastMessage<T extends Prisma.Conversation$lastMessageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$lastMessageArgs<ExtArgs>>): Prisma.Prisma__MessageClient<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lastMessageSender<T extends Prisma.Conversation$lastMessageSenderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$lastMessageSenderArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  lecturer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  student<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   members<T extends Prisma.Conversation$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.Conversation$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**

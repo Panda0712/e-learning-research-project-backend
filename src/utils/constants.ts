@@ -37,6 +37,7 @@ export const WEBSITE_DOMAINS =
 export const WHITELIST_DOMAINS = [
   "http://localhost:5173",
   "http://localhost:8017",
+  "https://e-learning-research-project-fronten.vercel.app",
 ];
 
 export const DEFAULT_PAGE = 1;

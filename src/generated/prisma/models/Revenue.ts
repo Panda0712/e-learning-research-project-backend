@@ -264,9 +264,9 @@ export type RevenueWhereInput = {
   platformFee?: Prisma.FloatFilter<"Revenue"> | number
   lecturerEarn?: Prisma.FloatFilter<"Revenue"> | number
   createdAt?: Prisma.DateTimeFilter<"Revenue"> | Date | string
-  order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
-  lecturer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  lecturer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
 }
 
 export type RevenueOrderByWithRelationInput = {
@@ -278,9 +278,9 @@ export type RevenueOrderByWithRelationInput = {
   platformFee?: Prisma.SortOrder
   lecturerEarn?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  order?: Prisma.OrderOrderByWithRelationInput
-  lecturer?: Prisma.UserOrderByWithRelationInput
   course?: Prisma.CourseOrderByWithRelationInput
+  lecturer?: Prisma.UserOrderByWithRelationInput
+  order?: Prisma.OrderOrderByWithRelationInput
 }
 
 export type RevenueWhereUniqueInput = Prisma.AtLeast<{
@@ -295,9 +295,9 @@ export type RevenueWhereUniqueInput = Prisma.AtLeast<{
   platformFee?: Prisma.FloatFilter<"Revenue"> | number
   lecturerEarn?: Prisma.FloatFilter<"Revenue"> | number
   createdAt?: Prisma.DateTimeFilter<"Revenue"> | Date | string
-  order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
-  lecturer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
+  lecturer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
 }, "id" | "orderId">
 
 export type RevenueOrderByWithAggregationInput = {
@@ -335,9 +335,9 @@ export type RevenueCreateInput = {
   platformFee: number
   lecturerEarn: number
   createdAt?: Date | string
-  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
-  lecturer?: Prisma.UserCreateNestedOneWithoutRevenuesInput
   course: Prisma.CourseCreateNestedOneWithoutRevenuesInput
+  lecturer?: Prisma.UserCreateNestedOneWithoutRevenuesInput
+  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
 }
 
 export type RevenueUncheckedCreateInput = {
@@ -356,9 +356,9 @@ export type RevenueUpdateInput = {
   platformFee?: Prisma.FloatFieldUpdateOperationsInput | number
   lecturerEarn?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
-  lecturer?: Prisma.UserUpdateOneWithoutRevenuesNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutRevenuesNestedInput
+  lecturer?: Prisma.UserUpdateOneWithoutRevenuesNestedInput
+  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
 }
 
 export type RevenueUncheckedUpdateInput = {
@@ -590,8 +590,8 @@ export type RevenueCreateWithoutLecturerInput = {
   platformFee: number
   lecturerEarn: number
   createdAt?: Date | string
-  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
   course: Prisma.CourseCreateNestedOneWithoutRevenuesInput
+  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
 }
 
 export type RevenueUncheckedCreateWithoutLecturerInput = {
@@ -649,8 +649,8 @@ export type RevenueCreateWithoutCourseInput = {
   platformFee: number
   lecturerEarn: number
   createdAt?: Date | string
-  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
   lecturer?: Prisma.UserCreateNestedOneWithoutRevenuesInput
+  order: Prisma.OrderCreateNestedOneWithoutRevenueInput
 }
 
 export type RevenueUncheckedCreateWithoutCourseInput = {
@@ -694,8 +694,8 @@ export type RevenueCreateWithoutOrderInput = {
   platformFee: number
   lecturerEarn: number
   createdAt?: Date | string
-  lecturer?: Prisma.UserCreateNestedOneWithoutRevenuesInput
   course: Prisma.CourseCreateNestedOneWithoutRevenuesInput
+  lecturer?: Prisma.UserCreateNestedOneWithoutRevenuesInput
 }
 
 export type RevenueUncheckedCreateWithoutOrderInput = {
@@ -729,8 +729,8 @@ export type RevenueUpdateWithoutOrderInput = {
   platformFee?: Prisma.FloatFieldUpdateOperationsInput | number
   lecturerEarn?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lecturer?: Prisma.UserUpdateOneWithoutRevenuesNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutRevenuesNestedInput
+  lecturer?: Prisma.UserUpdateOneWithoutRevenuesNestedInput
 }
 
 export type RevenueUncheckedUpdateWithoutOrderInput = {
@@ -758,8 +758,8 @@ export type RevenueUpdateWithoutLecturerInput = {
   platformFee?: Prisma.FloatFieldUpdateOperationsInput | number
   lecturerEarn?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutRevenuesNestedInput
+  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
 }
 
 export type RevenueUncheckedUpdateWithoutLecturerInput = {
@@ -797,8 +797,8 @@ export type RevenueUpdateWithoutCourseInput = {
   platformFee?: Prisma.FloatFieldUpdateOperationsInput | number
   lecturerEarn?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
   lecturer?: Prisma.UserUpdateOneWithoutRevenuesNestedInput
+  order?: Prisma.OrderUpdateOneRequiredWithoutRevenueNestedInput
 }
 
 export type RevenueUncheckedUpdateWithoutCourseInput = {
@@ -832,9 +832,9 @@ export type RevenueSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   platformFee?: boolean
   lecturerEarn?: boolean
   createdAt?: boolean
-  order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
-  lecturer?: boolean | Prisma.Revenue$lecturerArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lecturer?: boolean | Prisma.Revenue$lecturerArgs<ExtArgs>
+  order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["revenue"]>
 
 
@@ -852,17 +852,17 @@ export type RevenueSelectScalar = {
 
 export type RevenueOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "lecturerId" | "courseId" | "totalAmount" | "platformFee" | "lecturerEarn" | "createdAt", ExtArgs["result"]["revenue"]>
 export type RevenueInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
-  lecturer?: boolean | Prisma.Revenue$lecturerArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
+  lecturer?: boolean | Prisma.Revenue$lecturerArgs<ExtArgs>
+  order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
 }
 
 export type $RevenuePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Revenue"
   objects: {
-    order: Prisma.$OrderPayload<ExtArgs>
-    lecturer: Prisma.$UserPayload<ExtArgs> | null
     course: Prisma.$CoursePayload<ExtArgs>
+    lecturer: Prisma.$UserPayload<ExtArgs> | null
+    order: Prisma.$OrderPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1213,9 +1213,9 @@ readonly fields: RevenueFieldRefs;
  */
 export interface Prisma__RevenueClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  order<T extends Prisma.OrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  lecturer<T extends Prisma.Revenue$lecturerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Revenue$lecturerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lecturer<T extends Prisma.Revenue$lecturerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Revenue$lecturerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  order<T extends Prisma.OrderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrderDefaultArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -2927,17 +2927,17 @@ export const UserScalarFieldEnum = {
   password: 'password',
   firstName: 'firstName',
   lastName: 'lastName',
-  avatarId: 'avatarId',
   phoneNumber: 'phoneNumber',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
-  verifyToken: 'verifyToken',
-  resetPasswordToken: 'resetPasswordToken',
-  resetPasswordExpires: 'resetPasswordExpires',
   isVerified: 'isVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  verifyToken: 'verifyToken',
+  resetPasswordExpires: 'resetPasswordExpires',
+  resetPasswordToken: 'resetPasswordToken',
+  avatarId: 'avatarId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -2949,11 +2949,11 @@ export const KeyTokenScalarFieldEnum = {
   publicKey: 'publicKey',
   privateKey: 'privateKey',
   refreshToken: 'refreshToken',
-  refreshTokenUsed: 'refreshTokenUsed',
-  kid: 'kid',
   createdAt: 'createdAt',
+  isDestroyed: 'isDestroyed',
+  refreshTokenUsed: 'refreshTokenUsed',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  kid: 'kid'
 } as const
 
 export type KeyTokenScalarFieldEnum = (typeof KeyTokenScalarFieldEnum)[keyof typeof KeyTokenScalarFieldEnum]
@@ -2976,8 +2976,6 @@ export const CourseScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
   categoryId: 'categoryId',
-  thumbnailId: 'thumbnailId',
-  introVideoId: 'introVideoId',
   name: 'name',
   lecturerName: 'lecturerName',
   duration: 'duration',
@@ -2989,8 +2987,10 @@ export const CourseScalarFieldEnum = {
   price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  isDestroyed: 'isDestroyed',
   status: 'status',
-  isDestroyed: 'isDestroyed'
+  thumbnailId: 'thumbnailId',
+  introVideoId: 'introVideoId'
 } as const
 
 export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -3010,12 +3010,12 @@ export type CourseCategoryScalarFieldEnum = (typeof CourseCategoryScalarFieldEnu
 
 export const CourseFAQScalarFieldEnum = {
   id: 'id',
-  courseId: 'courseId',
   question: 'question',
   answer: 'answer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  courseId: 'courseId'
 } as const
 
 export type CourseFAQScalarFieldEnum = (typeof CourseFAQScalarFieldEnum)[keyof typeof CourseFAQScalarFieldEnum]
@@ -3054,16 +3054,16 @@ export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof 
 
 export const LessonScalarFieldEnum = {
   id: 'id',
-  lessonFileId: 'lessonFileId',
   moduleId: 'moduleId',
   title: 'title',
   description: 'description',
   note: 'note',
-  lessonVideoId: 'lessonVideoId',
   duration: 'duration',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  lessonFileId: 'lessonFileId',
+  lessonVideoId: 'lessonVideoId'
 } as const
 
 export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
@@ -3071,13 +3071,13 @@ export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof 
 
 export const ResourceScalarFieldEnum = {
   id: 'id',
-  publicId: 'publicId',
   fileSize: 'fileSize',
   fileType: 'fileType',
   fileUrl: 'fileUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  publicId: 'publicId'
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
@@ -3131,22 +3131,22 @@ export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typ
 export const OrderScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
-  couponId: 'couponId',
-  couponCode: 'couponCode',
-  discountAmount: 'discountAmount',
-  originalPrice: 'originalPrice',
   lecturer: 'lecturer',
   totalPrice: 'totalPrice',
   paymentMethod: 'paymentMethod',
   status: 'status',
+  createdAt: 'createdAt',
+  isDestroyed: 'isDestroyed',
+  checkoutUrl: 'checkoutUrl',
+  isSuccess: 'isSuccess',
   paymentLinkId: 'paymentLinkId',
   paymentStatus: 'paymentStatus',
-  checkoutUrl: 'checkoutUrl',
   qrCode: 'qrCode',
-  isSuccess: 'isSuccess',
-  createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  couponCode: 'couponCode',
+  couponId: 'couponId',
+  discountAmount: 'discountAmount',
+  originalPrice: 'originalPrice'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -3171,17 +3171,7 @@ export const CouponScalarFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
-  scope: 'scope',
-  courseId: 'courseId',
-  scopeCategoryId: 'scopeCategoryId',
   categoryId: 'categoryId',
-  discount: 'discount',
-  discountUnit: 'discountUnit',
-  usageLimit: 'usageLimit',
-  usedCount: 'usedCount',
-  usagePerUser: 'usagePerUser',
-  minOrderValue: 'minOrderValue',
-  maxValue: 'maxValue',
   amount: 'amount',
   startingDate: 'startingDate',
   startingTime: 'startingTime',
@@ -3189,7 +3179,17 @@ export const CouponScalarFieldEnum = {
   endingTime: 'endingTime',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  courseId: 'courseId',
+  discount: 'discount',
+  discountUnit: 'discountUnit',
+  usageLimit: 'usageLimit',
+  minOrderValue: 'minOrderValue',
+  maxValue: 'maxValue',
+  scope: 'scope',
+  scopeCategoryId: 'scopeCategoryId',
+  usagePerUser: 'usagePerUser',
+  usedCount: 'usedCount'
 } as const
 
 export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
@@ -3225,9 +3225,9 @@ export const SubmissionScalarFieldEnum = {
   studentId: 'studentId',
   score: 'score',
   status: 'status',
-  feedback: 'feedback',
   submittedAt: 'submittedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  feedback: 'feedback'
 } as const
 
 export type SubmissionScalarFieldEnum = (typeof SubmissionScalarFieldEnum)[keyof typeof SubmissionScalarFieldEnum]
@@ -3244,8 +3244,8 @@ export const AssessmentScalarFieldEnum = {
   totalSubmissions: 'totalSubmissions',
   averageScore: 'averageScore',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof typeof AssessmentScalarFieldEnum]
@@ -3254,19 +3254,19 @@ export type AssessmentScalarFieldEnum = (typeof AssessmentScalarFieldEnum)[keyof
 export const BlogPostScalarFieldEnum = {
   id: 'id',
   authorId: 'authorId',
-  reviewedById: 'reviewedById',
   categoryId: 'categoryId',
   title: 'title',
   slug: 'slug',
   content: 'content',
-  status: 'status',
-  reviewNote: 'reviewNote',
-  publishedAt: 'publishedAt',
-  thumbnailId: 'thumbnailId',
   totalComments: 'totalComments',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  thumbnailId: 'thumbnailId',
+  reviewedById: 'reviewedById',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  publishedAt: 'publishedAt'
 } as const
 
 export type BlogPostScalarFieldEnum = (typeof BlogPostScalarFieldEnum)[keyof typeof BlogPostScalarFieldEnum]
@@ -3289,10 +3289,10 @@ export const BlogCommentScalarFieldEnum = {
   blogId: 'blogId',
   userId: 'userId',
   content: 'content',
-  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  parentId: 'parentId'
 } as const
 
 export type BlogCommentScalarFieldEnum = (typeof BlogCommentScalarFieldEnum)[keyof typeof BlogCommentScalarFieldEnum]
@@ -3318,9 +3318,9 @@ export const CartScalarFieldEnum = {
   userId: 'userId',
   courseName: 'courseName',
   lecturer: 'lecturer',
-  updatedAt: 'updatedAt',
   createdAt: 'createdAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  updatedAt: 'updatedAt'
 } as const
 
 export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof CartScalarFieldEnum]
@@ -3370,7 +3370,6 @@ export type TransactionStudentScalarFieldEnum = (typeof TransactionStudentScalar
 export const LecturerProfileScalarFieldEnum = {
   id: 'id',
   lecturerId: 'lecturerId',
-  lecturerFileId: 'lecturerFileId',
   gender: 'gender',
   nationality: 'nationality',
   professionalTitle: 'professionalTitle',
@@ -3380,10 +3379,11 @@ export const LecturerProfileScalarFieldEnum = {
   totalCourses: 'totalCourses',
   avgRating: 'avgRating',
   bio: 'bio',
-  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  isActive: 'isActive',
+  lecturerFileId: 'lecturerFileId'
 } as const
 
 export type LecturerProfileScalarFieldEnum = (typeof LecturerProfileScalarFieldEnum)[keyof typeof LecturerProfileScalarFieldEnum]
@@ -3399,8 +3399,8 @@ export const LecturerPayoutScalarFieldEnum = {
   payoutMethod: 'payoutMethod',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  status: 'status',
-  isDestroyed: 'isDestroyed'
+  isDestroyed: 'isDestroyed',
+  status: 'status'
 } as const
 
 export type LecturerPayoutScalarFieldEnum = (typeof LecturerPayoutScalarFieldEnum)[keyof typeof LecturerPayoutScalarFieldEnum]
@@ -3641,9 +3641,9 @@ export type LessonOrderByRelevanceFieldEnum = (typeof LessonOrderByRelevanceFiel
 
 
 export const ResourceOrderByRelevanceFieldEnum = {
-  publicId: 'publicId',
   fileType: 'fileType',
-  fileUrl: 'fileUrl'
+  fileUrl: 'fileUrl',
+  publicId: 'publicId'
 } as const
 
 export type ResourceOrderByRelevanceFieldEnum = (typeof ResourceOrderByRelevanceFieldEnum)[keyof typeof ResourceOrderByRelevanceFieldEnum]
@@ -3674,14 +3674,14 @@ export type QuestionOrderByRelevanceFieldEnum = (typeof QuestionOrderByRelevance
 
 
 export const OrderOrderByRelevanceFieldEnum = {
-  couponCode: 'couponCode',
   lecturer: 'lecturer',
   paymentMethod: 'paymentMethod',
   status: 'status',
+  checkoutUrl: 'checkoutUrl',
   paymentLinkId: 'paymentLinkId',
   paymentStatus: 'paymentStatus',
-  checkoutUrl: 'checkoutUrl',
-  qrCode: 'qrCode'
+  qrCode: 'qrCode',
+  couponCode: 'couponCode'
 } as const
 
 export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
@@ -3692,10 +3692,10 @@ export const CouponOrderByRelevanceFieldEnum = {
   description: 'description',
   status: 'status',
   code: 'code',
-  scope: 'scope',
-  discountUnit: 'discountUnit',
   startingTime: 'startingTime',
-  endingTime: 'endingTime'
+  endingTime: 'endingTime',
+  discountUnit: 'discountUnit',
+  scope: 'scope'
 } as const
 
 export type CouponOrderByRelevanceFieldEnum = (typeof CouponOrderByRelevanceFieldEnum)[keyof typeof CouponOrderByRelevanceFieldEnum]
